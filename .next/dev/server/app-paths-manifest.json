@@ -1,0 +1,5 @@
+{
+  "/api/library/tree/route": "app/api/library/tree/route.js",
+  "/api/verse/[id]/route": "app/api/verse/[id]/route.js",
+  "/page": "app/page.js"
+}
