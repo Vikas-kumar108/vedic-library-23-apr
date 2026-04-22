@@ -125,6 +125,7 @@ model Text {
   segmentOrder Int?           @map("segment_order")
   deletedAt    DateTime?      @map("deleted_at")
   createdAt    DateTime       @default(now()) @map("created_at")
+  ftsVector    Unsupported("tsvector")? @map("fts_vector")
 
   node         Node           @relation(fields: [nodeId], references: [id], onDelete: Cascade)
   source       Source?        @relation(fields: [sourceId], references: [id])

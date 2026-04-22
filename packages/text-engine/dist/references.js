@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SHASTRA_SHORT_CODES = exports.SHASTRA_CANONICAL_NAMES = void 0;
 exports.formatReference = formatReference;
+exports.generateSlug = generateSlug;
 exports.parseCoordinatesFromSlug = parseCoordinatesFromSlug;
 exports.SHASTRA_CANONICAL_NAMES = {
     bg: 'Bhagavad Gītā',
@@ -14,12 +15,27 @@ exports.SHASTRA_SHORT_CODES = {
 /**
  * Formats a raw database reference or coordinates into a canonical string.
  */
-function formatReference(shastra, chapter, verse) {
+function formatReference(shastra, chapter, verse, section) {
     const code = exports.SHASTRA_SHORT_CODES[shastra.toLowerCase()] || shastra.toUpperCase();
     if (shastra.toLowerCase() === 'ks') {
+        if (section)
+            return `${code} ${section}.${chapter}.${verse}`;
+        return `${code} ${chapter}.${verse}`;
+    }
+    if (shastra.toLowerCase() === 'bg') {
         return `${code} ${chapter}.${verse}`;
     }
     return `${code} ${chapter}.${verse}`;
+}
+/**
+ * Generates a consistent slug for a node.
+ */
+function generateSlug(name) {
+    return name
+        .toLowerCase()
+        .replace(/[^a-z0-9]/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, '');
 }
 /**
  * Extracts coordinates from a slug or path.

@@ -4,33 +4,15 @@ import { TreeNode } from '@/lib/types'
 
 export async function GET() {
   try {
-    const nodes = await prisma.node.findMany({
-      orderBy: { orderIndex: 'asc' }
-    })
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4444'
+    const res = await fetch(`${apiUrl}/library/tree`, { cache: 'no-store' })
+    const data = await res.json()
+    
+    if (!res.ok) throw new Error(data.error || 'Gateway Error')
 
-    const nodesMap: Record<string, any> = {}
-    nodes.forEach(n => {
-      nodesMap[n.id] = {
-        id: n.id,
-        name: n.name,
-        type: n.level as any, // level maps to type
-        slug: n.slug || undefined,
-        canonicalRef: n.canonicalRef || undefined,
-        children: []
-      }
-    })
-
-    const tree: any[] = []
-    nodes.forEach(n => {
-      if (n.parentId && nodesMap[n.parentId]) {
-        nodesMap[n.parentId].children.push(nodesMap[n.id])
-      } else {
-        tree.push(nodesMap[n.id])
-      }
-    })
-    return NextResponse.json(tree)
+    return NextResponse.json(data)
   } catch (error: any) {
-    console.error('Error fetching library tree:', error)
+    console.error('Error fetching library tree from gateway:', error)
     return NextResponse.json({ error: error.message || 'Internal Server Error' }, { status: 500 })
   }
 }

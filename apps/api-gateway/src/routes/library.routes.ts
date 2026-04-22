@@ -8,8 +8,8 @@ export default async function libraryRoutes(fastify: FastifyInstance) {
   const typedFastify = fastify.withTypeProvider<ZodTypeProvider>()
 
   // 1. Get Tree
-  typedFastify.get('/tree', async () => {
-    const libraryService = new LibraryService(fastify.prisma)
+  typedFastify.get('/tree', async (request) => {
+    const libraryService = new LibraryService(request.server.prisma)
     return await libraryService.getTree()
   })
 
@@ -17,7 +17,7 @@ export default async function libraryRoutes(fastify: FastifyInstance) {
   typedFastify.get('/verse/:id', {
     schema: { params: VerseParamsSchema }
   }, async (request, reply) => {
-    const libraryService = new LibraryService(fastify.prisma)
+    const libraryService = new LibraryService(request.server.prisma)
     const { id } = request.params
     const verse = await libraryService.getVerse(id)
     if (!verse) return reply.status(404).send({ error: 'Verse not found' })

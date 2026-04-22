@@ -19,12 +19,30 @@ export const SHASTRA_SHORT_CODES: Record<string, string> = {
 /**
  * Formats a raw database reference or coordinates into a canonical string.
  */
-export function formatReference(shastra: string, chapter: number | string, verse: number | string): string {
+export function formatReference(shastra: string, chapter: number | string, verse: number | string, section?: number | string): string {
   const code = SHASTRA_SHORT_CODES[shastra.toLowerCase()] || shastra.toUpperCase()
+  
   if (shastra.toLowerCase() === 'ks') {
+    if (section) return `${code} ${section}.${chapter}.${verse}`
     return `${code} ${chapter}.${verse}`
   }
+  
+  if (shastra.toLowerCase() === 'bg') {
+    return `${code} ${chapter}.${verse}`
+  }
+
   return `${code} ${chapter}.${verse}`
+}
+
+/**
+ * Generates a consistent slug for a node.
+ */
+export function generateSlug(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '')
 }
 
 /**
