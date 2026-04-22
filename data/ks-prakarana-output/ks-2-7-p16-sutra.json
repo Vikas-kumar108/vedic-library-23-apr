@@ -1,0 +1,113 @@
+{
+  "global_prakarana_id": "p16",
+  "script_type": "devanagari",
+  "adhikarana_number": 2,
+  "adhikarana_name_sanskrit": "सम्प्रयोगिके अधिकरणम्",
+  "adhikarana_name_iast": "samprayogike adhikaraṇam",
+  "adhikarana_name_transliteration": "samprayogike-adhikaranam",
+  "adhikarana_name_english": "",
+  "adhyaya_number": 7,
+  "adhyaya_name_sanskrit": "प्रहणनप्रयोगास्तद्युक्ताश्च सीत्कृतक्रमाः",
+  "adhyaya_name_iast": "prahaṇana-prayogās tadyuktāś ca sītkṛta-kramāḥ",
+  "adhyaya_name_transliteration": "prahanana-prayogas tadyuktas ca sitkrta-kramah",
+  "adhyaya_name_english": "",
+  "prakarana_number_within_adhyaya": 2,
+  "prakarana_number_within_adhikarana": 11,
+  "prakarana_name_sanskrit": "सीत्कृतोपक्रमप्रकरणम्",
+  "prakarana_name_iast": "sītkṛtopakrama-prakaraṇam",
+  "prakarana_name_transliteration": "sitkrta-upakrama-prakaranam",
+  "prakarana_name_english": "",
+  "sutra_range": "22-35",
+  "sutra_count": 14,
+  "has_colophon": true,
+  "is_last_in_adhikarana": false,
+  "topic_tags": [],
+  "purushartha_context": [
+    "kama"
+  ],
+  "related_prakaranas": [
+    "p15",
+    "p17"
+  ],
+  "base_text_source": {
+    "category": "smriti",
+    "shastra_type": "kama-shastra",
+    "text_name": "kama-sutra",
+    "author": "vātsyāyana"
+  },
+  "structural_role": "concluding",
+  "ocr_corrections_notes": [
+    "[ensure ‘सीत्कृत’ (sītkṛta) retains long ī and ṛ; OCR may produce ‘सितकृत’ or ‘सीतकृत’]",
+    "[ensure correct sandhi: सीत्कृत + उपक्रम → सीत्कृतोपक्रम (not split)]",
+    "[ensure ‘उपक्रम’ (upakrama) is preserved; OCR may produce ‘उपकरम’ or confuse with ‘उपकर्म’]"
+  ],
+  "sutras": [
+    {
+      "number": "2.7.22",
+      "text": "२.७.२२ भवतश्चात्र श्लोकौ व्पारुष्यं रभसत्वं च पौरुषं तेज उच्यते. अःशक्तिरार्तिर्व्यावृत्तिरःबलत्वं च योषितः ॥ २.७.२२ ॥"
+    },
+    {
+      "number": "2.7.23",
+      "text": "व्रागात्प्रयोगसात्म्याच्च व्यत्ययोऽपि क्व चिद्भवेत्. न चिरं तस्य चैवान्ते प्रकृतेरेव योजनम् ॥ २.७.२३ ॥"
+    },
+    {
+      "number": "2.7.24",
+      "text": "कीलां उसरि कर्तरीं शिरसि विद्धां कपोलयोः संदंशिकां स्तनयोः पार्श्वयोश्चेति पूर्वैः सह प्रहणनं अष्टविधं इति दाक्षिणात्यानाम्. तद्युवतीनां उसरि कीलानि दृश्यन्ते. देशसात्म्यं एतत् ॥ २.७.२४ ॥"
+    },
+    {
+      "number": "2.7.25",
+      "text": "कष्टं अनःआर्यवृत्तं अनःआदृतं इति वात्स्यायनः ॥ २.७.२५ ॥"
+    },
+    {
+      "number": "2.7.26",
+      "text": "तथान्यदपि देशसात्म्यात्प्रयुक्तं अन्यत्र न प्रयुञ्जीत ॥ २.७.२६ ॥"
+    },
+    {
+      "number": "2.7.27",
+      "text": "आत्ययिकं तु तत्रापि परिहरेत् ॥ २.७.२७ ॥"
+    },
+    {
+      "number": "2.7.28",
+      "text": "रतियोगे हि कीलया गणिकां चित्रसेनां चोलराजो जघान ॥ २.७.२८ ॥"
+    },
+    {
+      "number": "2.7.29",
+      "text": "कर्तर्या कुण्टलः शातकर्णिः शातवाहनो महादेवीं मलयवतीम् ॥ २.७.२९ ॥"
+    },
+    {
+      "number": "2.7.30",
+      "text": "नरदेवः कुपाणिर्((२४)) विद्धया नाटीं काणां चकार((२५)) ॥ २.७.३० ॥"
+    },
+    {
+      "number": "2.7.31",
+      "text": "भवन्ति चात्र श्लोकाः ॥ २.७.३१ ॥"
+    },
+    {
+      "number": "2.7.31",
+      "text": "व्नास्त्यत्र का चिन्न च शास्त्रपरिग्रहः. प्रवृत्ते रतिसंयोगे राग एवात्र कारणम् ॥ २.७.३१ ॥"
+    },
+    {
+      "number": "2.7.32",
+      "text": "व्स्वप्नेषु न दृश्यन्ते ते भावास्ते च विभ्रमाः. सुरतव्यवहारेषु ये स्युस्तत्क्षणकल्पिताः ॥ २.७.३२ ॥"
+    },
+    {
+      "number": "2.7.33",
+      "text": "व्यथा हि पञ्चमीं धारां आस्थाय तुरगः पथि. स्थानुं श्वभ्रं दरीं वापि वेगान्धो न समीक्षते ॥ २.७.३३ ॥"
+    },
+    {
+      "number": "2.7.33",
+      "text": "व्२ एवं सुःरतसंमर्दे रागान्धौ कामिनावपि. चण्डवेगौ प्रवर्तेते समीक्षेत न चात्ययम् ॥ २.७.३३ ॥"
+    },
+    {
+      "number": "2.7.34",
+      "text": "तस्मान्मृदुत्वं चण्डत्वं युवत्या बलं एव च. आत्मनश्च बलं ज्ञात्वा तथा युञ्जीत शास्त्रवित् ॥ २.७.३४ ॥"
+    },
+    {
+      "number": "2.7.35",
+      "text": "न सरवदा न सर्वासु प्रयोगाः सांप्रयोगिकाः. स्थाने देशे च काले च योग एषां विधीयते ॥ २.७.३५ ॥"
+    }
+  ],
+  "colophon": {
+    "text": "चिति श्रीवात्यायनीये कामसूत्रे सांप्रयोगिके द्वितीयेऽधिकरणे प्रहणनप्रयोगास्तद्युक्ताश्च सीत्कृतक्रमाः सप्तमोऽध्यायः. आदितो द्वादशः ॥ २.७ ॥"
+  }
+}

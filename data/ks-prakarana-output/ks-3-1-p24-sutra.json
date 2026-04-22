@@ -1,0 +1,74 @@
+{
+  "global_prakarana_id": "p24",
+  "script_type": "devanagari",
+  "adhikarana_number": 3,
+  "adhikarana_name_sanskrit": "कन्यासम्प्रयुक्तके अधिकरणम्",
+  "adhikarana_name_iast": "kanyāsamprayuktake adhikaraṇam",
+  "adhikarana_name_transliteration": "kanya-samprayuktake-adhikaranam",
+  "adhikarana_name_english": "",
+  "adhyaya_number": 1,
+  "adhyaya_name_sanskrit": "वरणसंविधानम् सम्बन्धनिश्चयः च",
+  "adhyaya_name_iast": "varaṇa-saṁvidhānam sambandha-niścayaḥ ca",
+  "adhyaya_name_transliteration": "varana-samvidhanam sambandha-niscayah ca",
+  "adhyaya_name_english": "",
+  "prakarana_number_within_adhyaya": 2,
+  "prakarana_number_within_adhikarana": 2,
+  "prakarana_name_sanskrit": "सम्बन्धनिश्चयप्रकरणम्",
+  "prakarana_name_iast": "sambandha-niścaya-prakaraṇam",
+  "prakarana_name_transliteration": "sambandha-niscaya-prakaranam",
+  "prakarana_name_english": "",
+  "sutra_range": "20-24",
+  "sutra_count": 5,
+  "has_colophon": true,
+  "is_last_in_adhikarana": false,
+  "topic_tags": [],
+  "purushartha_context": [
+    "dharma",
+    "kama"
+  ],
+  "related_prakaranas": [
+    "p23",
+    "p25"
+  ],
+  "base_text_source": {
+    "category": "smriti",
+    "shastra_type": "kama-shastra",
+    "text_name": "kama-sutra",
+    "author": "vātsyāyana"
+  },
+  "structural_role": "concluding",
+  "ocr_corrections_notes": [
+    "[ensure ‘सम्बन्ध’ (sambandha) retains mbh cluster; OCR may produce ‘संबंध’ or ‘सम्बंध’]",
+    "[ensure ‘निश्चय’ (niścaya) retains ś; OCR may produce ‘निचय’]",
+    "[ensure compound ‘सम्बन्धनिश्चय’ is not split incorrectly]"
+  ],
+  "sutras": [
+    {
+      "number": "3.1.20",
+      "text": "सेच्तिओन्(प्रकरण)२४ भवन्ति चात्र श्लोकाः ॥ ३.१.२० ॥"
+    },
+    {
+      "number": "3.1.20",
+      "text": "व्समस्याद्याः सहक्रीडा विवाहाः सङ्गतानि च. समानैरेव कर्याणि नोत्तमैर्नापि वाधमैर्. ॥ ३.१.२० ॥"
+    },
+    {
+      "number": "3.1.21",
+      "text": "व्कन्यां गृहीत्वा वर्तेत प्रेष्यवद्यत्र नायकः. तं विद्यादुच्चसंबन्धं परित्यक्तं मनस्विभिः. ॥ ३.१.२१ ॥"
+    },
+    {
+      "number": "3.1.22",
+      "text": "व्स्वामिवद्विचरेद्यत्र बान्धवैः स्वैः पुरसःकृतः. अःश्लाघ्यो हीनसंबन्धः सोऽपि सद्भिर्विनिन्द्यते. ॥ ३.१.२२ ॥"
+    },
+    {
+      "number": "3.1.23",
+      "text": "व्परस्परसुखास्वादा क्रीडा यत्र प्रयुज्यते. विशेषयन्ती चान्योन्यं संबन्धः स विधीयते. ॥ ३.१.२३ ॥"
+    },
+    {
+      "number": "3.1.24",
+      "text": "व्कृत्वापि चोच्चसंबन्धं पश्चाज्ज्ञातिषु संनमेत्. न त्वेव हीनसंबन्धं कुर्यात्सद्भिर्विनिन्दितम्((७२)). ॥ ३.१.२४ ॥"
+    }
+  ],
+  "colophon": {
+    "text": "इति श्रीवात्स्यायनीये कामसूत्रे सांप्रयोगिके तृतीयेऽधिकरणे वरणविधानं संबन्धनिश्चयश्च प्रथमोऽध्यायः ॥ ३.१ ॥"
+  }
+}

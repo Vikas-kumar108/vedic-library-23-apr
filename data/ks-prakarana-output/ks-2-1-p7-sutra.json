@@ -1,0 +1,78 @@
+{
+  "global_prakarana_id": "p7",
+  "script_type": "devanagari",
+  "adhikarana_number": 2,
+  "adhikarana_name_sanskrit": "सम्प्रयोगिके अधिकरणम्",
+  "adhikarana_name_iast": "samprayogike adhikaraṇam",
+  "adhikarana_name_transliteration": "samprayogike-adhikaranam",
+  "adhikarana_name_english": "",
+  "adhyaya_number": 1,
+  "adhyaya_name_sanskrit": "प्रमाणकालभावेभ्यो रतावस्थापनम्",
+  "adhyaya_name_iast": "pramāṇa-kāla-bhāvebhyo ratāvasthāpanam",
+  "adhyaya_name_transliteration": "pramana-kala-bhavebhyo-rata-avasthapanam",
+  "adhyaya_name_english": "",
+  "prakarana_number_within_adhyaya": 2,
+  "prakarana_number_within_adhikarana": 2,
+  "prakarana_name_sanskrit": "प्रीतिविशेषप्रकरणम्",
+  "prakarana_name_iast": "prīti-viśeṣa-prakaraṇam",
+  "prakarana_name_transliteration": "priti-visesa-prakaranam",
+  "prakarana_name_english": "",
+  "sutra_range": "39-45",
+  "sutra_count": 7,
+  "has_colophon": true,
+  "is_last_in_adhikarana": false,
+  "topic_tags": [],
+  "purushartha_context": [
+    "kama"
+  ],
+  "related_prakaranas": [
+    "p6",
+    "p8",
+    "p9",
+    "p10"
+  ],
+  "base_text_source": {
+    "category": "smriti",
+    "shastra_type": "kama-shastra",
+    "text_name": "kama-sutra",
+    "author": "vātsyāyana"
+  },
+  "structural_role": "concluding",
+  "ocr_corrections_notes": [
+    "[ensure ‘प्रीति’ (prīti) retains long ī; OCR may reduce to ‘प्रिति’]",
+    "[ensure ‘विशेष’ (viśeṣa) retains ś and ṣ; OCR may produce ‘विसेस’ or ‘विशेस’]"
+  ],
+  "sutras": [
+    {
+      "number": "2.1.39",
+      "text": "अभ्यासादभिमानाच्च तथा संप्रत्ययादपि। विषयेभ्यश्च तन्त्रज्ञाः प्रीतिं आहुश्चतुर्विधाम् ॥ २.१.३९ ॥"
+    },
+    {
+      "number": "2.1.40",
+      "text": "शब्दादिभ्यो बहिरःभूता या कर्माभ्यासलक्षणा। प्रीतिः साभ्यासिकी ज्ञेया मृगयादिषु कर्मसु ॥ २.१.४० ॥"
+    },
+    {
+      "number": "2.1.41",
+      "text": "अनभ्यस्तेष्वपि पुरा कर्मस्वःविषयात्मिका। संकल्पाज्जायते प्रीतिर्या सा स्यादाभिमानिकी ॥ २.१.४१ ॥"
+    },
+    {
+      "number": "2.1.42",
+      "text": "प्रकृतेर्या तृतीयस्याः स्त्रियाश्चैवोपरिष्टके। तेषु तेषु च विज्ञेया चुमबनादिषु कर्मसु ॥ २.१.४२ ॥"
+    },
+    {
+      "number": "2.1.43",
+      "text": "नान्योऽयमिति इति यत्र स्यादन्यस्मिन्प्रीतिकारणे। तन्त्रज्ञैः कथ्यते सापि प्रीतिः संप्रत्ययात्मिका ॥ २.१.४३ ॥"
+    },
+    {
+      "number": "2.1.44",
+      "text": "प्रत्यक्षा लोकतः सिद्धा या प्रीतिर्विषयात्मिका। प्रधानफलवत्त्वात्सा तदर्थाश्चेतरा अपि ॥ २.१.४४ ॥"
+    },
+    {
+      "number": "2.1.45",
+      "text": "प्रीतीरेताः परामृश्य शास्त्रतः शास्त्रलक्षणाः। यो यथा वर्तते भावस्तं तथैव प्रयोजयेत् ॥ २.१.४५ ॥"
+    }
+  ],
+  "colophon": {
+    "text": "इति श्रीवात्यायनीये कामसूत्रे सांप्रयोगिके द्वितीयेऽधिकरणे प्रमाणकालभावेभ्यो रतावस्थापनं प्रीतिविशेषा इति प्रथमोऽध्यायः। आदितः षष्ठः ॥ २.१ ॥"
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "global_prakarana_id": "p44",
+  "script_type": "devanagari",
+  "adhikarana_number": 5,
+  "adhikarana_name_sanskrit": "पारदारिके अधिकरणम्",
+  "adhikarana_name_iast": "pāradārike adhikaraṇam",
+  "adhikarana_name_transliteration": "paradarike-adhikaranam",
+  "adhikarana_name_english": "",
+  "adhyaya_number": 2,
+  "adhyaya_name_sanskrit": "परिचयकारणान्यभियोगाश्च",
+  "adhyaya_name_iast": "paricaya-kāraṇāny abhiyogāś ca",
+  "adhyaya_name_transliteration": "paricaya-karanany abhiyogas ca",
+  "adhyaya_name_english": "",
+  "prakarana_number_within_adhyaya": 2,
+  "prakarana_number_within_adhikarana": 6,
+  "prakarana_name_sanskrit": "अभियोगप्रकरणम्",
+  "prakarana_name_iast": "abhiyoga-prakaraṇam",
+  "prakarana_name_transliteration": "abhiyoga-prakaranam",
+  "prakarana_name_english": "",
+  "sutra_range": "19-28",
+  "sutra_count": 10,
+  "has_colophon": true,
+  "is_last_in_adhikarana": false,
+  "topic_tags": [],
+  "purushartha_context": [
+    "kama"
+  ],
+  "related_prakaranas": [
+    "p43",
+    "p45"
+  ],
+  "base_text_source": {
+    "category": "smriti",
+    "shastra_type": "kama-shastra",
+    "text_name": "kama-sutra",
+    "author": "vātsyāyana"
+  },
+  "structural_role": "concluding",
+  "ocr_corrections_notes": [
+    "[ensure ‘अभियोग’ (abhiyoga) is preserved; OCR may produce ‘अभ्योग’ or ‘अभियोग’ inconsistently]",
+    "[ensure ‘भि’ (bhi) is not collapsed into ‘भ्य’ (bhya)]",
+    "[ensure compound ‘अभियोगप्रकरणम्’ remains intact without splitting]"
+  ],
+  "sutras": [
+    {
+      "number": "5.2.19",
+      "text": "सेच्तिओन्(प्रकरण)४४ कृतपरिचयां दर्शितेङिताकारां कन्यां इवोपायतोऽभियुञ्जीतेति. प्रायेण तत्र सूक्ष्मा अभियोगाः. कन्यानां अःसंप्रयुक्तत्वात्. इतरासु तानेव स्फुटं उपदध्यात्. संप्रयुक्तत्वात् ॥ ५.२.१९ ॥"
+    },
+    {
+      "number": "5.2.20",
+      "text": "संदर्शिताकारायां निर्भिन्नसद्भावायां समुपभोगव्यतिकरे तदीयान्युपयुञ्जीत ॥ ५.२.२० ॥"
+    },
+    {
+      "number": "5.2.21",
+      "text": "तत्र महार्हगन्धं उत्तरीयं कुसुमं स्यादङ्गुलीयकं च. तद्धस्ताद्गृहीतताम्बूलया गोष्ठीगमनोद्यतस्य केशहस्तपुष्पयाचनम् ॥ ५.२.२१ ॥"
+    },
+    {
+      "number": "5.2.22",
+      "text": "तत्र महार्हगन्धं स्पृहणीयं स्वनखदशनपदचिह्नितं साकारं दद्यात् ॥ ५.२.२२ ॥"
+    },
+    {
+      "number": "5.2.23",
+      "text": "अधिकैरधिकैश्चाभियोगैः साध्वसविच्छेदनम् ॥ ५.२.२३ ॥"
+    },
+    {
+      "number": "5.2.24",
+      "text": "क्रमेण च विविक्तदेशे गमनं आलिङ्गनं चुम्बनं ताम्बूलस्य ग्राहणं दानान्ते द्रव्याणां परिवर्तनं गुह्यदेशाभिमर्शनं चेत्यभियोगाः ॥ ५.२.२४ ॥"
+    },
+    {
+      "number": "5.2.25",
+      "text": "यत्र चैकाभियुक्ता न तत्रापरां अभियुञ्जीत ॥ ५.२.२५ ॥"
+    },
+    {
+      "number": "5.2.26",
+      "text": "तत्र या वृद्धानुभूतविषया प्रियोपग्रहैश्च तां उपगृह्णीयात् ॥ ५.२.२६ ॥"
+    },
+    {
+      "number": "5.2.27",
+      "text": "श्लोकावत्र भवतः ॥ ५.२.२७ ॥"
+    },
+    {
+      "number": "5.2.27",
+      "text": "वन्यत्र दृष्टसंचारस्तद्भर्ता यत्र नायकः. न तत्र योषितं कां चित्सुप्रापां अपि लङ्घयेत्. ॥ ५.२.२७ ॥"
+    },
+    {
+      "number": "5.2.28",
+      "text": "व्शङ्कितां रक्षितां भीतां सःश्वश्रूकां च योषितम्. न तर्कयेत मेधावी जानन्प्रत्ययं आत्मनः((१३९)). ॥ ५.२.२८ ॥"
+    }
+  ],
+  "colophon": {
+    "text": "चिति श्रीवात्स्यायनीये कामसूत्रे पारदारिके पञ्चमेऽधिकरणे परिचयकारणान्यभियोगाः द्वितीयोऽध्यायः ॥ ५.२ ॥"
+  }
+}

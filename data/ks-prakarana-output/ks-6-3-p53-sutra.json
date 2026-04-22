@@ -1,0 +1,150 @@
+{
+  "global_prakarana_id": "p53",
+  "script_type": "devanagari",
+  "adhikarana_number": 6,
+  "adhikarana_name_sanskrit": "वैशिकिके अधिकरणम्",
+  "adhikarana_name_iast": "vaiśikike adhikaraṇam",
+  "adhikarana_name_transliteration": "vaisikike-adhikaranam",
+  "adhikarana_name_english": "",
+  "adhyaya_number": 3,
+  "adhyaya_name_sanskrit": "अर्थागमोपाया विरक्तलिङ्गानि विरक्तप्रतिपत्तिर्निष्कासनक्रमाः",
+  "adhyaya_name_iast": "arthāgamopāyā virakta-liṅgāni virakta-pratipattir niṣkāsana-kramāḥ",
+  "adhyaya_name_transliteration": "arthagamopaya virakta-lingani virakta-pratipattir niskasana-kramah",
+  "adhyaya_name_english": "",
+  "prakarana_number_within_adhyaya": 1,
+  "prakarana_number_within_adhikarana": 4,
+  "prakarana_name_sanskrit": "अर्थागमोपायप्रकरणम्",
+  "prakarana_name_iast": "arthāgamopāya-prakaraṇam",
+  "prakarana_name_transliteration": "arthagamopaya-prakaranam",
+  "prakarana_name_english": "",
+  "sutra_range": "1-26",
+  "sutra_count": 26,
+  "has_colophon": false,
+  "is_last_in_adhikarana": false,
+  "topic_tags": [],
+  "purushartha_context": [
+    "artha",
+    "kama"
+  ],
+  "related_prakaranas": [
+    "p52",
+    "p54"
+  ],
+  "base_text_source": {
+    "category": "smriti",
+    "shastra_type": "kama-shastra",
+    "text_name": "kama-sutra",
+    "author": "vātsyāyana"
+  },
+  "structural_role": "opening",
+  "ocr_corrections_notes": [
+    "[ensure ‘अर्थ’ (artha) retains rth cluster; OCR may produce ‘अरत’]",
+    "[ensure ‘आगम’ (āgama) retains long ā; OCR may produce ‘अगम’]",
+    "[ensure ‘उपाय’ (upāya) retains long ā; OCR may produce ‘उपय’]",
+    "[ensure ‘लिङ्ग’ (liṅga) retains ṅ; OCR may produce ‘लिंग’]",
+    "[ensure ‘निष्कासन’ (niṣkāsana) retains ṣ and long ā; OCR may produce ‘निस्कासन’]",
+    "[ensure compound ‘अर्थागमोपाय’ remains intact]"
+  ],
+  "sutras": [
+    {
+      "number": "6.3.1",
+      "text": "सक्ताद्वित्तादानं स्वाभाविकं उपायतश्च ॥ ६.३.१ ॥"
+    },
+    {
+      "number": "6.3.2",
+      "text": "तत्र स्वाभाविकं संकल्पात्समधिकं वा लभमाना नोपायान्प्रयुञ्जीतेत्याचार्याः ॥ ६.३.२ ॥"
+    },
+    {
+      "number": "6.3.3",
+      "text": "विदितं अप्युपायैः परिष्कृतं द्विगुणं दास्यतीति वात्स्यायनः ॥ ६.३.३ ॥"
+    },
+    {
+      "number": "6.3.4",
+      "text": "अलंकारभक्ष्यभोज्यपेयमाल्यवस्त्रगन्धद्रव्यादीनां व्यवहारिषु कालिकं उद्धारार्त्थं अर्थप्रतिनयनेन ॥ ६.३.४ ॥"
+    },
+    {
+      "number": "6.3.5",
+      "text": "तत्समक्षं तद्वित्तप्रशंसा ॥ ६.३.५ ॥"
+    },
+    {
+      "number": "6.3.6",
+      "text": "व्रतवृक्षारामदेवकुलतडागोद्यानोत्सवप्रीतिदायव्यपदेशः ॥ ६.३.६ ॥"
+    },
+    {
+      "number": "6.3.7",
+      "text": "तदभिगमननिमित्तो रक्षिभिश्चौरैर्वालङ्कारपरिमोषः ॥ ६.३.७ ॥"
+    },
+    {
+      "number": "6.3.8",
+      "text": "दाहात्कुड्यच्छेदात्प्रमादाद्भवने चार्थनाशः ॥ ६.३.८ ॥"
+    },
+    {
+      "number": "6.3.9",
+      "text": "तथा याचितालङ्काराणां नायकालङ्काराणां च तदभिगमनार्थस्य व्ययस्य प्रणिधिभिर्निवेदनम् ॥ ६.३.९ ॥"
+    },
+    {
+      "number": "6.3.10",
+      "text": "तदर्थं ऋणग्रहणम्. जनन्या सह तदुद्भवस्य व्ययस्य विवादः..६.३.११ सुहृत्कार्येष्वनःअभिगमनं अनःअभिहारहेतोः ॥ ६.३.१० ॥"
+    },
+    {
+      "number": "6.3.12",
+      "text": "तैश्च पूर्वं आहृता गुरवोऽभिहाराः पूर्वं उपनीताः पूर्वं श्राविताः स्युः ॥ ६.३.१२ ॥"
+    },
+    {
+      "number": "6.3.13",
+      "text": "उचितानां क्रियाणां विच्छित्तिः ॥ ६.३.१३ ॥"
+    },
+    {
+      "number": "6.3.14",
+      "text": "नायकार्थं च शिल्पिषु कार्यम् ॥ ६.३.१४ ॥"
+    },
+    {
+      "number": "6.3.15",
+      "text": "वैद्यमहामात्रयोरुपकारक्रिया कार्यहेतोः ॥ ६.३.१५ ॥"
+    },
+    {
+      "number": "6.3.16",
+      "text": "मित्राणां चोपकारिणां व्यसनेष्वभ्युपपत्तिः ॥ ६.३.१६ ॥"
+    },
+    {
+      "number": "6.3.17",
+      "text": "गृहकर्म सख्याः पुत्रस्योत्सञ्जनं दोहदो व्याधिर्मित्रस्य दुःखापनयनं इति ॥ ६.३.१७ ॥"
+    },
+    {
+      "number": "6.3.18",
+      "text": "अलंकारैकदेशविक्रयो नायकस्यार्थे ॥ ६.३.१८ ॥"
+    },
+    {
+      "number": "6.3.19",
+      "text": "तया शीलितस्य चालङ्कारस्य भाण्डोपस्करस्य वा वणिजो विक्रयार्थं दर्शनम् ॥ ६.३.१९ ॥"
+    },
+    {
+      "number": "6.3.20",
+      "text": "प्रतिःगणिकानां च सदृशस्य भाण्डस्य व्यतिकरे प्रतिविशिष्टस्य ग्रहणम् ॥ ६.३.२० ॥"
+    },
+    {
+      "number": "6.3.21",
+      "text": "पूर्वोपकाराणां अःविस्मरणं अनुकीर्तनं च ॥ ६.३.२१ ॥"
+    },
+    {
+      "number": "6.3.22",
+      "text": "प्रणिधिभिः प्रतिःगणिकानां लाभातिशयं श्रावयेत् ॥ ६.३.२२ ॥"
+    },
+    {
+      "number": "6.3.23",
+      "text": "तासु नायकसमक्षं आत्मनोऽभ्यधिकं लाभं भूतं अःभूतं वा व्रीडिता नाम वर्णयेत् ॥ ६.३.२३ ॥"
+    },
+    {
+      "number": "6.3.24",
+      "text": "पूर्वयोगिनां च लाभातिशयेन पुनः सन्धाने यतमानानां आविषःकृतः प्रतिषेधः ॥ ६.३.२४ ॥"
+    },
+    {
+      "number": "6.3.25",
+      "text": "तत्स्पर्धिनां त्यागयोगिनां निदर्शनम् ॥ ६.३.२५ ॥"
+    },
+    {
+      "number": "6.3.26",
+      "text": "न पुनरेष्यतीति बालयाचितकम् ॥ ६.३.२६ ॥"
+    }
+  ]
+}

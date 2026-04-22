@@ -1,0 +1,126 @@
+{
+  "global_prakarana_id": "p11",
+  "script_type": "devanagari",
+  "adhikarana_number": 2,
+  "adhikarana_name_sanskrit": "सम्प्रयोगिके अधिकरणम्",
+  "adhikarana_name_iast": "samprayogike adhikaraṇam",
+  "adhikarana_name_transliteration": "samprayogike-adhikaranam",
+  "adhikarana_name_english": "",
+  "adhyaya_number": 5,
+  "adhyaya_name_sanskrit": "दशनच्छेद्यविधयः",
+  "adhyaya_name_iast": "daśana-cchedya-vidhayaḥ",
+  "adhyaya_name_transliteration": "dasana-cchedya-vidhayah",
+  "adhyaya_name_english": "",
+  "prakarana_number_within_adhyaya": 1,
+  "prakarana_number_within_adhikarana": 6,
+  "prakarana_name_sanskrit": "दशनच्छेद्यविधिप्रकरणम्",
+  "prakarana_name_iast": "daśana-cchedya-vidhi-prakaraṇam",
+  "prakarana_name_transliteration": "dasana-cchedya-vidhi-prakaranam",
+  "prakarana_name_english": "",
+  "sutra_range": "1-19",
+  "sutra_count": 19,
+  "has_colophon": false,
+  "is_last_in_adhikarana": false,
+  "topic_tags": [],
+  "purushartha_context": [
+    "kama"
+  ],
+  "related_prakaranas": [
+    "p10",
+    "p12"
+  ],
+  "base_text_source": {
+    "category": "smriti",
+    "shastra_type": "kama-shastra",
+    "text_name": "kama-sutra",
+    "author": "vātsyāyana"
+  },
+  "structural_role": "opening",
+  "ocr_corrections_notes": [
+    "[ensure ‘च्छे’ cluster (cch) is preserved in ‘च्छेद्य’; OCR may reduce to ‘छेद्य’ or ‘चेद्य’]",
+    "[ensure ‘दशन’ (daśana) retains ś; OCR may produce ‘दसन’]",
+    "[ensure plural ‘विधयः’ (vidhayaḥ) retains visarga; OCR may reduce to ‘विधय’]"
+  ],
+  "sutras": [
+    {
+      "number": "2.5.1",
+      "text": "उत्तरौष्ठं अन्तरःमुखं नयनं इति मुक्त्वा चुम्बनवद्दशनरदनस्थानानि ॥ २.५.१ ॥"
+    },
+    {
+      "number": "2.5.2",
+      "text": "समाः स्निग्धच्छाया रागग्राहिणो युक्तप्रमाणा निशःछिद्रास्तीक्ष्णाग्रा इति दशनगुणाः ॥ २.५.२ ॥"
+    },
+    {
+      "number": "2.5.3",
+      "text": "कुण्ठा राज्युद्गताः परुषाः विषमाः श्लक्ष्णाः पृथवो विरला इति च दोषाः ॥ २.५.३ ॥"
+    },
+    {
+      "number": "2.5.4",
+      "text": "[१] गूढकं [२] उच्छूनकं((१४)) [३] बिन्दुर्[४] बिन्दुमाला [५] प्रवालमणिर्[६] मणिमाला [७] खण्डाभ्रकं [८] वराहचर्वितकं इति दशनच्छेदन्विकल्पाः ॥ २.५.४ ॥"
+    },
+    {
+      "number": "2.5.5",
+      "text": "नातिलोहितेन रागमात्रेण विभावनीयं [१] गूढकम् ॥ २.५.५ ॥"
+    },
+    {
+      "number": "2.5.6",
+      "text": "तदेव पीडनाद्[२] उच्छूनकम् ॥ २.५.६ ॥"
+    },
+    {
+      "number": "2.5.7",
+      "text": "तदुभयं बिन्दुरधरमध्य इति ॥ २.५.७ ॥"
+    },
+    {
+      "number": "2.5.8",
+      "text": "उच्छूनकं प्रवालमणिश्च कपोले ॥ २.५.८ ॥"
+    },
+    {
+      "number": "2.5.9",
+      "text": "कर्णपूरचुम्बनं नखदशनच्छेद्यं इति सव्यकपोलमण्डनानि ॥ २.५.९ ॥"
+    },
+    {
+      "number": "2.5.10",
+      "text": "दन्तौष्ठसंयोगाभ्यासनिष्पादनत्वात्[५] प्रवालमणिसिद्धिः ॥ २.५.१० ॥"
+    },
+    {
+      "number": "2.5.11",
+      "text": "सर्वस्येयं [६] मणिमालायाश्च ॥ २.५.११ ॥"
+    },
+    {
+      "number": "2.5.12",
+      "text": "अल्पदेशायाश्च त्वचो दशनद्वयसंदंशजा [३] बिन्दुसिद्धिः ॥ २.५.१२ ॥"
+    },
+    {
+      "number": "2.5.13",
+      "text": "सर्वैर्[४] बिन्दुमालायाश्च ॥ २.५.१३ ॥"
+    },
+    {
+      "number": "2.5.14",
+      "text": "तस्मान्मालाद्वयं अपि गलकक्षवंक्षणप्रदेशेषु ॥ २.५.१४ ॥"
+    },
+    {
+      "number": "2.5.15",
+      "text": "ललाटे चोर्वोर्बिन्दुमाला ॥ २.५.१५ ॥"
+    },
+    {
+      "number": "2.5.16",
+      "text": "मण्दलं इव विषमकूटकयुक्तं [७] खण्डाभ्रकं स्तनपृष्ठ एव ॥ २.५.१६ ॥"
+    },
+    {
+      "number": "2.5.17",
+      "text": "संहताः प्रदीर्घा बह्व्यो दशनपदराजयस्ताम्रान्तराला [८] वराहचर्वितकम्. स्तनपृष्ठ एव ॥ २.५.१७ ॥"
+    },
+    {
+      "number": "2.5.18",
+      "text": "तदुभयं अपि चण्डवेगयोः ॥ २.५.१८ ॥"
+    },
+    {
+      "number": "2.5.18",
+      "text": "चिति दशनच्छेद्यानि ॥ २.५.१८ ॥"
+    },
+    {
+      "number": "2.5.19",
+      "text": "विशेषके कर्णपूरे पुष्पपीडे ताम्बूलपलाशे तमालपत्त्रे चेति प्रयोज्यागामिषु नखदशन च्छेद्यादीन्यभियोगिकानि ॥ २.५.१९ ॥"
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "global_prakarana_id": "p55",
+  "script_type": "devanagari",
+  "adhikarana_number": 6,
+  "adhikarana_name_sanskrit": "वैशिकिके अधिकरणम्",
+  "adhikarana_name_iast": "vaiśikike adhikaraṇam",
+  "adhikarana_name_transliteration": "vaisikike-adhikaranam",
+  "adhikarana_name_english": "",
+  "adhyaya_number": 3,
+  "adhyaya_name_sanskrit": "अर्थागमोपाया विरक्तलिङ्गानि विरक्तप्रतिपत्तिर्निष्कासनक्रमाः",
+  "adhyaya_name_iast": "arthāgamopāyā virakta-liṅgāni virakta-pratipattir niṣkāsana-kramāḥ",
+  "adhyaya_name_transliteration": "arthagamopaya virakta-lingani virakta-pratipattir niskasana-kramah",
+  "adhyaya_name_english": "",
+  "prakarana_number_within_adhyaya": 3,
+  "prakarana_number_within_adhikarana": 6,
+  "prakarana_name_sanskrit": "निष्कासनक्रमप्रकरणम्",
+  "prakarana_name_iast": "niṣkāsana-krama-prakaraṇam",
+  "prakarana_name_transliteration": "niskasana-krama-prakaranam",
+  "prakarana_name_english": "",
+  "sutra_range": "39-46",
+  "sutra_count": 8,
+  "has_colophon": true,
+  "is_last_in_adhikarana": false,
+  "topic_tags": [],
+  "purushartha_context": [
+    "artha",
+    "kama"
+  ],
+  "related_prakaranas": [
+    "p54",
+    "p56"
+  ],
+  "base_text_source": {
+    "category": "smriti",
+    "shastra_type": "kama-shastra",
+    "text_name": "kama-sutra",
+    "author": "vātsyāyana"
+  },
+  "structural_role": "concluding",
+  "ocr_corrections_notes": [
+    "[ensure ‘निष्कासन’ (niṣkāsana) retains ṣ and long ā; OCR may produce ‘निस्कासन’]",
+    "[ensure ‘ष्क’ (ṣk) cluster is preserved; OCR may reduce to ‘स्क’]",
+    "[ensure ‘क्रम’ (krama) is preserved; OCR may produce ‘करम’]",
+    "[ensure compound ‘निष्कासनक्रम’ remains intact]"
+  ],
+  "sutras": [
+    {
+      "number": "6.3.39",
+      "text": "सेच्तिओन्(प्रकरण)५५सक्तं तु पूर्वोपकारिणं अप्यल्पफलं व्यालीकेनानुपालयेत् ॥ ६.३.३९ ॥"
+    },
+    {
+      "number": "6.3.40",
+      "text": "अःसारं तु निष्प्रतिपत्तिकं उपायतोऽपवाहयेत्. अन्यं अवष्टभ्य ॥ ६.३.४० ॥"
+    },
+    {
+      "number": "6.3.41",
+      "text": "तदनःइष्टसेवा. निन्दिताभ्यासः. ओष्ठनिर्भोगः. पादेन भूमेरभिघातः. अःविज्ञातविषयस्य संकथा. तद्विज्ञातेष्वःविस्मयः कुत्सा च. दर्पविघातः अधिकैः सह संवासः. अनःअपेक्षणम्. समानदोषाणां निन्दा. रहसि चावस्थानम् ॥ ६.३.४१ ॥"
+    },
+    {
+      "number": "6.3.42",
+      "text": "जुगुप्सा. परिष्वङ्गे भुजमय्या सूच्या व्यवधानम्. स्तब्धता गात्राणाम्. सक्थ्नोर्व्यत्यासः. निद्रापरत्वं च. श्रान्तं उपलभ्य चोदना. अःशक्तौ हासः. शक्तावनःअभिनन्दनम्. दिवापि. भावं उपलभ्य महाजनाभिगमनम् ॥ ६.३.४२ ॥"
+    },
+    {
+      "number": "6.3.43",
+      "text": "वाक्येषु च्छलग्रहणम्. अःनर्मणि हासः. नर्मणि चान्यं अपदिश्य हसति वदति तस्मिन्कटाक्षेण परिजनस्य प्रेक्षणं ताडनं च. आहत्य चास्य कथां अन्याः कथाः. तद्व्यालीकानां व्यसनानां चाःपरिहार्याणां अनुकीर्तनम्. मर्मणां च चेटिकयोपक्षेपणम् ॥ ६.३.४३ ॥"
+    },
+    {
+      "number": "6.3.44",
+      "text": "आगते चाःदर्शनम्. अःयाच्ययाचनम्. अन्ते स्वयं मोक्षश्चेति परिग्रहकस्येति दत्तकस्य ॥ ६.३.४४ ॥"
+    },
+    {
+      "number": "6.3.45",
+      "text": "भवतश्चात्र श्लोकौ ॥ ६.३.४५ ॥"
+    },
+    {
+      "number": "6.3.45",
+      "text": "व्परीक्ष्य गम्यैः संयोगः संयुक्तस्यानुरञ्जनम्. रक्तादर्थस्य चादानं अन्ते मोक्षश्च वैशिकम्. ॥ ६.३.४५ ॥"
+    },
+    {
+      "number": "6.3.4",
+      "text": "वेवं एतेन कल्पेन स्थिता वेश्या परिग्रहे. नातिसन्धीयते गम्यैः करोत्यर्थांश्च पुष्कलान्((१७१)). ॥ ६.३.४ ॥"
+    }
+  ],
+  "colophon": {
+    "text": "चिति श्री वात्स्यायनीये कामसूत्रे वैशिके षष्ठेऽधिकरणेऽर्थागमोपाया विरक्तलिङ्गानि विरक्तप्रतिपत्तिर्निष्कासनक्रमास्तृतीयोऽध्यायः ॥ ६.३ ॥"
+  }
+}

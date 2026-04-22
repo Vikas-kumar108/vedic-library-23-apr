@@ -1,0 +1,103 @@
+{
+  "global_prakarana_id": "p51",
+  "script_type": "devanagari",
+  "adhikarana_number": 6,
+  "adhikarana_name_sanskrit": "वैशिकिके अधिकरणम्",
+  "adhikarana_name_iast": "vaiśikike adhikaraṇam",
+  "adhikarana_name_transliteration": "vaisikike-adhikaranam",
+  "adhikarana_name_english": "",
+  "adhyaya_number": 1,
+  "adhyaya_name_sanskrit": "सहायगम्यागम्यचिन्ता गमनकारणं गम्योपावर्तनं",
+  "adhyaya_name_iast": "sahāya-gamyāgamya-cintā gamana-kāraṇaṁ gamyopāvartanaṁ",
+  "adhyaya_name_transliteration": "sahaya-gamyagamya-cinta gamana-karanam gamyopavartanam",
+  "adhyaya_name_english": "",
+  "prakarana_number_within_adhyaya": 2,
+  "prakarana_number_within_adhikarana": 2,
+  "prakarana_name_sanskrit": "गम्योपावर्तनप्रकरणम्",
+  "prakarana_name_iast": "gamyopāvartana-prakaraṇam",
+  "prakarana_name_transliteration": "gamyopavartana-prakaranam",
+  "prakarana_name_english": "",
+  "sutra_range": "22-33",
+  "sutra_count": 12,
+  "has_colophon": true,
+  "is_last_in_adhikarana": false,
+  "topic_tags": [],
+  "purushartha_context": [
+    "artha",
+    "kama"
+  ],
+  "related_prakaranas": [
+    "p50",
+    "p52"
+  ],
+  "base_text_source": {
+    "category": "smriti",
+    "shastra_type": "kama-shastra",
+    "text_name": "kama-sutra",
+    "author": "vātsyāyana"
+  },
+  "structural_role": "concluding",
+  "ocr_corrections_notes": [
+    "[ensure sandhi: ‘गम्य + उपावर्तन’ → ‘गम्योपावर्तन’; OCR may split as ‘गम्य उपावर्तन’]",
+    "[ensure ‘उपावर्तन’ (upāvartana) retains long ā; OCR may produce ‘उपवर्तन’]",
+    "[ensure ‘वर्तन’ (vartana) is not altered to ‘वर्त्तन’ inconsistently]",
+    "[ensure compound ‘गम्योपावर्तन’ remains intact]"
+  ],
+  "sutras": [
+    {
+      "number": "6.1.21",
+      "text": "सेच्तिओन्(प्रकरण)५१उपमन्त्रितापि गम्येन सहसा न प्रतिजानीयात्. पुरुषाणां सुःलभावमानित्वात् ॥ ६.१.२१ ॥"
+    },
+    {
+      "number": "6.1.22",
+      "text": "भावजिज्ञासार्थं परिचारकमुखान्संवाहकगायनवैहासिकान्गम्ये तद्भक्तान्वा प्रणिदध्यात् ॥ ६.१.२२ ॥"
+    },
+    {
+      "number": "6.1.23",
+      "text": "तदःभावे पीठमर्दादीन्. तेभ्यो नायकस्य शौचाःशौचं रागापरागौ सक्ताःसक्ततां दानाःदाने च विद्यात् ॥ ६.१.२३ ॥"
+    },
+    {
+      "number": "6.1.24",
+      "text": "संभावितेन च सह विटपुरोगां प्रीतिं योजयेत् ॥ ६.१.२४ ॥"
+    },
+    {
+      "number": "6.1.25",
+      "text": "लावककुक्कुटमेषयुद्धशुकशारिकाप्रलापनप्रेक्षणककलाव्यपदेशेन पीठमर्दो नायकं तस्या उदवसितं आनयेत् ॥ ६.१.२५ ॥"
+    },
+    {
+      "number": "6.1.26",
+      "text": "तां वा तस्य ॥ ६.१.२६ ॥"
+    },
+    {
+      "number": "6.1.27",
+      "text": "आगतस्य प्रीतिकौतुकजननं किं चिद्द्रव्यजातं स्वयं इदं अःसाधारणोपभोग्यं इति प्रीतिदायं दद्यात् ॥ ६.१.२७ ॥"
+    },
+    {
+      "number": "6.1.28",
+      "text": "यत्र च रमते तया गोष्ठ्यैनं उपचारैश्च रञ्जयेत् ॥ ६.१.२८ ॥"
+    },
+    {
+      "number": "6.1.29",
+      "text": "गते च सःपरिहासप्रलापां सोपायनां परिचारिकां अभीक्ष्णं प्रेषयेत्..६.१.३० सःपीठमर्दायाश्च कारणापदेशेन स्वयं गमनं ॥ ६.१.२९ ॥"
+    },
+    {
+      "number": "6.1.31",
+      "text": "५१चिति गम्योपावर्तनम्((१६४)). भवन्ति चात्र श्लोकाः ॥ ६.१.३१ ॥"
+    },
+    {
+      "number": "6.1.31",
+      "text": "व्ताम्बूलानि स्रजश्चैव संस्कृतं चानुलेपनम्. आगतस्याहरेत्प्रीत्या कलागोष्ठीश्च योजयेत्. ॥ ६.१.३१ ॥"
+    },
+    {
+      "number": "6.1.32",
+      "text": "व्द्रव्याणि प्रणये दद्यात्कुर्याच्च परिवर्तनम्. संप्रयोगस्य चाकूतं निजेनैव प्रयोजयेत्. ॥ ६.१.३२ ॥"
+    },
+    {
+      "number": "6.1.33",
+      "text": "व्प्रीतिदायैरुपन्यासैरुपचारैश्च केवलैः. गम्येन सह संसृष्टा रञ्जयेत्तं ततः परम्((१६५)). ॥ ६.१.३३ ॥"
+    }
+  ],
+  "colophon": {
+    "text": "चिति श्री वात्स्यायनीये कामसूत्रे वैशिके षष्ठेऽधिकरणे सहायगम्याःगम्यचिन्ता गमनकारणं गम्योपावर्तनं प्रथमोऽध्यायः ॥ ६.१ ॥"
+  }
+}

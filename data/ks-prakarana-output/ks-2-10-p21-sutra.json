@@ -1,0 +1,102 @@
+{
+  "global_prakarana_id": "p21",
+  "script_type": "devanagari",
+  "adhikarana_number": 2,
+  "adhikarana_name_sanskrit": "सम्प्रयोगिके अधिकरणम्",
+  "adhikarana_name_iast": "samprayogike adhikaraṇam",
+  "adhikarana_name_transliteration": "samprayogike-adhikaranam",
+  "adhikarana_name_english": "",
+  "adhyaya_number": 10,
+  "adhyaya_name_sanskrit": "रतारम्भावसानिकं रतविशेषाः प्रणयकलहश्च",
+  "adhyaya_name_iast": "ratārambhāvasānikaṁ rataviśeṣāḥ praṇayakalahaś ca",
+  "adhyaya_name_transliteration": "ratarambhavasanikam ratavisesah pranayakalahas ca",
+  "adhyaya_name_english": "",
+  "prakarana_number_within_adhyaya": 2,
+  "prakarana_number_within_adhikarana": 16,
+  "prakarana_name_sanskrit": "रतविशेषप्रकरणम्",
+  "prakarana_name_iast": "rataviśeṣa-prakaraṇam",
+  "prakarana_name_transliteration": "ratavisesa-prakaranam",
+  "prakarana_name_english": "",
+  "sutra_range": "14-26",
+  "sutra_count": 13,
+  "has_colophon": false,
+  "is_last_in_adhikarana": false,
+  "topic_tags": [],
+  "purushartha_context": [
+    "kama"
+  ],
+  "related_prakaranas": [
+    "p20",
+    "p22"
+  ],
+  "base_text_source": {
+    "category": "smriti",
+    "shastra_type": "kama-shastra",
+    "text_name": "kama-sutra",
+    "author": "vātsyāyana"
+  },
+  "structural_role": "continuation",
+  "ocr_corrections_notes": [
+    "[ensure ‘विशेष’ (viśeṣa) retains both ś and ṣ; OCR may produce ‘विसेस’ or ‘विशेस’]",
+    "[ensure ‘रत’ (rata) is not misread as ‘रात’]",
+    "[preserve internal consistency with surrounding prakaraṇas (p20–p22 split structure)]"
+  ],
+  "sutras": [
+    {
+      "number": "2.10.14",
+      "text": "सेच्तिओन्(प्रकरण)२१((५३)) [१]रागवद्[२]आहार्यरागं [३]कृत्रिमरागं [४]व्यवहितरागं [५]पोटारतं [६]खलरतं [७]अःयन्त्रितरतं इति रतविशेषाः ॥ २.१०.१४ ॥"
+    },
+    {
+      "number": "2.10.15",
+      "text": "संदर्शनात्प्रभृत्युभयोरपि प्रवृद्धरागयोः प्रयत्नकृते समागमे प्रवासप्रत्यागमने वा कलहवियोगयोगे तद्[१]रागवत् ॥ २.१०.१५ ॥"
+    },
+    {
+      "number": "2.10.16",
+      "text": "तत्रात्माभिप्रायाद्यावदर्थं च प्रवृत्तिः ॥ २.१०.१६ ॥"
+    },
+    {
+      "number": "2.10.17",
+      "text": "मध्यस्थरागयोरारब्धं यदनुरज्यते तद्[२]आहार्यरागम् ॥ २.१०.१७ ॥"
+    },
+    {
+      "number": "2.10.18",
+      "text": "तत्र चातुःषष्टिकैर्योगैः सात्म्यानुविद्धैः संधुक्ष्य संधुक्ष्य रागं प्रवर्तेत ॥ २.१०.१८ ॥"
+    },
+    {
+      "number": "2.10.19",
+      "text": "तत्कार्यहेतोरन्यत्र सक्तयोर्वा [३]कृत्रिमरागम् ॥ २.१०.१९ ॥"
+    },
+    {
+      "number": "2.10.20",
+      "text": "तत्र समुच्चयेन योगाञ् शास्त्रतः पश्येत् ॥ २.१०.२० ॥"
+    },
+    {
+      "number": "2.10.21",
+      "text": "पुरुशस्तु हृदयप्रियां अन्यां मनसि निधाय व्यवहरेत्. संप्रयोगात्प्रभृति रतिं यावत्. अतस्तद्[४]व्यवहितरागम् ॥ २.१०.२१ ॥"
+    },
+    {
+      "number": "2.10.22",
+      "text": "न्यूनायां कुम्भदास्यां परिचारिकायां वा यावदर्थं संप्रयोगस्तत्[५]पोटारतम्(( ५४)) ॥ २.१०.२२ ॥"
+    },
+    {
+      "number": "2.10.23",
+      "text": "तत्रोपचरान्नाद्रियेत ॥ २.१०.२३ ॥"
+    },
+    {
+      "number": "2.10.24",
+      "text": "तथा वेश्याया ग्रामीणेन सह यावदर्थं [६]खलरतम् ॥ २.१०.२४ ॥"
+    },
+    {
+      "number": "2.10.25",
+      "text": "ग्रामव्रजप्रत्यन्तयोषिद्भिश्च नागरस्य ॥ २.१०.२५ ॥"
+    },
+    {
+      "number": "2.10.26",
+      "text": "उत्पन्नविस्रम्भयोश्च परस्परानुकूल्याद्[७]अःयन्त्रितरतम् ॥ २.१०.२६ ॥"
+    },
+    {
+      "number": "2.10.26",
+      "text": "चिति रतानि ॥ २.१०.२६ ॥"
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "global_prakarana_id": "p42",
+  "script_type": "devanagari",
+  "adhikarana_number": 5,
+  "adhikarana_name_sanskrit": "पारदारिके अधिकरणम्",
+  "adhikarana_name_iast": "pāradārike adhikaraṇam",
+  "adhikarana_name_transliteration": "paradarike-adhikaranam",
+  "adhikarana_name_english": "",
+  "adhyaya_number": 1,
+  "adhyaya_name_sanskrit": "स्त्रीपुरुषशीलवस्थापनं व्यावर्तनकारणानि स्त्रीषु सिद्धाः पुरुषा अयत्नसाध्या योषितः",
+  "adhyaya_name_iast": "strī-puruṣa-śīla-avasthāpanaṁ vyāvartana-kāraṇāni strīṣu siddhāḥ puruṣā ayatna-sādhyā yoṣitaḥ",
+  "adhyaya_name_transliteration": "stri-purusa-sila-avasthapanam vyavartana-karanani strisu siddhah purusa ayatna-sadhya yositah",
+  "adhyaya_name_english": "",
+  "prakarana_number_within_adhyaya": 4,
+  "prakarana_number_within_adhikarana": 4,
+  "prakarana_name_sanskrit": "अयत्नसाध्ययोषित्प्रकरणम्",
+  "prakarana_name_iast": "ayatna-sādhya-yoṣit-prakaraṇam",
+  "prakarana_name_transliteration": "ayatna-sadhya-yosit-prakaranam",
+  "prakarana_name_english": "",
+  "sutra_range": "51-56",
+  "sutra_count": 6,
+  "has_colophon": true,
+  "is_last_in_adhikarana": false,
+  "topic_tags": [],
+  "purushartha_context": [
+    "kama"
+  ],
+  "related_prakaranas": [
+    "p41",
+    "p43"
+  ],
+  "base_text_source": {
+    "category": "smriti",
+    "shastra_type": "kama-shastra",
+    "text_name": "kama-sutra",
+    "author": "vātsyāyana"
+  },
+  "structural_role": "concluding",
+  "ocr_corrections_notes": [
+    "[ensure ‘अयत्न’ (ayatna) retains tn cluster; OCR may produce ‘अयतन’]",
+    "[ensure ‘साध्य’ (sādhya) retains long ā and dhy cluster; OCR may produce ‘साध्य’ without proper diacritics or ‘साध’]",
+    "[ensure ‘योषित्’ (yoṣit) ends in ‘त्’ (final consonant), not ‘तः’ or ‘ता’]",
+    "[ensure ‘ष’ (ṣ) in ‘योषित्’ is preserved; OCR may produce ‘योसित’]"
+  ],
+  "sutras": [
+    {
+      "number": "5.1.51",
+      "text": "सेच्तिओन्(प्रकरण)४२ यथात्मनः सिद्धतां पश्येदेवं योषितोऽपि ॥ ५.१.५१ ॥"
+    },
+    {
+      "number": "5.1.52",
+      "text": "अःयत्नसाध्या योषितस्त्विमाः ण् अभियोगमात्रसाध्याः. द्वारदेशावस्थायिनी. प्रासादाद्राजमार्गावलोकिनी. तरुणप्रातिवेश्यगृहे गोष्ठीयोजिनी. सततप्रेक्षिणी. प्रेक्षिता पार्श्वविलोकिनी. निषःकारणं सःपत्न्याधिविन्ना. भर्तृद्वेषिणी विद्विष्टा च. परिहारहीना. निरःअपत्या ॥ ५.१.५२ ॥"
+    },
+    {
+      "number": "5.1.53",
+      "text": "ज्ञातिकुलनित्या. विपन्नापत्या. गोष्ठीयोजिनी. प्रीतियोजिनी. कुशीलवभार्या. मृतपतिका बाला. दरिद्रा बहूपभोगा. ज्येष्ठभार्या बहुदेवरका. बहुमानिनी न्यूनभर्तृका. कौशलाभिमानिनी भर्तुर्मौर्ख्येणोद्विग्ना. अःविशेषतया लोभेन ॥ ५.१.५३ ॥"
+    },
+    {
+      "number": "5.1.54",
+      "text": "कन्याकाले यत्नेन वारिता कथं चिदःलब्धाभियुक्ता च सा तदानीम्. समानबुद्धिशील मेधाप्रतिपत्तिसात्म्या. प्रकृत्या पक्षपातिनी. अनःअपराधे विमानिता.तुल्यरुपाभिश्चाधः कृता. प्रोषितपतिकेति. ईर्ष्यालुपूतिचोक्षक्लीबदीर्घसूत्रकापुरुषकुब्जवामन विरूपमणिकारग्राम्यदुरःगन्धिरोगिवृद्धभार्याश्चेति ॥ ५.१.५४ ॥"
+    },
+    {
+      "number": "5.1.55",
+      "text": "श्लोकावत्र भवतः ॥ ५.१.५५ ॥"
+    },
+    {
+      "number": "5.1.55",
+      "text": "विच्छा स्वभावतो जाता क्रियया परिबृंहिता. बुद्ध्या संशोधितोद्वेगा स्थिरा स्यादनःअपायिनी. ॥ ५.१.५५ ॥"
+    },
+    {
+      "number": "5.1.56",
+      "text": "व्सिद्धतां आत्मनो ज्ञात्वा लिङ्गान्युन्नीय योषिताम्. व्यावृत्तिकारणोच्छेदी नरो योषित्सु सिध्यति((१३६)). ॥ ५.१.५६ ॥"
+    }
+  ],
+  "colophon": {
+    "text": "चिति श्रीवात्स्यायनीये कामसूत्रे पारदारिके पञ्चमेऽधिकरणे स्त्रीपुरुषशीलावस्थापनं व्यावर्तनकारणानि स्त्रीषु सिद्धाः पुरुषा अःयत्नसाध्या योषितः प्रथमोऽध्यायः ॥ ५.१ ॥"
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "global_prakarana_id": "p29",
+  "script_type": "devanagari",
+  "adhikarana_number": 3,
+  "adhikarana_name_sanskrit": "कन्यासम्प्रयुक्तके अधिकरणम्",
+  "adhikarana_name_iast": "kanyāsamprayuktake adhikaraṇam",
+  "adhikarana_name_transliteration": "kanya-samprayuktake-adhikaranam",
+  "adhikarana_name_english": "",
+  "adhyaya_number": 4,
+  "adhyaya_name_sanskrit": "एकपुरुषाभियोगाः",
+  "adhyaya_name_iast": "eka-puruṣābhiyogāḥ",
+  "adhyaya_name_transliteration": "eka-purusabhiyogah",
+  "adhyaya_name_english": "",
+  "prakarana_number_within_adhyaya": 2,
+  "prakarana_number_within_adhikarana": 7,
+  "prakarana_name_sanskrit": "प्रयोज्यस्योपावर्तनप्रकरणम्",
+  "prakarana_name_iast": "prayojyasyopāvartana-prakaraṇam",
+  "prakarana_name_transliteration": "prayojyasyopavartana-prakaranam",
+  "prakarana_name_english": "",
+  "sutra_range": "36-47",
+  "sutra_count": 12,
+  "has_colophon": false,
+  "is_last_in_adhikarana": false,
+  "topic_tags": [],
+  "purushartha_context": [
+    "dharma",
+    "kama"
+  ],
+  "related_prakaranas": [
+    "p28",
+    "p30"
+  ],
+  "base_text_source": {
+    "category": "smriti",
+    "shastra_type": "kama-shastra",
+    "text_name": "kama-sutra",
+    "author": "vātsyāyana"
+  },
+  "structural_role": "continuation",
+  "ocr_corrections_notes": [
+    "[ensure sandhi: ‘प्रयोज्यस्य + उपावर्तन’ → ‘प्रयोज्यस्योपावर्तन’; OCR may split incorrectly]",
+    "[ensure ‘स्य’ (sya) cluster in ‘प्रयोज्यस्य’ is preserved; OCR may reduce to ‘प्रयोज्यस’]",
+    "[ensure ‘उपावर्तन’ (upāvartana) retains long ā; OCR may produce ‘उपवर्तन’]",
+    "[ensure ‘वर्तन’ (vartana) is not confused with ‘वर्त्तन’ or ‘वर्तन’ inconsistently]"
+  ],
+  "sutras": [
+    {
+      "number": "3.4.36",
+      "text": "सेच्तिओन्(प्रकरण)२९मन्दापदेशा((८७)) गुणवत्यपि कन्या धनहीना कुलीनापि समानैरःयाच्यमाना मातापितृवियुक्ता वा ज्ञातिकुलवर्तिनी वा प्राप्तयौवना पाणिग्रहणं स्वयं अभीप्सेत ॥ ३.४.३६ ॥"
+    },
+    {
+      "number": "3.4.37",
+      "text": "सा तु गुणवन्तं शक्तं सुःदर्शनं बालप्रीत्याभियोजयेत् ॥ ३.४.३७ ॥"
+    },
+    {
+      "number": "3.4.38",
+      "text": "यं वा मन्येत मातापित्रोरःसमीक्षया स्वयं अप्ययं इन्द्रियदौर्बल्यान्मयि प्रवर्तिष्यत इति प्रियहितोपचारैरभीक्ष्णसंदर्शनेन च तं आवर्जयेत् ॥ ३.४.३८ ॥"
+    },
+    {
+      "number": "3.4.39",
+      "text": "माता चैनां सखीभिर्धात्रेयिकाभिश्च सह तदभिमुखीं कुर्यात् ॥ ३.४.३९ ॥"
+    },
+    {
+      "number": "3.4.40",
+      "text": "पुष्पगन्धताम्बूलहस्ताया विःजने विःकाले च तदुपस्थानम्. कलाकौशलप्रकाशने वा संवाहने शिरसः पीडने चौचित्यदर्शनम्. प्रयोज्यस्य सात्म्ययुक्ताः कथायोगाः बालायां उपक्रमेषु यथोक्तं आचरेत्((८८)) ॥ ३.४.४० ॥"
+    },
+    {
+      "number": "3.4.41",
+      "text": "न चैवान्तरापि((८९)) पुरुषं स्वयं अभियुञ्जीत. स्वयं अभियोगिनी हि युवतिः सौभाग्यं जहातीत्याचार्याः ॥ ३.४.४१ ॥"
+    },
+    {
+      "number": "3.4.42",
+      "text": "तत्प्रयुक्तानां त्वभियोगानां आनुलोम्येन ग्रहणम् ॥ ३.४.४२ ॥"
+    },
+    {
+      "number": "3.4.43",
+      "text": "परिष्वक्ता((९०)) च न विकृतिं भजेत्. श्लक्ष्णम्((९१)) आकारं अःजानतीव प्रतिगृहीयात्. वदनग्रहणे बलात्कारः ॥ ३.४.४३ ॥"
+    },
+    {
+      "number": "3.4.44",
+      "text": "रतिभावनां अभ्यर्थ्यमानायाः कृच्छ्राद्गुह्यसंस्पर्शनम् ॥ ३.४.४४ ॥"
+    },
+    {
+      "number": "3.4.45",
+      "text": "अभ्यर्थितापि नातिविवृता स्वयं स्यात्. अन्यत्राःनिश्चयकालात्((९२)) ॥ ३.४.४५ ॥"
+    },
+    {
+      "number": "3.4.46",
+      "text": "यदा तु मन्येतानुरक्तो मयि न व्यावर्तयिष्यत इति तदैवैनं अभियुञ्जानं बालभाव मोक्षाय त्वरेत् ॥ ३.४.४६ ॥"
+    },
+    {
+      "number": "3.4.47",
+      "text": "विमुक्तकन्याभावा च विश्वास्येषु प्रकाशयेत् ॥ ३.४.४७ ॥"
+    },
+    {
+      "number": "3.4.47",
+      "text": "चिति प्रयोज्यस्योपावर्तनम्((९३)) ॥ ३.४.४७ ॥"
+    }
+  ]
+}

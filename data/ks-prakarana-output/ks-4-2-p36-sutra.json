@@ -1,0 +1,107 @@
+{
+  "global_prakarana_id": "p36",
+  "script_type": "devanagari",
+  "adhikarana_number": 4,
+  "adhikarana_name_sanskrit": "भार्याधिकारिके अधिकरणम्",
+  "adhikarana_name_iast": "bhāryādhikārike adhikaraṇam",
+  "adhikarana_name_transliteration": "bharyadhikarike-adhikaranam",
+  "adhikarana_name_english": "",
+  "adhyaya_number": 2,
+  "adhyaya_name_sanskrit": "ज्येष्ठादिवृत्तम्",
+  "adhyaya_name_iast": "jyeṣṭhādi-vṛttam",
+  "adhyaya_name_transliteration": "jyesthadi-vrttam",
+  "adhyaya_name_english": "",
+  "prakarana_number_within_adhyaya": 3,
+  "prakarana_number_within_adhikarana": 5,
+  "prakarana_name_sanskrit": "पुनर्भूवृत्तप्रकरणम्",
+  "prakarana_name_iast": "punarbhū-vṛtta-prakaraṇam",
+  "prakarana_name_transliteration": "punarbhu-vrtta-prakaranam",
+  "prakarana_name_english": "",
+  "sutra_range": "31-44",
+  "sutra_count": 14,
+  "has_colophon": false,
+  "is_last_in_adhikarana": false,
+  "topic_tags": [],
+  "purushartha_context": [
+    "dharma",
+    "kama"
+  ],
+  "related_prakaranas": [
+    "p35",
+    "p37"
+  ],
+  "base_text_source": {
+    "category": "smriti",
+    "shastra_type": "kama-shastra",
+    "text_name": "kama-sutra",
+    "author": "vātsyāyana"
+  },
+  "structural_role": "continuation",
+  "ocr_corrections_notes": [
+    "[ensure ‘पुनर्भू’ (punarbhū) retains rbh cluster and long ū; OCR may produce ‘पुनर्भु’ or ‘पुनरभू’]",
+    "[ensure ‘भू’ (bhū) is not reduced to ‘भु’]",
+    "[ensure ‘वृत्त’ (vṛtta) retains ṛ and double त्त; OCR may produce ‘वृत’]"
+  ],
+  "sutras": [
+    {
+      "number": "4.2.31",
+      "text": "सेच्तिओन्(प्रकरण)३६ विधवा त्विन्द्रियदौर्बल्यादातुरा भोगिनं गुणसंपन्नं च या पुनर्विन्देत्सा पुनर्भूः ॥ ४.२.३१ ॥"
+    },
+    {
+      "number": "4.2.32",
+      "text": "यतस्तु स्वेच्छया पुनरपि निष्क्रमणं निरःगुणोऽयं इति तदान्यं काङ्क्षेदिति बाभ्रवीयाः ॥ ४.२.३२ ॥"
+    },
+    {
+      "number": "4.2.33",
+      "text": "सौख्यार्थिनी सा किलान्यं पुनर्विन्देत ॥ ४.२.३३ ॥"
+    },
+    {
+      "number": "4.2.34",
+      "text": "गुणेषु सोपभोगेषु सुखसाकल्यं तस्मात्ततो विशेष इति गोनर्दीयः ॥ ४.२.३४ ॥"
+    },
+    {
+      "number": "4.2.35",
+      "text": "आत्मनश्चित्तानुकूल्यादिति वात्स्यायनः ॥ ४.२.३५ ॥"
+    },
+    {
+      "number": "4.2.36",
+      "text": "सा बान्धवैर्नायकादापानकोद्यानश्रद्धादानमित्रपूजनादि व्ययसहिष्णु कर्म लिप्सेत ॥ ४.२.३६ ॥"
+    },
+    {
+      "number": "4.2.37",
+      "text": "आत्मनः सारेण वालङ्कारं तदीयं आत्मीयं वा बिभृयात् ॥ ४.२.३७ ॥"
+    },
+    {
+      "number": "4.2.38",
+      "text": "प्रीतिदायेष्वःनियमः ॥ ४.२.३८ ॥"
+    },
+    {
+      "number": "4.2.39",
+      "text": "स्वेच्छया च गृहान्निर्गच्छती प्रीतिदायादन्यन्नायकदत्तं जीयेत. निष्कास्यमाना तु न किं चिद्दद्यात् ॥ ४.२.३९ ॥"
+    },
+    {
+      "number": "4.2.40",
+      "text": "सा प्रभविष्णुरिव तस्य भवनं आप्नुयात् ॥ ४.२.४० ॥"
+    },
+    {
+      "number": "4.2.41",
+      "text": "कुलजासु तु प्रीत्या वर्तेत ॥ ४.२.४१ ॥"
+    },
+    {
+      "number": "4.2.42",
+      "text": "दाक्षिण्येन परिजने सर्वत्र सःपरिहासा मित्रेषु प्रतिपत्तिः. कलासु कौशलं अधिकस्य च ज्ञानम् ॥ ४.२.४२ ॥"
+    },
+    {
+      "number": "4.2.43",
+      "text": "कलहस्थानेषु च नायकं स्वयं उपलभेत ॥ ४.२.४३ ॥"
+    },
+    {
+      "number": "4.2.44",
+      "text": "रहसि च कलया चतुःषष्ट्यानुवर्तेत. सःपत्नीनां च स्वयं उपकुर्यात्. तासां अपत्येष्वाभारणदानम्. तेषु स्वामिवदुपचारः. मण्डनकानि वेषानादरेण कुर्वीत. परिजने मित्रवर्गे चाधिकं विश्राणनम्((१२३)). समाजापानकोद्यानयात्राविहारशीलता च ॥ ४.२.४४ ॥"
+    },
+    {
+      "number": "4.2.44",
+      "text": "चिति पुनर्भूवृत्तम्((१२४)) ॥ ४.२.४४ ॥"
+    }
+  ]
+}

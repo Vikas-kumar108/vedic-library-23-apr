@@ -1,0 +1,87 @@
+{
+  "global_prakarana_id": "p30",
+  "script_type": "devanagari",
+  "adhikarana_number": 3,
+  "adhikarana_name_sanskrit": "कन्यासम्प्रयुक्तके अधिकरणम्",
+  "adhikarana_name_iast": "kanyāsamprayuktake adhikaraṇam",
+  "adhikarana_name_transliteration": "kanya-samprayuktake-adhikaranam",
+  "adhikarana_name_english": "",
+  "adhyaya_number": 4,
+  "adhyaya_name_sanskrit": "एकपुरुषाभियोगाः",
+  "adhyaya_name_iast": "eka-puruṣābhiyogāḥ",
+  "adhyaya_name_transliteration": "eka-purusabhiyogah",
+  "adhyaya_name_english": "",
+  "prakarana_number_within_adhyaya": 3,
+  "prakarana_number_within_adhikarana": 8,
+  "prakarana_name_sanskrit": "अभियोगतः कन्यायाः प्रतिपत्तिप्रकरणम्",
+  "prakarana_name_iast": "abhiyogataḥ kanyāyāḥ pratipatti-prakaraṇam",
+  "prakarana_name_transliteration": "abhiyogatah kanyayah pratipatti-prakaranam",
+  "prakarana_name_english": "",
+  "sutra_range": "48-55",
+  "sutra_count": 8,
+  "has_colophon": true,
+  "is_last_in_adhikarana": false,
+  "topic_tags": [],
+  "purushartha_context": [
+    "dharma",
+    "kama"
+  ],
+  "related_prakaranas": [
+    "p29",
+    "p31"
+  ],
+  "base_text_source": {
+    "category": "smriti",
+    "shastra_type": "kama-shastra",
+    "text_name": "kama-sutra",
+    "author": "vātsyāyana"
+  },
+  "structural_role": "concluding",
+  "ocr_corrections_notes": [
+    "[ensure ‘अभियोगतः’ (abhiyogataḥ) retains visarga; OCR may produce ‘अभियोगत’]",
+    "[ensure ‘कन्यायाः’ (kanyāyāḥ) retains both long ā and visarga; OCR may produce ‘कन्याया’]",
+    "[ensure ‘प्रतिपत्ति’ (pratipatti) retains double त्त; OCR may reduce to ‘प्रतिपति’]",
+    "[ensure compound segmentation is preserved: अभियोगतः + कन्यायाः + प्रतिपत्ति]"
+  ],
+  "sutras": [
+    {
+      "number": "3.4.48",
+      "text": "सेच्तिओन्(प्रकरण)३०भवन्ति चात्र श्लोकाः ॥ ३.४.४८ ॥"
+    },
+    {
+      "number": "3.4.48",
+      "text": "व्कन्याभियुज्यमाना तु यं मन्येताश्रयं सुखम्. अनुकूलं च वश्यं च तस्य कुर्यात्परिग्रहम्. ॥ ३.४.४८ ॥"
+    },
+    {
+      "number": "3.4.49",
+      "text": "वनःअपेक्ष्य गुणान्यत्र रूपं औचित्यं एव च. कुर्वीत धनलोभेन पतिं सापत्नकेष्वपि. ॥ ३.४.४९ ॥"
+    },
+    {
+      "number": "3.4.50",
+      "text": "व्तत्र युक्तगुणं वश्यं शक्तं बलवदर्थिनम्. उपायैरभियुञ्जानं कन्या न प्रतिलोभयेत्. ॥ ३.४.५० ॥"
+    },
+    {
+      "number": "3.4.51",
+      "text": "व्वरं वश्यो दरिद्रोऽपि निरःगुणोऽप्यात्मधारणः. गुणैर्युक्तोऽपि न त्वेवं बहुसाधारणः. ॥ ३.४.५१ ॥"
+    },
+    {
+      "number": "3.4.52",
+      "text": "व्प्रायेण धनिनां दारा बहवो निरःअवग्रहाः. बाह्ये सत्युपभोगेऽपि निर्विस्रम्भा बहिःसुखाः. ॥ ३.४.५२ ॥"
+    },
+    {
+      "number": "3.4.53",
+      "text": "व्नीचो यस्त्वभियुञ्जीत पुरुषः पलितोऽपि वा. विःदेशगतिशीलश्च न स संयोगं अर्हति. ॥ ३.४.५३ ॥"
+    },
+    {
+      "number": "3.4.54",
+      "text": "व्यदृच्छयाभियुक्तो यो दम्भद्यूताधिकोऽपि. सःपत्नीकश्च सापत्यो न स संयोगं अर्हति. ॥ ३.४.५४ ॥"
+    },
+    {
+      "number": "3.4.55",
+      "text": "व्गुणसाम्येऽभियोक्तॄणां एको वरयिता वरः. तत्राभियोक्तरि श्रैष्ठ्यं अनुरागात्मको हि सः((९४)). ॥ ३.४.५५ ॥"
+    }
+  ],
+  "colophon": {
+    "text": "चिति श्रीवात्स्यायनीये कामसूत्रे कन्यासंप्रयुक्तके तृतीयेऽधिकरणे एकपुरुषाभियोगा अभियोगतश्च कन्यायाः प्रतिपत्तिश्चतुर्थोऽध्यायः ॥ ३.४ ॥"
+  }
+}

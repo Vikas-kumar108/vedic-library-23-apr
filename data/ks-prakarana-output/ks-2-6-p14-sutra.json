@@ -1,0 +1,121 @@
+{
+  "global_prakarana_id": "p14",
+  "script_type": "devanagari",
+  "adhikarana_number": 2,
+  "adhikarana_name_sanskrit": "सम्प्रयोगिके अधिकरणम्",
+  "adhikarana_name_iast": "samprayogike adhikaraṇam",
+  "adhikarana_name_transliteration": "samprayogike-adhikaranam",
+  "adhikarana_name_english": "",
+  "adhyaya_number": 6,
+  "adhyaya_name_sanskrit": "संवेशनप्रकाराश्च विविधरतानि",
+  "adhyaya_name_iast": "saṁveśana-prakārāś ca vividharatāni",
+  "adhyaya_name_transliteration": "samvesana-prakaras ca vividharatani",
+  "adhyaya_name_english": "",
+  "prakarana_number_within_adhyaya": 2,
+  "prakarana_number_within_adhikarana": 9,
+  "prakarana_name_sanskrit": "चित्ररतनप्रकरणम्",
+  "prakarana_name_iast": "citra-ratana-prakaraṇam",
+  "prakarana_name_transliteration": "citra-ratana-prakaranam",
+  "prakarana_name_english": "",
+  "sutra_range": "36-52",
+  "sutra_count": 17,
+  "has_colophon": true,
+  "is_last_in_adhikarana": false,
+  "topic_tags": [],
+  "purushartha_context": [
+    "kama"
+  ],
+  "related_prakaranas": [
+    "p13",
+    "p15"
+  ],
+  "base_text_source": {
+    "category": "smriti",
+    "shastra_type": "kama-shastra",
+    "text_name": "kama-sutra",
+    "author": "vātsyāyana"
+  },
+  "structural_role": "concluding",
+  "ocr_corrections_notes": [
+    "[ensure ‘रतन’ (ratana) is preserved; do NOT normalize to ‘रत्न’—this is a common but incorrect correction]",
+    "[ensure ‘चित्र’ (citra) retains ‘त्र’; OCR may produce ‘चितर’]",
+    "[verify sandhi continuity with previous prakaraṇa (संवेशनप्रकार → चित्ररतन transition)]"
+  ],
+  "sutras": [
+    {
+      "number": "2.6.36",
+      "text": "सेच्तिओन्(प्रकरण)१४ अथ चित्ररतानि ॥ २.६.३६ ॥"
+    },
+    {
+      "number": "2.6.37",
+      "text": "ऊर्ध्वस्थितयोर्यूनोः परस्परापाश्रययोः कुड्यस्तम्भापाश्रितयोर्वा स्थितरतम् ॥ २.६.३७ ॥"
+    },
+    {
+      "number": "2.6.38",
+      "text": "कुड्यापाश्रितस्य कण्ठावसक्तबाहुपाशायास्तद्धस्तपञ्जरोपविष्टाया ऊरुपाशेन जघनं अभिवेष्टयन्त्या कुड्ये चरणक्रमेण वलन्त्या अवलम्बितकं रतम् ॥ २.६.३८ ॥"
+    },
+    {
+      "number": "2.6.39",
+      "text": "भूमौ वा चतुष्पदवदास्थिताया वृषलीलयावस्कन्दनं धेनुकम् ॥ २.६.३९ ॥"
+    },
+    {
+      "number": "2.6.40",
+      "text": "तत्र पृष्ठं उरःकर्माणि लभते ॥ २.६.४० ॥"
+    },
+    {
+      "number": "2.6.41",
+      "text": "एतेनैव योगेन शौनं ऐणेयं छागलं गर्दभाक्रान्तं मार्जारललितकं व्याघ्रावस्कन्दनं गजोपमर्दितं वराहघृष्टकं तुरगाधिरूढकं इति यत्र यत्र विशेषो योगोऽःपूर्वस्तत्तदुपलक्षयेत् ॥ २.६.४१ ॥"
+    },
+    {
+      "number": "2.6.42",
+      "text": "मिश्रीकृतसद्भावाभ्यां द्वाभ्यां सह संघाटकं रतम् ॥ २.६.४२ ॥"
+    },
+    {
+      "number": "2.6.43",
+      "text": "बह्वीभिश्च सह गोयूथिकम् ॥ २.६.४३ ॥"
+    },
+    {
+      "number": "2.6.44",
+      "text": "वारिक्रीडितकं छागलं ऐणेयं इति तत्कर्मानुकृतियोगात् ॥ २.६.४४ ॥"
+    },
+    {
+      "number": "2.6.45",
+      "text": "ग्रामनारीविषये((२१)) स्त्रीराज्ये च बाह्लीके बहवो युवानोऽन्तःपुरसःधर्माण एकैकस्याः परिग्रहभूताः ॥ २.६.४५ ॥"
+    },
+    {
+      "number": "2.6.46",
+      "text": "तेषां एकैकशो युगपच्च यथाःसात्म्यं यथाःयोगं च रञ्जयेयुः ॥ २.६.४६ ॥"
+    },
+    {
+      "number": "2.6.47",
+      "text": "एको धारयेदेनां अन्यो निषेवेत. अन्यो जघनं मुखं अन्यो मध्यं अन्य इति वारं वारेण व्यतिकरेण चानुतिष्ठेयुः ॥ २.६.४७ ॥"
+    },
+    {
+      "number": "2.6.48",
+      "text": "एतया गोष्ठीपरिग्रहा वेश्या राजयोषापरिग्राहश्च व्याख्यातः ॥ २.६.४८ ॥"
+    },
+    {
+      "number": "2.6.49",
+      "text": "अधोरतं पायावपि दाक्षिणत्यानाम्. इति चित्ररतानि ॥ २.६.४९ ॥"
+    },
+    {
+      "number": "2.6.50",
+      "text": "पुरुषोपसृप्तकानि पुरुषायिते वक्ष्यामः ॥ २.६.५० ॥"
+    },
+    {
+      "number": "2.6.51",
+      "text": "भवतश्चात्र श्लोकौ ॥ २.६.५१ ॥"
+    },
+    {
+      "number": "2.6.51",
+      "text": "व्पशूनां मृगजातीनां पतङ्गानां च विभ्रमैः. तैस्तैरुपायैश्चित्तज्ञो रतियोगान्विवर्धयेत् ॥ २.६.५१ ॥"
+    },
+    {
+      "number": "2.6.52",
+      "text": "व्तत्सात्म्याद्देशसात्म्याच्च तैस्तैर्भावैः प्रयोजितैः. स्त्रीणां स्नेहश्च रागश्च बहुमानश्च जायते ॥ २.६.५२ ॥"
+    }
+  ],
+  "colophon": {
+    "text": "चिति श्रीवात्यायनीये कामसूत्रे सांप्रयोगिके द्वितीयेऽधिकरणे संवेशनप्रकाराश्चित्ररतानि च षष्ठोऽध्यायः. आदितो एकदशः ॥ २.६ ॥"
+  }
+}

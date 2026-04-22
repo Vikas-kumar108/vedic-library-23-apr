@@ -1,0 +1,75 @@
+{
+  "global_prakarana_id": "p63",
+  "script_type": "devanagari",
+  "adhikarana_number": 7,
+  "adhikarana_name_sanskrit": "औपनिषदिके अधिकरणम्",
+  "adhikarana_name_iast": "aupanisadike adhikaraṇam",
+  "adhikarana_name_transliteration": "aupanisadike-adhikaranam",
+  "adhikarana_name_english": "",
+  "adhyaya_number": 2,
+  "adhyaya_name_sanskrit": "नष्टरागप्रत्यानयनं वृद्धिविधयश्चित्राश्च योगाः",
+  "adhyaya_name_iast": "naṣṭa-rāga-pratyānayanaṁ vṛddhi-vidhayaś citrāś ca yogāḥ",
+  "adhyaya_name_transliteration": "nastaraga-pratyanayanam vrddhi-vidhayas citras ca yogah",
+  "adhyaya_name_english": "",
+  "prakarana_number_within_adhyaya": 2,
+  "prakarana_number_within_adhikarana": 5,
+  "prakarana_name_sanskrit": "वृद्धिविधिप्रकरणम्",
+  "prakarana_name_iast": "vṛddhi-vidhi-prakaraṇam",
+  "prakarana_name_transliteration": "vrddhi-vidhi-prakaranam",
+  "prakarana_name_english": "",
+  "sutra_range": "25-31",
+  "sutra_count": 7,
+  "has_colophon": false,
+  "is_last_in_adhikarana": false,
+  "topic_tags": [],
+  "purushartha_context": [
+    "kama"
+  ],
+  "related_prakaranas": [
+    "p62",
+    "p64"
+  ],
+  "base_text_source": {
+    "category": "smriti",
+    "shastra_type": "kama-shastra",
+    "text_name": "kama-sutra",
+    "author": "vātsyāyana"
+  },
+  "structural_role": "continuation",
+  "ocr_corrections_notes": [
+    "[ensure ‘वृद्धि’ (vṛddhi) retains ṛ and double ddh; OCR may produce ‘वृदि’ or ‘व्रिधि’]",
+    "[ensure ‘विधि’ (vidhi) is preserved; OCR may produce ‘विदि’]",
+    "[ensure distinction between ‘वृद्धि’ and ‘विधि’ is maintained]",
+    "[ensure compound ‘वृद्धिविधि’ remains intact]"
+  ],
+  "sutras": [
+    {
+      "number": "7.2.25",
+      "text": "एवं वृक्षजानां जन्तूनां शूकैरुपहितं लिङ्गं दशरात्रं तैलेन मृदितं पुनरुपतृंहितं पुनः प्रमृदितं इति जातशोफं खट्वायां अधोमुखस्तदन्तरे लम्बयेत् ॥ ७.२.२५ ॥"
+    },
+    {
+      "number": "7.2.26",
+      "text": "तत्र शीतैः कषायैः कृतवेदनाःनिग्रहं सोपक्रमेण निष्पादयेत् ॥ ७.२.२६ ॥"
+    },
+    {
+      "number": "7.2.27",
+      "text": "स यावज्जीवं शूकजो नाम शोफो विटानाम् ॥ ७.२.२७ ॥"
+    },
+    {
+      "number": "7.2.28",
+      "text": "अश्वगन्धाशबरकन्दजलशूकबृहतीफलमहीषनवनीतहस्तिकर्णवज्रवल्लीरसैरेकैकेन परिमर्दनं मासिकं वर्धनम् ॥ ७.२.२८ ॥"
+    },
+    {
+      "number": "7.2.29",
+      "text": "एतैरेव कषायैः पक्वेन तैलेन परिमर्दनं षाण्मास्यम् ॥ ७.२.२९ ॥"
+    },
+    {
+      "number": "7.2.30",
+      "text": "दाडिमत्रापुषबीजानि बालुका बृहतीफलरसश्चेति मिद्वग्निना पक्वेन तैलेन परिमर्दनं परिषेको वा ॥ ७.२.३० ॥"
+    },
+    {
+      "number": "7.2.31",
+      "text": "तांस्तांश्च योगानाप्तेभ्यो बुध्येत ॥ ७.२.३१ ॥"
+    }
+  ]
+}

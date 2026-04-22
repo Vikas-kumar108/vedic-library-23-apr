@@ -1,0 +1,87 @@
+{
+  "global_prakarana_id": "p60",
+  "script_type": "devanagari",
+  "adhikarana_number": 7,
+  "adhikarana_name_sanskrit": "औपनिषदिके अधिकरणम्",
+  "adhikarana_name_iast": "aupanisadike adhikaraṇam",
+  "adhikarana_name_transliteration": "aupanisadike-adhikaranam",
+  "adhikarana_name_english": "",
+  "adhyaya_number": 1,
+  "adhyaya_name_sanskrit": "सुभगंकरणं वशीकरणं वृष्याश्च योगाः",
+  "adhyaya_name_iast": "subhagaṁkaraṇaṁ vaśīkaraṇaṁ vṛṣyāś ca yogāḥ",
+  "adhyaya_name_transliteration": "subhagamkaranam vasikaranam vrsyas ca yogah",
+  "adhyaya_name_english": "",
+  "prakarana_number_within_adhyaya": 2,
+  "prakarana_number_within_adhikarana": 2,
+  "prakarana_name_sanskrit": "वशीकरणप्रकरणम्",
+  "prakarana_name_iast": "vaśīkaraṇa-prakaraṇam",
+  "prakarana_name_transliteration": "vasikarana-prakaranam",
+  "prakarana_name_english": "",
+  "sutra_range": "25-35",
+  "sutra_count": 11,
+  "has_colophon": false,
+  "is_last_in_adhikarana": false,
+  "topic_tags": [],
+  "purushartha_context": [
+    "kama"
+  ],
+  "related_prakaranas": [
+    "p59",
+    "p61"
+  ],
+  "base_text_source": {
+    "category": "smriti",
+    "shastra_type": "kama-shastra",
+    "text_name": "kama-sutra",
+    "author": "vātsyāyana"
+  },
+  "structural_role": "continuation",
+  "ocr_corrections_notes": [
+    "[ensure ‘वशीकरण’ (vaśīkaraṇa) retains ś and long ī; OCR may produce ‘वसिकरण’]",
+    "[ensure ‘करण’ (karaṇa) retains ṇ; OCR may produce ‘करण’ with dental न]",
+    "[ensure anusvāra in previous segment ‘सुभगंकरण’ is not incorrectly merged here]",
+    "[ensure compound ‘वशीकरण’ remains intact]"
+  ],
+  "sutras": [
+    {
+      "number": "7.1.25",
+      "text": "सेच्तिओन्(प्रकरण)६०धत्तूरकमरिचपिप्पलीचूर्णैर्मधुमिश्रैर्लिप्तलिङ्गस्य सम्प्रयोगो वशीकरणम् ॥ ७.१.२५ ॥"
+    },
+    {
+      "number": "7.1.26",
+      "text": "वातोद्भान्तपत्त्रं मृतकनिर्माल्यं मयूरास्थिचूर्णावचूर्णं वशीकरणम् ॥ ७.१.२६ ॥"
+    },
+    {
+      "number": "7.1.27",
+      "text": "स्वयं मृताया मण्डलकारिकायाश्चूर्णं मधुसंयुक्तं सहामलकैः स्नानं वशीकरणम् ॥ ७.१.२७ ॥"
+    },
+    {
+      "number": "7.1.28",
+      "text": "वज्रस्नुहीगण्डकानि खण्डशः कृतानि मनःशिलागन्धपाषाणचूर्णेनाभ्यज्य सप्तकृत्वः शोषितानि चूर्णयित्वा मधुना लिप्तलिङ्गस्य संप्रयोगो वशीकरणम् ॥ ७.१.२८ ॥"
+    },
+    {
+      "number": "7.1.29",
+      "text": "एतेनैव रात्रौ धूमं कृत्वा तद्धूमतिरसःकृतं सौवर्णं चन्द्रमसं दर्शयति ॥ ७.१.२९ ॥"
+    },
+    {
+      "number": "7.1.30",
+      "text": "एतैरेव चूर्णितैर्वानरपुरीषमिश्रितैर्यां कन्यां अवकिरेत्शान्यस्मै न दीयते ॥ ७.१.३० ॥"
+    },
+    {
+      "number": "7.1.31",
+      "text": "वचागण्डकानि सहकारतैललिप्तानि शिशपावृक्षस्कन्धं उत्कीर्य षण्मासं निदध्यात्ततः षड्भिर्मासैरपनीतानि देवकान्तं अनुलेपनं वशीकरणं चेत्याचक्षते ॥ ७.१.३१ ॥"
+    },
+    {
+      "number": "7.1.32",
+      "text": "तथा खदिरसारजानि शकलानि तनूनि यं वृक्षं उत्कीर्य षण्मासं निदध्यात्तत्पुष्पगन्धानि भवन्ति गन्धर्वकान्तं अनुलेपनं वशीकरणं चेत्याचक्षते ॥ ७.१.३२ ॥"
+    },
+    {
+      "number": "7.1.33",
+      "text": "प्रियङ्गवस्तगरमिश्राः सहकारतैलदिग्धा नागवृक्षं उत्कीर्य षण्मासं निहिता नागकान्तं अनुलेपनं वशीकरणं इत्याचक्षते..७.१.३४ उष्ट्रास्थि भृगराजरसेन भावितं दग्धं अञ्जनं नलिकायां निहितं उष्ट्रास्थिशलाकयैव स्नातोऽञ्जनसहितं पुण्यं चक्षुष्यं वशीकरणं चेत्याचक्षते ॥ ७.१.३३ ॥"
+    },
+    {
+      "number": "7.1.35",
+      "text": "एतेन श्येनभासमयूरास्थिमयान्यञ्जनानि व्याख्यातानि((१८७)) ॥ ७.१.३५ ॥"
+    }
+  ]
+}

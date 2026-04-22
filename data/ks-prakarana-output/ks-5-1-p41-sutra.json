@@ -1,0 +1,51 @@
+{
+  "global_prakarana_id": "p41",
+  "script_type": "devanagari",
+  "adhikarana_number": 5,
+  "adhikarana_name_sanskrit": "पारदारिके अधिकरणम्",
+  "adhikarana_name_iast": "pāradārike adhikaraṇam",
+  "adhikarana_name_transliteration": "paradarike-adhikaranam",
+  "adhikarana_name_english": "",
+  "adhyaya_number": 1,
+  "adhyaya_name_sanskrit": "स्त्रीपुरुषशीलवस्थापनं व्यावर्तनकारणानि स्त्रीषु सिद्धाः पुरुषा अयत्नसाध्या योषितः",
+  "adhyaya_name_iast": "strī-puruṣa-śīla-avasthāpanaṁ vyāvartana-kāraṇāni strīṣu siddhāḥ puruṣā ayatna-sādhyā yoṣitaḥ",
+  "adhyaya_name_transliteration": "stri-purusa-sila-avasthapanam vyavartana-karanani strisu siddhah purusa ayatna-sadhya yositah",
+  "adhyaya_name_english": "",
+  "prakarana_number_within_adhyaya": 3,
+  "prakarana_number_within_adhikarana": 3,
+  "prakarana_name_sanskrit": "स्त्रीषु सिद्धपुरुषप्रकरणम्",
+  "prakarana_name_iast": "strīṣu siddha-puruṣa-prakaraṇam",
+  "prakarana_name_transliteration": "strisu siddha-purusa-prakaranam",
+  "prakarana_name_english": "",
+  "sutra_range": "50",
+  "sutra_count": 1,
+  "has_colophon": false,
+  "is_last_in_adhikarana": false,
+  "topic_tags": [],
+  "purushartha_context": [
+    "kama"
+  ],
+  "related_prakaranas": [
+    "p40",
+    "p42"
+  ],
+  "base_text_source": {
+    "category": "smriti",
+    "shastra_type": "kama-shastra",
+    "text_name": "kama-sutra",
+    "author": "vātsyāyana"
+  },
+  "structural_role": "continuation",
+  "ocr_corrections_notes": [
+    "[ensure ‘स्त्रीषु’ (strīṣu) retains ṣ and long ī; OCR may produce ‘स्त्रीसु’]",
+    "[ensure ‘सिद्ध’ (siddha) retains ddh cluster; OCR may produce ‘सिध’ or ‘सिद्द’]",
+    "[ensure ‘पुरुष’ (puruṣa) retains ṣ; OCR may produce ‘पुरुस’]",
+    "[ensure single-sutra range ‘50’ is preserved correctly without expansion]"
+  ],
+  "sutras": [
+    {
+      "number": "5.1.50",
+      "text": "सेच्तिओन्(प्रकरण)४१ पुरुषास्त्वमी प्रायेण सिद्धाः ण् कामसूत्रज्ञः कथाख्यानकुशलो बाल्यात्प्रभृति संसृष्टः प्रवृद्धयौवनः क्रीडनकर्मादिनागतविश्वासः प्रेषणस्य कर्तोचितसंभाषणः प्रियस्य कर्तान्यस्य भूतपूर्वो दूतो मर्मज्ञ उत्तमया प्रार्थितः सख्या प्रच्छन्नं संसृष्टः सुभगाभिख्यातः सहसंवृद्धः प्रातिवेश्यः कामशीलस्तथाभूतश्च परिचारको धात्रेयिकापरिग्रहो नववरकः प्रेक्षोद्यानत्याग शीलो वृष इति सिद्धप्रतापः साहसिकः शूरो विद्यारूपगुणोपभोगैः पत्युरतिशयिता महार्हवेषोपचारश्चेति((१३५)) ॥ ५.१.५० ॥"
+    }
+  ]
+}

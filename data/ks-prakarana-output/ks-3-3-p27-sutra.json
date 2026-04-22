@@ -1,0 +1,83 @@
+{
+  "global_prakarana_id": "p27",
+  "script_type": "devanagari",
+  "adhikarana_number": 3,
+  "adhikarana_name_sanskrit": "कन्यासम्प्रयुक्तके अधिकरणम्",
+  "adhikarana_name_iast": "kanyāsamprayuktake adhikaraṇam",
+  "adhikarana_name_transliteration": "kanya-samprayuktake-adhikaranam",
+  "adhikarana_name_english": "",
+  "adhyaya_number": 3,
+  "adhyaya_name_sanskrit": "बालायामुपक्रमाः इङ्गिताकारसूचनम् च",
+  "adhyaya_name_iast": "bālāyām upakramāḥ iṅgitākāra-sūcanam ca",
+  "adhyaya_name_transliteration": "balayam-upakramah ingitakara-sucanam ca",
+  "adhyaya_name_english": "",
+  "prakarana_number_within_adhyaya": 2,
+  "prakarana_number_within_adhikarana": 5,
+  "prakarana_name_sanskrit": "इङ्गिताकारसूचनप्रकरणम्",
+  "prakarana_name_iast": "iṅgitākāra-sūcana-prakaraṇam",
+  "prakarana_name_transliteration": "ingitakara-sucana-prakaranam",
+  "prakarana_name_english": "",
+  "sutra_range": "25-32",
+  "sutra_count": 8,
+  "has_colophon": true,
+  "is_last_in_adhikarana": false,
+  "topic_tags": [],
+  "purushartha_context": [
+    "dharma",
+    "kama"
+  ],
+  "related_prakaranas": [
+    "p26",
+    "p28"
+  ],
+  "base_text_source": {
+    "category": "smriti",
+    "shastra_type": "kama-shastra",
+    "text_name": "kama-sutra",
+    "author": "vātsyāyana"
+  },
+  "structural_role": "concluding",
+  "ocr_corrections_notes": [
+    "[ensure ‘इङ्गित’ (iṅgita) retains ṅ; OCR may produce ‘इंगित’]",
+    "[ensure ‘आकार’ (ākāra) retains long ā; OCR may produce ‘अकार’]",
+    "[ensure ‘सूचन’ (sūcana) retains long ū; OCR may produce ‘सुचन’]",
+    "[ensure compound ‘इङ्गिताकारसूचन’ is not split incorrectly]"
+  ],
+  "sutras": [
+    {
+      "number": "3.3.25",
+      "text": "सेच्तिओन्(प्रकरण)२७ तानिङ्गिताकारान्वक्ष्यामः((७९))..३.३.२६ संमुखं तं तु न वीक्षते. वीक्षिता व्रीडां दर्शयति. रुच्यं आत्मनोऽङ्गं अपदेशेन प्रकाशयति. प्रमत्तं प्रच्छन्नं नायकं अतिक्रान्तं च वीक्षते ॥ ३.३.२५ ॥"
+    },
+    {
+      "number": "3.3.27",
+      "text": "पृष्टा च किं चित्सःस्मितं अःव्यक्ताक्षरं अनःअवसितार्तं च मन्दं मन्दं अधोमुखी कथयति. तत्समीपे चिरं स्थानं अभिनन्दति. दूरे स्थिता पश्यतु मां इति मन्यमाना परिजनं सःवदनविकारं आभाषते. तं देशं न मुञ्चति ॥ ३.३.२७ ॥"
+    },
+    {
+      "number": "3.3.28",
+      "text": "यत्किं चिद्दृष्ट्वा विहसितं करोति. तत्र कथां अवस्थानार्थं अनुबध्नाति. बालस्याङ्कगतस्यालिङ्गनं चुम्बनं च करोति. परिचारिकायास्तिलकं च रचयति. परिजनानवष्टभ्य तास्ताश्च लीला दर्शयति ॥ ३.३.२८ ॥"
+    },
+    {
+      "number": "3.3.29",
+      "text": "तन्मित्रेषु विश्वासिति. वचनं चैषां बहु मन्यते करोति च. तत्परिचारकैः सह प्रीतिं संकथां द्यूतं इति च करोति. स्वकर्मसु च प्रभविष्णुरिवैतान्नियुङ्क्ते. तेषु च नायकसंकथां अन्यस्य कथयत्स्ववहितातां शृणोति ॥ ३.३.२९ ॥"
+    },
+    {
+      "number": "3.3.30",
+      "text": "धात्रेयिका चोदिता नायकयोदवसितं प्रविशति. तां अन्तरा कृत्वा तेन सह द्यूतं क्रीडां आलापं चायोजयितुं इच्छति. अनःअलंकृता दर्शनपथं परिहरति. कर्णपत्त्रं अङ्गुलीयकं स्रजं वा तेन याचिता सःधीरं एव गात्रादवतार्य सख्या हस्ते ददाति. तेन च दत्तं नित्यं धारयति. अन्यवरसंकथासु विषण्णा भवति. तत्पक्षकैश्च सह न संसृज्यत इति ॥ ३.३.३० ॥"
+    },
+    {
+      "number": "3.3.31",
+      "text": "भवतश्चात्र श्लोकौ ॥ ३.३.३१ ॥"
+    },
+    {
+      "number": "3.3.31",
+      "text": "व्दृष्ट्वैतान्भावसंयुक्तानाकारानिङ्गितानि च. कन्यायाः संप्रयोगार्थं तांस्तान्योगान्विचिन्तयेत्. ॥ ३.३.३१ ॥"
+    },
+    {
+      "number": "3.3.32",
+      "text": "व्बालक्रीडनकैर्बाला कलाभिर्यौवने स्थिता. वत्सला चापि संग्राह्या विश्वास्यजनसंग्रहात्((८०)) ॥ ३.३.३२ ॥"
+    }
+  ],
+  "colophon": {
+    "text": "चिति श्रीवात्स्यायनीये कामसूत्रे कन्यासंप्रयुक्तके तृतीयेऽधिकरणे बाकोपक्रमा इङिताकारसूचनं तृतीयोऽध्यायः ॥ ३.३ ॥"
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "global_prakarana_id": "p22",
+  "script_type": "devanagari",
+  "adhikarana_number": 2,
+  "adhikarana_name_sanskrit": "सम्प्रयोगिके अधिकरणम्",
+  "adhikarana_name_iast": "samprayogike adhikaraṇam",
+  "adhikarana_name_transliteration": "samprayogike-adhikaranam",
+  "adhikarana_name_english": "",
+  "adhyaya_number": 10,
+  "adhyaya_name_sanskrit": "रतारम्भावसानिकं रतविशेषाः प्रणयकलहश्च",
+  "adhyaya_name_iast": "ratārambhāvasānikaṁ rataviśeṣāḥ praṇayakalahaś ca",
+  "adhyaya_name_transliteration": "ratarambhavasanikam ratavisesah pranayakalahas ca",
+  "adhyaya_name_english": "",
+  "prakarana_number_within_adhyaya": 3,
+  "prakarana_number_within_adhikarana": 17,
+  "prakarana_name_sanskrit": "प्रणयकलहप्रकरणम्",
+  "prakarana_name_iast": "praṇayakalaha-prakaraṇam",
+  "prakarana_name_transliteration": "pranayakalaha-prakaranam",
+  "prakarana_name_english": "",
+  "sutra_range": "27-39",
+  "sutra_count": 13,
+  "has_colophon": true,
+  "is_last_in_adhikarana": true,
+  "topic_tags": [],
+  "purushartha_context": [
+    "kama"
+  ],
+  "related_prakaranas": [
+    "p21",
+    "p23"
+  ],
+  "base_text_source": {
+    "category": "smriti",
+    "shastra_type": "kama-shastra",
+    "text_name": "kama-sutra",
+    "author": "vātsyāyana"
+  },
+  "structural_role": "concluding",
+  "ocr_corrections_notes": [
+    "[ensure ‘प्रणय’ (praṇaya) retains ṇ; OCR may produce ‘प्रनय’]",
+    "[ensure ‘कलह’ (kalaha) is not reduced to ‘कलह्’ or ‘कलह’ without proper ending]",
+    "[ensure compound ‘प्रणयकलह’ remains intact; OCR may split incorrectly]"
+  ],
+  "sutras": [
+    {
+      "number": "2.10.27",
+      "text": "सेच्तिओन्(प्रकरण)२२((५५)) वर्धमाणप्रणया तु नयिका सपत्नीनामग्रहणं तदाश्रयं आलापं वा गोत्रस्खलितं वा न मर्षयेत्. नायकव्यलीकं च ॥ २.१०.२७ ॥"
+    },
+    {
+      "number": "2.10.28",
+      "text": "तत्र सुःभृशः कलहो रुदितं आयासः शिरोरुहाणां अवक्षोदनं((५६)) प्रहणनं आसनाच्छयनाद्वा मह्यां पतनं माल्यभूषणावमोक्षो भूमौ शय्या((५७)) च ॥ २.१०.२८ ॥"
+    },
+    {
+      "number": "2.10.29",
+      "text": "तत्र युक्तरूपेण साम्ना पादपतनेन वा प्रसन्नमनास्तां अनुनयन्नुपक्रम्य शयनं आरोहयेत्..२.१०.३० तस्य च वचनं उत्तरेण योजयन्ती विवृद्धक्रोधा सःकचग्रहं अस्यास्यं उन्नमय्य पादेन बाहौ शिरसि वक्षसि पृष्ठे वा सकृद्द्विस्त्रिर्हन्यात्. द्वारदेशं गच्छेत्. तत्रोपविश्याश्रुकरणं इति ॥ २.१०.२९ ॥"
+    },
+    {
+      "number": "2.10.31",
+      "text": "अतिःक्रुद्धापि तु न द्वारदेशाद्भूयो गच्छेत्. दोषवत्त्वात्. इति दत्तकः. तत्र युक्तितोऽनुन्~ईयमाना प्रसादं आकाङ्क्षेत्. प्रसन्नापि तु सःकषायैर्((५८)) एव वाक्यैरेनं तुदतीव प्रसन्नरतिकाङ्क्षिणी नायकेन परिरभ्येत ॥ २.१०.३१ ॥"
+    },
+    {
+      "number": "2.10.32",
+      "text": "स्वभवनस्था तु निमित्तात्कलहिता तथाःविदचेष्टैव नायकं अभिगच्छेत् ॥ २.१०.३२ ॥"
+    },
+    {
+      "number": "2.10.33",
+      "text": "तत्र पीठमर्दविटविदूषकैर्नायकप्रयुक्तैरुपशमितरोषा तैरेवानिनीता तैः सहैव तद्भवनं अधिगच्छेत्. तत्र च वसेत् ॥ २.१०.३३ ॥"
+    },
+    {
+      "number": "2.10.33",
+      "text": "चिति प्रणयकलहः ॥ २.१०.३३ ॥"
+    },
+    {
+      "number": "2.10.34",
+      "text": "भवन्ति चात्र श्लोकाः ॥ २.१०.३४ ॥"
+    },
+    {
+      "number": "2.10.34",
+      "text": "वेवं एतां चतुःषष्टिं बाभ्रव्येण प्रकीर्तिताम्. प्रयुञ्जानो वरस्त्रीषु सिद्धिं गच्छति नायकः ॥ २.१०.३४ ॥"
+    },
+    {
+      "number": "2.10.35",
+      "text": "व्ब्रुवन्नपि अन्यशास्त्राणि चतुःषष्टिविवर्जितः. विद्वत्संसदि नात्यःअर्थं कथासु परिपूज्यते ॥ २.१०.३५ ॥"
+    },
+    {
+      "number": "2.10.36",
+      "text": "व्वर्जितोऽप्यन्यविज्ञानैरेतया यस्त्वलंकृतः. स गोष्ठ्यां नरनारीणां कथास्वग्रं विगाहते((५९)) ॥ २.१०.३६ ॥"
+    },
+    {
+      "number": "2.10.37",
+      "text": "व्विद्वद्भिः पूजितां एनां खलैरपि सुःपूजितम्. पूजितां गणिकासङ्घैर्नन्दिनीं को न पूजयेत् ॥ २.१०.३७ ॥"
+    },
+    {
+      "number": "2.10.38",
+      "text": "व्नन्दिनी सुःभगा सिद्धा सुःभगंकरणीति च. नारीप्रियेति चाचार्यैः शास्त्रेष्वेषा निरुच्यते ॥ २.१०.३८ ॥"
+    },
+    {
+      "number": "2.10.39",
+      "text": "व्कन्याभिः परयोषिद्भिर्गणिकाभिश्च भावतः. वीक्ष्यते बहुमानेन चतुःषष्टिविचक्षणः ॥ २.१०.३९ ॥"
+    }
+  ],
+  "colophon": {
+    "text": "चिति श्रीवात्यायनीये कामसूत्रे सांप्रयोगिके द्वितीयेऽधिकरणे रतारम्भावसानिकं रतविशेषाः प्रणयकलहश्च दशमोऽध्यायः. आदितः पञ्चदशः..लिव्रे ३ कन्यासंप्रयुक्तकं तृतीयं अधिकरणम् ॥ २.१० ॥"
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "global_prakarana_id": "p49",
+  "script_type": "devanagari",
+  "adhikarana_number": 5,
+  "adhikarana_name_sanskrit": "पारदारिके अधिकरणम्",
+  "adhikarana_name_iast": "pāradārike adhikaraṇam",
+  "adhikarana_name_transliteration": "paradarike-adhikaranam",
+  "adhikarana_name_english": "",
+  "adhyaya_number": 6,
+  "adhyaya_name_sanskrit": "आन्तःपुरिकं दाररक्षितकम्",
+  "adhyaya_name_iast": "āntaḥpurikaṁ dāra-rakṣitakam",
+  "adhyaya_name_transliteration": "antahpurikam dara-raksitakam",
+  "adhyaya_name_english": "",
+  "prakarana_number_within_adhyaya": 2,
+  "prakarana_number_within_adhikarana": 11,
+  "prakarana_name_sanskrit": "दाररक्षितकप्रकरणम्",
+  "prakarana_name_iast": "dāra-rakṣitaka-prakaraṇam",
+  "prakarana_name_transliteration": "dara-raksitaka-prakaranam",
+  "prakarana_name_english": "",
+  "sutra_range": "39-48",
+  "sutra_count": 10,
+  "has_colophon": true,
+  "is_last_in_adhikarana": true,
+  "topic_tags": [],
+  "purushartha_context": [
+    "kama"
+  ],
+  "related_prakaranas": [
+    "p48",
+    "p50"
+  ],
+  "base_text_source": {
+    "category": "smriti",
+    "shastra_type": "kama-shastra",
+    "text_name": "kama-sutra",
+    "author": "vātsyāyana"
+  },
+  "structural_role": "concluding",
+  "ocr_corrections_notes": [
+    "[ensure ‘दार’ (dāra) retains long ā; OCR may produce ‘दर’]",
+    "[ensure ‘रक्षितक’ (rakṣitaka) retains kṣ cluster; OCR may produce ‘रकसितक’ or ‘रक्षित’]",
+    "[ensure ‘क्ष’ (kṣ) is preserved and not reduced to ‘कस’ or ‘क्स’]",
+    "[ensure compound ‘दाररक्षितक’ remains intact]"
+  ],
+  "sutras": [
+    {
+      "number": "5.6.39",
+      "text": "सेच्तिओन्(प्रकरण)४९ एभ्य एव च कारणेभ्यः स्वदारान्रक्षेत् ॥ ५.६.३९ ॥"
+    },
+    {
+      "number": "5.6.40",
+      "text": "कामोपधाशुद्धान्((१५६)) रक्षिणोऽन्तःःपुरे स्थापयेदित्याचार्याः ॥ ५.६.४० ॥"
+    },
+    {
+      "number": "5.6.41",
+      "text": "ते हि भयेन चार्थेन चान्यं प्रयोजयेयुस्तस्मात्कामभयार्थोपधाशुद्धानिति गोणिकापुत्रः((१५७)) ॥ ५.६.४१ ॥"
+    },
+    {
+      "number": "5.6.42",
+      "text": "अःद्रोहो धर्मस्तं अपि भयाज्जह्यादतो धर्मभयोपधाशुद्धानिति वात्स्यायनः ॥ ५.६.४२ ॥"
+    },
+    {
+      "number": "5.6.43",
+      "text": "वाक्याभिधायिनीभिश्च गूढाकाराभिः प्रमादभिरात्मदारान्((१५८)) उपदध्याच्छौचाःशौचपरिज्ञानार्थं इति बाभ्रवीयाः ॥ ५.६.४३ ॥"
+    },
+    {
+      "number": "5.6.44",
+      "text": "दुष्टानां युवतिषु सिद्धत्वान्नाःकस्मादःदुष्टदूषणं आचरेदिति वात्स्यायनः((१५९)) ॥ ५.६.४४ ॥"
+    },
+    {
+      "number": "5.6.45",
+      "text": "अतिःगोष्ठी निरःअङ्कुशत्वं भर्तुः स्वैरता पुरुषैः सहाःनियन्त्रणता प्रवासेऽवस्थानं विदेशे निवासः स्ववृत्त्युपघातः स्वैरिणीसंसर्गः पत्युरीर्ष्यालुता चेति स्त्रीणां विनाशकारणानि ॥ ५.६.४५ ॥"
+    },
+    {
+      "number": "5.6.46",
+      "text": "व्संदृश्य शास्त्रतो योगान्पारदारिकलक्षितान्. न याति च्छलनां कश्चिद्स्वदारान्प्रति शास्त्रवित्. ॥ ५.६.४६ ॥"
+    },
+    {
+      "number": "5.6.47",
+      "text": "व्पाक्षिकत्वात्प्रयोगाणां अपायानां च दर्शनात्. धर्मार्थयोश्च वैलोम्यान्नाचरेत्पारदारिकम्. ॥ ५.६.४७ ॥"
+    },
+    {
+      "number": "5.6.48",
+      "text": "व्तदेतद्दारगुप्त्यर्थं आरब्धं श्रेयसे नृणाम्. प्रजानां दूषणायैव न विज्ञेयोऽस्य संविधिः((१६०)). ॥ ५.६.४८ ॥"
+    }
+  ],
+  "colophon": {
+    "text": "चिति श्रिवात्स्यायनीये कामसूत्रे पारदारिके पञ्चमेऽधिकरणे ईश्वर्कामितं पञ्चमोऽध्यायः..लिव्रे ६ वैशिकं षष्टं अधिकरणम् ॥ ५.६ ॥"
+  }
+}

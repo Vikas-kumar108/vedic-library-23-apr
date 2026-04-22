@@ -1,0 +1,179 @@
+{
+  "global_prakarana_id": "p40",
+  "script_type": "devanagari",
+  "adhikarana_number": 5,
+  "adhikarana_name_sanskrit": "पारदारिके अधिकरणम्",
+  "adhikarana_name_iast": "pāradārike adhikaraṇam",
+  "adhikarana_name_transliteration": "paradarike-adhikaranam",
+  "adhikarana_name_english": "",
+  "adhyaya_number": 1,
+  "adhyaya_name_sanskrit": "स्त्रीपुरुषशीलवस्थापनं व्यावर्तनकारणानि स्त्रीषु सिद्धाः पुरुषा अयत्नसाध्या योषितः",
+  "adhyaya_name_iast": "strī-puruṣa-śīla-avasthāpanaṁ vyāvartana-kāraṇāni strīṣu siddhāḥ puruṣā ayatna-sādhyā yoṣitaḥ",
+  "adhyaya_name_transliteration": "stri-purusa-sila-avasthapanam vyavartana-karanani strisu siddhah purusa ayatna-sadhya yositah",
+  "adhyaya_name_english": "",
+  "prakarana_number_within_adhyaya": 2,
+  "prakarana_number_within_adhikarana": 2,
+  "prakarana_name_sanskrit": "व्यावर्तनकारणप्रकरणम्",
+  "prakarana_name_iast": "vyāvartana-kāraṇa-prakaraṇam",
+  "prakarana_name_transliteration": "vyavartana-karana-prakaranam",
+  "prakarana_name_english": "",
+  "sutra_range": "17-49",
+  "sutra_count": 33,
+  "has_colophon": false,
+  "is_last_in_adhikarana": false,
+  "topic_tags": [],
+  "purushartha_context": [
+    "kama"
+  ],
+  "related_prakaranas": [
+    "p39",
+    "p41"
+  ],
+  "base_text_source": {
+    "category": "smriti",
+    "shastra_type": "kama-shastra",
+    "text_name": "kama-sutra",
+    "author": "vātsyāyana"
+  },
+  "structural_role": "continuation",
+  "ocr_corrections_notes": [
+    "[ensure ‘व्यावर्तन’ (vyāvartana) retains long ā; OCR may produce ‘व्यवर्तन’]",
+    "[ensure ‘कारण’ (kāraṇa) retains long ā and ṇ; OCR may produce ‘करण’]",
+    "[ensure ‘ण’ (ṇa) is not reduced to ‘न’ in ‘कारण’]",
+    "[ensure compound ‘व्यावर्तनकारण’ remains intact]"
+  ],
+  "sutras": [
+    {
+      "number": "5.1.17",
+      "text": "सेच्तिओन्(प्रकरण)४० तत्र व्यावर्तनकारणानि((१३२)) ॥ ५.१.१७ ॥"
+    },
+    {
+      "number": "5.1.18",
+      "text": "पत्यावनुरागः ॥ ५.१.१८ ॥"
+    },
+    {
+      "number": "5.1.19",
+      "text": "अपत्यापेक्षा ॥ ५.१.१९ ॥"
+    },
+    {
+      "number": "5.1.20",
+      "text": "अतिक्रान्तवयस्त्वम् ॥ ५.१.२० ॥"
+    },
+    {
+      "number": "5.1.21",
+      "text": "दुःखाभिभवः ॥ ५.१.२१ ॥"
+    },
+    {
+      "number": "5.1.22",
+      "text": "विरहानःउपलम्भः ॥ ५.१.२२ ॥"
+    },
+    {
+      "number": "5.1.23",
+      "text": "अवज्ञयोपमन्त्रयत इति क्रोधः ॥ ५.१.२३ ॥"
+    },
+    {
+      "number": "5.1.24",
+      "text": "अःप्रतर्क्य इति संकल्पवर्जनम् ॥ ५.१.२४ ॥"
+    },
+    {
+      "number": "5.1.25",
+      "text": "गमिष्यतीत्यनःआयतिरन्यत्र प्रसक्तमतिरिति च ॥ ५.१.२५ ॥"
+    },
+    {
+      "number": "5.1.26",
+      "text": "असंवृताकार इत्युद्वेगः ॥ ५.१.२६ ॥"
+    },
+    {
+      "number": "5.1.27",
+      "text": "मित्रेषु निसृष्तभाव इति तेष्वपेक्षा ॥ ५.१.२७ ॥"
+    },
+    {
+      "number": "5.1.28",
+      "text": "शुष्काभियोगीत्याशङ्का ॥ ५.१.२८ ॥"
+    },
+    {
+      "number": "5.1.29",
+      "text": "तेजस्वीति साध्वसम् ॥ ५.१.२९ ॥"
+    },
+    {
+      "number": "5.1.30",
+      "text": "चण्डवेगः समर्थो वेति भयं मृग्याः ॥ ५.१.३० ॥"
+    },
+    {
+      "number": "5.1.31",
+      "text": "नागरकः कलासु विचक्षण इति व्रीडा ॥ ५.१.३१ ॥"
+    },
+    {
+      "number": "5.1.32",
+      "text": "सखित्वेनोपचरित इति च ॥ ५.१.३२ ॥"
+    },
+    {
+      "number": "5.1.33",
+      "text": "अःदेशकालज्ञ इत्यसूया ॥ ५.१.३३ ॥"
+    },
+    {
+      "number": "5.1.34",
+      "text": "परिभवस्थानं इत्यःबहुमानः ॥ ५.१.३४ ॥"
+    },
+    {
+      "number": "5.1.35",
+      "text": "आकारितोऽपि नावबुध्यत इत्यवज्ञा ॥ ५.१.३५ ॥"
+    },
+    {
+      "number": "5.1.36",
+      "text": "शसो मन्दवेग इति च हस्तिन्याः ॥ ५.१.३६ ॥"
+    },
+    {
+      "number": "5.1.37",
+      "text": "मत्तोऽस्य मा भूदनःइष्टं इत्यनुकम्पा ॥ ५.१.३७ ॥"
+    },
+    {
+      "number": "5.1.38",
+      "text": "आत्मनि दोषदर्शनान्निर्वेदः ॥ ५.१.३८ ॥"
+    },
+    {
+      "number": "5.1.39",
+      "text": "विदिता सती स्वजनबहिषःकृता भविष्यामीति भयम् ॥ ५.१.३९ ॥"
+    },
+    {
+      "number": "5.1.40",
+      "text": "पलित इत्यनःआदरः ॥ ५.१.४० ॥"
+    },
+    {
+      "number": "5.1.41",
+      "text": "पत्या प्रयुक्तः परीक्षत इति विमर्शः ॥ ५.१.४१ ॥"
+    },
+    {
+      "number": "5.1.42",
+      "text": "धर्मापेक्षा चेति ॥ ५.१.४२ ॥"
+    },
+    {
+      "number": "5.1.43",
+      "text": "तेषु यदात्मनि लक्षयेत्तदादित एव परिच्छिन्द्यात् ॥ ५.१.४३ ॥"
+    },
+    {
+      "number": "5.1.44",
+      "text": "आर्यत्वयुक्तानि रागवर्धनात् ॥ ५.१.४४ ॥"
+    },
+    {
+      "number": "5.1.45",
+      "text": "अःशक्तिजान्युपायप्रदर्शनात् ॥ ५.१.४५ ॥"
+    },
+    {
+      "number": "5.1.46",
+      "text": "बहुमानकृतान्यतिःपरिचयात् ॥ ५.१.४६ ॥"
+    },
+    {
+      "number": "5.1.47",
+      "text": "परिभवकृतान्यतिःशौण्डीर्याद्((१३३)) वैचक्षण्याच्च ॥ ५.१.४७ ॥"
+    },
+    {
+      "number": "5.1.48",
+      "text": "तत्परिभवजानि प्रणत्या. ॥ ५.१.४८ ॥"
+    },
+    {
+      "number": "5.1.49",
+      "text": "भययुक्तान्याश्वसनादिति((१३४)) ॥ ५.१.४९ ॥"
+    }
+  ]
+}

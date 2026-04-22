@@ -1,0 +1,138 @@
+{
+  "global_prakarana_id": "p18",
+  "script_type": "devanagari",
+  "adhikarana_number": 2,
+  "adhikarana_name_sanskrit": "सम्प्रयोगिके अधिकरणम्",
+  "adhikarana_name_iast": "samprayogike adhikaraṇam",
+  "adhikarana_name_transliteration": "samprayogike-adhikaranam",
+  "adhikarana_name_english": "",
+  "adhyaya_number": 8,
+  "adhyaya_name_sanskrit": "पुरुषोपसृप्तानि पुरुषायितम्",
+  "adhyaya_name_iast": "puruṣopasṛptāni puruṣāyitam",
+  "adhyaya_name_transliteration": "purusopasrptani purus-ayitam",
+  "adhyaya_name_english": "",
+  "prakarana_number_within_adhyaya": 2,
+  "prakarana_number_within_adhikarana": 13,
+  "prakarana_name_sanskrit": "पुरुषोपसृप्तप्रकरणम्",
+  "prakarana_name_iast": "puruṣopasṛpta-prakaraṇam",
+  "prakarana_name_transliteration": "purusopasrpta-prakaranam",
+  "prakarana_name_english": "",
+  "sutra_range": "8-31",
+  "sutra_count": 24,
+  "has_colophon": true,
+  "is_last_in_adhikarana": false,
+  "topic_tags": [],
+  "purushartha_context": [
+    "kama"
+  ],
+  "related_prakaranas": [
+    "p17",
+    "p19"
+  ],
+  "base_text_source": {
+    "category": "smriti",
+    "shastra_type": "kama-shastra",
+    "text_name": "kama-sutra",
+    "author": "vātsyāyana"
+  },
+  "structural_role": "concluding",
+  "ocr_corrections_notes": [
+    "[ensure ‘उपसृप्त’ (upasṛpta) retains ṛ; OCR may produce ‘उपस्रप्त’ or ‘उपसर्पित’]",
+    "[ensure ‘पुरुष’ (puruṣa) retains ṣ; OCR may produce ‘पुरुस’]",
+    "[maintain correct mapping: this prakaraṇa covers sutras 8–31, complementing p17]"
+  ],
+  "sutras": [
+    {
+      "number": "2.8.8",
+      "text": "सेच्तिओन्(प्रकरण)१८ पुरुषः शयनस्थाया योषितस्तद्वचनव्याक्षिप्तचित्ताया इव नीवीं विश्लेषयेत्. तत्र विवदमानां कपोलचुम्बनेन पर्याकुलयेत् ॥ २.८.८ ॥"
+    },
+    {
+      "number": "2.8.9",
+      "text": "स्थिरलिङ्गश्च तत्रैनां परिस्पृशेत् ॥ २.८.९ ॥"
+    },
+    {
+      "number": "2.8.10",
+      "text": "प्रथमसंगता चेत्संहतोर्वोरन्तरे घट्टनम् ॥ २.८.१० ॥"
+    },
+    {
+      "number": "2.8.11",
+      "text": "कन्यायाश्च ॥ २.८.११ ॥"
+    },
+    {
+      "number": "2.8.12",
+      "text": "तथा स्तनयोः संहतयोर्हस्तयोः कक्षयोरंसयोर्ग्रीवायां इति च ॥ २.८.१२ ॥"
+    },
+    {
+      "number": "2.8.13",
+      "text": "स्वैरिण्यां यथाःसात्म्यं यथायोगं च. अलके चुम्बनार्थं एनां निर्दयं अवलम्बेत्हनुदेशे चाङ्गुलिसंपुतेन ॥ २.८.१३ ॥"
+    },
+    {
+      "number": "2.8.14",
+      "text": "तत्रेतरस्य व्रीडा निमीलनं च. प्रथमसमागमे कन्यायाश्च ॥ २.८.१४ ॥"
+    },
+    {
+      "number": "2.8.15",
+      "text": "रतिसंयोगे चैनां कथं अनुरज्यत इति प्रवृत्त्या परीक्षेत ॥ २.८.१५ ॥"
+    },
+    {
+      "number": "2.8.16",
+      "text": "युक्तयन्त्रेणोपसृप्यमाना यतो दृष्टिं आवर्तयेत्तत एवैनां पीडयेत्. एतद्रहस्यं युवतीनां इति सुवर्णनाभः ॥ २.८.१६ ॥"
+    },
+    {
+      "number": "2.8.17",
+      "text": "गात्राणां स्रंसनं नेत्रनिमीलनं व्रीडानाशः समधिका च रतियोजनेति स्त्रीणां भावलक्षणम्..२.८.१८ हस्तौ विधुनोति स्विद्यति दशत्युत्थातुं न ददाति पादेनाहन्ति रतावमाने च पुरुषातिवर्तिनी ॥ २.८.१७ ॥"
+    },
+    {
+      "number": "2.8.19",
+      "text": "तस्याः प्राग्यन्त्रयोगात्करेण संबाधं गज इव क्षोभयेत्. आ मृदुभावात्. ततो यन्त्रयोजनम् ॥ २.८.१९ ॥"
+    },
+    {
+      "number": "2.8.20",
+      "text": "उपसृप्तकं [१]मन्थनं [२]हुलो((२९)) [३]अवमर्दनं [४]पीडितकं [५]निर्घातो [६]वराहघातो [७]वृषघातश्[८]चटकविलसितं [९]संपुट इति पुरुषोपसृप्तानि ॥ २.८.२० ॥"
+    },
+    {
+      "number": "2.8.21",
+      "text": "न्याय्यं ऋजुसंमिश्रणं उपसृप्तकम् ॥ २.८.२१ ॥"
+    },
+    {
+      "number": "2.8.22",
+      "text": "हस्तेन लिङ्गं सर्वतो भ्रामयेदिति [१]मन्थनम् ॥ २.८.२२ ॥"
+    },
+    {
+      "number": "2.8.23",
+      "text": "नीचीकृत्य जघनं उपरिष्टाद्घट्टयेदिति [२]हुलः ॥ २.८.२३ ॥"
+    },
+    {
+      "number": "2.8.24",
+      "text": "तदेव विपरीतं सःरभसं [३]अवमर्दनम् ॥ २.८.२४ ॥"
+    },
+    {
+      "number": "2.8.25",
+      "text": "लिङ्गेन समाहत्य पीडयंश्चिरं अवतिष्ठेतेति [४]पीडितकम् ॥ २.८.२५ ॥"
+    },
+    {
+      "number": "2.8.26",
+      "text": "सुःदूरं उत्कृष्य वेगेन स्वजघनं अवपातयेदिति [५]निर्घातः ॥ २.८.२६ ॥"
+    },
+    {
+      "number": "2.8.27",
+      "text": "एकत एव भूयिष्ठं अवलिखेदिति [६]वराहघातः ॥ २.८.२७ ॥"
+    },
+    {
+      "number": "2.8.28",
+      "text": "स एवोभयतः पर्यायेण [७]वृषाघातः ॥ २.८.२८ ॥"
+    },
+    {
+      "number": "2.8.29",
+      "text": "सकृन्मिश्रितं अःनिष्क्रमय्य द्विस्त्रिश्चतुरिति घट्टयेदिति [८]चटकविलसितम् ॥ २.८.२९ ॥"
+    },
+    {
+      "number": "2.8.30",
+      "text": "रागावसानिकं व्याख्यातं करणं [९]संपुटं इति((३०)) ॥ २.८.३० ॥"
+    },
+    {
+      "number": "2.8.31",
+      "text": "तेषां स्त्रीसात्म्याद्विकल्पेन प्रयोगः ॥ २.८.३१ ॥"
+    }
+  ]
+}

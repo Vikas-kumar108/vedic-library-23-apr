@@ -1,0 +1,107 @@
+{
+  "global_prakarana_id": "p35",
+  "script_type": "devanagari",
+  "adhikarana_number": 4,
+  "adhikarana_name_sanskrit": "भार्याधिकारिके अधिकरणम्",
+  "adhikarana_name_iast": "bhāryādhikārike adhikaraṇam",
+  "adhikarana_name_transliteration": "bharyadhikarike-adhikaranam",
+  "adhikarana_name_english": "",
+  "adhyaya_number": 2,
+  "adhyaya_name_sanskrit": "ज्येष्ठादिवृत्तम्",
+  "adhyaya_name_iast": "jyeṣṭhādi-vṛttam",
+  "adhyaya_name_transliteration": "jyesthadi-vrttam",
+  "adhyaya_name_english": "",
+  "prakarana_number_within_adhyaya": 2,
+  "prakarana_number_within_adhikarana": 4,
+  "prakarana_name_sanskrit": "कनिष्ठावृत्तप्रकरणम्",
+  "prakarana_name_iast": "kaniṣṭhā-vṛtta-prakaraṇam",
+  "prakarana_name_transliteration": "kanistha-vrtta-prakaranam",
+  "prakarana_name_english": "",
+  "sutra_range": "16-30",
+  "sutra_count": 15,
+  "has_colophon": false,
+  "is_last_in_adhikarana": false,
+  "topic_tags": [],
+  "purushartha_context": [
+    "dharma",
+    "kama"
+  ],
+  "related_prakaranas": [
+    "p34",
+    "p36"
+  ],
+  "base_text_source": {
+    "category": "smriti",
+    "shastra_type": "kama-shastra",
+    "text_name": "kama-sutra",
+    "author": "vātsyāyana"
+  },
+  "structural_role": "continuation",
+  "ocr_corrections_notes": [
+    "[ensure ‘कनिष्ठ’ (kaniṣṭha) retains ṣṭh cluster; OCR may produce ‘कनिष्ट’ or ‘कनिस्थ’]",
+    "[ensure ‘वृत्त’ (vṛtta) retains ṛ and double त्त; OCR may produce ‘वृत’]",
+    "[ensure long ā in ‘कनिष्ठा’ (kaniṣṭhā) is preserved; OCR may produce ‘कनिष्ठ’]"
+  ],
+  "sutras": [
+    {
+      "number": "4.2.16",
+      "text": "सेच्तिओन्(प्रकरण)३५ कनिष्ठा तु मातृवत्सःपत्नीं पश्येत् ॥ ४.२.१६ ॥"
+    },
+    {
+      "number": "4.2.17",
+      "text": "ज्ञातिदायं अपि तस्या अःविदितं नोपयुञ्जीत ॥ ४.२.१७ ॥"
+    },
+    {
+      "number": "4.2.18",
+      "text": "आत्मवृत्तान्तांस्तदधिष्ठितान्कुर्यात् ॥ ४.२.१८ ॥"
+    },
+    {
+      "number": "4.2.19",
+      "text": "अनुज्ञाता पतिं अधिशयीत ॥ ४.२.१९ ॥"
+    },
+    {
+      "number": "4.2.20",
+      "text": "न वा तस्या वचनं अन्यस्याः कथयेत् ॥ ४.२.२० ॥"
+    },
+    {
+      "number": "4.2.21",
+      "text": "तदपत्यानि स्वेभ्योऽधिकानि पश्येत्..४.२.२२ रहसि पतिं अधिकं उपचरेत् ॥ ४.२.२१ ॥"
+    },
+    {
+      "number": "4.2.23",
+      "text": "आत्मनश्च सपत्नीविकारजं दुःखं नाचक्षीत ॥ ४.२.२३ ॥"
+    },
+    {
+      "number": "4.2.24",
+      "text": "पत्युष्च सःविशेषकं गूढं मानं लिप्सेत् ॥ ४.२.२४ ॥"
+    },
+    {
+      "number": "4.2.25",
+      "text": "अनेन खलु पथ्यदानेन जीवामीति ब्रूयात् ॥ ४.२.२५ ॥"
+    },
+    {
+      "number": "4.2.26",
+      "text": "तत्तु श्लाघया रागेण वा बाहिर्नाचक्षीत ॥ ४.२.२६ ॥"
+    },
+    {
+      "number": "4.2.27",
+      "text": "भिन्नरहस्या हि भर्तुरवज्ञां लभते ॥ ४.२.२७ ॥"
+    },
+    {
+      "number": "4.2.28",
+      "text": "ज्येष्ठाभयाच्च निगूढसंमानार्थिनी स्यादिति गोनर्दीयः ॥ ४.२.२८ ॥"
+    },
+    {
+      "number": "4.2.29",
+      "text": "दुरःभागं अनःअपत्यां च ज्येष्ठां अनुकम्पेत नायकेन चानुकम्पयेत् ॥ ४.२.२९ ॥"
+    },
+    {
+      "number": "4.2.30",
+      "text": "प्रसह्य त्वेनां एकचारिणीवृत्तं अनुतिष्ठेत् ॥ ४.२.३० ॥"
+    },
+    {
+      "number": "4.2.30",
+      "text": "चिति कनिष्ठावृत्तम्((१२२)) ॥ ४.२.३० ॥"
+    }
+  ]
+}

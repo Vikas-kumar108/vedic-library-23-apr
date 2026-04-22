@@ -1,0 +1,96 @@
+{
+  "global_prakarana_id": "p54",
+  "script_type": "devanagari",
+  "adhikarana_number": 6,
+  "adhikarana_name_sanskrit": "वैशिकिके अधिकरणम्",
+  "adhikarana_name_iast": "vaiśikike adhikaraṇam",
+  "adhikarana_name_transliteration": "vaisikike-adhikaranam",
+  "adhikarana_name_english": "",
+  "adhyaya_number": 3,
+  "adhyaya_name_sanskrit": "अर्थागमोपाया विरक्तलिङ्गानि विरक्तप्रतिपत्तिर्निष्कासनक्रमाः",
+  "adhyaya_name_iast": "arthāgamopāyā virakta-liṅgāni virakta-pratipattir niṣkāsana-kramāḥ",
+  "adhyaya_name_transliteration": "arthagamopaya virakta-lingani virakta-pratipattir niskasana-kramah",
+  "adhyaya_name_english": "",
+  "prakarana_number_within_adhyaya": 2,
+  "prakarana_number_within_adhikarana": 5,
+  "prakarana_name_sanskrit": "विरक्तप्रतिपत्तिप्रकरणम्",
+  "prakarana_name_iast": "virakta-pratipatti-prakaraṇam",
+  "prakarana_name_transliteration": "virakta-pratipatti-prakaranam",
+  "prakarana_name_english": "",
+  "sutra_range": "27-38",
+  "sutra_count": 12,
+  "has_colophon": false,
+  "is_last_in_adhikarana": false,
+  "topic_tags": [],
+  "purushartha_context": [
+    "artha",
+    "kama"
+  ],
+  "related_prakaranas": [
+    "p53",
+    "p55"
+  ],
+  "base_text_source": {
+    "category": "smriti",
+    "shastra_type": "kama-shastra",
+    "text_name": "kama-sutra",
+    "author": "vātsyāyana"
+  },
+  "structural_role": "continuation",
+  "ocr_corrections_notes": [
+    "[ensure ‘विरक्त’ (virakta) is preserved; OCR may produce ‘विरकत’]",
+    "[ensure ‘प्रतिपत्ति’ (pratipatti) retains double त्त; OCR may reduce to ‘प्रतिपति’]",
+    "[ensure ‘लिङ्ग’ (liṅga) retains ṅ in adhyāya name; OCR may produce ‘लिंग’]",
+    "[ensure compound ‘विरक्तप्रतिपत्ति’ remains intact]"
+  ],
+  "sutras": [
+    {
+      "number": "6.3.27",
+      "text": "सेच्तिओन्(प्रकरण)५४विःरक्तं च नित्यं एव प्रकृतिविक्रियातो विद्यान्मुखवर्णाच्च ॥ ६.३.२७ ॥"
+    },
+    {
+      "number": "6.3.28",
+      "text": "ऊनं अतिरिक्तं वा ददाति ॥ ६.३.२८ ॥"
+    },
+    {
+      "number": "6.3.29",
+      "text": "प्रतिलोमैः सम्बध्यते ॥ ६.३.२९ ॥"
+    },
+    {
+      "number": "6.3.30",
+      "text": "व्यपदिश्यान्यत्करोति ॥ ६.३.३० ॥"
+    },
+    {
+      "number": "6.3.31",
+      "text": "उचितं आच्छिनत्ति ॥ ६.३.३१ ॥"
+    },
+    {
+      "number": "6.3.32",
+      "text": "प्रतिज्ञातं विस्मरति. अन्यथा वा योजयति ॥ ६.३.३२ ॥"
+    },
+    {
+      "number": "6.3.33",
+      "text": "स्वःपक्षैः संज्ञया भाषते ॥ ६.३.३३ ॥"
+    },
+    {
+      "number": "6.3.34",
+      "text": "मित्रकार्यं अपदिश्यान्यत्र शेते ॥ ६.३.३४ ॥"
+    },
+    {
+      "number": "6.3.35",
+      "text": "पूर्वसंसृष्टायाश्च परिजनेन मिथः कथयति ॥ ६.३.३५ ॥"
+    },
+    {
+      "number": "6.3.36",
+      "text": "तस्य सारद्रव्याणि प्रागवबोधादन्यापदेशेन हस्ते कुर्वीत ॥ ६.३.३६ ॥"
+    },
+    {
+      "number": "6.3.37",
+      "text": "तानि चास्या हस्तादुत्तमर्णः प्रसह्य गृह्णीयात् ॥ ६.३.३७ ॥"
+    },
+    {
+      "number": "6.3.38",
+      "text": "विवदमानेन सह धर्मस्थेषु((१६९)) व्यवहरेद् ॥ ६.३.३८ ॥"
+    }
+  ]
+}

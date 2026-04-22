@@ -1,0 +1,145 @@
+{
+  "global_prakarana_id": "p62",
+  "script_type": "devanagari",
+  "adhikarana_number": 7,
+  "adhikarana_name_sanskrit": "औपनिषदिके अधिकरणम्",
+  "adhikarana_name_iast": "aupanisadike adhikaraṇam",
+  "adhikarana_name_transliteration": "aupanisadike-adhikaranam",
+  "adhikarana_name_english": "",
+  "adhyaya_number": 2,
+  "adhyaya_name_sanskrit": "नष्टरागप्रत्यानयनं वृद्धिविधयश्चित्राश्च योगाः",
+  "adhyaya_name_iast": "naṣṭa-rāga-pratyānayanaṁ vṛddhi-vidhayaś citrāś ca yogāḥ",
+  "adhyaya_name_transliteration": "nastaraga-pratyanayanam vrddhi-vidhayas citras ca yogah",
+  "adhyaya_name_english": "",
+  "prakarana_number_within_adhyaya": 1,
+  "prakarana_number_within_adhikarana": 4,
+  "prakarana_name_sanskrit": "नष्टरागप्रत्यानयनप्रकरणम्",
+  "prakarana_name_iast": "naṣṭa-rāga-pratyānayana-prakaraṇam",
+  "prakarana_name_transliteration": "nastaraga-pratyanayana-prakaranam",
+  "prakarana_name_english": "",
+  "sutra_range": "1-24",
+  "sutra_count": 24,
+  "has_colophon": false,
+  "is_last_in_adhikarana": false,
+  "topic_tags": [],
+  "purushartha_context": [
+    "kama"
+  ],
+  "related_prakaranas": [
+    "p61",
+    "p63"
+  ],
+  "base_text_source": {
+    "category": "smriti",
+    "shastra_type": "kama-shastra",
+    "text_name": "kama-sutra",
+    "author": "vātsyāyana"
+  },
+  "structural_role": "opening",
+  "ocr_corrections_notes": [
+    "[ensure ‘नष्ट’ (naṣṭa) retains ṣṭ cluster; OCR may produce ‘नस्ट’]",
+    "[ensure ‘राग’ (rāga) retains long ā; OCR may produce ‘रग’]",
+    "[ensure ‘प्रत्यानयन’ (pratyānayana) retains long ā; OCR may produce ‘प्रत्यानयन’ with shortened vowel]",
+    "[ensure ‘वृद्धि’ (vṛddhi) retains ṛ and double ddh; OCR may produce ‘वृदि’]",
+    "[ensure ‘चित्रा’ (citrā) retains long ā; OCR may produce ‘चित्र’]",
+    "[ensure compound ‘नष्टरागप्रत्यानयन’ remains intact]"
+  ],
+  "sutras": [
+    {
+      "number": "7.2.1",
+      "text": "चण्डवेगां रञ्जयितुं अःशक्नुवन्योगानाचरेत् ॥ ७.२.१ ॥"
+    },
+    {
+      "number": "7.2.2",
+      "text": "रागस्योपक्रमे संबाधस्य करेणोपमर्दनं तस्या रसप्राप्तिकाले च रतयोजनं इति रागप्रत्यानयनम् ॥ ७.२.२ ॥"
+    },
+    {
+      "number": "7.2.3",
+      "text": "औपरिष्टकं मन्दवेगस्य गतवयसो व्यायतस्य रतश्रान्तस्य च रागप्रत्यानयनम् ॥ ७.२.३ ॥"
+    },
+    {
+      "number": "7.2.4",
+      "text": "अपद्रव्याणि वा योजयेत् ॥ ७.२.४ ॥"
+    },
+    {
+      "number": "7.2.5",
+      "text": "तानि सुवर्णरजतताम्रकालायसगजदन्तगवलद्रव्यमयाणि ॥ ७.२.५ ॥"
+    },
+    {
+      "number": "7.2.6",
+      "text": "त्रापुषाणि सैसकानि च मृदूनि शीतवीर्याणि कर्मणि च धृष्णूनि भवन्तीति बाभ्रवीया योगाः ॥ ७.२.६ ॥"
+    },
+    {
+      "number": "7.2.7",
+      "text": "दारुमयानि साम्यतश्चेति वात्स्यायनः ॥ ७.२.७ ॥"
+    },
+    {
+      "number": "7.2.8",
+      "text": "लिङ्गप्रमाणान्तरं बिन्दुभिः कर्कशपर्यन्तं बहुलं स्यात् ॥ ७.२.८ ॥"
+    },
+    {
+      "number": "7.2.9",
+      "text": "एते एव द्वे संघाटी ॥ ७.२.९ ॥"
+    },
+    {
+      "number": "7.2.10",
+      "text": "त्रिप्रभृति यावत्प्रमाणं वा चूडकः ॥ ७.२.१० ॥"
+    },
+    {
+      "number": "7.2.11",
+      "text": "एकां एव लतिकां प्रमाणवशेन वेष्टयेदित्येकचूडकः ॥ ७.२.११ ॥"
+    },
+    {
+      "number": "7.2.12",
+      "text": "उभयतोःमुखच्छिद्रः स्थूलकर्कशवृषणगुटिकायुक्तः प्रमाणवशयोगी कट्यां बद्धः कञ्चुको जालकं वा ॥ ७.२.१२ ॥"
+    },
+    {
+      "number": "7.2.13",
+      "text": "तदःभावेऽलाबूनालकं वेणुश्च तैलकषायैः सुःभावितः सूत्रेण कट्यां बद्धः श्लक्ष्णा काष्ठमाला वा ग्रथिता बहुभिरामलकास्थिभिः संयुक्तेत्यपविद्धयोगाः. ॥ ७.२.१३ ॥"
+    },
+    {
+      "number": "7.2.14",
+      "text": "न त्वःविद्धस्य कस्य चिद्व्यवहृतिरस्तीति ॥ ७.२.१४ ॥"
+    },
+    {
+      "number": "7.2.15",
+      "text": "दाक्षिणात्यानां लिङ्गस्य कर्णयोरिव व्यधनं बालस्य ॥ ७.२.१५ ॥"
+    },
+    {
+      "number": "7.2.16",
+      "text": "युवा तु शस्त्रेण छेदयित्वा यावद्रुधिरस्यागमनं तावदुदके तिष्ठेत् ॥ ७.२.१६ ॥"
+    },
+    {
+      "number": "7.2.17",
+      "text": "वैशद्यार्थं च तस्यां रात्रौ निर्बन्धाद्व्यवायः ॥ ७.२.१७ ॥"
+    },
+    {
+      "number": "7.2.18",
+      "text": "ततः कषायैरेकदिनान्तरितं शोधनम् ॥ ७.२.१८ ॥"
+    },
+    {
+      "number": "7.2.19",
+      "text": "वेतसकुटजशङ्कुभिः क्रमेण वर्धमानस्य वर्धनैर्बन्धनम् ॥ ७.२.१९ ॥"
+    },
+    {
+      "number": "7.2.20",
+      "text": "यष्टीमधुकेन मधुयुक्तेन शोधनम् ॥ ७.२.२० ॥"
+    },
+    {
+      "number": "7.2.21",
+      "text": "ततः सीसकपत्त्रकर्णिकया वर्धयेत् ॥ ७.२.२१ ॥"
+    },
+    {
+      "number": "7.2.22",
+      "text": "म्रक्षयेद्भल्लातकतैलेनेति व्यधनयोगाः ॥ ७.२.२२ ॥"
+    },
+    {
+      "number": "7.2.23",
+      "text": "तस्मिन्ननःएकाकृतिविकल्पान्यपद्रव्याणि योजयेत् ॥ ७.२.२३ ॥"
+    },
+    {
+      "number": "7.2.24",
+      "text": "वृत्तं एकतो वृतां उदूखलकं कुसुमकं कण्टकितं कङ्कास्थि गजकरकं अष्टमण्डलकं भ्रमरकं शृङ्गाटकं अन्यानि वोपायतः कर्मतश्च बहुकर्मसहता चैषां मृदुकर्कशता यथासात्म्यं ॥ ७.२.२४ ॥"
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../lib/generated/client"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// 1. Structural Tree
+model LibraryNode {
+  id         String  @id
+  parentId   String?
+  path       String? // Simulating ltree: "itihasa.mahabharata.bg.1.1"
+  name       String
+  sanskrit   String?
+  type       String // category, text, section, chapter, verse
+  order      Int     @default(0)
+  verseCount Int?
+  structure  Json? // ["Skandha", "Adhyaya", "Sloka"]
+  meta       Json?
+
+  parent   LibraryNode?  @relation("TreeHierarchy", fields: [parentId], references: [id])
+  children LibraryNode[] @relation("TreeHierarchy")
+
+  @@index([parentId])
+  @@index([path])
+}
+
+// 2. The Verse/Sutra Content Entity
+model Verse {
+  id                String  @id
+  chapterNumber     Int
+  verseNumber       Int
+  unitType          String? // sloka, sutra, mantra, prose
+  scripts           Json? // { devanagari: "...", iast: "..." }
+  synonyms          Json? // { en: [...], sa: [...] }
+  segmentation      Json?
+  anvaya            Json?
+  anvayaTranslation Json?
+  meter             String?
+  theme             String?
+  relations         Json? // { related_verses: [], ... }
+
+  commentaries Commentary[]
+  translations Translation[]
+
+  @@index([chapterNumber, verseNumber])
+}
+
+// 3. Normalized Authors & Sources
+model Author {
+  id           Int           @id @default(autoincrement())
+  name         String        @unique
+  role         String? // author, commentator, translator
+  sampradaya   String?
+  description  String?
+  translations Translation[]
+  commentaries Commentary[]
+
+  @@index([name])
+}
+
+// 4. Content Linked to Authors
+model Translation {
+  id          Int    @id @default(autoincrement())
+  verseId     String
+  authorId    Int
+  language    String
+  description String
+
+  verse  Verse  @relation(fields: [verseId], references: [id], onDelete: Cascade)
+  author Author @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@index([verseId])
+  @@index([authorId])
+}
+
+model Commentary {
+  id              Int     @id @default(autoincrement())
+  verseId         String
+  authorId        Int
+  language        String
+  description     String
+  sampradaya      String?
+  subCommentaries Json? // Recursive commentaries
+
+  verse  Verse  @relation(fields: [verseId], references: [id], onDelete: Cascade)
+  author Author @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@index([verseId])
+  @@index([authorId])
+}

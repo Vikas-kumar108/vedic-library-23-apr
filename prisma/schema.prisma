@@ -1,0 +1,226 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [ltree, pgvector(map: "vector"), uuid_ossp(map: "uuid-ossp")]
+}
+
+// =====================================================
+// ENUMS
+// =====================================================
+
+enum ContentType {
+  sutra
+  translation
+  commentary
+  purport
+  title
+  subtitle
+  colophon
+}
+
+enum Language {
+  sa
+  en
+  hi
+  bn
+  ta
+  or
+  mr
+  gu
+}
+
+enum Script {
+  devanagari
+  latin
+  bengali
+  tamil
+  oriya
+}
+
+enum LifeStage {
+  student
+  unmarried
+  married
+  parent
+  retired
+  renunciate
+}
+
+enum GuidanceLevel {
+  beginner
+  intermediate
+  advanced
+  teacher
+}
+
+// =====================================================
+// CORE MODELS
+// =====================================================
+
+model Shastra {
+  id            String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  slug          String   @unique
+  name          String
+  structureType String   @map("structure_type")
+  createdAt     DateTime @default(now()) @map("created_at")
+  nodes         Node[]
+
+  @@map("shastras")
+}
+
+model Source {
+  id          String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name        String
+  role        String?
+  description String?
+  yearApprox  Int?     @map("year_approx")
+  era         String?
+  createdAt   DateTime @default(now()) @map("created_at")
+  texts       Text[]
+  versions    TextVersion[]
+
+  @@map("sources")
+}
+
+model Node {
+  id           String               @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  shastraId    String               @map("shastra_id") @db.Uuid
+  parentId     String?              @map("parent_id") @db.Uuid
+  level        String               // category, text, section, chapter, verse
+  name         String
+  slug         String?
+  orderIndex   Int                  @default(0) @map("order_index")
+  canonicalRef String?              @map("canonical_ref")
+  path         Unsupported("ltree")?
+  deletedAt    DateTime?            @map("deleted_at")
+  createdAt    DateTime             @default(now()) @map("created_at")
+
+  shastra      Shastra              @relation(fields: [shastraId], references: [id], onDelete: Cascade)
+  parent       Node?                @relation("NodeToNode", fields: [parentId], references: [id], onDelete: Cascade)
+  children     Node[]               @relation("NodeToNode")
+  texts        Text[]
+  fromRelations NodeRelation[]      @relation("FromNode")
+  toRelations   NodeRelation[]      @relation("ToNode")
+  tags         NodeTag[]
+
+  @@index([path], type: Gist)
+  @@map("nodes")
+}
+
+model Text {
+  id           String         @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  nodeId       String         @map("node_id") @db.Uuid
+  contentType  ContentType    @map("content_type")
+  language     Language
+  script       Script
+  content      String
+  sourceId     String?        @map("source_id") @db.Uuid
+  isPrimary    Boolean        @default(false) @map("is_primary")
+  anchorWord   String?        @map("anchor_word")
+  segmentOrder Int?           @map("segment_order")
+  deletedAt    DateTime?      @map("deleted_at")
+  createdAt    DateTime       @default(now()) @map("created_at")
+
+  node         Node           @relation(fields: [nodeId], references: [id], onDelete: Cascade)
+  source       Source?        @relation(fields: [sourceId], references: [id])
+  metadata     TextMetadata?
+  synonyms     Synonym[]
+  versions     TextVersion[]
+  embedding    TextEmbedding?
+
+  @@index([nodeId])
+  @@index([nodeId, contentType, language])
+  @@map("texts")
+}
+
+model TextMetadata {
+  textId         String          @id @map("text_id") @db.Uuid
+  lifeStages     LifeStage[]     @map("life_stages")
+  guidanceLevels GuidanceLevel[] @map("guidance_levels")
+  isSensitive    Boolean         @default(false) @map("is_sensitive")
+
+  text           Text            @relation(fields: [textId], references: [id], onDelete: Cascade)
+
+  @@map("text_metadata")
+}
+
+model Synonym {
+  id         String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  textId     String    @map("text_id") @db.Uuid
+  word       String
+  meaning    String?
+  language   Language?
+  orderIndex Int?      @map("order_index")
+
+  text       Text      @relation(fields: [textId], references: [id], onDelete: Cascade)
+
+  @@map("synonyms")
+}
+
+model Tag {
+  id        String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name      String?   @unique
+  type      String?
+  createdAt DateTime  @default(now()) @map("created_at")
+  nodes     NodeTag[]
+
+  @@map("tags")
+}
+
+model NodeTag {
+  nodeId String @map("node_id") @db.Uuid
+  tagId  String @map("tag_id") @db.Uuid
+
+  node   Node   @relation(fields: [nodeId], references: [id], onDelete: Cascade)
+  tag    Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([nodeId, tagId])
+  @@map("node_tags")
+}
+
+model NodeRelation {
+  id           String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  fromNodeId   String   @map("from_node_id") @db.Uuid
+  toNodeId     String   @map("to_node_id") @db.Uuid
+  relationType String?  @map("relation_type")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  fromNode     Node     @relation("FromNode", fields: [fromNodeId], references: [id], onDelete: Cascade)
+  toNode       Node     @relation("ToNode", fields: [toNodeId], references: [id], onDelete: Cascade)
+
+  @@map("node_relations")
+}
+
+model TextVersion {
+  id            String      @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  textId        String      @map("text_id") @db.Uuid
+  content       String?
+  contentType   ContentType? @map("content_type")
+  language      Language?
+  script        Script?
+  sourceId      String?     @map("source_id") @db.Uuid
+  versionNumber Int?        @map("version_number")
+  updatedBy     String?     @map("updated_by")
+  createdAt     DateTime    @default(now()) @map("created_at")
+
+  text          Text        @relation(fields: [textId], references: [id], onDelete: Cascade)
+  source        Source?     @relation(fields: [sourceId], references: [id])
+
+  @@map("text_versions")
+}
+
+model TextEmbedding {
+  textId    String                   @id @map("text_id") @db.Uuid
+  embedding Unsupported("vector(384)")
+  model     String
+  createdAt DateTime                 @default(now()) @map("created_at")
+
+  text      Text                     @relation(fields: [textId], references: [id], onDelete: Cascade)
+
+  @@map("text_embeddings")
+}

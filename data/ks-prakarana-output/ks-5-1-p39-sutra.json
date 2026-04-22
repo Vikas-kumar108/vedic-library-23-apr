@@ -1,0 +1,113 @@
+{
+  "global_prakarana_id": "p39",
+  "script_type": "devanagari",
+  "adhikarana_number": 5,
+  "adhikarana_name_sanskrit": "पारदारिके अधिकरणम्",
+  "adhikarana_name_iast": "pāradārike adhikaraṇam",
+  "adhikarana_name_transliteration": "paradarike-adhikaranam",
+  "adhikarana_name_english": "",
+  "adhyaya_number": 1,
+  "adhyaya_name_sanskrit": "स्त्रीपुरुषशीलवस्थापनं व्यावर्तनकारणानि स्त्रीषु सिद्धाः पुरुषा अयत्नसाध्या योषितः",
+  "adhyaya_name_iast": "strī-puruṣa-śīla-avasthāpanaṁ vyāvartana-kāraṇāni strīṣu siddhāḥ puruṣā ayatna-sādhyā yoṣitaḥ",
+  "adhyaya_name_transliteration": "stri-purusa-sila-avasthapanam vyavartana-karanani strisu siddhah purusa ayatna-sadhya yositah",
+  "adhyaya_name_english": "",
+  "prakarana_number_within_adhyaya": 1,
+  "prakarana_number_within_adhikarana": 1,
+  "prakarana_name_sanskrit": "स्त्रीपुरुषशीलावस्थापनप्रकरणम्",
+  "prakarana_name_iast": "strī-puruṣa-śīla-avasthāpana-prakaraṇam",
+  "prakarana_name_transliteration": "stri-purusa-sila-avasthapana-prakaranam",
+  "prakarana_name_english": "",
+  "sutra_range": "1-16",
+  "sutra_count": 16,
+  "has_colophon": false,
+  "is_last_in_adhikarana": false,
+  "topic_tags": [],
+  "purushartha_context": [
+    "kama"
+  ],
+  "related_prakaranas": [
+    "p38",
+    "p40"
+  ],
+  "base_text_source": {
+    "category": "smriti",
+    "shastra_type": "kama-shastra",
+    "text_name": "kama-sutra",
+    "author": "vātsyāyana"
+  },
+  "structural_role": "opening",
+  "ocr_corrections_notes": [
+    "[ensure ‘स्त्री’ (strī) retains long ī; OCR may produce ‘स्त्रि’]",
+    "[ensure ‘पुरुष’ (puruṣa) retains ṣ; OCR may produce ‘पुरुस’]",
+    "[ensure ‘शील’ (śīla) retains long ī and ś; OCR may produce ‘सिल’]",
+    "[ensure ‘अवस्थापन’ (avasthāpana) retains long ā; OCR may produce ‘अवस्थपन’]",
+    "[ensure ‘व्यावर्तन’ (vyāvartana) retains long ā; OCR may produce ‘व्यवर्तन’]",
+    "[ensure ‘योषितः’ (yoṣitaḥ) retains ṣ and visarga; OCR may produce ‘योसित’]"
+  ],
+  "sutras": [
+    {
+      "number": "5.1.1",
+      "text": "व्याख्यातकारणाः परपरिग्रहोपगमाः((१३०)) ॥ ५.१.१ ॥"
+    },
+    {
+      "number": "5.1.2",
+      "text": "तेषु साध्यत्वं अनःअत्ययं गम्यत्वं आयतिं वृत्तिं चादित एव परीक्षेत ॥ ५.१.२ ॥"
+    },
+    {
+      "number": "5.1.3",
+      "text": "यदा तु स्थानात्स्थानान्तरं कामं प्रतिपद्यमानं पश्येत्तदात्मशरीरोपघातत्राणार्थं परपरिग्रहानभ्युपगच्छेत् ॥ ५.१.३ ॥"
+    },
+    {
+      "number": "5.1.4",
+      "text": "दश तु कामस्य स्थानानि ॥ ५.१.४ ॥"
+    },
+    {
+      "number": "5.1.5",
+      "text": "[१]चक्षुःप्रीतिर्[२]मनःसङ्गः [३]संकल्पोत्पत्तिर्[४]निद्राच्छेदस्[५]तनुता [६]विषयेभ्यो व्यावृत्तिर्[७]लज्जाप्रनाश [८]उन्मादो [९]मूर्च्छा [१०]मरणं इति तेषां लिङ्गानि ॥ ५.१.५ ॥"
+    },
+    {
+      "number": "5.1.6",
+      "text": "तत्राकृतितो लक्षणतश्च युवत्याः शीलं सत्यं शौचं साध्यतां चण्डवेगतां च लक्षयेदित्याचार्याः ॥ ५.१.६ ॥"
+    },
+    {
+      "number": "5.1.7",
+      "text": "व्यभिचारादाकृतिलक्षणयोगानां इङ्गिताकाराभ्यां एव प्रवृत्तिर्बोद्धव्या योषित इति वात्स्यायनः ॥ ५.१.७ ॥"
+    },
+    {
+      "number": "5.1.8",
+      "text": "यं किं चिदुज्ज्वलं पुरुषं दृष्त्वा स्त्री कामयते. तथा पुरुषोऽपि योषिताम्. अपेक्षया तु न प्रवर्तते इति गोणिकापुत्रः ॥ ५.१.८ ॥"
+    },
+    {
+      "number": "5.1.9",
+      "text": "तत्र स्त्रियं प्रति विशेषः ॥ ५.१.९ ॥"
+    },
+    {
+      "number": "5.1.10",
+      "text": "न स्त्री धर्मं अःधर्मं चापेक्षते कामयत एव. कार्यापेक्षया तु नाभियुङ्क्ते ॥ ५.१.१० ॥"
+    },
+    {
+      "number": "5.1.11",
+      "text": "स्वभावाच्च पुरुषेणाभियुज्यमाना चिकीर्षन्त्यपि व्यावर्तते ॥ ५.१.११ ॥"
+    },
+    {
+      "number": "5.1.12",
+      "text": "पुनः पुनरभियुक्ता सिद्ध्यति ॥ ५.१.१२ ॥"
+    },
+    {
+      "number": "5.1.13",
+      "text": "पुरुषस्तु धर्मस्थितिं आर्यसमयं चापेक्ष्य कामयमानोऽपि व्यावर्तते ॥ ५.१.१३ ॥"
+    },
+    {
+      "number": "5.1.14",
+      "text": "तथाबुद्धिश्चाभियुज्यमानोऽपि न सिद्ध्यति ॥ ५.१.१४ ॥"
+    },
+    {
+      "number": "5.1.15",
+      "text": "निषःकारणं अभियुङ्क्ते. अभियुज्यापि पुनर्नाभियुङ्क्ते. सिद्धायां च माध्यस्थ्यं गच्छति ॥ ५.१.१५ ॥"
+    },
+    {
+      "number": "5.1.16",
+      "text": "सुःलभां अवमन्यते. दुरःलभां आकङ्क्षत इति प्रायोवादः((१३१)) ॥ ५.१.१६ ॥"
+    }
+  ]
+}

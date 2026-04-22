@@ -1,0 +1,91 @@
+{
+  "global_prakarana_id": "p37",
+  "script_type": "devanagari",
+  "adhikarana_number": 4,
+  "adhikarana_name_sanskrit": "भार्याधिकारिके अधिकरणम्",
+  "adhikarana_name_iast": "bhāryādhikārike adhikaraṇam",
+  "adhikarana_name_transliteration": "bharyadhikarike-adhikaranam",
+  "adhikarana_name_english": "",
+  "adhyaya_number": 2,
+  "adhyaya_name_sanskrit": "ज्येष्ठादिवृत्तम्",
+  "adhyaya_name_iast": "jyeṣṭhādi-vṛttam",
+  "adhyaya_name_transliteration": "jyesthadi-vrttam",
+  "adhyaya_name_english": "",
+  "prakarana_number_within_adhyaya": 4,
+  "prakarana_number_within_adhikarana": 6,
+  "prakarana_name_sanskrit": "दुर्भगावृत्तप्रकरणम्",
+  "prakarana_name_iast": "durbhagā-vṛtta-prakaraṇam",
+  "prakarana_name_transliteration": "durbhaga-vrtta-prakaranam",
+  "prakarana_name_english": "",
+  "sutra_range": "45-54",
+  "sutra_count": 10,
+  "has_colophon": false,
+  "is_last_in_adhikarana": false,
+  "topic_tags": [],
+  "purushartha_context": [
+    "dharma",
+    "kama"
+  ],
+  "related_prakaranas": [
+    "p36",
+    "p38"
+  ],
+  "base_text_source": {
+    "category": "smriti",
+    "shastra_type": "kama-shastra",
+    "text_name": "kama-sutra",
+    "author": "vātsyāyana"
+  },
+  "structural_role": "continuation",
+  "ocr_corrections_notes": [
+    "[ensure ‘दुर्भगा’ (durbhagā) retains rbh cluster and long ā; OCR may produce ‘दुर्बगा’ or ‘दुर्गा’]",
+    "[ensure ‘भगा’ (bhagā) is not simplified to ‘गा’ or ‘भग’]",
+    "[ensure ‘वृत्त’ (vṛtta) retains ṛ and double त्त; OCR may produce ‘वृत’]"
+  ],
+  "sutras": [
+    {
+      "number": "4.2.45",
+      "text": "सेच्तिओन्(प्रकरण)३७ दुर्भगा तु सापत्नकपीडिता या तासां अधिकं इव पत्यावुपचरेत्तां आश्रयेत्. प्रकाश्यानि च कलाविज्ञानानि दर्शयेत्. दौर्भाग्याद्रहस्यानां अःभावः ॥ ४.२.४५ ॥"
+    },
+    {
+      "number": "4.2.46",
+      "text": "नायकापत्यानां धात्रेयिकानि कुर्यात् ॥ ४.२.४६ ॥"
+    },
+    {
+      "number": "4.2.47",
+      "text": "तन्मित्राणि चोपगृह्य तैर्भक्तिं आत्मनः प्रकाशयेत् ॥ ४.२.४७ ॥"
+    },
+    {
+      "number": "4.2.48",
+      "text": "धर्मकृत्येषु च पुरश्चारिणी स्याद्व्रतोपवासयोश्च ॥ ४.२.४८ ॥"
+    },
+    {
+      "number": "4.2.49",
+      "text": "परिजने दाक्षिण्यम्. न चाधिकं आत्मानं पश्येत् ॥ ४.२.४९ ॥"
+    },
+    {
+      "number": "4.2.50",
+      "text": "शयने तत्सात्म्येनात्मनोऽनुरागप्रत्यानयनम् ॥ ४.२.५० ॥"
+    },
+    {
+      "number": "4.2.51",
+      "text": "न चोपालभेत वामतां च न दर्शयेत् ॥ ४.२.५१ ॥"
+    },
+    {
+      "number": "4.2.52",
+      "text": "यया च कलहितः स्यात्कामं तां आवर्तयेत् ॥ ४.२.५२ ॥"
+    },
+    {
+      "number": "4.2.53",
+      "text": "यां च प्रच्छन्नां कामयेत्तां अनेन सह संगमयेद्गोपयेच्च ॥ ४.२.५३ ॥"
+    },
+    {
+      "number": "4.2.54",
+      "text": "यथा च पतिव्रतात्वं अःशाठ्यं नायको मन्येत तथा प्रतिविदध्यात् ॥ ४.२.५४ ॥"
+    },
+    {
+      "number": "4.2.54",
+      "text": "चिति दुर्भगावृत्तम्((१२५)) ॥ ४.२.५४ ॥"
+    }
+  ]
+}

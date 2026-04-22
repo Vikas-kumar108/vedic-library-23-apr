@@ -1,0 +1,111 @@
+{
+  "global_prakarana_id": "p34",
+  "script_type": "devanagari",
+  "adhikarana_number": 4,
+  "adhikarana_name_sanskrit": "भार्याधिकारिके अधिकरणम्",
+  "adhikarana_name_iast": "bhāryādhikārike adhikaraṇam",
+  "adhikarana_name_transliteration": "bharyadhikarike-adhikaranam",
+  "adhikarana_name_english": "",
+  "adhyaya_number": 2,
+  "adhyaya_name_sanskrit": "ज्येष्ठादिवृत्तम्",
+  "adhyaya_name_iast": "jyeṣṭhādi-vṛttam",
+  "adhyaya_name_transliteration": "jyesthadi-vrttam",
+  "adhyaya_name_english": "",
+  "prakarana_number_within_adhyaya": 1,
+  "prakarana_number_within_adhikarana": 3,
+  "prakarana_name_sanskrit": "ज्येष्ठावृत्तप्रकरणम्",
+  "prakarana_name_iast": "jyeṣṭhā-vṛtta-prakaraṇam",
+  "prakarana_name_transliteration": "jyestha-vrtta-prakaranam",
+  "prakarana_name_english": "",
+  "sutra_range": "1-15",
+  "sutra_count": 15,
+  "has_colophon": false,
+  "is_last_in_adhikarana": false,
+  "topic_tags": [],
+  "purushartha_context": [
+    "dharma",
+    "kama"
+  ],
+  "related_prakaranas": [
+    "p33",
+    "p35"
+  ],
+  "base_text_source": {
+    "category": "smriti",
+    "shastra_type": "kama-shastra",
+    "text_name": "kama-sutra",
+    "author": "vātsyāyana"
+  },
+  "structural_role": "opening",
+  "ocr_corrections_notes": [
+    "[ensure ‘ज्येष्ठ’ (jyeṣṭha) retains ṣṭh cluster; OCR may produce ‘ज्येष्ट’ or ‘ज्येष्ठ’ without proper diacritics]",
+    "[ensure ‘वृत्त’ (vṛtta) retains ṛ and double त्त; OCR may produce ‘वृत’]",
+    "[ensure ‘आदि’ (ādi) retains long ā; OCR may produce ‘अदि’]"
+  ],
+  "sutras": [
+    {
+      "number": "4.2.1",
+      "text": "जाड्यदौःशील्यदौर्भाग्येभ्यः प्रजानःउत्पत्तेराभीक्ष्ण्येन दारिकोत्पत्तेर्नायकचापलाद्वा सपत्न्यधिवेदनम् ॥ ४.२.१ ॥"
+    },
+    {
+      "number": "4.2.2",
+      "text": "तदादित एव भक्तिशीलवैदग्ध्यख्यापनेन परिजिहीर्षेत्. प्रजाःनुत्पत्तौ च स्वयं एव सापत्नके चोदयेत् ॥ ४.२.२ ॥"
+    },
+    {
+      "number": "4.2.3",
+      "text": "अधिविद्यमाना च यावच्छक्तियोगादात्मनोऽधिकत्वेन स्थितिं कारयेत् ॥ ४.२.३ ॥"
+    },
+    {
+      "number": "4.2.4",
+      "text": "आगतां चैनां भगिनीवदीक्षेत. नयकविदितं च प्रादोषिकं विधिमतीव यत्नादस्याः कारयेत्. सौभाग्यजं वैकृतं उत्सेकं वास्या नाद्रियेत ॥ ४.२.४ ॥"
+    },
+    {
+      "number": "4.2.5",
+      "text": "भर्तरि प्रमाद्यन्तीं उपेक्षेत. यत्र मन्येतार्थं इयं स्वयं अपि प्रतिपत्स्यत इति तत्रैनां आदरत एवानुशिष्यात् ॥ ४.२.५ ॥"
+    },
+    {
+      "number": "4.2.6",
+      "text": "नायकसंश्रवे च रहसि विशेषानधिकान्दर्शयेत् ॥ ४.२.६ ॥"
+    },
+    {
+      "number": "4.2.7",
+      "text": "तदपत्येस्वःविशेषः. परिजनवर्गेऽधिकानुकम्पा. मित्रवर्गे प्रीतिः. आत्मज्ञातिषु नात्यःआदरः. तज्ज्ञातिषु चातिःसंभ्रमः ॥ ४.२.७ ॥"
+    },
+    {
+      "number": "4.2.8",
+      "text": "बह्वीभिस्त्वधिविन्ना अःव्यवहितया संसृज्येत ॥ ४.२.८ ॥"
+    },
+    {
+      "number": "4.2.9",
+      "text": "यां तु नायकोऽधिकां चिकीर्षेत्तां भूतपूर्वसुभगया प्रोत्साह्य कलहयेत् ॥ ४.२.९ ॥"
+    },
+    {
+      "number": "4.2.10",
+      "text": "ततश्चानुकम्पेत ॥ ४.२.१० ॥"
+    },
+    {
+      "number": "4.2.11",
+      "text": "ताभिरेकत्वेनाधिकां चिकिर्षीतां स्वयं अःविवदमाना दुरःजनीःकुर्यात् ॥ ४.२.११ ॥"
+    },
+    {
+      "number": "4.2.12",
+      "text": "नायकेन तु कलहितां एनां पक्षपातावलम्बनोपबृम्हितां आश्वासयेत् ॥ ४.२.१२ ॥"
+    },
+    {
+      "number": "4.2.13",
+      "text": "कलहं च वर्धयेत् ॥ ४.२.१३ ॥"
+    },
+    {
+      "number": "4.2.14",
+      "text": "मन्दं वा कलहं उपलभ्य स्वयं एव संधुक्षयेत् ॥ ४.२.१४ ॥"
+    },
+    {
+      "number": "4.2.15",
+      "text": "यदि नायकोऽस्यां अद्यापि सानुनय इति मन्येत तदा स्वयमेव सन्धौ प्रयतेत ॥ ४.२.१५ ॥"
+    },
+    {
+      "number": "4.2.15",
+      "text": "चिति ज्येष्ठावृत्तम्((१२१)) ॥ ४.२.१५ ॥"
+    }
+  ]
+}

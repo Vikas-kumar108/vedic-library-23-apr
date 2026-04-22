@@ -1,0 +1,86 @@
+{
+  "global_prakarana_id": "p33",
+  "script_type": "devanagari",
+  "adhikarana_number": 4,
+  "adhikarana_name_sanskrit": "भार्याधिकारिके अधिकरणम्",
+  "adhikarana_name_iast": "bhāryādhikārike adhikaraṇam",
+  "adhikarana_name_transliteration": "bharyadhikarike-adhikaranam",
+  "adhikarana_name_english": "",
+  "adhyaya_number": 1,
+  "adhyaya_name_sanskrit": "एकचारिणीवृत्तं प्रवासचर्या च",
+  "adhyaya_name_iast": "ekacāriṇī-vṛttaṁ pravāsa-caryā ca",
+  "adhyaya_name_transliteration": "ekacarini-vrttam pravasa-carya ca",
+  "adhyaya_name_english": "",
+  "prakarana_number_within_adhyaya": 2,
+  "prakarana_number_within_adhikarana": 2,
+  "prakarana_name_sanskrit": "प्रवासचर्याप्रकरणम्",
+  "prakarana_name_iast": "pravāsa-caryā-prakaraṇam",
+  "prakarana_name_transliteration": "pravasa-carya-prakaranam",
+  "prakarana_name_english": "",
+  "sutra_range": "42-48",
+  "sutra_count": 7,
+  "has_colophon": true,
+  "is_last_in_adhikarana": false,
+  "topic_tags": [],
+  "purushartha_context": [
+    "dharma",
+    "kama"
+  ],
+  "related_prakaranas": [
+    "p32",
+    "p34"
+  ],
+  "base_text_source": {
+    "category": "smriti",
+    "shastra_type": "kama-shastra",
+    "text_name": "kama-sutra",
+    "author": "vātsyāyana"
+  },
+  "structural_role": "concluding",
+  "ocr_corrections_notes": [
+    "[ensure ‘प्रवास’ (pravāsa) retains long ā; OCR may produce ‘प्रवस’]",
+    "[ensure ‘चर्या’ (caryā) retains long ā; OCR may produce ‘चर्य’]",
+    "[ensure compound ‘प्रवासचर्या’ is not split incorrectly]"
+  ],
+  "sutras": [
+    {
+      "number": "4.1.42",
+      "text": "सेच्तिओन्(प्रकरण)३३ [प्रवासचर्य्याप्रकरणम्] प्रवासे मङ्गलमात्राभरणा देवतोपवासपरा वार्तायां स्थिता गृहानवेक्षेत ॥ ४.१.४२ ॥"
+    },
+    {
+      "number": "4.1.43",
+      "text": "शय्या च गुरुजनमूले. तदभिमता कार्यनिष्पत्तिः. नायकाभिमतानां चार्थानां अर्जने प्रतिसंस्कारे च यत्नः ॥ ४.१.४३ ॥"
+    },
+    {
+      "number": "4.1.44",
+      "text": "नित्यनैमित्तिकेषु कर्मसूचितो व्ययः. तदारब्धानां च कर्मणां समापने मतिः ॥ ४.१.४४ ॥"
+    },
+    {
+      "number": "4.1.45",
+      "text": "ज्ञातिकुलस्यानःअभिगमनं अन्यत्र व्यसनोत्सवाभ्याम्((११८)). तत्रापि नायकपरिजनाधिष्ठिताया नातिकालं अवस्थानं अःपरिवर्तितप्रवासवेषता च ॥ ४.१.४५ ॥"
+    },
+    {
+      "number": "4.1.46",
+      "text": "गुरुजनानुज्ञातानां करणं उपवासानाम्. परिचारकैः शुचिभिराज्ञाधिष्ठितैरनुमतेन क्रयविक्रयकर्मणा सारस्यापूरणं तनूकरणं च शक्त्या व्ययानाम् ॥ ४.१.४६ ॥"
+    },
+    {
+      "number": "4.1.47",
+      "text": "आगते च प्रकृतिस्थाया एव प्रथमतो दर्शनं दैवतपूजनं उपहाराणां चाहरणम् ॥ ४.१.४७ ॥"
+    },
+    {
+      "number": "4.1.47",
+      "text": "चिति प्रवासचर्या((११९)) ॥ ४.१.४७ ॥"
+    },
+    {
+      "number": "4.1.48",
+      "text": "भवतश्चात्र श्लोकौ ॥ ४.१.४८ ॥"
+    },
+    {
+      "number": "4.1.48",
+      "text": "व्सद्वृत्तम्((१२०)) अनुवर्तेत नायकस्य हितैषिणी. कुलयोषा पुनर्भूर्वा वेश्या वाप्येकचारिणी.. धर्मं अर्थं तथा कामं लभन्ते स्थानं एव च. निःःसपत्नं च भर्तारं नार्यः सद्वृत्तं आश्रिताः. ॥ ४.१.४८ ॥"
+    }
+  ],
+  "colophon": {
+    "text": "चिति श्रीवात्स्यायनीये कामसूत्रे भार्याधिकारिके चतुर्थेऽधिकरणे एकचारिणीवृत्तं प्रवासचार्या च प्रथमोऽध्यायः ॥ ४.१ ॥"
+  }
+}

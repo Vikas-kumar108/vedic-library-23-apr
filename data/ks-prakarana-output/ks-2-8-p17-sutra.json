@@ -1,0 +1,121 @@
+{
+  "global_prakarana_id": "p17",
+  "script_type": "devanagari",
+  "adhikarana_number": 2,
+  "adhikarana_name_sanskrit": "सम्प्रयोगिके अधिकरणम्",
+  "adhikarana_name_iast": "samprayogike adhikaraṇam",
+  "adhikarana_name_transliteration": "samprayogike-adhikaranam",
+  "adhikarana_name_english": "",
+  "adhyaya_number": 8,
+  "adhyaya_name_sanskrit": "पुरुषोपसृप्तानि पुरुषायितम्",
+  "adhyaya_name_iast": "puruṣopasṛptāni puruṣāyitam",
+  "adhyaya_name_transliteration": "purusopasrptani purus-ayitam",
+  "adhyaya_name_english": "",
+  "prakarana_number_within_adhyaya": 1,
+  "prakarana_number_within_adhikarana": 12,
+  "prakarana_name_sanskrit": "पुरुषायितप्रकरणम्",
+  "prakarana_name_iast": "puruṣāyita-prakaraṇam",
+  "prakarana_name_transliteration": "purusayita-prakaranam",
+  "prakarana_name_english": "",
+  "sutra_range": "1-7,32-41",
+  "sutra_count": 17,
+  "has_colophon": false,
+  "is_last_in_adhikarana": false,
+  "topic_tags": [],
+  "purushartha_context": [
+    "kama"
+  ],
+  "related_prakaranas": [
+    "p16",
+    "p18"
+  ],
+  "base_text_source": {
+    "category": "smriti",
+    "shastra_type": "kama-shastra",
+    "text_name": "kama-sutra",
+    "author": "vātsyāyana"
+  },
+  "structural_role": "opening",
+  "ocr_corrections_notes": [
+    "[non-linear sutra distribution: 1–7 and 32–41 belong to this prakaraṇa; ensure correct grouping during parsing]",
+    "[ensure ‘पुरुषायित’ (puruṣāyita) retains ṣ and long ā; OCR may produce ‘पुरुसायित’]",
+    "[ensure ‘उपसृप्त’ (upasṛpta) retains ṛ; OCR may produce ‘उपस्रप्त’ or ‘उपसर्पित’]"
+  ],
+  "sutras": [
+    {
+      "number": "2.8.1",
+      "text": "p17 (a) नायकस्य संतताभ्यासात्प्रैश्रमं उपलभ्य रागस्य चानःउपशमं अनुमता तेन तं अधोऽवपात्य पुरुषायितेन साहाय्यं दद्यात् ॥ २.८.१ ॥"
+    },
+    {
+      "number": "2.8.2",
+      "text": "स्वाभिप्रायाद्वा विकल्पयोजनार्थिनी ॥ २.८.२ ॥"
+    },
+    {
+      "number": "2.8.3",
+      "text": "नयककुतूहलाद्वा ॥ २.८.३ ॥"
+    },
+    {
+      "number": "2.8.4",
+      "text": "तत्र युक्तयन्त्रेणैवेतरेणोत्थाप्यमाना तं अधः पातयेत्. एवं च रतं अःविछिन्नरसं तथा प्रवृत्तं एव स्यात्. इत्येकोऽप्ययं मार्गः ॥ २.८.४ ॥"
+    },
+    {
+      "number": "2.8.5",
+      "text": "पुनरारम्भेणादित एवोपक्रमेत्. इति द्वितीयः ॥ २.८.५ ॥"
+    },
+    {
+      "number": "2.8.6",
+      "text": "सा प्रकीर्यमाणकेशकुसुमा श्वासविच्छिन्नहासिनी वक्त्रसंसर्गार्थं स्तनाभ्यां उरः पीडयन्ती पुनः पुनः शिरो नामयन्ती याश्चेष्टाः पूर्वं असौ दर्शितवांस्ता एव प्रकुर्वीत. पातिता प्रतिपातयामीति हसन्ती तर्जयन्ती प्रतिघ्नती च ब्रूयात्. पुनश्च व्रीडां((२७)) दर्शयेत्. श्रमं विरामाभीप्सां च. पुरुषोपसृप्तैरेवोपसर्पेत् ॥ २.८.६ ॥"
+    },
+    {
+      "number": "2.8.7",
+      "text": "तानि च वक्ष्यामः((२८)) ॥ २.८.७ ॥"
+    },
+    {
+      "number": "2.8.32",
+      "text": "and p17 (b) सेच्तिओन्(प्रकरण)१७ब्((३१)) पुरुषायिते तु [१]संदंशो [२]भ्रमरकः [३]प्रेङ्खोलितम्((३२)) इत्यधिकानि ॥ २.८.३२ ॥"
+    },
+    {
+      "number": "2.8.33",
+      "text": "बाडवेन लिङ्गं अवगृह्य निष्कर्षन्त्याः पीडयन्त्या वा चिरावस्थानं [१]संदंशः ॥ २.८.३३ ॥"
+    },
+    {
+      "number": "2.8.34",
+      "text": "युक्तयन्त्रा चक्रवद्भ्रमेदिति [२]भ्रमरक आभ्यासिकः ॥ २.८.३४ ॥"
+    },
+    {
+      "number": "2.8.35",
+      "text": "तत्रेतरः स्वजघनं उत्क्षिपेत् ॥ २.८.३५ ॥"
+    },
+    {
+      "number": "2.8.36",
+      "text": "जघनं एव दोलायमानं सर्वतो भ्रामयेदिति [३]प्रेङ्खोलितकम् ॥ २.८.३६ ॥"
+    },
+    {
+      "number": "2.8.37",
+      "text": "युक्तयन्त्रैव ललाटे ललाटं निधाय विश्राम्येत ॥ २.८.३७ ॥"
+    },
+    {
+      "number": "2.8.38",
+      "text": "विश्रान्तायां च पुरुषस्य पुनरावर्तनम्. इति पुरुषायितानि ॥ २.८.३८ ॥"
+    },
+    {
+      "number": "2.8.39",
+      "text": "भवन्ति चात्र श्लोकाः ॥ २.८.३९ ॥"
+    },
+    {
+      "number": "2.8.39",
+      "text": "व्प्रच्छादितस्वभावापि गूढाकारापि कामिनी. विवृणोत्येव भावं स्वं रागादुपरिवर्तिनी ॥ २.८.३९ ॥"
+    },
+    {
+      "number": "2.8.40",
+      "text": "व्यथाशीला भवेन्नारी यथा च रतिलालसा. तस्या एव विचेष्टाभिस्तत्सर्वं उपलक्षयेत् ॥ २.८.४० ॥"
+    },
+    {
+      "number": "2.8.41",
+      "text": "व्न त्वेव र्तौ न प्रसूतां न मृगीं न च गर्भिणीम्. न चातिःव्यायतां((३३)) नारीं योजयेत्पुरुषायिते ॥ २.८.४१ ॥"
+    }
+  ],
+  "colophon": {
+    "text": "चिति श्रीवात्यायनीये कामसूत्रे सांप्रयोगिके द्वितीयेऽधिकरणे पुरुषोपसृप्तानि पुरुषायितं चाष्टमोऽध्यायः. आदितस्त्रयोदशः ॥ २.८ ॥"
+  }
+}

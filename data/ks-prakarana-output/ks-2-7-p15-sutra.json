@@ -1,0 +1,131 @@
+{
+  "global_prakarana_id": "p15",
+  "script_type": "devanagari",
+  "adhikarana_number": 2,
+  "adhikarana_name_sanskrit": "सम्प्रयोगिके अधिकरणम्",
+  "adhikarana_name_iast": "samprayogike adhikaraṇam",
+  "adhikarana_name_transliteration": "samprayogike-adhikaranam",
+  "adhikarana_name_english": "",
+  "adhyaya_number": 7,
+  "adhyaya_name_sanskrit": "प्रहणनप्रयोगास्तद्युक्ताश्च सीत्कृतक्रमाः",
+  "adhyaya_name_iast": "prahaṇana-prayogās tadyuktāś ca sītkṛta-kramāḥ",
+  "adhyaya_name_transliteration": "prahanana-prayogas tadyuktas ca sitkrta-kramah",
+  "adhyaya_name_english": "",
+  "prakarana_number_within_adhyaya": 1,
+  "prakarana_number_within_adhikarana": 10,
+  "prakarana_name_sanskrit": "प्रहणनयोगप्रकरणम्",
+  "prakarana_name_iast": "prahaṇana-yoga-prakaraṇam",
+  "prakarana_name_transliteration": "prahanana-yoga-prakaranam",
+  "prakarana_name_english": "",
+  "sutra_range": "1-21",
+  "sutra_count": 21,
+  "has_colophon": false,
+  "is_last_in_adhikarana": false,
+  "topic_tags": [],
+  "purushartha_context": [
+    "kama"
+  ],
+  "related_prakaranas": [
+    "p14",
+    "p16"
+  ],
+  "base_text_source": {
+    "category": "smriti",
+    "shastra_type": "kama-shastra",
+    "text_name": "kama-sutra",
+    "author": "vātsyāyana"
+  },
+  "structural_role": "opening",
+  "ocr_corrections_notes": [
+    "[ensure ‘प्रहणन’ (prahaṇana) is preserved; OCR or editors may incorrectly normalize to ‘प्रहारण’]",
+    "[ensure distinction: adhyāya uses ‘प्रयोग’ (prayoga) but prakaraṇa uses ‘योग’ (yoga)]",
+    "[ensure ‘सीत्कृत’ (sītkṛta) retains long ī and ṛ; OCR may produce ‘सितकृत’ or ‘सीतकृत’]",
+    "[ensure compound ‘तद्युक्ताश्च’ retains ‘श्च’; OCR may split as ‘युक्ता च’]"
+  ],
+  "sutras": [
+    {
+      "number": "2.7.1",
+      "text": "कलहरूपं सुःरतं आचक्षते. विवादात्मकत्वाद्वामशीलत्वाच्च कामस्य ॥ २.७.१ ॥"
+    },
+    {
+      "number": "2.7.2",
+      "text": "तस्मात्प्रहणनन्स्थानं अङ्गम्. स्कन्धौ शिरः स्तनान्तरं पृष्ठं जघनं पार्श्व इति स्थानानि ॥ २.७.२ ॥"
+    },
+    {
+      "number": "2.7.3",
+      "text": "तच्चतुर्विधं ण् [१] अपहस्तकं [२] प्रसृतकं [३] मुष्टिः [४] समतलकं इति ॥ २.७.३ ॥"
+    },
+    {
+      "number": "2.7.4",
+      "text": "तदुद्भावं च सीत्कृतम्. तस्यातिःरूपत्वात्. तदनःएकविधम् ॥ २.७.४ ॥"
+    },
+    {
+      "number": "2.7.5",
+      "text": "विरुतानि चाष्टौ ॥ २.७.५ ॥"
+    },
+    {
+      "number": "2.7.6",
+      "text": "[आ]हिंकार[अ२]स्तनित[अ३]कूजित[अ४]रुदित[अ५]सूत्कृत[अ६]दूत्कृत[अ७]फूत्कृतानि ॥ २.७.६ ॥"
+    },
+    {
+      "number": "2.7.7",
+      "text": "अम्बार्थाः शब्दा वारणार्था मोक्षणार्थाश्चालमर्थास्ते ते [अ८] चाथयोगात् ॥ २.७.७ ॥"
+    },
+    {
+      "number": "2.7.8",
+      "text": "[ब्१]पारावत[ब्२]परभृत[ब्३]हारीत[ब्४]शुक[ब्५]मधुकर[ब्६]दात्यूह[ब्७]हंस[ ब्८]कारण्डव[ब्९]लावकविरुतानि सीत्कृतभूयिष्ठानि विकल्पशः प्रयुञ्जीत ॥ २.७.८ ॥"
+    },
+    {
+      "number": "2.7.9",
+      "text": "उत्सङ्गोपविष्टायाः पृष्ठे मुष्टिना प्रहारः ॥ २.७.९ ॥"
+    },
+    {
+      "number": "2.7.10",
+      "text": "तत्र सासूयाया इव [अ२]स्तनित[अ४]रुदित[अ३]कूजितानि प्रतिघातश्च स्यात् ॥ २.७.१० ॥"
+    },
+    {
+      "number": "2.7.11",
+      "text": "युक्तयन्त्रायाः स्तनान्तरे [१] अपहस्तकेन प्रहरेत् ॥ २.७.११ ॥"
+    },
+    {
+      "number": "2.7.12",
+      "text": "मन्दोपक्रमं वर्धमानरागं आ परिसमाप्तेः ॥ २.७.१२ ॥"
+    },
+    {
+      "number": "2.7.13",
+      "text": "तत्र [अ८]हिंकारादीनां अःनियमेनाभ्यासेन विकल्पेन च तत्कालं एव प्रयोगः ॥ २.७.१३ ॥"
+    },
+    {
+      "number": "2.7.14",
+      "text": "शिरसि किं चिदाकुञ्चितागुलिना करेण विवदन्त्याः [अ७]फूत्कृत्य प्रहणनं तत्[२] प्रसृतकम् ॥ २.७.१४ ॥"
+    },
+    {
+      "number": "2.7.15",
+      "text": "तत्रान्तर्मुखेन [अ३]कूजितं [अ७]फूत्कृतं च ॥ २.७.१५ ॥"
+    },
+    {
+      "number": "2.7.16",
+      "text": "रतान्ते च श्वासितरुदिते ॥ २.७.१६ ॥"
+    },
+    {
+      "number": "2.7.17",
+      "text": "फेणोरिव स्फुटतः शब्दानुकरणं [अ६]दूत्कृतम् ॥ २.७.१७ ॥"
+    },
+    {
+      "number": "2.7.18",
+      "text": "अप्सु बदरस्येव((२२)) निपततः [अ७]फूत्कृतम् ॥ २.७.१८ ॥"
+    },
+    {
+      "number": "2.7.19",
+      "text": "सर्वत्र चुम्बनादिष्वपक्रान्तायाः सःसीत्कृतं तेनैव प्रत्युत्तरम् ॥ २.७.१९ ॥"
+    },
+    {
+      "number": "2.7.20",
+      "text": "रागवशात्प्रहणनाभ्यासे [अ८]वारणमोक्षणालं अर्थानां शब्दानां अम्बार्थानां च सःतान्तश्वासितरुदितस्तनितमिश्रीकृतप्रयोगा विरुतानां च. रागावसानकाले जघनपर्श्वयोस्((२३)) ताडनं इत्यःत्वरया चा परिसमाप्तेः ॥ २.७.२० ॥"
+    },
+    {
+      "number": "2.7.21",
+      "text": "तत्र [ब्९]लावक[ब्७]हंसविकूजितं त्वरयैव. इति स्तननप्रहणनयोगाः.. ॥ २.७.२१ ॥"
+    }
+  ]
+}
