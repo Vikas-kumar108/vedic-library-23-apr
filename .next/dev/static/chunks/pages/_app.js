@@ -1,0 +1,8 @@
+__turbopack_load_page_chunks__("/_app", [
+  "static/chunks/[root-of-the-server]__0cpaz99._.js",
+  "static/chunks/0e-u_react-dom_0037m-m._.js",
+  "static/chunks/node_modules__pnpm_11y8dj-._.js",
+  "static/chunks/[root-of-the-server]__0fcyzpo._.js",
+  "static/chunks/playground_ui-vedic-library-frontend-v2_pages__app_07xvfw~._.js",
+  "static/chunks/turbopack-playground_ui-vedic-library-frontend-v2_pages__app_0y2642f._.js"
+])
