@@ -4,8 +4,9 @@ node_modules
 
 /lib/generated/prisma
 
-
 .next/
 node_modules/
-*.sst
+dist/
 .DS_Store
+*.sst
+*.meta
