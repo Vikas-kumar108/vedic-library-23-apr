@@ -117,6 +117,11 @@ enum UserRole {
   teacher
   coordinator
   admin
+  donor
+  director
+  village_member
+  city_member
+  outreach_lead
 
   @@map("user_role_enum")
 }
@@ -307,6 +312,296 @@ model NodeRelation {
   @@map("node_relations")
 }
 
+model SubscriptionTier {
+  id             String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  orgId          String          @map("org_id") @db.Uuid
+  organization   Organization    @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  name           String          // e.g. "Gita Seeker", "Dharma Practitioner"
+  description    String?
+  level          Int             @default(1)
+  
+  users          User[]
+  campaigns      CommunicationCampaign[]
+  
+  createdAt      DateTime        @default(now()) @map("created_at")
+  updatedAt      DateTime        @updatedAt @map("updated_at")
+
+  @@map("subscription_tiers")
+}
+
+model CommunicationCampaign {
+  id             String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  orgId          String          @map("org_id") @db.Uuid
+  organization   Organization    @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  title          String
+  content        String          @db.Text
+  type           String          // EMAIL, SMS, WHATSAPP, PORTAL_NOTICE
+  status         String          @default("draft") // draft, scheduled, sent
+  
+  targetTierId   String?         @map("target_tier_id") @db.Uuid
+  targetTier     SubscriptionTier? @relation(fields: [targetTierId], references: [id])
+  
+  language       Language?
+  scheduledAt    DateTime?       @map("scheduled_at")
+  sentAt         DateTime?       @map("sent_at")
+  
+  createdAt      DateTime        @default(now()) @map("created_at")
+  updatedAt      DateTime        @updatedAt @map("updated_at")
+
+  @@map("communication_campaigns")
+}
+
+model Organization {
+  id             String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name           String
+  type           String          // Trust, NGO, Section 8, Pvt Ltd
+  registrationNo String?         @map("registration_no")
+  pan            String?
+  tan            String?
+  address        String?         @db.Text
+  
+  members        OrgMember[]
+  legalDocuments LegalDocument[]
+  compliances    ComplianceRecord[]
+  projects       Project[]
+  
+  financialAccounts     FinancialAccount[]
+  transactions          Transaction[]
+  contributions         Contribution[]
+  activityLogs          ActivityLog[]
+  subscriptionTiers     SubscriptionTier[]
+  campaigns             CommunicationCampaign[]
+  
+  createdAt      DateTime        @default(now()) @map("created_at")
+  updatedAt      DateTime        @updatedAt @map("updated_at")
+
+  @@map("organizations")
+}
+
+model OrgMember {
+  id             String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  orgId          String          @map("org_id") @db.Uuid
+  userId         String          @map("user_id") @db.Uuid
+  role           String          // Director, Trustee, Accountant, Advisor
+  startDate      DateTime?       @map("start_date")
+  endDate        DateTime?       @map("end_date")
+  
+  organization   Organization    @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("org_members")
+}
+
+model LegalDocument {
+  id             String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  orgId          String          @map("org_id") @db.Uuid
+  organization   Organization    @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  
+  title          String
+  category       String          // Registration, Tax, Financial, Regulatory
+  fileUrl        String          @map("file_url")
+  issuingAuthority String?       @map("issuing_authority")
+  issueDate      DateTime?       @map("issue_date")
+  expiryDate     DateTime?       @map("expiry_date")
+  sensitivity    String          @default("RESTRICTED") // PUBLIC, ROLE_BASED, RESTRICTED
+  
+  status         String          @default("VALID") // VALID, EXPIRED, PENDING
+  
+  createdAt      DateTime        @default(now()) @map("created_at")
+  updatedAt      DateTime        @updatedAt @map("updated_at")
+
+  @@map("legal_documents")
+}
+
+model ComplianceRecord {
+  id             String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  orgId          String          @map("org_id") @db.Uuid
+  organization   Organization    @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  
+  name           String
+  type           String          // Tax, Financial, Regulatory, Internal
+  frequency      String          // Monthly, Yearly, One-time
+  dueDate        DateTime        @map("due_date")
+  status         String          @default("UPCOMING") // UPCOMING, COMPLETED, OVERDUE, DELAYED
+  
+  responsibleId  String?         @map("responsible_id") @db.Uuid
+  responsible    User?           @relation("ResponsibleUser", fields: [responsibleId], references: [id])
+  
+  supervisorId   String?         @map("supervisor_id") @db.Uuid
+  supervisor     User?           @relation("SupervisorUser", fields: [supervisorId], references: [id])
+  
+  notes          String?         @db.Text
+  
+  createdAt      DateTime        @default(now()) @map("created_at")
+  updatedAt      DateTime        @updatedAt @map("updated_at")
+
+  @@map("compliance_records")
+}
+
+model SecureShareLink {
+  id             String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  orgId          String          @map("org_id") @db.Uuid
+  token          String          @unique
+  purpose        String?         // CSR Partner, Auditor, Govt
+  expiresAt      DateTime        @map("expires_at")
+  accessCount    Int             @default(0) @map("access_count")
+  
+  documentIds    String[]        @map("document_ids") // List of LegalDocument IDs
+  
+  createdAt      DateTime        @default(now()) @map("created_at")
+
+  @@map("secure_share_links")
+}
+
+model FinancialAccount {
+  id             String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  orgId          String          @map("org_id") @db.Uuid
+  organization   Organization    @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  name           String          // e.g. "SBI Main Account", "Petty Cash Box"
+  type           String          // BANK, CASH, WALLET
+  balance        Decimal         @default(0)
+  currency       String          @default("INR")
+  
+  outgoingTransactions Transaction[] @relation("SourceAccount")
+  incomingTransactions Transaction[] @relation("DestinationAccount")
+  
+  createdAt      DateTime        @default(now()) @map("created_at")
+  updatedAt      DateTime        @updatedAt @map("updated_at")
+
+  @@map("financial_accounts")
+}
+
+model Transaction {
+  id             String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  orgId          String          @map("org_id") @db.Uuid
+  organization   Organization    @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  amount         Decimal
+  type           String          // INCOME, EXPENSE, TRANSFER
+  date           DateTime        @default(now())
+  
+  sourceAccountId String?        @map("source_account_id") @db.Uuid
+  sourceAccount   FinancialAccount? @relation("SourceAccount", fields: [sourceAccountId], references: [id])
+  
+  destinationAccountId String?   @map("destination_account_id") @db.Uuid
+  destinationAccount FinancialAccount? @relation("DestinationAccount", fields: [destinationAccountId], references: [id])
+  
+  category       String          // Food, Travel, Salary, Construction
+  purpose        String          @db.Text
+  programId      String?         @map("program_id") @db.Uuid
+  program        Project?        @relation(fields: [programId], references: [id])
+  
+  paymentMethod  String          // UPI, CASH, BANK_TRANSFER
+  proofUrl       String?         @map("proof_url") // Bill/Receipt scan
+  
+  recordedById   String          @map("recorded_by_id") @db.Uuid
+  recordedBy     User            @relation("RecordedBy", fields: [recordedById], references: [id])
+  
+  approvedById   String?         @map("approved_by_id") @db.Uuid
+  approvedBy     User?           @relation("ApprovedBy", fields: [approvedById], references: [id])
+  
+  status         String          @default("PENDING") // PENDING, APPROVED, EXECUTED, REJECTED
+  
+  auditLogs      AuditLog[]
+
+  createdAt      DateTime        @default(now()) @map("created_at")
+  updatedAt      DateTime        @updatedAt @map("updated_at")
+
+  @@map("transactions")
+}
+
+model AuditLog {
+  id             String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  transactionId  String?         @map("transaction_id") @db.Uuid
+  transaction    Transaction?    @relation(fields: [transactionId], references: [id])
+  
+  action         String          // CREATE, UPDATE, DELETE, APPROVE
+  performedById  String          @map("performed_by_id") @db.Uuid
+  performedBy    User            @relation(fields: [performedById], references: [id])
+  
+  oldData        Json?           @map("old_data")
+  newData        Json?           @map("new_data")
+  
+  timestamp      DateTime        @default(now())
+
+  @@map("audit_logs")
+}
+
+model Contribution {
+  id             String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  orgId          String          @map("org_id") @db.Uuid
+  organization   Organization    @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  userId         String          @map("user_id") @db.Uuid
+  user           User            @relation(fields: [userId], references: [id])
+  amount         Decimal?
+  type           String          // Cash, Online, In-Kind-Value
+  item           String?         // For In-Kind (e.g. Rice, Clothes)
+  quantity       Decimal?        
+  unit           String?         // kg, pcs, sets
+  purpose        String?
+  projectId      String?         @map("project_id") @db.Uuid
+  project        Project?        @relation(fields: [projectId], references: [id])
+  date           DateTime        @default(now())
+  
+  createdAt      DateTime        @default(now()) @map("created_at")
+  updatedAt      DateTime        @updatedAt @map("updated_at")
+
+  @@map("contributions")
+}
+
+model Project {
+  id             String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  orgId          String          @map("org_id") @db.Uuid
+  organization   Organization    @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  name           String
+  description    String?
+  totalBudget    Decimal         @map("total_budget")
+  status         String          @default("active")
+  
+  contributions  Contribution[]
+  expenses       Expense[]
+  activityLogs   ActivityLog[]
+  transactions   Transaction[]
+  
+  createdAt      DateTime        @default(now()) @map("created_at")
+  updatedAt      DateTime        @updatedAt @map("updated_at")
+
+  @@map("projects")
+}
+
+model Expense {
+  id             String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  projectId      String          @map("project_id") @db.Uuid
+  project        Project         @relation(fields: [projectId], references: [id])
+  amount         Decimal
+  category       String
+  description    String
+  date           DateTime        @default(now())
+  
+  createdAt      DateTime        @default(now()) @map("created_at")
+  updatedAt      DateTime        @updatedAt @map("updated_at")
+
+  @@map("expenses")
+}
+
+model ActivityLog {
+  id             String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  orgId          String          @map("org_id") @db.Uuid
+  organization   Organization    @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  title          String
+  description    String
+  category       String
+  date           DateTime        @default(now())
+  images         String[]        @default([])
+  
+  projectId      String?         @map("project_id") @db.Uuid
+  project        Project?        @relation(fields: [projectId], references: [id])
+  
+  createdAt      DateTime        @default(now()) @map("created_at")
+  updatedAt      DateTime        @updatedAt @map("updated_at")
+
+  @@map("activity_logs")
+}
+
 model TextVersion {
   id            String      @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   textId        String      @map("text_id") @db.Uuid
@@ -343,14 +638,30 @@ model TextEmbedding {
 model User {
   id             String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   email          String          @unique
-  password       String?
-  name           String?
+  // Identity & Contact
+  full_name      String?         @map("full_name")
+  phoneNumber    String?         @map("phone_number")
+  whatsappNumber String?         @map("whatsapp_number")
+  alternatePhone String?         @map("alternate_phone")
+  emergencyContact String?       @map("emergency_contact")
+  avatarUrl      String?         @map("avatar_url")
+  
+  // Personal Attributes
+  gender         Gender?
+  dateOfBirth    DateTime?       @map("date_of_birth")
+  maritalStatus  String?         @map("marital_status")
+  education      String?
+  occupation     String?
+  skills         String[]        @default([])
+  interests      String[]        @default([])
+  nativePlace    String?         @map("native_place")
+  
+  isOnline       Boolean         @default(true) @map("is_online")
   emailVerified  DateTime?       @map("email_verified")
   verificationToken String?      @map("verification_token")
   resetToken     String?         @map("reset_token")
   resetTokenExpires DateTime?    @map("reset_token_expires")
   roles          UserRole[]      @default([student])
-  gender         Gender?
   ageGroup       AgeGroup?       @map("age_group")
   lifeStage      LifeStage?      @map("life_stage")
   eligibilityLevel Int             @default(1) @map("eligibility_level")
@@ -358,8 +669,24 @@ model User {
   innerState     InnerState?     @map("inner_state")
   nature         Svabhava?
   
+  // Exhaustive Geography
+  addressLine1   String?         @map("address_line1")
+  addressLine2   String?         @map("address_line2")
+  village        String?
+  city           String?
+  state          String?
+  pinCode        String?         @map("pin_code")
+  
+  // Institutional Context
+  notes          String?         @db.Text
+  metadata       Json?           @default("{}")
   journeyStageId String?         @map("journey_stage_id") @db.Uuid
   journeyStage   LifeJourneyStage? @relation(fields: [journeyStageId], references: [id])
+  subscriptionTierId String?     @map("subscription_tier_id") @db.Uuid
+  subscriptionTier SubscriptionTier? @relation(fields: [subscriptionTierId], references: [id])
+  
+  notificationPrefs Json?        @default("{\"email\": true, \"whatsapp\": false, \"sms\": false}")
+  
   createdAt      DateTime        @default(now()) @map("created_at")
   lastActive     DateTime?       @map("last_active")
   
@@ -369,8 +696,22 @@ model User {
   nodeProgress   UserNodeProgress[]
   curveProgress  UserCurveProgress[]
   
+  // Relations
+  contributions  Contribution[]
+  benefits       Benefit[]
+  familyLinks    FamilyLink[]    @relation("UserMain")
+  relatedTo      FamilyLink[]    @relation("UserRelated")
+  
   assignmentsAsGuide   GuidanceAssignment[] @relation("Guide")
   assignmentsAsStudent GuidanceAssignment[] @relation("Student")
+
+  orgMemberships       OrgMember[]
+  responsibleCompliances ComplianceRecord[] @relation("ResponsibleUser")
+  supervisedCompliances  ComplianceRecord[] @relation("SupervisorUser")
+
+  recordedTransactions   Transaction[] @relation("RecordedBy")
+  approvedTransactions   Transaction[] @relation("ApprovedBy")
+  auditActions           AuditLog[]
 
   circleMemberships    CircleMember[]
   circlePosts          CirclePost[]
@@ -379,6 +720,35 @@ model User {
   eventRegistrations   EventRegistration[]
 
   @@map("users")
+}
+
+
+model Benefit {
+  id          String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  userId      String   @map("user_id") @db.Uuid
+  type        String   // SCHOLARSHIP, FOOD, BOOKS, COUNSELING
+  description String?
+  date        DateTime @default(now())
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("benefits")
+}
+
+model FamilyLink {
+  id          String           @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  userId      String           @map("user_id") @db.Uuid
+  relatedId   String           @map("related_id") @db.Uuid
+  type        RelationshipType
+  notes       String?
+  createdAt   DateTime         @default(now()) @map("created_at")
+
+  user        User             @relation("UserMain", fields: [userId], references: [id], onDelete: Cascade)
+  related     User             @relation("UserRelated", fields: [relatedId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, relatedId, type])
+  @@map("family_links")
 }
 
 model LifeJourneyStage {

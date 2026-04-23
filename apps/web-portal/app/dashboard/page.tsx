@@ -20,6 +20,9 @@ import { useCourses } from '@/features/courses/hooks/useCourses'
 import { useSadhana } from '@/features/practice/hooks/useSadhana'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
+import { FinancialTransparency } from '@/components/organisms/crm/financial-transparency'
+import { MemberJourney } from '@/components/organisms/crm/member-journey'
+import { ActivityFeed } from '@/components/organisms/crm/activity-feed'
 
 /**
  * Integrated Dashboard
@@ -78,7 +81,23 @@ export default function DashboardPage() {
         {/* LEFT: THE JOURNEY (Learning + Discovery) */}
         <div className="space-y-12">
           
-          {/* Continue Learning */}
+          {/* 2. DYNAMIC CONTENT BASED ON ROLE */}
+          {user?.roles?.includes('donor') ? (
+            <section className="space-y-6">
+               <FinancialTransparency contributions={user.contributions || []} />
+            </section>
+          ) : (
+            <section className="space-y-6">
+               <MemberJourney member={user} />
+            </section>
+          )}
+
+          {/* 3. LIVE FROM THE FIELD (Social Transparency) */}
+          <section className="space-y-6">
+             <ActivityFeed />
+          </section>
+
+          {/* Continue Learning (Optional for Donors) */}
           <section className="space-y-6">
             <div className="flex items-center justify-between">
               <h2 className="text-xs font-bold text-slate-900 uppercase tracking-[0.2em]">Resume Journey</h2>

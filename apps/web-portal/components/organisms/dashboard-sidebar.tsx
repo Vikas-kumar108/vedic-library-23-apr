@@ -9,7 +9,8 @@ import {
   Settings, 
   LogOut,
   Sparkles,
-  ChevronRight
+  ChevronRight,
+  Download
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
@@ -27,6 +28,7 @@ export function DashboardSidebar() {
     { label: 'Library', icon: Library, href: '/library' },
     { label: 'Courses', icon: BookOpen, href: '/courses' },
     { label: 'Practice', icon: Sparkles, href: '/practice' },
+    { label: 'Downloads', icon: Download, href: '/downloads' },
     { label: 'Community', icon: UsersIcon, href: '/community' },
     { label: 'Guidance', icon: HelpCircle, href: '/guidance' },
   ]

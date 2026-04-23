@@ -11,7 +11,11 @@ import {
   Bell,
   Search,
   Settings,
-  ShieldCheck
+  ShieldCheck,
+  HeartHandshake,
+  IndianRupee,
+  MessageSquare,
+  ChevronRight
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
@@ -26,8 +30,12 @@ export function AdminSidebar() {
 
   const menuItems = [
     { label: 'Overview', icon: BarChart3, href: '/admin' },
-    { label: 'Content', icon: FileText, href: '/admin/content' },
+    { label: 'Community', icon: HeartHandshake, href: '/admin/community' },
+    { label: 'Communication', icon: MessageSquare, href: '/admin/communication' },
+    { label: 'Governance', icon: ShieldCheck, href: '/admin/governance' },
+    { label: 'Finance', icon: IndianRupee, href: '/admin/finance' },
     { label: 'Users', icon: UsersIcon, href: '/admin/users' },
+    { label: 'Content', icon: FileText, href: '/admin/content' },
     { label: 'Payments', icon: CreditCard, href: '/admin/payments' },
     { label: 'Analytics', icon: Activity, href: '/admin/analytics' },
   ]
@@ -39,9 +47,16 @@ export function AdminSidebar() {
           A
         </div>
         <div className="flex flex-col">
-          <span className="text-white font-bold tracking-tight">Admin Console</span>
-          <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">VedicSkills v2.0</span>
+          <span className="text-white font-bold tracking-tight">Vedic Library Main</span>
+          <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest italic">Public Trust</span>
         </div>
+      </div>
+
+      <div className="mb-10 px-4">
+        <Link href="/select-organization" className="w-full h-10 bg-white/5 border border-white/10 rounded-xl flex items-center justify-between px-4 hover:bg-white/10 transition-all group">
+          <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Switch Organization</span>
+          <ChevronRight className="w-3 h-3 text-slate-600 group-hover:text-blue-400" />
+        </Link>
       </div>
 
       <nav className="flex-1 space-y-2">
