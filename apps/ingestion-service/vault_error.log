@@ -1,0 +1,47 @@
+◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+🛡️ MANIFESTING INSTITUTIONAL VAULT...
+PrismaClientValidationError: 
+Invalid `prisma.organization.findUnique()` invocation in
+/Users/ppublications/Workspace/system/ui-lab/playground/ui-vedic-library-frontend-v2/apps/ingestion-service/scratch/seed_vault.ts:34:41
+
+  31 console.log('🛡️ MANIFESTING INSTITUTIONAL VAULT...')
+  32 
+  33 // 1. Fetch Root Organization
+→ 34 const org = await prisma.organization.findUnique({
+       where: {
+         registrationNo: "ROOT-001",
+     ?   id?: String,
+     ?   AND?: OrganizationWhereInput | OrganizationWhereInput[],
+     ?   OR?: OrganizationWhereInput[],
+     ?   NOT?: OrganizationWhereInput | OrganizationWhereInput[],
+     ?   name?: StringFilter | String,
+     ?   type?: StringFilter | String,
+     ?   pan?: StringNullableFilter | String | Null,
+     ?   tan?: StringNullableFilter | String | Null,
+     ?   address?: StringNullableFilter | String | Null,
+     ?   createdAt?: DateTimeFilter | DateTime,
+     ?   updatedAt?: DateTimeFilter | DateTime,
+     ?   members?: OrgMemberListRelationFilter,
+     ?   legalDocuments?: LegalDocumentListRelationFilter,
+     ?   compliances?: ComplianceRecordListRelationFilter,
+     ?   projects?: ProjectListRelationFilter,
+     ?   financialAccounts?: FinancialAccountListRelationFilter,
+     ?   transactions?: TransactionListRelationFilter,
+     ?   contributions?: ContributionListRelationFilter,
+     ?   activityLogs?: ActivityLogListRelationFilter,
+     ?   subscriptionTiers?: SubscriptionTierListRelationFilter,
+     ?   campaigns?: CommunicationCampaignListRelationFilter
+       }
+     })
+
+Argument `where` of type OrganizationWhereUniqueInput needs at least one of `id` arguments. Available options are marked with ?.
+    at Pn (/Users/ppublications/Workspace/system/ui-lab/playground/ui-vedic-library-frontend-v2/node_modules/.pnpm/@prisma+client@6.4.1_prisma@6.4.1_typescript@5.7.3__typescript@5.7.3/node_modules/@prisma/client/runtime/library.js:29:1363)
+    at Un.handleRequestError (/Users/ppublications/Workspace/system/ui-lab/playground/ui-vedic-library-frontend-v2/node_modules/.pnpm/@prisma+client@6.4.1_prisma@6.4.1_typescript@5.7.3__typescript@5.7.3/node_modules/@prisma/client/runtime/library.js:121:7090)
+    at Un.handleAndLogRequestError (/Users/ppublications/Workspace/system/ui-lab/playground/ui-vedic-library-frontend-v2/node_modules/.pnpm/@prisma+client@6.4.1_prisma@6.4.1_typescript@5.7.3__typescript@5.7.3/node_modules/@prisma/client/runtime/library.js:121:6771)
+    at Un.request (/Users/ppublications/Workspace/system/ui-lab/playground/ui-vedic-library-frontend-v2/node_modules/.pnpm/@prisma+client@6.4.1_prisma@6.4.1_typescript@5.7.3__typescript@5.7.3/node_modules/@prisma/client/runtime/library.js:121:6478)
+    at async l (/Users/ppublications/Workspace/system/ui-lab/playground/ui-vedic-library-frontend-v2/node_modules/.pnpm/@prisma+client@6.4.1_prisma@6.4.1_typescript@5.7.3__typescript@5.7.3/node_modules/@prisma/client/runtime/library.js:130:9644)
+    at async main (/Users/ppublications/Workspace/system/ui-lab/playground/ui-vedic-library-frontend-v2/apps/ingestion-service/scratch/seed_vault.ts:34:15) {
+  clientVersion: '6.4.1'
+}
+undefined
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: tsx scratch/seed_vault.ts
