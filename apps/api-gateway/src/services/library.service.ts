@@ -20,11 +20,11 @@ export class LibraryService {
     })
 
     const nodesMap: Record<string, any> = {}
-    nodes.forEach(n => {
+    nodes.forEach((n: any) => {
       const slug = n.slug || 'node'
       const name = n.canonicalRef || slug
         .split('-')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
         .join(' ')
 
       nodesMap[n.id] = {
@@ -104,14 +104,14 @@ export class LibraryService {
         canonicalRef: node.canonicalRef || undefined,
       },
       relations: {
-        related_verses: node.fromRelations.map(r => ({
+        related_verses: node.fromRelations.map((r: any) => ({
           id: r.toNodeId,
           name: r.toNode.canonicalRef || r.toNode.slug || 'Related'
         })),
         courses: [],
         guidance: [],
         seva_domains: [],
-        tags: node.tags.map(nt => ({
+        tags: node.tags.map((nt: any) => ({
           id: nt.tag.id,
           slug: nt.tag.slug,
           name: nt.tag.name,

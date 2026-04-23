@@ -10,7 +10,8 @@ import {
   CheckCircle2, 
   Clock,
   Filter,
-  DollarSign
+  DollarSign,
+  MoreVertical
 } from 'lucide-react'
 import { Button } from '@/components/atoms/button'
 import { Badge } from '@/components/atoms/badge'

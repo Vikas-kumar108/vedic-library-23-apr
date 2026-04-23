@@ -6,7 +6,8 @@
   "types": "index.ts",
   "scripts": {
     "db:generate": "prisma generate",
-    "db:push": "prisma db push"
+    "db:push": "prisma db push",
+    "build": "pnpm db:generate"
   },
   "dependencies": {
     "@prisma/client": "^6.4.1"

@@ -38,8 +38,8 @@ export default function AdminDashboardPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-slate-50 flex">
-      <AdminSidebar />
+    <>
+      {/* Sidebar is provided by AdminLayout */}
       
       <main className="flex-1 p-10 space-y-10 max-w-7xl mx-auto">
         {/* Top Navigation Bar */}
@@ -158,6 +158,6 @@ export default function AdminDashboardPage() {
         </div>
 
       </main>
-    </div>
+    </>
   )
 }

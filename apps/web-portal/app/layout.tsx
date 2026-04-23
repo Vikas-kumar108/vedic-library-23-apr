@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import type { Metadata, Viewport } from 'next'
 import { Inter, Noto_Serif, Noto_Sans_Devanagari, Noto_Sans_Bengali, Cormorant_Garamond } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
@@ -79,7 +80,9 @@ export default function RootLayout({
         <main className="pb-24 md:pb-0 min-h-screen">
           {children}
         </main>
-        <MobileNav />
+        <Suspense fallback={null}>
+          <MobileNav />
+        </Suspense>
         <Analytics />
       </body>
     </html>

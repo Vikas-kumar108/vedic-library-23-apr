@@ -33,7 +33,7 @@ export function MobileNav() {
     <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-t border-slate-100 px-6 py-3 md:hidden shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)]">
       <div className="flex items-center justify-between max-w-lg mx-auto">
         {navItems.map((item) => {
-          const isActive = pathname.startsWith(item.href)
+          const isActive = pathname?.startsWith(item.href)
           return (
             <Link 
               key={item.href} 

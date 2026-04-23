@@ -12,7 +12,7 @@ export default async function discoveryRoutes(fastify: FastifyInstance, options:
     }).parse(request.query)
 
     try {
-      const results = await discoveryService.searchPractical(q, stage ? parseInt(stage) : 1)
+      const results = await discoveryService.searchPractical(q, Number(stage) || 1)
       return reply.send(results)
     } catch (error: any) {
       return reply.code(400).send({ error: error.message })
