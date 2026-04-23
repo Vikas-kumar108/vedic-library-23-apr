@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import { 
   Folder, 
@@ -18,27 +16,24 @@ import {
 import { Button } from '@/components/atoms/button'
 import { Badge } from '@/components/atoms/badge'
 import { cn } from '@/lib/utils'
+import { getLegalDocuments } from '../actions'
+import { format } from 'date-fns'
 
 /**
  * Digital Locker (Institutional Vault)
  * Responsibility: High-resolution management of legal and financial documents.
  */
 
-const FOLDERS = [
-  { name: 'Registration Docs', count: 4, icon: Folder, color: 'text-blue-500', bg: 'bg-blue-50' },
-  { name: 'Tax Certifications', count: 3, icon: Folder, color: 'text-orange-500', bg: 'bg-orange-50' },
-  { name: 'Financial Audits', count: 6, icon: Folder, color: 'text-emerald-500', bg: 'bg-emerald-50' },
-  { name: 'Regulatory (FCRA)', count: 2, icon: Folder, color: 'text-purple-500', bg: 'bg-purple-50' },
-]
+export default async function DigitalLocker() {
+  const legalDocuments = await getLegalDocuments()
 
-const RECENT_DOCS = [
-  { id: '1', name: 'Trust_Deed_Signed.pdf', category: 'Registration', status: 'VALID', date: '10 Apr 2026', sensitivity: 'RESTRICTED' },
-  { id: '2', name: '12AB_Certificate_2026.pdf', category: 'Tax', status: 'PENDING', date: '15 Apr 2026', sensitivity: 'RESTRICTED' },
-  { id: '3', name: 'Audit_Report_FY24.pdf', category: 'Financial', status: 'VALID', date: '05 Apr 2026', sensitivity: 'RESTRICTED' },
-  { id: '4', name: 'CSR_Registration_Form.pdf', category: 'Regulatory', status: 'EXPIRED', date: '01 Mar 2026', sensitivity: 'PUBLIC' },
-]
+  const folders = [
+    { name: 'Registration Docs', count: legalDocuments.filter(d => d.category === 'Registration').length, icon: Folder, color: 'text-blue-500', bg: 'bg-blue-50' },
+    { name: 'Tax Certifications', count: legalDocuments.filter(d => d.category === 'Tax').length, icon: Folder, color: 'text-orange-500', bg: 'bg-orange-50' },
+    { name: 'Financial Audits', count: legalDocuments.filter(d => d.category === 'Audit' || d.category === 'Financial').length, icon: Folder, color: 'text-emerald-500', bg: 'bg-emerald-50' },
+    { name: 'Regulatory (FCRA)', count: legalDocuments.filter(d => d.category === 'Regulatory').length, icon: Folder, color: 'text-purple-500', bg: 'bg-purple-50' },
+  ]
 
-export default function DigitalLocker() {
   return (
     <div className="p-10 space-y-10 animate-in fade-in duration-700">
       
@@ -62,7 +57,7 @@ export default function DigitalLocker() {
 
       {/* Folder Categories */}
       <div className="grid md:grid-cols-4 gap-6">
-        {FOLDERS.map((folder, i) => (
+        {folders.map((folder, i) => (
           <div key={i} className="p-8 bg-white border border-slate-100 rounded-[2.5rem] shadow-sm hover:shadow-2xl hover:border-blue-100 transition-all cursor-pointer group">
              <div className={cn("w-12 h-12 rounded-2xl flex items-center justify-center mb-6", folder.bg, folder.color)}>
                 <folder.icon className="w-6 h-6" />
@@ -100,53 +95,61 @@ export default function DigitalLocker() {
                      <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">Action</th>
                   </tr>
                </thead>
-               <tbody className="divide-y divide-slate-50">
-                  {RECENT_DOCS.map((doc) => (
-                     <tr key={doc.id} className="group hover:bg-slate-50/50 transition-colors cursor-pointer">
-                        <td className="px-8 py-6">
-                           <div className="flex items-center gap-4">
-                              <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-blue-600 group-hover:text-white transition-all">
-                                 <FileText className="w-4 h-4" />
-                              </div>
-                              <p className="text-sm font-bold text-slate-900">{doc.name}</p>
-                           </div>
-                        </td>
-                        <td className="px-8 py-6">
-                           <Badge variant="outline" className="rounded-full px-3 py-1 bg-slate-50 text-[9px] font-bold border-slate-100">
-                              {doc.category}
-                           </Badge>
-                        </td>
-                        <td className="px-8 py-6">
-                           <div className="flex items-center gap-2">
-                              {doc.status === 'VALID' && <CheckCircle2 className="w-3 h-3 text-emerald-500" />}
-                              {doc.status === 'PENDING' && <Clock className="w-3 h-3 text-orange-500" />}
-                              {doc.status === 'EXPIRED' && <AlertCircle className="w-3 h-3 text-red-500" />}
-                              <span className={cn(
-                                "text-[9px] font-black uppercase tracking-widest",
-                                doc.status === 'VALID' ? "text-emerald-600" : 
-                                doc.status === 'PENDING' ? "text-orange-600" : "text-red-600"
-                              )}>
-                                 {doc.status}
-                              </span>
-                           </div>
-                        </td>
-                        <td className="px-8 py-6">
-                           <p className={cn(
-                             "text-[9px] font-black uppercase tracking-widest",
-                             doc.sensitivity === 'RESTRICTED' ? "text-red-400" : "text-emerald-400"
-                           )}>{doc.sensitivity}</p>
-                        </td>
-                        <td className="px-8 py-6">
-                           <p className="text-xs font-bold text-slate-500">{doc.date}</p>
-                        </td>
-                        <td className="px-8 py-6 text-right">
-                           <button className="p-2 text-slate-300 hover:text-slate-600">
-                              <MoreVertical className="w-4 h-4" />
-                           </button>
-                        </td>
-                     </tr>
-                  ))}
-               </tbody>
+                <tbody className="divide-y divide-slate-50">
+                   {legalDocuments.map((doc) => (
+                      <tr key={doc.id} className="group hover:bg-slate-50/50 transition-colors cursor-pointer">
+                         <td className="px-8 py-6">
+                            <div className="flex items-center gap-4">
+                               <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                                  <FileText className="w-4 h-4" />
+                               </div>
+                               <p className="text-sm font-bold text-slate-900">{doc.title}</p>
+                            </div>
+                         </td>
+                         <td className="px-8 py-6">
+                            <Badge variant="outline" className="rounded-full px-3 py-1 bg-slate-50 text-[9px] font-bold border-slate-100">
+                               {doc.category}
+                            </Badge>
+                         </td>
+                         <td className="px-8 py-6">
+                            <div className="flex items-center gap-2">
+                               {doc.status === 'VALID' && <CheckCircle2 className="w-3 h-3 text-emerald-500" />}
+                               {doc.status === 'VERIFIED' && <CheckCircle2 className="w-3 h-3 text-emerald-500" />}
+                               {doc.status === 'PENDING' && <Clock className="w-3 h-3 text-orange-500" />}
+                               {doc.status === 'EXPIRED' && <AlertCircle className="w-3 h-3 text-red-500" />}
+                               <span className={cn(
+                                 "text-[9px] font-black uppercase tracking-widest",
+                                 (doc.status === 'VALID' || doc.status === 'VERIFIED') ? "text-emerald-600" : 
+                                 doc.status === 'PENDING' ? "text-orange-600" : "text-red-600"
+                               )}>
+                                  {doc.status}
+                               </span>
+                            </div>
+                         </td>
+                         <td className="px-8 py-6">
+                            <p className={cn(
+                               "text-[9px] font-black uppercase tracking-widest",
+                               doc.sensitivity === 'RESTRICTED' ? "text-red-400" : "text-emerald-400"
+                            )}>{doc.sensitivity}</p>
+                         </td>
+                         <td className="px-8 py-6">
+                            <p className="text-xs font-bold text-slate-500">{format(new Date(doc.createdAt), 'dd MMM yyyy')}</p>
+                         </td>
+                         <td className="px-8 py-6 text-right">
+                            <button className="p-2 text-slate-300 hover:text-slate-600">
+                               <MoreVertical className="w-4 h-4" />
+                            </button>
+                         </td>
+                      </tr>
+                   ))}
+                   {legalDocuments.length === 0 && (
+                      <tr>
+                         <td colSpan={6} className="px-8 py-20 text-center text-slate-400 italic text-xs">
+                            No documents found in the institutional vault.
+                         </td>
+                      </tr>
+                   )}
+                </tbody>
             </table>
          </div>
       </section>

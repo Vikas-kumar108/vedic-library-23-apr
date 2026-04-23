@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import { 
   IndianRupee, 
@@ -21,55 +19,22 @@ import {
 import { Button } from '@/components/atoms/button'
 import { Badge } from '@/components/atoms/badge'
 import { cn } from '@/lib/utils'
+import { getTransactions, getFinancialAccounts } from './actions'
+import { format } from 'date-fns'
 
 /**
  * Financial Dharma Dashboard
  * Responsibility: Complete financial transparency, audit trails, and income/expense tracking.
  */
 
-const ACCOUNTS = [
-  { name: 'SBI Main Account', balance: '₹12,45,000', type: 'BANK' },
-  { name: 'Petty Cash Box', balance: '₹15,200', type: 'CASH' },
-  { name: 'HDFC (CSR Fund)', balance: '₹45,00,000', type: 'BANK' }
-]
+export default async function FinanceDashboard() {
+  const transactions = await getTransactions()
+  const accounts = await getFinancialAccounts()
 
-const TRANSACTIONS = [
-  { 
-    id: '1', 
-    title: 'Individual Donation', 
-    amount: '+ ₹50,000', 
-    type: 'INCOME', 
-    program: 'General', 
-    account: 'SBI Main',
-    recordedBy: 'Amit (Acc)', 
-    status: 'APPROVED',
-    date: 'Today, 2:30 PM'
-  },
-  { 
-    id: '2', 
-    title: 'School Bricks Purchase', 
-    amount: '- ₹15,000', 
-    type: 'EXPENSE', 
-    program: 'Mayapur School', 
-    account: 'Petty Cash',
-    recordedBy: 'Suresh (Acc)', 
-    status: 'PENDING',
-    date: 'Today, 11:15 AM'
-  },
-  { 
-    id: '3', 
-    title: 'CSR Grant Received', 
-    amount: '+ ₹10,00,000', 
-    type: 'INCOME', 
-    program: 'Girls Education', 
-    account: 'HDFC (CSR)',
-    recordedBy: 'Amit (Acc)', 
-    status: 'APPROVED',
-    date: 'Yesterday'
-  }
-]
+  const totalBalance = accounts.reduce((acc, curr) => acc + Number(curr.balance), 0)
 
-export default function FinanceDashboard() {
+  const pendingTransactions = transactions.filter(t => t.status === 'PENDING')
+
   return (
     <div className="p-10 space-y-10 animate-in fade-in duration-700">
       
@@ -82,7 +47,7 @@ export default function FinanceDashboard() {
                 Audit Integrity Active
               </Badge>
               <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest flex items-center gap-2">
-                <CheckCircle2 className="w-3 h-3 text-green-500" /> Total Balance: ₹57,60,200
+                <CheckCircle2 className="w-3 h-3 text-green-500" /> Total Balance: {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(totalBalance)}
               </p>
            </div>
         </div>
@@ -98,12 +63,12 @@ export default function FinanceDashboard() {
 
       {/* Account Overview Cards */}
       <div className="grid md:grid-cols-3 gap-6">
-        {ACCOUNTS.map((acc, i) => (
+        {accounts.map((acc, i) => (
           <div key={i} className="p-8 bg-white border border-slate-100 rounded-[3rem] shadow-sm flex flex-col justify-between group hover:border-blue-200 transition-all">
              <div className="flex justify-between items-start">
                 <div className={cn(
-                  "w-12 h-12 rounded-2xl flex items-center justify-center",
-                  acc.type === 'BANK' ? "bg-blue-50 text-blue-600" : "bg-orange-50 text-orange-600"
+                   "w-12 h-12 rounded-2xl flex items-center justify-center",
+                   acc.type === 'BANK' ? "bg-blue-50 text-blue-600" : "bg-orange-50 text-orange-600"
                 )}>
                    {acc.type === 'BANK' ? <Banknote className="w-6 h-6" /> : <Wallet className="w-6 h-6" />}
                 </div>
@@ -113,7 +78,7 @@ export default function FinanceDashboard() {
              </div>
              <div className="mt-6">
                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{acc.name}</p>
-                <p className="text-2xl font-black text-slate-900 mt-1">{acc.balance}</p>
+                <p className="text-2xl font-black text-slate-900 mt-1">{new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(Number(acc.balance))}</p>
              </div>
           </div>
         ))}
@@ -150,7 +115,7 @@ export default function FinanceDashboard() {
                     </tr>
                  </thead>
                  <tbody className="divide-y divide-slate-50">
-                    {TRANSACTIONS.map((t) => (
+                    {transactions.map((t) => (
                        <tr key={t.id} className="group hover:bg-slate-50/50 transition-colors cursor-pointer">
                           <td className="px-8 py-6">
                              <div className="flex items-center gap-4">
@@ -161,24 +126,26 @@ export default function FinanceDashboard() {
                                    {t.type === 'INCOME' ? <ArrowUpRight className="w-4 h-4" /> : <ArrowDownLeft className="w-4 h-4" />}
                                 </div>
                                 <div>
-                                   <p className="text-sm font-bold text-slate-900">{t.title}</p>
-                                   <p className="text-[9px] text-slate-400 font-bold uppercase tracking-widest flex items-center gap-2 italic">
-                                     <Clock className="w-3 h-3" /> {t.date} • {t.recordedBy}
+                                   <p className="text-sm font-bold text-slate-900">{t.purpose}</p>
+                                   <p className="text-[9px] text-slate-400 font-bold uppercase tracking-widest mt-1 flex items-center gap-2 italic">
+                                     <Clock className="w-3 h-3" /> {format(new Date(t.date), 'MMM d, yyyy')} • {t.recordedBy?.full_name || 'System'}
                                    </p>
                                 </div>
                              </div>
                           </td>
                           <td className="px-8 py-6">
                              <Badge variant="outline" className="rounded-full px-3 py-1 bg-slate-50 text-[8px] font-bold border-slate-100">
-                                {t.program}
+                                {t.category}
                              </Badge>
                           </td>
-                          <td className="px-8 py-6 text-xs font-bold text-slate-500">{t.account}</td>
+                          <td className="px-8 py-6 text-xs font-bold text-slate-500">
+                            {t.type === 'EXPENSE' ? t.sourceAccount?.name : t.destinationAccount?.name}
+                          </td>
                           <td className="px-8 py-6 text-right">
                              <p className={cn(
                                "text-sm font-black",
                                t.type === 'INCOME' ? "text-green-600" : "text-red-600"
-                             )}>{t.amount}</p>
+                             )}>{t.type === 'INCOME' ? '+' : '-'} {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(Number(t.amount))}</p>
                              <div className="flex items-center justify-end gap-1 mt-1">
                                 {t.status === 'APPROVED' ? <CheckCircle2 className="w-3 h-3 text-emerald-500" /> : <Clock className="w-3 h-3 text-orange-500" />}
                                 <span className="text-[8px] font-black uppercase tracking-widest text-slate-400">{t.status}</span>
@@ -198,16 +165,23 @@ export default function FinanceDashboard() {
                  <h2 className="text-[10px] font-black text-blue-400 uppercase tracking-widest flex items-center gap-2">
                     <AlertCircle className="w-4 h-4" /> Director Approval
                  </h2>
-                 <h3 className="text-2xl font-serif font-bold italic leading-tight">2 Transactions Pending</h3>
+                 <h3 className="text-2xl font-serif font-bold italic leading-tight">{pendingTransactions.length} Transactions Pending</h3>
                  <div className="space-y-4">
-                    <div className="p-4 bg-white/5 border border-white/5 rounded-2xl">
-                       <p className="text-xs font-bold">School Bricks Purchase</p>
-                       <p className="text-[9px] text-white/40 font-bold uppercase tracking-widest mt-1">₹15,000 • Mayapur School</p>
-                       <div className="flex gap-2 mt-4">
-                          <Button className="h-8 flex-1 bg-blue-600 text-[9px] font-black uppercase tracking-widest">Approve</Button>
-                          <Button variant="ghost" className="h-8 px-3 bg-white/5 text-[9px]">Reject</Button>
-                       </div>
-                    </div>
+                    {pendingTransactions.map((pt) => (
+                      <div key={pt.id} className="p-4 bg-white/5 border border-white/5 rounded-2xl">
+                         <p className="text-xs font-bold">{pt.purpose}</p>
+                         <p className="text-[9px] text-white/40 font-bold uppercase tracking-widest mt-1">
+                           {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(Number(pt.amount))} • {pt.category}
+                         </p>
+                         <div className="flex gap-2 mt-4">
+                            <Button className="h-8 flex-1 bg-blue-600 text-[9px] font-black uppercase tracking-widest">Approve</Button>
+                            <Button variant="ghost" className="h-8 px-3 bg-white/5 text-[9px]">Reject</Button>
+                         </div>
+                      </div>
+                    ))}
+                    {pendingTransactions.length === 0 && (
+                      <p className="text-xs text-white/40 italic">No transactions awaiting approval.</p>
+                    )}
                  </div>
               </div>
            </section>

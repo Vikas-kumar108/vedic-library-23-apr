@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import { 
   Send, 
@@ -18,43 +16,22 @@ import {
 import { Button } from '@/components/atoms/button'
 import { Badge } from '@/components/atoms/badge'
 import { cn } from '@/lib/utils'
+import { getCampaigns, getSubscriptionTiers } from './actions'
+import { format } from 'date-fns'
 
 /**
  * Communication Hub Dashboard (Admin)
  * Responsibility: Manage personalized outreach across Email, SMS, and WhatsApp.
  */
 
-const CAMPAIGNS = [
-  {
-    id: '1',
-    title: 'Gita Jayanti Special Newsletter',
-    type: 'EMAIL',
-    target: 'Gita Seekers',
-    status: 'SENT',
-    sentAt: '2 Hours Ago',
-    reach: '450 Members'
-  },
-  {
-    id: '2',
-    title: 'Daily Sadhana Reminder',
-    type: 'WHATSAPP',
-    target: 'Active Sadhakas',
-    status: 'SCHEDULED',
-    sentAt: 'Tomorrow, 5 AM',
-    reach: '120 Members'
-  },
-  {
-    id: '3',
-    title: 'Village Outreach Announcement',
-    type: 'SMS',
-    target: 'Mayapur Villagers',
-    status: 'DRAFT',
-    sentAt: '-',
-    reach: '800 Members'
-  }
-]
+export default async function CommunicationHub() {
+  const [campaigns, tiers] = await Promise.all([
+    getCampaigns(),
+    getSubscriptionTiers()
+  ])
 
-export default function CommunicationHub() {
+  const totalSubscribers = tiers.reduce((acc, curr) => acc + curr._count.users, 0)
+
   return (
     <div className="p-10 space-y-10 animate-in fade-in duration-700">
       
@@ -67,7 +44,7 @@ export default function CommunicationHub() {
                 Intelligent Outreach Active
               </Badge>
               <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest flex items-center gap-2">
-                <CheckCircle2 className="w-3 h-3 text-green-500" /> 1,200+ Subscribed Members
+                <CheckCircle2 className="w-3 h-3 text-green-500" /> {totalSubscribers.toLocaleString()}+ Subscribed Members
               </p>
            </div>
         </div>
@@ -82,7 +59,7 @@ export default function CommunicationHub() {
           { label: 'Email Open Rate', value: '68%', icon: Mail, color: 'text-blue-500', bg: 'bg-blue-50' },
           { label: 'WA Engagement', value: '92%', icon: MessageSquare, color: 'text-green-500', bg: 'bg-green-50' },
           { label: 'SMS Delivery', value: '99%', icon: Phone, color: 'text-orange-500', bg: 'bg-orange-50' },
-          { label: 'Subscribers', value: '1,450', icon: Users, color: 'text-purple-500', bg: 'bg-purple-50' },
+          { label: 'Subscribers', value: totalSubscribers.toLocaleString(), icon: Users, color: 'text-purple-500', bg: 'bg-purple-50' },
         ].map((stat, i) => (
           <div key={i} className="p-6 bg-white border border-slate-100 rounded-[2rem] shadow-sm flex items-center gap-4">
             <div className={cn("w-12 h-12 rounded-2xl flex items-center justify-center", stat.bg, stat.color)}>
@@ -123,53 +100,60 @@ export default function CommunicationHub() {
                     <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">Action</th>
                  </tr>
               </thead>
-              <tbody className="divide-y divide-slate-50">
-                 {CAMPAIGNS.map((c) => (
-                    <tr key={c.id} className="group hover:bg-slate-50/50 transition-colors cursor-pointer">
-                       <td className="px-8 py-6">
-                          <div className="flex items-center gap-4">
-                             <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-blue-600 group-hover:text-white transition-all">
-                                <Send className="w-4 h-4" />
+                 <tbody className="divide-y divide-slate-50">
+                    {campaigns.map((c) => (
+                       <tr key={c.id} className="group hover:bg-slate-50/50 transition-colors cursor-pointer">
+                          <td className="px-8 py-6">
+                             <div className="flex items-center gap-4">
+                                <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                                   <Send className="w-4 h-4" />
+                                </div>
+                                <div>
+                                   <p className="text-sm font-bold text-slate-900">{c.title}</p>
+                                   <p className="text-[9px] text-slate-400 font-bold uppercase tracking-widest mt-0.5 italic flex items-center gap-1">
+                                     <Clock className="w-3 h-3" /> {c.sentAt ? format(new Date(c.sentAt), 'MMM d, h:mm a') : (c.scheduledAt ? `Scheduled: ${format(new Date(c.scheduledAt), 'MMM d')}` : 'No date')}
+                                   </p>
+                                </div>
                              </div>
-                             <div>
-                                <p className="text-sm font-bold text-slate-900">{c.title}</p>
-                                <p className="text-[9px] text-slate-400 font-bold uppercase tracking-widest mt-0.5 italic flex items-center gap-1">
-                                  <Clock className="w-3 h-3" /> {c.sentAt}
-                                </p>
-                             </div>
-                          </div>
-                       </td>
-                       <td className="px-8 py-6">
-                          <Badge variant="outline" className="rounded-full border-slate-200 text-[9px] font-bold px-3">
-                             {c.type === 'EMAIL' && <Mail className="w-3 h-3 mr-1 text-blue-500" />}
-                             {c.type === 'WHATSAPP' && <MessageSquare className="w-3 h-3 mr-1 text-green-500" />}
-                             {c.type === 'SMS' && <Phone className="w-3 h-3 mr-1 text-orange-500" />}
-                             {c.type}
-                          </Badge>
-                       </td>
-                       <td className="px-8 py-6">
-                          <p className="text-xs font-bold text-slate-700">{c.target}</p>
-                       </td>
-                       <td className="px-8 py-6">
-                          <span className={cn(
-                            "px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest",
-                            c.status === 'SENT' ? "bg-green-50 text-green-600" : 
-                            c.status === 'SCHEDULED' ? "bg-blue-50 text-blue-600" : "bg-slate-100 text-slate-500"
-                          )}>
-                             {c.status}
-                          </span>
-                       </td>
-                       <td className="px-8 py-6">
-                          <p className="text-xs font-bold text-slate-700">{c.reach}</p>
-                       </td>
-                       <td className="px-8 py-6 text-right">
-                          <button className="p-2 text-slate-300 hover:text-slate-600 transition-colors">
-                             <MoreVertical className="w-4 h-4" />
-                          </button>
-                       </td>
-                    </tr>
-                 ))}
-              </tbody>
+                          </td>
+                          <td className="px-8 py-6">
+                             <Badge variant="outline" className="rounded-full border-slate-200 text-[9px] font-bold px-3">
+                                {c.type === 'EMAIL' && <Mail className="w-3 h-3 mr-1 text-blue-500" />}
+                                {c.type === 'WHATSAPP' && <MessageSquare className="w-3 h-3 mr-1 text-green-500" />}
+                                {c.type === 'SMS' && <Phone className="w-3 h-3 mr-1 text-orange-500" />}
+                                {c.type}
+                             </Badge>
+                          </td>
+                          <td className="px-8 py-6">
+                             <p className="text-xs font-bold text-slate-700">{c.targetTier?.name || 'All Members'}</p>
+                          </td>
+                          <td className="px-8 py-6">
+                             <span className={cn(
+                               "px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest",
+                               c.status.toUpperCase() === 'SENT' ? "bg-green-50 text-green-600" : 
+                               c.status.toUpperCase() === 'SCHEDULED' ? "bg-blue-50 text-blue-600" : "bg-slate-100 text-slate-500"
+                             )}>
+                                {c.status}
+                             </span>
+                          </td>
+                          <td className="px-8 py-6">
+                             <p className="text-xs font-bold text-slate-700">{c.reach || '-'}</p>
+                          </td>
+                          <td className="px-8 py-6 text-right">
+                             <button className="p-2 text-slate-300 hover:text-slate-600 transition-colors">
+                                <MoreVertical className="w-4 h-4" />
+                             </button>
+                          </td>
+                       </tr>
+                    ))}
+                    {campaigns.length === 0 && (
+                       <tr>
+                          <td colSpan={6} className="px-8 py-20 text-center text-slate-400 italic text-xs">
+                             No campaigns recorded.
+                          </td>
+                       </tr>
+                    )}
+                 </tbody>
            </table>
         </div>
       </section>
@@ -180,21 +164,20 @@ export default function CommunicationHub() {
             <div className="relative z-10 space-y-6">
                <h3 className="text-2xl font-serif font-bold italic">Named Subscription <span className="text-blue-400">Tiers</span></h3>
                <p className="text-white/40 text-sm leading-relaxed">Personalize outreach based on spiritual interest groups rather than just numbers.</p>
-               <div className="space-y-4">
-                  {[
-                    { name: 'Gita Seekers', count: 450, color: 'bg-blue-500' },
-                    { name: 'Sadhaka Community', count: 320, color: 'bg-green-500' },
-                    { name: 'Dharma Practitioners', count: 680, color: 'bg-orange-500' },
-                  ].map((t, i) => (
+                <div className="space-y-4">
+                   {tiers.map((t, i) => (
                     <div key={i} className="flex justify-between items-center group/item">
                        <div className="flex items-center gap-3">
-                          <div className={cn("w-2 h-2 rounded-full", t.color)} />
+                          <div className={cn("w-2 h-2 rounded-full", i % 3 === 0 ? 'bg-blue-500' : i % 3 === 1 ? 'bg-green-500' : 'bg-orange-500')} />
                           <span className="text-xs font-bold text-white/80 group-hover/item:text-white transition-colors">{t.name}</span>
                        </div>
-                       <span className="text-xs font-black text-white/40">{t.count} Members</span>
+                       <span className="text-xs font-black text-white/40">{t._count.users} Members</span>
                     </div>
                   ))}
-               </div>
+                  {tiers.length === 0 && (
+                    <p className="text-xs text-white/40 italic">No subscription tiers defined.</p>
+                  )}
+                </div>
             </div>
             <Users className="absolute top-0 right-0 p-10 w-64 h-64 opacity-5 group-hover:scale-110 transition-transform duration-1000" />
          </div>

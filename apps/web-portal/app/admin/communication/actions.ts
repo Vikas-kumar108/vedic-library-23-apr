@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { prisma } from '@/lib/prisma'
 import { CRMService } from '@/services/crm-service'
 import { protectAction } from '@/lib/rbac'
-import { UserRole } from '@prisma/client'
+import { UserRole } from '@/lib/prisma'
 
 /**
  * SECURE COMMUNICATION ACTIONS
@@ -60,5 +60,37 @@ export async function createSubscriptionTier(data: any, adminUser: any) {
     return { success: true, data: tier }
   } catch (error: any) {
     return { success: false, error: error.message }
+  }
+}
+
+export async function getCampaigns(filters: any = {}) {
+  try {
+    return await prisma.communicationCampaign.findMany({
+      where: filters,
+      orderBy: { createdAt: 'desc' },
+      include: {
+        targetTier: true
+      }
+    })
+  } catch (error) {
+    console.error('GET_CAMPAIGNS_ERROR:', error)
+    return []
+  }
+}
+
+export async function getSubscriptionTiers() {
+  try {
+    return await prisma.subscriptionTier.findMany({
+      include: {
+        _count: {
+          select: {
+            users: true
+          }
+        }
+      }
+    })
+  } catch (error) {
+    console.error('GET_SUBSCRIPTION_TIERS_ERROR:', error)
+    return []
   }
 }

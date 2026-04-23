@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { prisma } from '@/lib/prisma'
 import { protectAction } from '@/lib/rbac'
-import { UserRole } from '@/lib/prisma'
+import { UserRole, TransactionType } from '@/lib/prisma'
 
 /**
  * FINANCIAL DHARMA ACTIONS
@@ -124,5 +124,35 @@ export async function getFinancialReports(adminUser: any) {
     return { success: true, data: { income, expenses, balances } }
   } catch (error: any) {
     return { success: false, error: error.message }
+  }
+}
+
+export async function getTransactions(filters: any = {}) {
+  try {
+    return await prisma.transaction.findMany({
+      where: filters,
+      orderBy: { date: 'desc' },
+      include: {
+        recordedBy: true,
+        sourceAccount: true,
+        destinationAccount: true,
+        program: true
+      }
+    })
+  } catch (error) {
+    console.error('GET_TRANSACTIONS_ERROR:', error)
+    return []
+  }
+}
+
+export async function getFinancialAccounts(orgId?: string) {
+  try {
+    return await prisma.financialAccount.findMany({
+      where: orgId ? { orgId } : {},
+      orderBy: { name: 'asc' }
+    })
+  } catch (error) {
+    console.error('GET_ACCOUNTS_ERROR:', error)
+    return []
   }
 }

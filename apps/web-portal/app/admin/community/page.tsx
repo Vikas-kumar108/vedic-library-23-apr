@@ -106,7 +106,7 @@ export default async function CommunityAdminPage() {
                         )}
                       </div>
                       <div>
-                        <p className="font-bold text-slate-900 leading-tight">{member.name}</p>
+                        <p className="font-bold text-slate-900 leading-tight">{member.full_name}</p>
                         <p className="text-[11px] text-slate-400 mt-1">{member.phoneNumber || member.email}</p>
                       </div>
                     </div>

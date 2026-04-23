@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { prisma } from '@/lib/prisma'
 import { protectAction } from '@/lib/rbac'
-import { UserRole } from '@prisma/client'
+import { UserRole } from '@/lib/prisma'
 import crypto from 'crypto'
 
 /**
@@ -107,5 +107,52 @@ export async function recordComplianceStatus(id: string, status: string, notes: 
     return { success: true, data: record }
   } catch (error: any) {
     return { success: false, error: error.message }
+  }
+}
+
+export async function getOrganizations() {
+  try {
+    return await prisma.organization.findMany({
+      include: {
+        _count: {
+          select: {
+            members: true,
+            legalDocuments: true,
+            compliances: true
+          }
+        }
+      }
+    })
+  } catch (error) {
+    console.error('GET_ORGANIZATIONS_ERROR:', error)
+    return []
+  }
+}
+
+export async function getComplianceRecords(filters: any = {}) {
+  try {
+    return await prisma.complianceRecord.findMany({
+      where: filters,
+      orderBy: { dueDate: 'asc' },
+      include: {
+        responsible: true,
+        supervisor: true
+      }
+    })
+  } catch (error) {
+    console.error('GET_COMPLIANCE_RECORDS_ERROR:', error)
+    return []
+  }
+}
+
+export async function getLegalDocuments(filters: any = {}) {
+  try {
+    return await prisma.legalDocument.findMany({
+      where: filters,
+      orderBy: { createdAt: 'desc' }
+    })
+  } catch (error) {
+    console.error('GET_LEGAL_DOCUMENTS_ERROR:', error)
+    return []
   }
 }
