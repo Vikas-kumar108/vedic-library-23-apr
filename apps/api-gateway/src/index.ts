@@ -3,6 +3,7 @@ import { serializerCompiler, validatorCompiler, ZodTypeProvider } from 'fastify-
 import cors from '@fastify/cors'
 import prismaPlugin from './plugins/prisma'
 import libraryRoutes from './routes/library.routes'
+import authRoutes from './routes/auth'
 
 const fastify = Fastify({
   logger: true,
@@ -15,6 +16,7 @@ fastify.setSerializerCompiler(serializerCompiler)
 await fastify.register(cors)
 await fastify.register(prismaPlugin)
 await fastify.register(libraryRoutes, { prefix: '/library' })
+await fastify.register(authRoutes, { prefix: '/auth' })
 
 // Health Check
 fastify.get('/health', async () => {

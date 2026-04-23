@@ -305,6 +305,12 @@ model TextEmbedding {
 model User {
   id             String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   email          String          @unique
+  password       String?
+  name           String?
+  emailVerified  DateTime?       @map("email_verified")
+  verificationToken String?      @map("verification_token")
+  resetToken     String?         @map("reset_token")
+  resetTokenExpires DateTime?    @map("reset_token_expires")
   roles          UserRole[]      @default([student])
   gender         Gender?
   lifeStage      LifeStage?      @map("life_stage")
