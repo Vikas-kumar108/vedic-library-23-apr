@@ -8,7 +8,9 @@
     "lint": "pnpm -r lint",
     "sync": "pnpm --filter @dharma/web-portal run sync",
     "db:push": "pnpm --filter @dharma/data-access db:push",
-    "db:generate": "pnpm --filter @dharma/data-access db:generate"
+    "db:generate": "pnpm --filter @dharma/data-access db:generate",
+    "prisma": "prisma",
+    "postinstall": "pnpm db:generate"
   },
   "devDependencies": {
     "typescript": "5.7.3"
