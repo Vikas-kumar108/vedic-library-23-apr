@@ -26,21 +26,28 @@ export function DashboardSidebar() {
     { label: 'Dashboard', icon: LayoutDashboard, href: '/dashboard' },
     { label: 'Library', icon: Library, href: '/library' },
     { label: 'Courses', icon: BookOpen, href: '/courses' },
+    { label: 'Practice', icon: Sparkles, href: '/practice' },
+    { label: 'Community', icon: UsersIcon, href: '/community' },
+    { label: 'Guidance', icon: HelpCircle, href: '/guidance' },
+  ]
+
+  const bottomItems = [
     { label: 'Profile', icon: User, href: '/profile' },
+    { label: 'Settings', icon: Settings, href: '/settings' },
   ]
 
   return (
-    <aside className="w-80 h-screen bg-white border-r border-slate-100 p-8 flex flex-col sticky top-0">
+    <aside className="w-64 h-screen bg-slate-50/50 border-r border-slate-100 p-6 flex flex-col sticky top-0">
       {/* Branding */}
-      <div className="flex items-center gap-3 mb-16 px-4">
-        <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-primary/20">
+      <div className="flex items-center gap-3 mb-10 px-2">
+        <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white font-bold shadow-lg shadow-primary/20">
           V
         </div>
-        <span className="text-xl font-bold font-serif text-slate-900 tracking-tight">VedicSkills</span>
+        <span className="text-lg font-bold font-serif text-slate-900 tracking-tight">VedicSkills</span>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 space-y-2">
+      <nav className="flex-1 space-y-1">
         {menuItems.map((item) => {
           const isActive = pathname === item.href
           return (
@@ -48,36 +55,32 @@ export function DashboardSidebar() {
               key={item.href}
               href={item.href}
               className={cn(
-                "flex items-center justify-between px-4 py-4 rounded-2xl transition-all group",
-                isActive ? "bg-primary/5 text-primary font-bold shadow-sm" : "text-slate-400 hover:bg-slate-50 hover:text-slate-600"
+                "flex items-center gap-3 px-3 py-3 rounded-xl transition-all group",
+                isActive ? "bg-primary/10 text-primary font-bold" : "text-slate-500 hover:bg-slate-100/50 hover:text-slate-900"
               )}
             >
-              <div className="flex items-center gap-4">
-                <item.icon className={cn("w-5 h-5 transition-colors", isActive ? "text-primary" : "text-slate-300 group-hover:text-slate-400")} />
-                <span className="text-sm uppercase tracking-widest">{item.label}</span>
-              </div>
-              {isActive && <ChevronRight className="w-4 h-4" />}
+              <item.icon className={cn("w-4 h-4 transition-colors", isActive ? "text-primary" : "text-slate-400 group-hover:text-slate-600")} />
+              <span className="text-xs uppercase tracking-widest">{item.label}</span>
             </Link>
           )
         })}
       </nav>
 
-      {/* Footer / Upgrade */}
-      <div className="space-y-6 pt-8 border-t border-slate-50">
-        <div className="bg-primary/5 p-6 rounded-[2rem] border border-primary/10 relative overflow-hidden group">
-          <Sparkles className="absolute -top-2 -right-2 w-12 h-12 text-primary opacity-20 group-hover:scale-125 transition-transform" />
-          <div className="relative z-10">
-            <h4 className="font-bold text-slate-900 text-sm mb-1">Go Premium</h4>
-            <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest leading-relaxed mb-4">Unlock all Shastras & Mentor access</p>
-            <Link href="/pricing" className="text-xs font-bold text-primary underline underline-offset-4">Upgrade Now</Link>
-          </div>
-        </div>
-
-        <button className="flex items-center gap-4 px-4 py-2 text-slate-400 hover:text-red-500 transition-colors w-full">
-          <LogOut className="w-5 h-5" />
-          <span className="text-sm font-bold uppercase tracking-widest">Logout</span>
-        </button>
+      {/* Bottom Menu */}
+      <div className="space-y-1 pt-6 border-t border-slate-100">
+        {bottomItems.map((item) => (
+          <Link 
+            key={item.href}
+            href={item.href}
+            className="flex items-center gap-3 px-3 py-3 rounded-xl text-slate-500 hover:bg-slate-100/50 hover:text-slate-900 transition-all group"
+          >
+            <item.icon className="w-4 h-4 text-slate-400 group-hover:text-slate-600" />
+            <span className="text-xs uppercase tracking-widest">{item.label}</span>
+          </Link>
+        ))}
       </div>
     </aside>
   )
 }
+
+import { Users as UsersIcon, HelpCircle } from "lucide-react"
