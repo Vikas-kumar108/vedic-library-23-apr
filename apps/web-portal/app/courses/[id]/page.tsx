@@ -16,7 +16,7 @@ import {
   Zap,
   Leaf
 } from 'lucide-react'
-import { Button, BackButton, Breadcrumb } from '@/components'
+import { Button, BackButton, Breadcrumb } from '@/components/index'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 

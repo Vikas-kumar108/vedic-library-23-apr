@@ -1,160 +1,204 @@
 'use client'
 
-import React, { useState } from 'react'
-import { Sparkles, Sun, MessageSquare, PenTool, CheckCircle2 } from 'lucide-react'
+import React from 'react'
 import { 
-  DashboardSidebar, 
-  CourseCardProgress, 
-  WisdomCard,
-  Button
-} from '@/components'
+  BookOpen, 
+  Flame, 
+  Search, 
+  Bell, 
+  TrendingUp, 
+  Calendar,
+  Zap,
+  ArrowRight,
+  Sparkles,
+  ChevronRight
+} from 'lucide-react'
+import { Button } from '@/components/atoms/button'
+import { Badge } from '@/components/atoms/badge'
+import { useAuth } from '@/features/auth/hooks/useAuth'
+import { useCourses } from '@/features/courses/hooks/useCourses'
+import { useSadhana } from '@/features/practice/hooks/useSadhana'
 import { cn } from '@/lib/utils'
+import Link from 'next/link'
 
 /**
- * User Dashboard Page
- * Responsibility: Command center for the logged-in seeker.
- * Purpose: Centralizes learning progress, recommendations, and reflection.
+ * Integrated Dashboard
+ * Responsibility: The central hub of the seeker's journey.
+ * Purpose: Answers "What now?", "Where next?", and "How is my progress?".
  */
 export default function DashboardPage() {
-  const [reflection, setReflection] = useState('')
-  const userName = "Nitai" // Aligned with request
+  const { user, isLoading: authLoading } = useAuth()
+  const { courses, isLoading: coursesLoading } = useCourses()
+  const { stats, isLoading: sadhanaLoading } = useSadhana()
+
+  if (authLoading) return <div className="p-12 animate-pulse text-slate-400 font-serif italic text-xl">Entering the Gurukulam...</div>
 
   return (
-    <div className="min-h-screen bg-[#F8F7F4] flex">
-      <DashboardSidebar />
+    <div className="max-w-7xl mx-auto space-y-10 animate-fade-in">
       
-      <main className="flex-1 max-w-7xl mx-auto flex flex-col">
-        {/* Top Header (VERY CLEAN) */}
-        <header className="px-10 py-6 flex items-center justify-between border-b border-slate-100 bg-white/50 backdrop-blur-md sticky top-0 z-40">
-          <div className="space-y-1">
-            <h1 className="text-2xl font-serif font-bold text-slate-900">
-              Welcome back, <span className="text-primary italic">{userName}</span>
+      {/* 1. SEEKER HEADER (Identity + Sankalpa) */}
+      <header className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-10 border-b border-slate-100">
+        <div className="space-y-4">
+          <div className="flex items-center gap-3">
+            <h1 className="text-4xl md:text-5xl font-serif font-bold text-slate-900 tracking-tight">
+              Welcome back, <span className="text-primary italic">{user?.name || 'Seeker'}</span>
             </h1>
-            <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
-              <Sun className="w-3 h-3 text-orange-500" /> Shuddha Ekadashi • 23 April
+            <div className="w-8 h-8 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
+              <Sparkles className="w-4 h-4" />
             </div>
           </div>
-
-          <div className="flex items-center gap-6">
-            {/* Global Search */}
-            <div className="relative group hidden md:block">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300 group-focus-within:text-primary transition-colors" />
-              <input 
-                type="text" 
-                placeholder="Search teachings..." 
-                className="h-10 w-64 pl-11 pr-4 rounded-xl border border-slate-200 bg-white focus:ring-4 focus:ring-primary/5 focus:border-primary outline-none transition-all text-xs"
-              />
+          <div className="flex items-center gap-4">
+            <Badge variant="outline" className="h-10 px-6 rounded-xl border-slate-100 text-slate-500 font-bold uppercase tracking-widest text-[10px]">
+              Stage: {user?.stage || 'Sadhaka'}
+            </Badge>
+            <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest italic flex items-center gap-2">
+              <Zap className="w-3 h-3 text-primary" /> {stats?.currentStreak || 0} Day Sadhana Streak
             </div>
-            
-            <div className="flex items-center gap-2">
-              <button className="w-10 h-10 rounded-xl hover:bg-white border border-transparent hover:border-slate-100 flex items-center justify-center text-slate-400 relative transition-all">
-                <Bell className="w-5 h-5" />
-                <div className="absolute top-2.5 right-2.5 w-1.5 h-1.5 bg-primary rounded-full border-2 border-[#F8F7F4]" />
-              </button>
-              <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary font-bold text-xs cursor-pointer overflow-hidden">
-                <div className="w-full h-full bg-[url('https://api.dicebear.com/7.x/avataaars/svg?seed=Nitai')] bg-cover" />
-              </div>
-            </div>
-          </div>
-        </header>
-
-        <div className="p-10 space-y-10">
-          {/* Section: 3 Questions Layer */}
-          <div className="grid lg:grid-cols-3 gap-8">
-            {/* Q1: What should I do now? (Sadhana) */}
-            <div className="bg-primary rounded-[2.5rem] p-8 text-white shadow-2xl shadow-primary/20 relative overflow-hidden group hover-lift">
-              <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:scale-110 transition-transform">
-                <Sparkles className="w-20 h-20" />
-              </div>
-              <div className="relative z-10 space-y-6">
-                <div className="text-[10px] font-bold text-white/60 uppercase tracking-widest">Sadhana Tracker</div>
-                <h3 className="text-2xl font-serif font-bold italic leading-tight">Begin your daily <br />chanting meditation</h3>
-                <Button className="bg-white text-primary hover:bg-white/90 w-full h-12 rounded-xl font-bold">Start Practice</Button>
-              </div>
-            </div>
-
-            {/* Q2: Where did I leave off? (Resume) */}
-            <div className="bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-soft relative group hover-lift">
-              <div className="space-y-6">
-                <div className="flex justify-between items-start">
-                  <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Continue Learning</div>
-                  <div className="text-[10px] font-bold text-primary px-2 py-1 bg-primary/5 rounded-full">25% Done</div>
-                </div>
-                <h3 className="text-xl font-bold text-slate-900 leading-tight">Bhagavad Gita <br />Foundations</h3>
-                <div className="h-1.5 w-full bg-slate-50 rounded-full overflow-hidden">
-                  <div className="h-full bg-primary w-1/4 rounded-full" />
-                </div>
-                <Button variant="outline" className="w-full h-12 rounded-xl border-slate-100 hover:bg-slate-50">Resume Lesson 4</Button>
-              </div>
-            </div>
-
-            {/* Q3: What is my next step? (Journey) */}
-            <div className="bg-slate-900 rounded-[2.5rem] p-8 text-white shadow-soft relative overflow-hidden group hover-lift">
-              <div className="absolute -bottom-8 -right-8 w-32 h-32 bg-primary/20 rounded-full blur-3xl" />
-              <div className="relative z-10 space-y-6">
-                <div className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Your Path</div>
-                <h3 className="text-xl font-bold leading-tight">Transitioning to <br />Householder Life</h3>
-                <p className="text-xs text-slate-400 leading-relaxed">Stage 4 of 28: Harmonizing Dharma with Responsibility.</p>
-                <div className="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-widest cursor-pointer group/link">
-                  View Path Map <ChevronRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="grid lg:grid-cols-[1fr_400px] gap-12">
-            {/* Recommended Feed */}
-            <section className="space-y-8">
-              <div className="flex items-center justify-between">
-                <h2 className="text-xl font-bold text-slate-900">Recommended for your Stage</h2>
-                <Button variant="ghost" className="text-xs font-bold text-primary">See All</Button>
-              </div>
-              <div className="grid md:grid-cols-2 gap-8">
-                <WisdomCard 
-                  id="w1"
-                  title="The Grihastha Manual"
-                  type="Lesson"
-                  duration="15 min"
-                  level="Intermediate"
-                  tags={['Dharma', 'Life']}
-                  href="/learn/grihastha"
-                />
-                <WisdomCard 
-                  id="w2"
-                  title="Leadership in Service"
-                  type="Article"
-                  duration="10 min"
-                  level="Advanced"
-                  tags={['Leadership']}
-                  href="/blog/leadership"
-                />
-              </div>
-            </section>
-
-            {/* Daily Reflection (Hriday-Manthan) */}
-            <section className="space-y-8">
-              <h2 className="text-xl font-bold text-slate-900">Hriday-Manthan</h2>
-              <div className="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-soft space-y-6">
-                <div className="flex items-center gap-3 text-primary mb-2">
-                  <MessageSquare className="w-5 h-5" />
-                  <h3 className="font-bold text-xs uppercase tracking-widest">Today's Reflection</h3>
-                </div>
-                <textarea 
-                  className="w-full min-h-[140px] p-6 text-sm rounded-2xl border border-slate-50 bg-slate-50 focus:ring-4 focus:ring-primary/5 focus:border-primary outline-none transition-all placeholder:italic"
-                  placeholder="Record your realization..."
-                  value={reflection}
-                  onChange={(e) => setReflection(e.target.value)}
-                />
-                <Button className="w-full h-14 rounded-2xl bg-slate-900 text-white font-bold">
-                  Save to Soul-Log
-                </Button>
-              </div>
-            </section>
           </div>
         </div>
-      </main>
+        
+        <div className="flex gap-4">
+          <div className="relative group">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300" />
+            <input 
+              type="text" 
+              placeholder="Search wisdom..." 
+              className="h-14 pl-12 pr-6 rounded-2xl border border-slate-100 bg-white shadow-soft outline-none focus:ring-4 focus:ring-primary/5 focus:border-primary transition-all text-sm w-64"
+            />
+          </div>
+          <Button variant="outline" size="icon" className="h-14 w-14 rounded-2xl border-slate-100 relative group">
+            <Bell className="w-5 h-5 text-slate-400 group-hover:text-primary transition-colors" />
+            <div className="absolute top-4 right-4 w-2 h-2 bg-primary rounded-full ring-4 ring-white" />
+          </Button>
+        </div>
+      </header>
+
+      <div className="grid lg:grid-cols-[1fr_400px] gap-10">
+        
+        {/* LEFT: THE JOURNEY (Learning + Discovery) */}
+        <div className="space-y-12">
+          
+          {/* Continue Learning */}
+          <section className="space-y-6">
+            <div className="flex items-center justify-between">
+              <h2 className="text-xs font-bold text-slate-900 uppercase tracking-[0.2em]">Resume Journey</h2>
+              <Link href="/courses" className="text-[10px] font-bold text-primary uppercase tracking-widest hover:underline transition-all">View All Paths →</Link>
+            </div>
+            
+            <div className="grid md:grid-cols-2 gap-6">
+              {courses.slice(0, 2).map((course) => (
+                <div key={course.id} className="group bg-white p-8 rounded-[3rem] border border-slate-100 shadow-soft hover:shadow-2xl hover:shadow-slate-200/50 transition-all flex flex-col justify-between">
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <Badge className="bg-primary/5 text-primary rounded-lg text-[8px] uppercase tracking-widest font-bold">
+                        {course.level}
+                      </Badge>
+                      <span className="text-[10px] text-slate-300 font-bold">{course.progress || 0}% Complete</span>
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-900 leading-snug group-hover:text-primary transition-colors">{course.title}</h3>
+                    <div className="h-1 w-full bg-slate-50 rounded-full overflow-hidden">
+                      <div className="h-full bg-primary rounded-full transition-all duration-1000" style={{ width: `${course.progress || 0}%` }} />
+                    </div>
+                  </div>
+                  <Button asChild variant="ghost" className="mt-8 justify-between h-12 rounded-xl text-primary font-bold">
+                    <Link href={`/courses/${course.id}`}>
+                      Continue <ChevronRight className="w-4 h-4" />
+                    </Link>
+                  </Button>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Recommended Readings (Semantic Guidance) */}
+          <section className="space-y-6">
+            <h2 className="text-xs font-bold text-slate-900 uppercase tracking-[0.2em]">Recommended Wisdom</h2>
+            <div className="bg-slate-900 rounded-[3rem] p-10 text-white relative overflow-hidden group">
+              <div className="relative z-10 space-y-8">
+                <div className="space-y-2">
+                  <div className="text-primary font-bold text-[10px] uppercase tracking-widest flex items-center gap-2">
+                    <TrendingUp className="w-4 h-4" /> Based on your Stage: {user?.stage || 'Sadhaka'}
+                  </div>
+                  <h3 className="text-3xl font-serif font-bold italic leading-tight max-w-lg">
+                    Balance & Duty: Navigating the Grihastha Life
+                  </h3>
+                  <p className="text-white/40 text-sm leading-relaxed max-w-md italic">
+                    A collection of verses from Bhagavad Gītā Chapter 3, specifically curated for your current life path.
+                  </p>
+                </div>
+                <Button className="h-14 px-8 rounded-2xl bg-white text-slate-900 font-bold shadow-xl shadow-white/10 group/btn">
+                  Open Collection <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-2 transition-transform" />
+                </Button>
+              </div>
+              <div className="absolute top-0 right-0 p-10 opacity-10 group-hover:scale-110 transition-transform">
+                <BookOpen className="w-48 h-48" />
+              </div>
+            </div>
+          </section>
+        </div>
+
+        {/* RIGHT: THE PRACTICE (Sadhana + Community) */}
+        <aside className="space-y-10">
+          
+          {/* Daily Sadhana Tracker (Simplified for Dashboard) */}
+          <section className="bg-white p-10 rounded-[3rem] border border-slate-100 shadow-soft space-y-8">
+            <div className="flex items-center justify-between">
+              <h2 className="text-xs font-bold text-slate-900 uppercase tracking-widest">Today's Vow</h2>
+              <Flame className="w-5 h-5 text-orange-500 fill-current animate-pulse" />
+            </div>
+            
+            <div className="space-y-6">
+              <div className="flex items-center justify-between group cursor-pointer">
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-primary/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
+                    <Zap className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-bold text-slate-900">Japa Meditation</div>
+                    <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">16 Rounds Scheduled</div>
+                  </div>
+                </div>
+                <div className="text-slate-200 group-hover:text-primary transition-all"><ChevronRight className="w-5 h-5" /></div>
+              </div>
+
+              <div className="flex items-center justify-between group cursor-pointer">
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center text-orange-500 group-hover:bg-orange-500 group-hover:text-white transition-all">
+                    <BookOpen className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-bold text-slate-900">Shastra Study</div>
+                    <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">30 Mins Scheduled</div>
+                  </div>
+                </div>
+                <div className="text-slate-200 group-hover:text-orange-500 transition-all"><ChevronRight className="w-5 h-5" /></div>
+              </div>
+            </div>
+
+            <Button asChild variant="outline" className="w-full h-12 rounded-xl border-slate-100 text-xs font-bold uppercase tracking-widest hover:border-primary/20 hover:text-primary transition-all">
+              <Link href="/practice">Open Tracker</Link>
+            </Button>
+          </section>
+
+          {/* Upcoming Sangha Sessions */}
+          <section className="bg-white p-10 rounded-[3rem] border border-slate-100 shadow-soft space-y-6">
+            <h2 className="text-xs font-bold text-slate-900 uppercase tracking-widest flex items-center gap-2">
+              <Calendar className="w-4 h-4 text-primary" /> Live Sessions
+            </h2>
+            <div className="space-y-4">
+              <div className="p-4 bg-slate-50 rounded-2xl border border-slate-50 hover:border-primary/20 transition-all cursor-pointer group">
+                <div className="text-[10px] font-bold text-primary uppercase tracking-widest mb-1">Today, 6 PM</div>
+                <div className="text-xs font-bold text-slate-900 group-hover:text-primary transition-colors">Gita Satsang: Karma & Duty</div>
+                <div className="text-[8px] text-slate-400 font-bold uppercase tracking-widest mt-1">with Dr. Keshav Dev</div>
+              </div>
+            </div>
+            <Button asChild variant="ghost" className="w-full text-xs text-primary font-bold">
+               <Link href="/guidance">View Calendar →</Link>
+            </Button>
+          </section>
+
+        </aside>
+      </div>
     </div>
   )
 }
-
-import { Search, Bell, ChevronRight } from "lucide-react"

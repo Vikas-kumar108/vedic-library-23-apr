@@ -1,7 +1,8 @@
 import React from 'react'
 import Link from 'next/link'
-import { Navbar } from '@/components/layout/navbar'
-import { Hero } from '@/components/home/hero'
+import { Navbar } from '@/components/organisms/navbar'
+import { Hero } from '@/components/organisms/hero'
+import { Button } from '@/components/atoms/button'
 import { 
   BookOpen, 
   Sparkles, 
@@ -10,7 +11,6 @@ import {
   Clock,
   Quote
 } from 'lucide-react'
-import { Button } from '@/components/ui/button'
 
 const valueProps = [
   { id: 'learn', title: 'Learn', icon: BookOpen, desc: 'Structured paths for deep understanding', color: 'bg-blue-100 text-blue-600' },

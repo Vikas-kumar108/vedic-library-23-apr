@@ -12,7 +12,7 @@ import {
   Sun,
   PenTool
 } from 'lucide-react'
-import { Button, StandardPage, Breadcrumb } from '@/components'
+import { Button, StandardPage, Breadcrumb } from '@/components/index'
 import { cn } from '@/lib/utils'
 
 /**

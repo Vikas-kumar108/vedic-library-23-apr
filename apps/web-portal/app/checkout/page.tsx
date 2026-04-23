@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { Lock, ShieldCheck, CreditCard, ChevronLeft } from 'lucide-react'
-import { Button, StandardPage, BackButton } from '@/components'
+import { Button, StandardPage, BackButton } from '@/components/index'
 import Link from 'next/link'
 
 /**

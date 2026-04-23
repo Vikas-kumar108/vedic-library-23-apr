@@ -12,7 +12,7 @@ import {
   ChevronLeft,
   Star
 } from 'lucide-react'
-import { Button, StandardPage, BackButton, Badge } from '@/components'
+import { Button, StandardPage, BackButton, Badge } from '@/components/index'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 

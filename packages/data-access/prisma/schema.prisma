@@ -371,6 +371,12 @@ model User {
   assignmentsAsGuide   GuidanceAssignment[] @relation("Guide")
   assignmentsAsStudent GuidanceAssignment[] @relation("Student")
 
+  circleMemberships    CircleMember[]
+  circlePosts          CirclePost[]
+  mentoredCircles      Circle[]           @relation("CircleMentor")
+  hostedEvents         VedicEvent[]       @relation("EventHost")
+  eventRegistrations   EventRegistration[]
+
   @@map("users")
 }
 
@@ -524,6 +530,130 @@ model Highlight {
 
   @@map("highlights")
 }
+
+// =====================================================
+// COMMUNITY & SOCIAL LAYER
+// =====================================================
+
+model Circle {
+  id            String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name          String
+  slug          String          @unique
+  description   String?
+  avatar        String?
+  type          CircleType      @default(REGIONAL)
+  location      String?
+  memberCount   Int             @default(0) @map("member_count")
+  mentorId      String?         @map("mentor_id") @db.Uuid
+  createdAt     DateTime        @default(now()) @map("created_at")
+  
+  mentor        User?           @relation("CircleMentor", fields: [mentorId], references: [id])
+  members       CircleMember[]
+  posts         CirclePost[]
+
+  @@map("circles")
+}
+
+enum CircleType {
+  REGIONAL
+  STUDY_GROUP
+  MENTOR_CIRCLE
+
+  @@map("circle_type_enum")
+}
+
+model CircleMember {
+  userId    String     @map("user_id") @db.Uuid
+  circleId  String     @map("circle_id") @db.Uuid
+  role      CircleRole @default(MEMBER)
+  joinedAt  DateTime   @default(now()) @map("joined_at")
+
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  circle    Circle     @relation(fields: [circleId], references: [id], onDelete: Cascade)
+
+  @@id([userId, circleId])
+  @@map("circle_members")
+}
+
+enum CircleRole {
+  MEMBER
+  MODERATOR
+  MENTOR
+
+  @@map("circle_role_enum")
+}
+
+model CirclePost {
+  id        String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  circleId  String   @map("circle_id") @db.Uuid
+  authorId  String   @map("author_id") @db.Uuid
+  content   String
+  category  PostCategory @default(REALIZATION)
+  likes     Int      @default(0)
+  replies   Int      @default(0)
+  isPinned  Boolean  @default(false) @map("is_pinned")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  circle    Circle   @relation(fields: [circleId], references: [id], onDelete: Cascade)
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@map("circle_posts")
+}
+
+enum PostCategory {
+  REALIZATION
+  QUESTION
+  ANNOUNCEMENT
+
+  @@map("post_category_enum")
+}
+
+// =====================================================
+// EVENTS LAYER
+// =====================================================
+
+model VedicEvent {
+  id          String      @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  title       String
+  description String?
+  hostId      String      @map("host_id") @db.Uuid
+  startTime   DateTime    @map("start_time")
+  endTime     DateTime    @map("end_time")
+  type        EventType   @default(LIVE_SATSANG)
+  category    String?
+  platform    String      @default("ZOOM")
+  link        String?
+  createdAt   DateTime    @default(now()) @map("created_at")
+
+  host        User        @relation("EventHost", fields: [hostId], references: [id])
+  registrations EventRegistration[]
+
+  @@map("vedic_events")
+}
+
+enum EventType {
+  LIVE_SATSANG
+  WORKSHOP
+  GROUP_MEDITATION
+
+  @@map("event_type_enum")
+}
+
+model EventRegistration {
+  userId    String   @map("user_id") @db.Uuid
+  eventId   String   @map("event_id") @db.Uuid
+  joinedAt  DateTime @default(now()) @map("joined_at")
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  event     VedicEvent @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@id([userId, eventId])
+  @@map("event_registrations")
+}
+
+// =====================================================
+// ACCESS & CONTENT RULES (ALREADY PRESENT BUT LINKED)
+// =====================================================
 
 model ContentAccessRule {
   id                   String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid

@@ -12,7 +12,7 @@ import {
   ChevronRight,
   Monitor
 } from 'lucide-react'
-import { Button, StandardPage, BackButton } from '@/components'
+import { Button, StandardPage, BackButton } from '@/components/index'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 

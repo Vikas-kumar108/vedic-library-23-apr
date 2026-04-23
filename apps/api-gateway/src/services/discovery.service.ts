@@ -76,7 +76,7 @@ export class DiscoveryService {
         take: 10,
       })
       nodeResults = texts.map(t => ({
-        tagId: null,
+        tagId: 'general',
         tagName: 'General Wisdom',
         nodeId: t.node.id,
         slug: t.node.slug,

@@ -14,7 +14,8 @@ import {
   ArrowUpRight,
   MoreVertical
 } from 'lucide-react'
-import { AdminSidebar, Button } from '@/components'
+import { Button } from '@/components/atoms/button'
+import { AdminSidebar } from '@/components/organisms/admin-sidebar'
 import { cn } from '@/lib/utils'
 
 /**

@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { Check, Star, Sparkles, ShieldCheck, Zap, Heart } from 'lucide-react'
-import { Button, StandardPage, Breadcrumb } from '@/components'
+import { Button, StandardPage, Breadcrumb } from '@/components/index'
 import Link from 'next/link'
 
 /**

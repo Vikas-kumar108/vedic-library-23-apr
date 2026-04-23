@@ -14,6 +14,7 @@ export * from './organisms/wisdom-card'
 export * from './organisms/course-cards'
 export * from './organisms/dashboard-sidebar'
 export * from './organisms/admin-sidebar'
+export * from './organisms/mobile-nav'
 
 // TEMPLATES
 export * from './templates/standard-page'

@@ -2,7 +2,9 @@
 
 import React from 'react'
 import { Award, Zap, CheckCircle2, History, CreditCard } from 'lucide-react'
-import { Button, StandardPage, Breadcrumb } from '@/components'
+import { Button } from '@/components/atoms/button'
+import { StandardPage } from '@/components/templates/standard-page'
+import { Breadcrumb } from '@/components/molecules/breadcrumb'
 import Link from 'next/link'
 
 /**
