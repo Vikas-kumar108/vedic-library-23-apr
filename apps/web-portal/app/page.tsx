@@ -122,7 +122,7 @@ export default function LandingPage() {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-8">Begin your journey with one lesson.</h2>
           <Button asChild size="lg" className="h-16 px-12 rounded-2xl bg-orange-600 hover:bg-orange-700 text-white text-xl font-bold shadow-2xl shadow-orange-600/20 transition-transform hover:scale-105 active:scale-95">
-            <Link href="/onboarding">Start Learning</Link>
+            <Link href="/welcome">Start Your Journey</Link>
           </Button>
         </div>
       </section>
