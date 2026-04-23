@@ -48,6 +48,48 @@ enum Script {
   @@map("script_enum")
 }
 
+enum Gender {
+  male
+  female
+  @@map("gender_enum")
+}
+
+enum AgeGroup {
+  child_0_5
+  child_5_10
+  teen_10_18
+  youth_18_25
+  adult_25_40
+  mid_40_60
+  senior_60_plus
+  @@map("age_group_enum")
+}
+
+enum Purushartha {
+  dharma
+  artha
+  kama
+  moksha
+  @@map("purushartha_enum")
+}
+
+enum InnerState {
+  confused
+  seeking
+  stable
+  disturbed
+  detached
+  @@map("inner_state_enum")
+}
+
+enum Svabhava {
+  intellectual
+  administrative
+  creative
+  practical
+  @@map("svabhava_enum")
+}
+
 enum LifeStage {
   student
   unmarried
@@ -66,13 +108,6 @@ enum GuidanceLevel {
   teacher
 
   @@map("guidance_level_enum")
-}
-
-enum Gender {
-  male
-  female
-
-  @@map("gender_enum")
 }
 
 enum UserRole {
@@ -151,6 +186,8 @@ model Node {
   parentId     String?              @map("parent_id") @db.Uuid
   level        String               // category, text, section, chapter, verse
   slug         String?
+  sensitivity  Int                  @default(1) // 1: Universal, 2: Contextual, 3: Controlled
+  minAge       Int?                 @map("min_age")
   orderIndex   Int                  @default(0) @map("order_index")
   canonicalRef String?              @map("canonical_ref")
   path         Unsupported("ltree")?
@@ -313,8 +350,15 @@ model User {
   resetTokenExpires DateTime?    @map("reset_token_expires")
   roles          UserRole[]      @default([student])
   gender         Gender?
+  ageGroup       AgeGroup?       @map("age_group")
   lifeStage      LifeStage?      @map("life_stage")
-  guidanceLevel  GuidanceLevel?  @map("guidance_level")
+  eligibilityLevel Int             @default(1) @map("eligibility_level")
+  primaryFocus   Purushartha?    @map("primary_focus")
+  innerState     InnerState?     @map("inner_state")
+  nature         Svabhava?
+  
+  journeyStageId String?         @map("journey_stage_id") @db.Uuid
+  journeyStage   LifeJourneyStage? @relation(fields: [journeyStageId], references: [id])
   createdAt      DateTime        @default(now()) @map("created_at")
   lastActive     DateTime?       @map("last_active")
   
@@ -329,6 +373,27 @@ model User {
 
   @@map("users")
 }
+
+model LifeJourneyStage {
+  id          String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  stageNumber Int      @unique @map("stage_number")
+  slug        String   @unique
+  name        String
+  category    String   // e.g., "Childhood", "Householder"
+  minAge      Int?     @map("min_age")
+  maxAge      Int?     @map("max_age")
+  authority   String?
+  focus       String?
+  dominantPurushartha Purushartha @map("dominant_purushartha")
+  
+  description String?
+  keyProblems String[] @map("key_problems")
+  
+  users       User[]
+  
+  @@map("life_journey_stages")
+}
+
 
 model UserStatistics {
   userId             String   @id @map("user_id") @db.Uuid

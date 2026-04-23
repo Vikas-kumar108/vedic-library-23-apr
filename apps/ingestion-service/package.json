@@ -8,6 +8,7 @@
   "dependencies": {
     "@dharma/data-access": "workspace:*",
     "@dharma/text-engine": "workspace:*",
+    "@prisma/client": "^6.4.1",
     "dotenv": "^17.4.2"
   },
   "devDependencies": {

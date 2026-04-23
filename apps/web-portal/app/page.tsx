@@ -1,114 +1,152 @@
-'use client'
-
 import React from 'react'
 import Link from 'next/link'
+import { Navbar } from '@/components/layout/navbar'
+import { Hero } from '@/components/home/hero'
+import { 
+  BookOpen, 
+  Sparkles, 
+  PenTool, 
+  ChevronRight,
+  Clock,
+  Quote
+} from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { BookOpen, GraduationCap, Users, Heart, ArrowRight } from 'lucide-react'
+
+const valueProps = [
+  { id: 'learn', title: 'Learn', icon: BookOpen, desc: 'Structured paths for deep understanding', color: 'bg-blue-100 text-blue-600' },
+  { id: 'reflect', title: 'Reflect', icon: PenTool, desc: 'Capture insights and realizations', color: 'bg-orange-100 text-orange-600' },
+  { id: 'apply', title: 'Apply', icon: Sparkles, desc: 'Bring wisdom into daily life', color: 'bg-green-100 text-green-600' },
+]
+
+const featuredContent = [
+  { id: '1', title: 'Harmony in the Home', duration: '12 min', tag: 'Dharma', level: 'Beginner' },
+  { id: '2', title: 'Nature of the Self', duration: '18 min', tag: 'Moksha', level: 'Intermediate' },
+  { id: '3', title: 'Ethical Prosperity', duration: '15 min', tag: 'Artha', level: 'Beginner' },
+]
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-background">
-      {/* Hero Section */}
-      <header className="relative py-20 px-4 overflow-hidden bg-gradient-to-b from-[var(--saffron-light)]/20 to-background">
-        <div className="max-w-6xl mx-auto text-center space-y-8 relative z-10">
-          <h1 className="text-5xl md:text-7xl font-serif tracking-tight text-foreground">
-            Vedic Skills Platform
-          </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto font-light leading-relaxed">
-            The foundational OS for your spiritual and practical life. 
-            Explore unlimited teachings tailored to every walk of life.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-            <Button asChild size="lg" className="rounded-full px-8 h-14 text-lg bg-[var(--knowledge-blue)] hover:bg-[var(--knowledge-blue)]/90 shadow-xl shadow-blue-500/20 transition-all hover:scale-105">
-              <Link href="/auth/signup">
-                Start Your Journey <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-            <Button asChild variant="outline" size="lg" className="rounded-full px-8 h-14 text-lg border-border/50 hover:bg-secondary/50">
-              <Link href="/library">
-                Explore the Library
-              </Link>
-            </Button>
-          </div>
-        </div>
-        
-        {/* Background Decorative Elements */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full opacity-10 pointer-events-none">
-          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-orange-500 rounded-full blur-[120px]" />
-          <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-blue-500 rounded-full blur-[120px]" />
-        </div>
-      </header>
+    <main className="min-h-screen bg-white">
+      <Navbar />
+      <Hero />
 
-      {/* Pillars Section */}
-      <section className="py-24 px-4 max-w-6xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-serif text-center mb-16">The Four Pillars of Wisdom</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <FeatureCard 
-            icon={BookOpen} 
-            title="Library" 
-            description="The 'NIKHIL Knowledge OS' — a massive, structured repository of Vedic texts."
-            color="text-orange-600"
-            bgColor="bg-orange-50"
-          />
-          <FeatureCard 
-            icon={GraduationCap} 
-            title="Education" 
-            description="Personalized Learning Curves that guide you through the library based on your life stage."
-            color="text-blue-600"
-            bgColor="bg-blue-50"
-          />
-          <FeatureCard 
-            icon={Users} 
-            title="Guidance" 
-            description="Connect with mentors and Gurus to resolve doubts and receive personalized instruction."
-            color="text-purple-600"
-            bgColor="bg-purple-50"
-          />
-          <FeatureCard 
-            icon={Heart} 
-            title="Community" 
-            description="Gamified outreach and service coordination, translating knowledge into action."
-            color="text-red-600"
-            bgColor="bg-red-50"
-          />
+      {/* Value Section */}
+      <section className="py-24">
+        <div className="container mx-auto px-4 grid md:grid-cols-3 gap-8">
+          {valueProps.map((p) => (
+            <div key={p.id} className="p-8 rounded-[2.5rem] bg-slate-50 border border-slate-100 text-center group hover:bg-white hover:shadow-xl transition-all duration-500">
+              <div className={`w-16 h-16 ${p.color} rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform`}>
+                <p.icon className="w-8 h-8" />
+              </div>
+              <h3 className="text-2xl font-bold text-slate-900 mb-3">{p.title}</h3>
+              <p className="text-slate-600">{p.desc}</p>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* Exploration Section */}
-      <section className="bg-secondary/30 py-24 px-4">
-        <div className="max-w-4xl mx-auto text-center space-y-8">
-          <h2 className="text-3xl md:text-4xl font-serif">Something for Everyone</h2>
-          <p className="text-lg text-muted-foreground leading-relaxed">
-            Whether you are a student (Brahmacharya), a householder (Grihastha), or a scholar, 
-            the platform adapts to your individual needs. Share your situation, and let the 
-            Shastras illuminate your path.
-          </p>
-          <div className="pt-8">
-            <Button asChild variant="link" className="text-primary text-lg">
-              <Link href="/auth/signup">Join 1,000+ scholars today →</Link>
+      {/* Featured Content */}
+      <section className="py-24 bg-slate-50">
+        <div className="container mx-auto px-4">
+          <div className="flex justify-between items-end mb-12">
+            <div>
+              <h2 className="text-4xl font-bold text-slate-900 mb-4">Featured Content</h2>
+              <p className="text-slate-600">Start with our most popular guided lessons.</p>
+            </div>
+            <Button asChild variant="ghost" className="text-orange-600 hover:text-orange-700 font-bold group">
+              <Link href="/explore" className="flex items-center">
+                View All <ChevronRight className="ml-1 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
             </Button>
           </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {featuredContent.map((f) => (
+              <div key={f.id} className="bg-white rounded-[2.5rem] overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl transition-all group">
+                <div className="h-48 bg-slate-200 relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                  <div className="absolute top-4 left-4 px-3 py-1 bg-white/90 backdrop-blur-md rounded-full text-[10px] font-bold text-orange-600 uppercase tracking-widest">
+                    {f.tag}
+                  </div>
+                </div>
+                <div className="p-8">
+                  <div className="flex items-center gap-4 text-xs text-slate-400 mb-4">
+                    <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {f.duration}</span>
+                    <span>{f.level}</span>
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-900 mb-6 group-hover:text-orange-600 transition-colors">{f.title}</h3>
+                  <Button asChild className="w-full h-12 rounded-xl bg-slate-900 hover:bg-orange-600 text-white font-bold transition-all">
+                    <Link href={`/library/featured-${f.id}`}>Start Learning</Link>
+                  </Button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works */}
+      <section className="py-24 text-center">
+        <div className="container mx-auto px-4">
+          <h2 className="text-4xl font-bold text-slate-900 mb-20">How It Works</h2>
+          <div className="grid md:grid-cols-3 gap-12 relative max-w-4xl mx-auto">
+            {[
+              { step: '01', title: 'Learn', desc: 'Engage with structured Vedic content.' },
+              { step: '02', title: 'Reflect', desc: 'Personalize the wisdom with your insights.' },
+              { step: '03', title: 'Grow', desc: 'See the transformation in your daily life.' },
+            ].map((s, i) => (
+              <div key={i} className="relative">
+                <div className="text-8xl font-black text-slate-100 absolute -top-12 left-1/2 -translate-x-1/2 -z-10">{s.step}</div>
+                <h3 className="text-2xl font-bold text-slate-900 mb-4">{s.title}</h3>
+                <p className="text-slate-600">{s.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Trust Section */}
+      <section className="py-24 bg-orange-600 text-white overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[100px] rounded-full" />
+        <div className="container mx-auto px-4 relative z-10 text-center max-w-3xl">
+          <Quote className="w-16 h-16 text-orange-200 mx-auto mb-8 opacity-50" />
+          <h2 className="text-3xl md:text-5xl font-bold mb-8 leading-tight">
+            “A system designed for inner growth, not just information.”
+          </h2>
+          <div className="w-20 h-1 bg-white/30 mx-auto" />
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="py-24 text-center">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-8">Begin your journey with one lesson.</h2>
+          <Button asChild size="lg" className="h-16 px-12 rounded-2xl bg-orange-600 hover:bg-orange-700 text-white text-xl font-bold shadow-2xl shadow-orange-600/20 transition-transform hover:scale-105 active:scale-95">
+            <Link href="/onboarding">Start Learning</Link>
+          </Button>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-12 border-t border-border/50 text-center text-muted-foreground text-sm">
-        <p>© 2026 Vedic Skills Platform. Built for the modern seeker.</p>
+      <footer className="py-20 border-t border-slate-100">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-8 mb-12">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-orange-600 rounded-lg flex items-center justify-center text-white font-bold">V</div>
+              <span className="text-lg font-bold text-slate-900">VedicSkills</span>
+            </div>
+            <div className="flex items-center gap-8 text-sm font-semibold text-slate-400">
+              <Link href="/explore" className="hover:text-orange-600">Explore</Link>
+              <Link href="/courses" className="hover:text-orange-600">Courses</Link>
+              <Link href="/library" className="hover:text-orange-600">Library</Link>
+              <Link href="/about" className="hover:text-orange-600">About</Link>
+            </div>
+          </div>
+          <div className="text-center text-slate-300 text-sm">
+            © 2026 VedicSkills Platform. All rights reserved.
+          </div>
+        </div>
       </footer>
-    </div>
-  )
-}
-
-function FeatureCard({ icon: Icon, title, description, color, bgColor }: any) {
-  return (
-    <div className="p-8 rounded-3xl border border-border/50 hover:border-primary/20 hover:shadow-2xl hover:shadow-primary/5 transition-all group bg-card">
-      <div className={`w-12 h-12 ${bgColor} ${color} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
-        <Icon className="h-6 w-6" />
-      </div>
-      <h3 className="text-xl font-semibold mb-3">{title}</h3>
-      <p className="text-muted-foreground leading-relaxed">
-        {description}
-      </p>
-    </div>
+    </main>
   )
 }

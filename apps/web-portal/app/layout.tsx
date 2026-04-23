@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter, Noto_Serif } from 'next/font/google'
+import { Inter, Noto_Serif, Noto_Sans_Devanagari, Noto_Sans_Bengali, Cormorant_Garamond } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
@@ -14,6 +14,25 @@ const notoSerif = Noto_Serif({
   variable: '--font-noto-serif',
   display: 'swap',
   weight: ['400', '500', '600', '700']
+})
+
+const cormorant = Cormorant_Garamond({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-serif',
+  display: 'swap',
+})
+
+const devanagari = Noto_Sans_Devanagari({
+  subsets: ["devanagari"],
+  variable: '--font-devanagari',
+  display: 'swap',
+})
+
+const bengali = Noto_Sans_Bengali({
+  subsets: ["bengali"],
+  variable: '--font-bengali',
+  display: 'swap',
 })
 
 export const metadata: Metadata = {
@@ -53,7 +72,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${notoSerif.variable}`}>
+    <html lang="en" className={`${inter.variable} ${notoSerif.variable} ${cormorant.variable} ${devanagari.variable} ${bengali.variable}`}>
       <body className="font-sans antialiased bg-background text-foreground">
         {children}
         <Analytics />

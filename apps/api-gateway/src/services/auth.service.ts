@@ -116,6 +116,29 @@ export class AuthService {
     return { message: 'Password reset successfully' }
   }
 
+  /**
+   * calculateEligibility: The "Adhikāra Engine".
+   * 
+   * Purpose: Determines a user's eligibility level based on Age and Life Stage.
+   * Responsibility: Enforces the scientific mapping of maturity to content access levels.
+   */
+  private calculateEligibility(ageGroup: string, asrama: string): number {
+    // Level 1: Child / Early student
+    if (ageGroup === 'child_0_5' || ageGroup === 'child_5_10') return 1
+    
+    // Level 2: Teen / Brahmacari
+    if (ageGroup === 'teen_10_18') return 2
+    
+    // Level 5: Mature / Mentor (50+)
+    if (ageGroup === 'mid_40_60' || ageGroup === 'senior_60_plus') return 5
+    
+    // Level 4: Married (Grihastha)
+    if (asrama === 'married') return 4
+    
+    // Level 3: Young adult (Pre-marriage)
+    return 3
+  }
+
   async login(data: any) {
     const { email, password } = data
 
