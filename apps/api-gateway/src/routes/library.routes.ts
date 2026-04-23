@@ -32,4 +32,10 @@ export default async function libraryRoutes(fastify: FastifyInstance) {
     const results = await searchByKeyword(q)
     return results
   })
+  
+  // 4. Get Tags
+  typedFastify.get('/tags', async (request) => {
+    const libraryService = new LibraryService(request.server.prisma)
+    return await libraryService.getTags()
+  })
 }

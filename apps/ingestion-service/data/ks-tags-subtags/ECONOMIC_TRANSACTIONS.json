@@ -1,0 +1,188 @@
+{
+  "id": "ECONOMIC_TRANSACTIONS",
+  "title": "The Business of Pleasure",
+  "description": "Focuses on the financial and contract logic (especially in Adhikaraṇa 6).",
+  "keywords": ["economics", "transaction", "finance", "contract", "value", "exchange"],
+
+  "subtags": [
+    {
+      "id": "fee_negotiation",
+      "sanskrit": "Bhāṭī",
+      "description": "The art of naming and negotiating a price, balancing demand, status, and perceived value.",
+      "keywords": ["fee", "price", "negotiation", "value", "transaction"],
+      "examples": [
+        "Setting a price based on client status",
+        "Adjusting fees according to demand",
+        "Negotiating terms before engagement"
+      ],
+      "related_tags": [
+        "financial_negotiation",
+        "dowry_and_wealth",
+        "courtesan_culture",
+        "power_and_control"
+      ]
+    },
+
+    {
+      "id": "retention_tactics",
+      "sanskrit": null,
+      "description": "Methods used to maintain a client’s ongoing financial and emotional investment.",
+      "keywords": ["retention", "client", "loyalty", "strategy", "income"],
+      "examples": [
+        "Maintaining emotional engagement",
+        "Creating exclusivity or attachment",
+        "Encouraging repeated patronage"
+      ],
+      "related_tags": [
+        "creating_obligation",
+        "reputation_building",
+        "trust_and_confidence",
+        "relationship_dynamics"
+      ]
+    },
+
+    {
+      "id": "asset_stripping",
+      "sanskrit": "Artha-haraṇa",
+      "description": "Gradually extracting wealth from a lover through strategic engagement and influence.",
+      "keywords": ["wealth", "extraction", "strategy", "resource", "gain"],
+      "examples": [
+        "Encouraging gifts over time",
+        "Increasing financial dependence",
+        "Maximizing long-term gain"
+      ],
+      "related_tags": [
+        "extorting_wealth",
+        "financial_negotiation",
+        "power_and_control",
+        "social_strategy"
+      ]
+    },
+
+    {
+      "id": "debt_management",
+      "sanskrit": null,
+      "description": "Handling situations where a lover owes money, including recovery, negotiation, or disengagement.",
+      "keywords": ["debt", "management", "recovery", "finance", "obligation"],
+      "examples": [
+        "Negotiating repayment terms",
+        "Reducing losses from unreliable clients",
+        "Deciding whether to continue engagement"
+      ],
+      "related_tags": [
+        "breach_of_contract",
+        "financial_negotiation",
+        "assessing_risks",
+        "legal_disputes"
+      ]
+    },
+
+    {
+      "id": "gift_valuation",
+      "sanskrit": null,
+      "description": "Understanding the psychological and economic difference between forms of wealth such as cash, jewelry, or goods.",
+      "keywords": ["gift", "value", "wealth", "psychology", "exchange"],
+      "examples": [
+        "Comparing liquid versus symbolic gifts",
+        "Assessing long-term value of ornaments",
+        "Interpreting intent behind different offerings"
+      ],
+      "related_tags": [
+        "gift_giving",
+        "property_rights",
+        "finances_and_budgeting",
+        "material_culture"
+      ]
+    },
+
+    {
+      "id": "contract_breach",
+      "sanskrit": null,
+      "description": "Situations where a lover fails to fulfill agreed obligations such as payment or appearance.",
+      "keywords": ["contract", "breach", "failure", "agreement", "obligation"],
+      "examples": [
+        "Client failing to pay agreed amount",
+        "Not showing up for arranged meeting",
+        "Violating agreed terms"
+      ],
+      "related_tags": [
+        "breach_of_contract",
+        "legal_and_normative",
+        "trust_and_confidence",
+        "legal_disputes"
+      ]
+    },
+
+    {
+      "id": "investment_in_beauty",
+      "sanskrit": null,
+      "description": "Spending resources on clothing, grooming, and arts to enhance earning potential and status.",
+      "keywords": ["investment", "beauty", "appearance", "capital", "return"],
+      "examples": [
+        "Purchasing fine garments or ornaments",
+        "Learning arts to increase desirability",
+        "Maintaining personal presentation"
+      ],
+      "related_tags": [
+        "enhancing_attractiveness",
+        "arts_and_aesthetics",
+        "material_culture",
+        "cultivating_sophistication"
+      ]
+    },
+
+    {
+      "id": "joint_ventures",
+      "sanskrit": "Goṣṭhī",
+      "description": "Shared arrangements where multiple clients participate, including coordinated economic agreements.",
+      "keywords": ["group", "shared", "venture", "agreement", "coordination"],
+      "examples": [
+        "Group-based patronage arrangements",
+        "Coordinating shared access",
+        "Managing collective expectations"
+      ],
+      "related_tags": [
+        "friendship_and_allies",
+        "financial_negotiation",
+        "social_strategy",
+        "relationship_dynamics"
+      ]
+    },
+
+    {
+      "id": "legal_disputes",
+      "sanskrit": null,
+      "description": "Conflicts between courtesan and client requiring intervention by authority or legal systems.",
+      "keywords": ["dispute", "legal", "conflict", "authority", "resolution"],
+      "examples": [
+        "Appealing to the king or court",
+        "Resolving payment conflicts",
+        "Settling contractual disagreements"
+      ],
+      "related_tags": [
+        "judicial_intervention",
+        "property_rights",
+        "breach_of_contract",
+        "legal_and_normative"
+      ]
+    },
+
+    {
+      "id": "pensions_and_retirement",
+      "sanskrit": null,
+      "description": "Long-term planning for livelihood after active professional life, including savings and transition strategies.",
+      "keywords": ["retirement", "pension", "planning", "future", "security"],
+      "examples": [
+        "Saving wealth for later life",
+        "Transitioning to different roles",
+        "Maintaining stability after decline in income"
+      ],
+      "related_tags": [
+        "finances_and_budgeting",
+        "life_stages",
+        "religious_conversion",
+        "abandoning_the_world"
+      ]
+    }
+  ]
+}

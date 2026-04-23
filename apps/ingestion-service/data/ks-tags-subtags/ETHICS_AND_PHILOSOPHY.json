@@ -1,0 +1,188 @@
+{
+  "id": "ETHICS_AND_PHILOSOPHY",
+  "title": "Theoretical Foundations",
+  "description": "Focuses on the philosophical debates, moral dilemmas, and logical deductions.",
+  "keywords": ["ethics", "philosophy", "dharma", "reasoning", "morality", "theory"],
+
+  "subtags": [
+    {
+      "id": "trivarga_balance",
+      "sanskrit": "Dharma-Artha-Kāma",
+      "description": "Prioritization and balance between Dharma (duty), Artha (wealth), and Kāma (desire), and how individuals navigate conflicts between them.",
+      "keywords": ["trivarga", "balance", "dharma", "artha", "kama", "priorities"],
+      "examples": [
+        "Choosing duty over pleasure in a moral dilemma",
+        "Pursuing wealth without violating ethical principles",
+        "Balancing sensual enjoyment with social responsibility"
+      ],
+      "related_tags": [
+        "human_goals",
+        "duty_and_obligation",
+        "life_stages",
+        "asceticism_and_restraint"
+      ]
+    },
+
+    {
+      "id": "scriptural_authority",
+      "sanskrit": "Śāstra-pramāṇa",
+      "description": "Debate between reliance on scriptural authority versus personal experience, observation, or practical knowledge.",
+      "keywords": ["shastra", "authority", "knowledge", "experience", "tradition"],
+      "examples": [
+        "Following prescribed rules versus adapting to real-life situations",
+        "Commentarial justification based on earlier texts",
+        "Conflict between lived experience and scriptural injunctions"
+      ],
+      "related_tags": [
+        "logical_maxims",
+        "materialist_objections",
+        "duty_and_obligation",
+        "human_goals"
+      ]
+    },
+
+    {
+      "id": "materialist_objections",
+      "sanskrit": "Lokāyata",
+      "description": "Counter-arguments against religious or ethical systems, emphasizing material reality, skepticism, and practical enjoyment.",
+      "keywords": ["lokayata", "materialism", "skepticism", "hedonism", "critique"],
+      "examples": [
+        "Arguments denying afterlife or karmic consequences",
+        "Prioritizing pleasure over duty",
+        "Criticism of ritual and scriptural authority"
+      ],
+      "related_tags": [
+        "scriptural_authority",
+        "trivarga_balance",
+        "human_goals",
+        "righteous_deception"
+      ]
+    },
+
+    {
+      "id": "human_goals",
+      "sanskrit": "Puruṣārtha",
+      "description": "The purpose of human actions, encompassing Dharma, Artha, Kāma, and sometimes Mokṣa, as guiding principles of life.",
+      "keywords": ["purushartha", "life goals", "purpose", "dharma", "kama"],
+      "examples": [
+        "Understanding life as pursuit of multiple goals",
+        "Integration of pleasure within a broader ethical life",
+        "Debates on the supremacy of one goal over others"
+      ],
+      "related_tags": [
+        "trivarga_balance",
+        "life_stages",
+        "duty_and_obligation",
+        "asceticism_and_restraint"
+      ]
+    },
+
+    {
+      "id": "fate_vs_free_will",
+      "sanskrit": "Daiva vs Puruṣakāra",
+      "description": "Debate between destiny (fate, divine will) and personal effort, and how outcomes are shaped by each.",
+      "keywords": ["fate", "destiny", "free will", "effort", "agency"],
+      "examples": [
+        "Success attributed to effort versus luck",
+        "Debate on whether love is predetermined or cultivated",
+        "Justification of actions through fate"
+      ],
+      "related_tags": [
+        "human_goals",
+        "duty_and_obligation",
+        "logical_maxims",
+        "sin_and_expiation"
+      ]
+    },
+
+    {
+      "id": "logical_maxims",
+      "sanskrit": "Nyāya",
+      "description": "Analogies, reasoning patterns, and logical proofs used by commentators to justify interpretations and arguments.",
+      "keywords": ["logic", "nyaya", "reasoning", "analogy", "argument"],
+      "examples": [
+        "Use of analogy to explain emotional behavior",
+        "Logical justification for social norms",
+        "Inference used to support unseen motivations"
+      ],
+      "related_tags": [
+        "scriptural_authority",
+        "materialist_objections",
+        "fate_vs_free_will",
+        "righteous_deception"
+      ]
+    },
+
+    {
+      "id": "sin_and_expiation",
+      "sanskrit": "Pāpa / Prāyaścitta",
+      "description": "Moral failings and remedies, including recognition of wrongdoing and prescribed methods of atonement.",
+      "keywords": ["sin", "atonement", "guilt", "expiation", "ethics"],
+      "examples": [
+        "Adultery followed by prescribed penance",
+        "Breaking social norms and seeking purification",
+        "Internal guilt and external restitution"
+      ],
+      "related_tags": [
+        "duty_and_obligation",
+        "righteous_deception",
+        "fate_vs_free_will",
+        "asceticism_and_restraint"
+      ]
+    },
+
+    {
+      "id": "duty_and_obligation",
+      "sanskrit": "Kartavya",
+      "description": "What one must do according to role, context, and ethical expectations, even when it conflicts with personal desire.",
+      "keywords": ["duty", "obligation", "responsibility", "ethics", "role"],
+      "examples": [
+        "Fulfilling marital duties despite personal conflict",
+        "Acting according to societal expectations",
+        "Choosing obligation over pleasure"
+      ],
+      "related_tags": [
+        "trivarga_balance",
+        "human_goals",
+        "sin_and_expiation",
+        "life_stages"
+      ]
+    },
+
+    {
+      "id": "righteous_deception",
+      "sanskrit": "Dharma-saṅkaṭa",
+      "description": "Situations where lying or breaking rules is justified due to higher ethical or practical considerations.",
+      "keywords": ["deception", "ethics", "dilemma", "justification", "strategy"],
+      "examples": [
+        "Deceiving to protect a relationship",
+        "Breaking a rule to avoid greater harm",
+        "Strategic lying in romantic or social contexts"
+      ],
+      "related_tags": [
+        "logical_maxims",
+        "materialist_objections",
+        "sin_and_expiation",
+        "power_and_control"
+      ]
+    },
+
+    {
+      "id": "asceticism_and_restraint",
+      "sanskrit": "Brahmacarya",
+      "description": "Abstinence and self-control, including restraint of senses and disciplined conduct in pursuit of higher goals.",
+      "keywords": ["restraint", "celibacy", "discipline", "self-control", "asceticism"],
+      "examples": [
+        "Practicing celibacy during student life",
+        "Resisting temptation for long-term benefit",
+        "Balancing restraint with engagement in worldly life"
+      ],
+      "related_tags": [
+        "trivarga_balance",
+        "human_goals",
+        "life_stages",
+        "sin_and_expiation"
+      ]
+    }
+  ]
+}

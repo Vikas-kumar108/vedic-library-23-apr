@@ -1,0 +1,188 @@
+{
+  "id": "BIOMETRIC_TYPOLOGY",
+  "title": "Physical Dimensions & Vitality",
+  "description": "Focuses on the physiological classifications (the 'Samyoga' logic).",
+  "keywords": ["body", "physiology", "classification", "vitality", "compatibility", "typology"],
+
+  "subtags": [
+    {
+      "id": "height_ratios",
+      "sanskrit": null,
+      "description": "Classification by physical stature, considering proportional differences in height and their relational implications.",
+      "keywords": ["height", "proportion", "stature", "comparison", "body"],
+      "examples": [
+        "Matching individuals based on similar height",
+        "Considering proportional differences in pairing",
+        "Adapting interaction based on stature"
+      ],
+      "related_tags": [
+        "genital_compatibility",
+        "body_types",
+        "strength_assessment",
+        "visual_composition"
+      ]
+    },
+
+    {
+      "id": "genital_compatibility",
+      "sanskrit": null,
+      "description": "The nine types of unions based on size classifications, used as a framework for compatibility and balance.",
+      "keywords": ["compatibility", "classification", "union", "proportion", "matching"],
+      "examples": [
+        "Categorizing pairings into balanced or imbalanced types",
+        "Assessing compatibility through proportional frameworks",
+        "Adjusting behavior based on classification"
+      ],
+      "related_tags": [
+        "height_ratios",
+        "intimacy_and_technique",
+        "duration_of_acts",
+        "satisfaction_and_satiety"
+      ]
+    },
+
+    {
+      "id": "vitality_levels",
+      "sanskrit": "Sattva / Vega",
+      "description": "High versus low energy types, including differences in intensity, endurance, and responsiveness.",
+      "keywords": ["energy", "vitality", "intensity", "endurance", "nature"],
+      "examples": [
+        "Individuals with high energy and responsiveness",
+        "Differences in pace and engagement",
+        "Adapting interaction based on vitality"
+      ],
+      "related_tags": [
+        "body_types",
+        "duration_of_acts",
+        "passion_and_desire",
+        "strength_assessment"
+      ]
+    },
+
+    {
+      "id": "breath_control",
+      "sanskrit": "Prāṇa",
+      "description": "The role of breathing in regulating physical and emotional states, including rhythm and control during interaction.",
+      "keywords": ["breath", "prana", "control", "rhythm", "regulation"],
+      "examples": [
+        "Coordinating breathing with movement",
+        "Using breath to maintain calm or intensity",
+        "Observing breath patterns as indicators of state"
+      ],
+      "related_tags": [
+        "vitality_levels",
+        "asceticism_and_restraint",
+        "satisfaction_and_satiety",
+        "vocalizations"
+      ]
+    },
+
+    {
+      "id": "physical_defects",
+      "sanskrit": null,
+      "description": "Classification of ailments or conditions that make one 'Agamya', including physical or health-related considerations.",
+      "keywords": ["defect", "ailment", "health", "condition", "restriction"],
+      "examples": [
+        "Conditions considered unsuitable for interaction",
+        "Health-related limitations",
+        "Classification of physical impairments"
+      ],
+      "related_tags": [
+        "medical_remedies",
+        "duty_and_obligation",
+        "caste_dynamics",
+        "public_reputation"
+      ]
+    },
+
+    {
+      "id": "body_types",
+      "sanskrit": "Vāta, Pitta, Kapha",
+      "description": "Constitutional types influencing behavior, desire, and physical tendencies, based on traditional physiological models.",
+      "keywords": ["dosha", "body type", "constitution", "ayurveda", "nature"],
+      "examples": [
+        "Differences in temperament based on constitution",
+        "Variation in physical and emotional tendencies",
+        "Adapting behavior to body type"
+      ],
+      "related_tags": [
+        "vitality_levels",
+        "medical_remedies",
+        "culinary_arts",
+        "seasonal_adaptation"
+      ]
+    },
+
+    {
+      "id": "secretions_and_fluids",
+      "sanskrit": "Rasa / Śukra",
+      "description": "Technical focus on bodily fluids and secretions, considered in relation to vitality, health, and physiological processes.",
+      "keywords": ["fluid", "secretion", "rasa", "shukra", "biology"],
+      "examples": [
+        "Understanding bodily fluids as indicators of health",
+        "Role of secretions in physiological processes",
+        "Traditional classification of bodily substances"
+      ],
+      "related_tags": [
+        "medical_remedies",
+        "aphrodisiacs",
+        "physical_enhancements",
+        "vitality_levels"
+      ]
+    },
+
+    {
+      "id": "strength_assessment",
+      "sanskrit": "Balābala",
+      "description": "Measuring the physical power, endurance, and capacity of a partner.",
+      "keywords": ["strength", "power", "endurance", "capacity", "assessment"],
+      "examples": [
+        "Evaluating physical capability",
+        "Assessing endurance and stamina",
+        "Adapting interaction based on strength"
+      ],
+      "related_tags": [
+        "vitality_levels",
+        "height_ratios",
+        "body_types",
+        "duration_of_acts"
+      ]
+    },
+
+    {
+      "id": "vocal_quality",
+      "sanskrit": null,
+      "description": "Voice pitch, tone, and modulation, and their relation to personality and emotional state.",
+      "keywords": ["voice", "sound", "tone", "pitch", "expression"],
+      "examples": [
+        "Soft versus sharp vocal tones",
+        "Voice as an indicator of mood",
+        "Speech patterns reflecting personality"
+      ],
+      "related_tags": [
+        "vocalizations",
+        "auditory_pleasure",
+        "personality_traits",
+        "communication_and_signs"
+      ]
+    },
+
+    {
+      "id": "eye_movements",
+      "sanskrit": "Dṛṣṭi-bheda",
+      "description": "Technical types of glances and gazes, including their role in conveying emotion and intention.",
+      "keywords": ["eyes", "gaze", "movement", "expression", "signal"],
+      "examples": [
+        "Different types of glances indicating interest or hesitation",
+        "Eye movement as a communication tool",
+        "Subtle visual cues in interaction"
+      ],
+      "related_tags": [
+        "body_language",
+        "hidden_intentions",
+        "passion_and_desire",
+        "visual_composition"
+      ]
+    }
+  ]
+}

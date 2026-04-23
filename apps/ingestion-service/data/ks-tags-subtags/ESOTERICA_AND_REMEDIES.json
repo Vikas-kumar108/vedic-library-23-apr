@@ -1,0 +1,188 @@
+{
+  "id": "ESOTERICA_AND_REMEDIES",
+  "title": "The Aupaniṣadikam",
+  "description": "Focuses on the medical, occult, and scientific practices of the time.",
+  "keywords": ["esoteric", "remedies", "medicine", "occult", "science", "ritual"],
+
+  "subtags": [
+    {
+      "id": "aphrodisiacs",
+      "sanskrit": "Vṛṣya-yoga",
+      "description": "Tonics and preparations intended to increase vigor, vitality, and overall physical capacity.",
+      "keywords": ["tonic", "vigor", "vitality", "enhancement", "preparation"],
+      "examples": [
+        "Use of herbal mixtures to improve strength",
+        "Dietary preparations believed to enhance vitality",
+        "Regimens aimed at sustaining energy"
+      ],
+      "related_tags": [
+        "medical_remedies",
+        "culinary_arts",
+        "physical_enhancements",
+        "trivarga_balance"
+      ]
+    },
+
+    {
+      "id": "enhancing_attractiveness",
+      "sanskrit": "Subhagaṁkaraṇa",
+      "description": "Ointments, applications, and methods used to increase attractiveness and desirability.",
+      "keywords": ["attractiveness", "appearance", "cosmetics", "enhancement", "beauty"],
+      "examples": [
+        "Application of scented substances to the body",
+        "Use of herbal preparations for skin enhancement",
+        "Techniques to improve outward appeal"
+      ],
+      "related_tags": [
+        "grooming_and_perfumery",
+        "arts_and_aesthetics",
+        "passion_and_desire",
+        "courtesan_culture"
+      ]
+    },
+
+    {
+      "id": "physical_enhancements",
+      "sanskrit": "Vṛddhi-vidhi",
+      "description": "Methods described for altering or enhancing physical attributes, often through traditional techniques or preparations.",
+      "keywords": ["enhancement", "body", "modification", "technique", "growth"],
+      "examples": [
+        "Use of substances believed to alter physical traits",
+        "Practices aimed at improving bodily form",
+        "Traditional enhancement techniques"
+      ],
+      "related_tags": [
+        "aphrodisiacs",
+        "medical_remedies",
+        "intimacy_and_technique",
+        "enhancing_attractiveness"
+      ]
+    },
+
+    {
+      "id": "subjugation_spells",
+      "sanskrit": "Vaśīkaraṇa-mantra",
+      "description": "Occult methods intended to influence or control another person’s thoughts or behavior through ritual or mantra.",
+      "keywords": ["spell", "mantra", "occult", "control", "influence"],
+      "examples": [
+        "Use of chants to influence another person",
+        "Ritual practices aimed at attraction or control",
+        "Belief in supernatural influence on relationships"
+      ],
+      "related_tags": [
+        "power_and_control",
+        "righteous_deception",
+        "hidden_intentions",
+        "astrology_and_timing"
+      ]
+    },
+
+    {
+      "id": "astrology_and_timing",
+      "sanskrit": "Jyotiṣa / Kāla",
+      "description": "Planetary alignments, timing, and auspicious moments used to guide actions and decisions.",
+      "keywords": ["astrology", "timing", "planets", "auspicious", "calendar"],
+      "examples": [
+        "Choosing favorable times for important actions",
+        "Interpreting planetary influence",
+        "Aligning behavior with auspicious periods"
+      ],
+      "related_tags": [
+        "auspicious_signs",
+        "omens_and_dreams",
+        "religious_observances",
+        "fate_vs_free_will"
+      ]
+    },
+
+    {
+      "id": "medical_remedies",
+      "sanskrit": "Cikitsā",
+      "description": "Cures for diseases or discomforts, including herbal, dietary, and procedural treatments.",
+      "keywords": ["medicine", "treatment", "healing", "health", "remedy"],
+      "examples": [
+        "Herbal treatments for physical conditions",
+        "Dietary adjustments for well-being",
+        "Procedures to relieve discomfort"
+      ],
+      "related_tags": [
+        "aphrodisiacs",
+        "physical_enhancements",
+        "gardening_and_agriculture",
+        "culinary_arts"
+      ]
+    },
+
+    {
+      "id": "poisons_and_toxins",
+      "sanskrit": "Rasa / Viṣa",
+      "description": "Formulations intended to harm, weaken, or influence the body, often discussed in a cautionary or strategic context.",
+      "keywords": ["poison", "toxin", "harm", "substance", "risk"],
+      "examples": [
+        "Knowledge of harmful substances",
+        "Use of toxins in strategic contexts",
+        "Understanding effects of poisonous compounds"
+      ],
+      "related_tags": [
+        "assessing_risks",
+        "medical_remedies",
+        "power_and_control",
+        "chemistry_and_metallurgy"
+      ]
+    },
+
+    {
+      "id": "artificial_aids",
+      "sanskrit": "Apadravya",
+      "description": "Artificial implements such as rings or devices described in traditional contexts to assist or modify physical interaction.",
+      "keywords": ["device", "implement", "aid", "tool", "assistance"],
+      "examples": [
+        "Use of crafted objects in intimate contexts",
+        "Devices designed for functional assistance",
+        "Traditional references to artificial aids"
+      ],
+      "related_tags": [
+        "intimacy_and_technique",
+        "physical_enhancements",
+        "arts_and_aesthetics",
+        "medical_remedies"
+      ]
+    },
+
+    {
+      "id": "chemistry_and_metallurgy",
+      "sanskrit": "Dhātuvāda",
+      "description": "Working with minerals, metals, and substances, including early chemical knowledge and material transformations.",
+      "keywords": ["chemistry", "metallurgy", "minerals", "substances", "alchemy"],
+      "examples": [
+        "Processing metals and minerals",
+        "Preparation of compounds",
+        "Understanding material properties"
+      ],
+      "related_tags": [
+        "medical_remedies",
+        "poisons_and_toxins",
+        "aphrodisiacs",
+        "physical_enhancements"
+      ]
+    },
+
+    {
+      "id": "omens_and_dreams",
+      "sanskrit": "Śakuna / Svapna",
+      "description": "Interpreting the future through signs, omens, and dreams, and using them to guide decisions.",
+      "keywords": ["omens", "dreams", "interpretation", "future", "signs"],
+      "examples": [
+        "Interpreting dreams as indicators of outcomes",
+        "Observing omens in daily life",
+        "Using signs to guide decisions"
+      ],
+      "related_tags": [
+        "astrology_and_timing",
+        "auspicious_signs",
+        "fate_vs_free_will",
+        "religious_observances"
+      ]
+    }
+  ]
+}

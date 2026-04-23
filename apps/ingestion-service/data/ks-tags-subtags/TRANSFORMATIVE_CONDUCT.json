@@ -1,0 +1,188 @@
+{
+  "id": "TRANSFORMATIVE_CONDUCT",
+  "title": "Changing Self-Image",
+  "description": "Focuses on personal evolution and role-playing.",
+  "keywords": ["transformation", "identity", "self-image", "role", "evolution", "behavior"],
+
+  "subtags": [
+    {
+      "id": "social_climbing",
+      "sanskrit": null,
+      "description": "How to act like a higher-caste person, including adopting manners, speech, and lifestyle associated with elevated status.",
+      "keywords": ["status", "imitation", "class", "behavior", "aspiration"],
+      "examples": [
+        "Adopting refined speech and conduct",
+        "Mimicking elite customs and habits",
+        "Aligning behavior with higher social expectations"
+      ],
+      "related_tags": [
+        "caste_dynamics",
+        "reputation_building",
+        "cultivating_sophistication",
+        "public_reputation"
+      ]
+    },
+
+    {
+      "id": "disguise_and_masquerade",
+      "sanskrit": "Māyā",
+      "description": "Wearing another's clothes or assuming a different outward identity to achieve specific goals.",
+      "keywords": ["disguise", "mask", "identity", "appearance", "deception"],
+      "examples": [
+        "Changing attire to avoid recognition",
+        "Assuming another role for strategic purposes",
+        "Using disguise to access restricted spaces"
+      ],
+      "related_tags": [
+        "hidden_intentions",
+        "secret_unions",
+        "information_gathering",
+        "power_and_control"
+      ]
+    },
+
+    {
+      "id": "acting_like_the_beloved",
+      "sanskrit": null,
+      "description": "Assuming the partner's personality, preferences, or behavior to create closeness or influence.",
+      "keywords": ["imitation", "empathy", "alignment", "behavior", "connection"],
+      "examples": [
+        "Adopting similar speech patterns",
+        "Mirroring preferences and habits",
+        "Aligning personality traits for bonding"
+      ],
+      "related_tags": [
+        "trust_and_confidence",
+        "passion_and_desire",
+        "testing_intentions",
+        "relationship_dynamics"
+      ]
+    },
+
+    {
+      "id": "overcoming_vices",
+      "sanskrit": null,
+      "description": "Dealing with addiction to gambling, wine, or other habits, and cultivating self-control.",
+      "keywords": ["vice", "addiction", "control", "discipline", "habit"],
+      "examples": [
+        "Reducing dependence on harmful habits",
+        "Adopting disciplined routines",
+        "Balancing indulgence with restraint"
+      ],
+      "related_tags": [
+        "asceticism_and_restraint",
+        "games_and_puzzles",
+        "culinary_arts",
+        "duty_and_obligation"
+      ]
+    },
+
+    {
+      "id": "cultivating_sophistication",
+      "sanskrit": null,
+      "description": "The transition from 'Grāmya' (rustic) to 'Nāgaraka' (urbane), including refinement of behavior and taste.",
+      "keywords": ["refinement", "urbanity", "culture", "education", "transformation"],
+      "examples": [
+        "Learning etiquette and refined conduct",
+        "Developing aesthetic taste",
+        "Adapting to urban social expectations"
+      ],
+      "related_tags": [
+        "arts_and_aesthetics",
+        "social_climbing",
+        "literary_arts",
+        "public_reputation"
+      ]
+    },
+
+    {
+      "id": "religious_conversion",
+      "sanskrit": null,
+      "description": "When a character joins a convent, sect, or adopts a new spiritual path, altering identity and lifestyle.",
+      "keywords": ["religion", "conversion", "sect", "belief", "identity"],
+      "examples": [
+        "Joining a religious order",
+        "Adopting new spiritual practices",
+        "Changing lifestyle based on belief"
+      ],
+      "related_tags": [
+        "religious_observances",
+        "asceticism_and_restraint",
+        "abandoning_the_world",
+        "duty_and_obligation"
+      ]
+    },
+
+    {
+      "id": "physical_transformation",
+      "sanskrit": null,
+      "description": "Changes in body such as weight, hair, or skin, used to alter appearance and perception.",
+      "keywords": ["body", "appearance", "change", "transformation", "physical"],
+      "examples": [
+        "Altering physical appearance intentionally",
+        "Enhancing or modifying bodily features",
+        "Adapting presentation for social contexts"
+      ],
+      "related_tags": [
+        "enhancing_attractiveness",
+        "body_types",
+        "skin_aesthetics",
+        "grooming_and_perfumery"
+      ]
+    },
+
+    {
+      "id": "intellectual_growth",
+      "sanskrit": null,
+      "description": "The study of the 64 arts as a path to influence, refinement, and personal power.",
+      "keywords": ["learning", "education", "knowledge", "arts", "growth"],
+      "examples": [
+        "Studying music, poetry, and arts",
+        "Developing intellectual skills",
+        "Using knowledge for social advancement"
+      ],
+      "related_tags": [
+        "arts_and_aesthetics",
+        "literary_arts",
+        "logical_maxims",
+        "cultivating_sophistication"
+      ]
+    },
+
+    {
+      "id": "abandoning_the_world",
+      "sanskrit": "Vairāgya",
+      "description": "The renunciate stage, where one withdraws from worldly life and attachments.",
+      "keywords": ["renunciation", "detachment", "vairagya", "withdrawal", "spiritual"],
+      "examples": [
+        "Leaving household life",
+        "Adopting ascetic practices",
+        "Reducing material and emotional attachments"
+      ],
+      "related_tags": [
+        "asceticism_and_restraint",
+        "religious_conversion",
+        "human_goals",
+        "life_stages"
+      ]
+    },
+
+    {
+      "id": "faking_experience",
+      "sanskrit": null,
+      "description": "Acting like an experienced individual (a 'Vātsyāyana') even when inexperienced, to gain advantage or credibility.",
+      "keywords": ["pretense", "experience", "imitation", "confidence", "strategy"],
+      "examples": [
+        "Displaying confidence beyond actual skill",
+        "Imitating experienced behavior patterns",
+        "Creating perception of expertise"
+      ],
+      "related_tags": [
+        "reputation_building",
+        "hidden_intentions",
+        "social_climbing",
+        "power_and_control"
+      ]
+    }
+  ]
+}

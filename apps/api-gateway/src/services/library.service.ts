@@ -14,7 +14,6 @@ export class LibraryService {
         id: true,
         parentId: true,
         slug: true,
-        name: true,
         level: true,
         canonicalRef: true,
       }
@@ -22,8 +21,17 @@ export class LibraryService {
 
     const nodesMap: Record<string, any> = {}
     nodes.forEach(n => {
+      const slug = n.slug || 'node'
+      const name = n.canonicalRef || slug
+        .split('-')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ')
+
       nodesMap[n.id] = {
-        ...n,
+        id: n.id,
+        parentId: n.parentId,
+        slug: n.slug,
+        name: name,
         type: n.level,
         children: []
       }
@@ -60,6 +68,13 @@ export class LibraryService {
         },
         fromRelations: {
           include: { toNode: true }
+        },
+        tags: {
+          include: {
+            tag: {
+              include: { parent: true }
+            }
+          }
         }
       }
     })
@@ -96,6 +111,17 @@ export class LibraryService {
         courses: [],
         guidance: [],
         seva_domains: [],
+        tags: node.tags.map(nt => ({
+          id: nt.tag.id,
+          slug: nt.tag.slug,
+          name: nt.tag.name,
+          sanskrit: nt.tag.sanskritName,
+          parent: nt.tag.parent ? {
+            id: nt.tag.parent.id,
+            slug: nt.tag.parent.slug,
+            name: nt.tag.parent.name
+          } : null
+        })),
       },
     }
 
@@ -136,5 +162,19 @@ export class LibraryService {
     }
 
     return verse
+  }
+
+  /**
+   * Fetches all tags organized by hierarchy.
+   */
+  async getTags() {
+    const tags = await this.prisma.tag.findMany({
+      where: { parentId: null },
+      include: {
+        subtags: true
+      },
+      orderBy: { name: 'asc' }
+    })
+    return tags
   }
 }

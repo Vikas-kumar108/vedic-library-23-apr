@@ -1,0 +1,188 @@
+{
+  "id": "SOCIOLOGICAL_ARCHETYPES",
+  "title": "The Personas",
+  "description": "Focuses on the specific 'characters' that inhabit the Kāmasūtra's world.",
+  "keywords": ["archetype", "persona", "character", "role", "social type"],
+
+  "subtags": [
+    {
+      "id": "the_pithamarda",
+      "sanskrit": "Pīṭhamarda",
+      "description": "The penniless but cultured intellectual or teacher, valued for knowledge and refinement despite lack of wealth.",
+      "keywords": ["intellectual", "teacher", "culture", "poverty", "knowledge"],
+      "examples": [
+        "Advising others despite limited resources",
+        "Participating in elite circles through intellect",
+        "Gaining influence through learning"
+      ],
+      "related_tags": [
+        "intellectual_growth",
+        "literary_arts",
+        "social_climbing",
+        "friendship_and_allies"
+      ]
+    },
+
+    {
+      "id": "the_vita",
+      "sanskrit": "Vita",
+      "description": "The experienced and fashionable man-about-town, skilled in social interaction and pleasure.",
+      "keywords": ["urban", "fashionable", "experienced", "social", "refined"],
+      "examples": [
+        "Navigating elite social circles",
+        "Demonstrating charm and sophistication",
+        "Engaging in refined arts and pleasures"
+      ],
+      "related_tags": [
+        "nagaraka",
+        "arts_and_aesthetics",
+        "social_strategy",
+        "reputation_building"
+      ]
+    },
+
+    {
+      "id": "the_vidushaka",
+      "sanskrit": "Vidūṣaka",
+      "description": "The jester or companion who provides comic relief, often acting as a mediator or commentator.",
+      "keywords": ["jester", "humor", "companion", "comic", "mediator"],
+      "examples": [
+        "Using humor to diffuse tension",
+        "Acting as a companion in social settings",
+        "Providing commentary on situations"
+      ],
+      "related_tags": [
+        "flirtatious_banter",
+        "playful_insults",
+        "friendship_and_allies",
+        "communication_and_signs"
+      ]
+    },
+
+    {
+      "id": "the_nagaraka",
+      "sanskrit": "Nāgaraka",
+      "description": "The quintessential sophisticated city-dweller, embodying refinement, culture, and aesthetic sensibility.",
+      "keywords": ["urban", "refined", "culture", "sophistication", "lifestyle"],
+      "examples": [
+        "Mastery of the 64 arts",
+        "Living a cultured urban lifestyle",
+        "Balancing pleasure with social decorum"
+      ],
+      "related_tags": [
+        "arts_and_aesthetics",
+        "cultivating_sophistication",
+        "material_culture",
+        "public_reputation"
+      ]
+    },
+
+    {
+      "id": "the_ganika",
+      "sanskrit": "Gaṇikā",
+      "description": "The highly educated, high-status courtesan skilled in arts, conversation, and strategy.",
+      "keywords": ["courtesan", "educated", "status", "art", "strategy"],
+      "examples": [
+        "Mastery of music, poetry, and conversation",
+        "Engaging with elite patrons",
+        "Balancing emotion and strategy"
+      ],
+      "related_tags": [
+        "courtesan_culture",
+        "financial_negotiation",
+        "arts_and_aesthetics",
+        "relationship_dynamics"
+      ]
+    },
+
+    {
+      "id": "the_rupajiva",
+      "sanskrit": "Rūpajīva",
+      "description": "A courtesan who relies primarily on physical beauty rather than cultivated arts.",
+      "keywords": ["beauty", "appearance", "courtesan", "attraction", "visual"],
+      "examples": [
+        "Relying on appearance for influence",
+        "Prioritizing physical charm over education",
+        "Attracting attention through visual appeal"
+      ],
+      "related_tags": [
+        "enhancing_attractiveness",
+        "skin_aesthetics",
+        "passion_and_desire",
+        "courtesan_culture"
+      ]
+    },
+
+    {
+      "id": "the_paricharika",
+      "sanskrit": "Paricārikā",
+      "description": "The loyal female attendant or confidante who assists, advises, and mediates.",
+      "keywords": ["attendant", "confidante", "assistant", "loyalty", "support"],
+      "examples": [
+        "Acting as intermediary in communication",
+        "Providing advice and support",
+        "Maintaining confidentiality"
+      ],
+      "related_tags": [
+        "messengers_and_go_betweens",
+        "nursemaid_confidantes",
+        "trust_and_confidence",
+        "domestic_dynamics"
+      ]
+    },
+
+    {
+      "id": "the_kutila",
+      "sanskrit": "Kuṭila",
+      "description": "The deceptive or manipulative individual, skilled in indirect strategy and hidden intent.",
+      "keywords": ["deceptive", "manipulative", "strategy", "hidden", "cunning"],
+      "examples": [
+        "Using indirect methods to achieve goals",
+        "Concealing true intentions",
+        "Manipulating perception and behavior"
+      ],
+      "related_tags": [
+        "hidden_intentions",
+        "social_strategy",
+        "righteous_deception",
+        "power_and_control"
+      ]
+    },
+
+    {
+      "id": "the_mugdha",
+      "sanskrit": "Mugdhā",
+      "description": "The innocent or naive young woman, characterized by simplicity and lack of experience.",
+      "keywords": ["innocent", "naive", "youth", "simplicity", "inexperience"],
+      "examples": [
+        "Displaying hesitation or modesty",
+        "Learning through experience",
+        "Reacting with curiosity or uncertainty"
+      ],
+      "related_tags": [
+        "shame_and_modesty",
+        "testing_intentions",
+        "life_stages",
+        "trust_and_confidence"
+      ]
+    },
+
+    {
+      "id": "the_praudha",
+      "sanskrit": "Prauḍhā",
+      "description": "The mature and experienced woman, confident in conduct and understanding of relationships.",
+      "keywords": ["mature", "experienced", "confidence", "wisdom", "stability"],
+      "examples": [
+        "Displaying confidence in interaction",
+        "Guiding or influencing others",
+        "Managing complex relationships effectively"
+      ],
+      "related_tags": [
+        "vitality_levels",
+        "relationship_dynamics",
+        "power_and_control",
+        "trust_and_confidence"
+      ]
+    }
+  ]
+}

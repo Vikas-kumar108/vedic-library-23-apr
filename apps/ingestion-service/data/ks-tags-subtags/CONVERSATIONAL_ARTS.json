@@ -1,0 +1,188 @@
+{
+  "id": "CONVERSATIONAL_ARTS",
+  "title": "The Verbal Layer",
+  "description": "Focuses on the technical aspects of speech and wit.",
+  "keywords": ["speech", "conversation", "wit", "language", "expression", "verbal art"],
+
+  "subtags": [
+    {
+      "id": "double_entendre",
+      "sanskrit": "Vakrokti",
+      "description": "Speaking with two meanings, where a statement carries both a direct and an implied sense.",
+      "keywords": ["double meaning", "indirect speech", "suggestion", "wit", "ambiguity"],
+      "examples": [
+        "Using layered language to convey hidden intent",
+        "Statements that appear innocent but carry deeper meaning",
+        "Playful ambiguity in conversation"
+      ],
+      "related_tags": [
+        "indirect_hints",
+        "secret_codes",
+        "hidden_intentions",
+        "literary_arts"
+      ]
+    },
+
+    {
+      "id": "riddle_solving",
+      "sanskrit": "Prahelikā",
+      "description": "The use of riddles to test intelligence, wit, and presence of mind in conversation.",
+      "keywords": ["riddle", "puzzle", "intelligence", "wit", "challenge"],
+      "examples": [
+        "Posing riddles to test a partner’s cleverness",
+        "Solving word-based challenges",
+        "Using puzzles as playful interaction"
+      ],
+      "related_tags": [
+        "games_and_puzzles",
+        "testing_intentions",
+        "flirtatious_banter",
+        "logical_maxims"
+      ]
+    },
+
+    {
+      "id": "narrative_persuasion",
+      "sanskrit": null,
+      "description": "Telling stories of famous lovers or situations to influence, persuade, or inspire a partner.",
+      "keywords": ["story", "persuasion", "narrative", "influence", "example"],
+      "examples": [
+        "Narrating tales of legendary romances",
+        "Using stories to justify actions",
+        "Drawing parallels to influence decisions"
+      ],
+      "related_tags": [
+        "persuasion_and_debate",
+        "historical_precedent",
+        "literary_arts",
+        "righteous_deception"
+      ]
+    },
+
+    {
+      "id": "the_art_of_apology",
+      "sanskrit": "Anunaya",
+      "description": "Specific phrases and verbal strategies used to apologize and restore harmony.",
+      "keywords": ["apology", "repair", "speech", "conciliation", "emotion"],
+      "examples": [
+        "Using gentle language to calm conflict",
+        "Expressing regret through structured phrases",
+        "Appealing emotionally to restore connection"
+      ],
+      "related_tags": [
+        "reconciliation",
+        "lovers_quarrels",
+        "vulnerability_tactics",
+        "trust_and_confidence"
+      ]
+    },
+
+    {
+      "id": "playful_insults",
+      "sanskrit": "Narmā-lapita",
+      "description": "Joking or teasing remarks used in intimacy to create closeness without causing harm.",
+      "keywords": ["teasing", "playful insult", "humor", "banter", "interaction"],
+      "examples": [
+        "Light teasing between partners",
+        "Mock insults used affectionately",
+        "Humor used to deepen connection"
+      ],
+      "related_tags": [
+        "flirtatious_banter",
+        "jealousy_and_anger",
+        "trust_and_confidence",
+        "body_language"
+      ]
+    },
+
+    {
+      "id": "confession_of_love",
+      "sanskrit": "Bhāva-nivedana",
+      "description": "The moment of expressing love or emotional truth directly to another.",
+      "keywords": ["confession", "love", "expression", "emotion", "declaration"],
+      "examples": [
+        "Directly expressing affection",
+        "Revealing inner emotional state",
+        "Declaring commitment or desire"
+      ],
+      "related_tags": [
+        "passion_and_desire",
+        "trust_and_confidence",
+        "love_letters",
+        "testing_intentions"
+      ]
+    },
+
+    {
+      "id": "concealing_secrets",
+      "sanskrit": "Mantra-gupti",
+      "description": "The mechanics of keeping information hidden, including controlled speech and selective disclosure.",
+      "keywords": ["secret", "concealment", "control", "speech", "strategy"],
+      "examples": [
+        "Avoiding revealing sensitive information",
+        "Speaking selectively to protect intentions",
+        "Managing knowledge between individuals"
+      ],
+      "related_tags": [
+        "hidden_intentions",
+        "secret_codes",
+        "information_gathering",
+        "assessing_risks"
+      ]
+    },
+
+    {
+      "id": "foreign_languages",
+      "sanskrit": "Mlecchita / Deśa-bhāṣā",
+      "description": "Use of foreign or regional languages to communicate privately or signal identity.",
+      "keywords": ["language", "foreign", "code", "communication", "identity"],
+      "examples": [
+        "Using a regional dialect for secrecy",
+        "Switching language to exclude others",
+        "Employing coded or unfamiliar speech"
+      ],
+      "related_tags": [
+        "secret_codes",
+        "regional_customs",
+        "messengers_and_go_betweens",
+        "communication_and_signs"
+      ]
+    },
+
+    {
+      "id": "shouting_and_crying",
+      "sanskrit": "Akranda",
+      "description": "The communicative role of loud expression, including shouting or crying to convey urgency or emotion.",
+      "keywords": ["shouting", "crying", "expression", "emotion", "intensity"],
+      "examples": [
+        "Raising voice to express distress",
+        "Crying to signal emotional state",
+        "Using intensity to communicate urgency"
+      ],
+      "related_tags": [
+        "vocalizations",
+        "grief_and_longing",
+        "jealousy_and_anger",
+        "fear_and_anxiety"
+      ]
+    },
+
+    {
+      "id": "whispering",
+      "sanskrit": "Upāṁśu",
+      "description": "Soft or private speech used in close proximity, often for secrecy or intimacy.",
+      "keywords": ["whisper", "soft speech", "privacy", "intimacy", "tone"],
+      "examples": [
+        "Speaking softly to avoid detection",
+        "Private communication in close settings",
+        "Lowering voice to create intimacy"
+      ],
+      "related_tags": [
+        "body_language",
+        "hidden_intentions",
+        "secret_unions",
+        "passion_and_desire"
+      ]
+    }
+  ]
+}

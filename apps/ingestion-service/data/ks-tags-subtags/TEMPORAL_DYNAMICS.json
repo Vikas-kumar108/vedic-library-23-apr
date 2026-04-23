@@ -1,0 +1,188 @@
+{
+  "id": "TEMPORAL_DYNAMICS",
+  "title": "Time and Seasonality",
+  "description": "Focuses on when actions should be performed.",
+  "keywords": ["time", "season", "timing", "cycle", "duration", "kala"],
+
+  "subtags": [
+    {
+      "id": "seasonal_adaptation",
+      "sanskrit": "Ṛtu-caryā",
+      "description": "How behavior changes in different seasons such as Summer, Winter, and Rainy season, including adjustments in lifestyle and activity.",
+      "keywords": ["season", "adaptation", "climate", "rutucarya", "environment"],
+      "examples": [
+        "Adjusting routines during hot or cold weather",
+        "Changing clothing and environment by season",
+        "Seasonal variation in social and personal activities"
+      ],
+      "related_tags": [
+        "environmental_comfort",
+        "culinary_arts",
+        "gardening_and_agriculture",
+        "passion_and_desire"
+      ]
+    },
+
+    {
+      "id": "diurnal_cycles",
+      "sanskrit": null,
+      "description": "Activities meant for different parts of the day, such as morning, midday, and evening.",
+      "keywords": ["day cycle", "morning", "afternoon", "evening", "routine"],
+      "examples": [
+        "Morning routines and preparations",
+        "Midday activities and responsibilities",
+        "Evening relaxation or social interaction"
+      ],
+      "related_tags": [
+        "household_duties",
+        "religious_observances",
+        "environmental_comfort",
+        "public_reputation"
+      ]
+    },
+
+    {
+      "id": "nocturnal_phases",
+      "sanskrit": null,
+      "description": "Specific timing of late-night, midnight, or dawn activities, and their distinct contexts and meanings.",
+      "keywords": ["night", "late-night", "dawn", "timing", "privacy"],
+      "examples": [
+        "Late-night interactions in private settings",
+        "Pre-dawn activities and transitions",
+        "Nighttime as a distinct social and emotional space"
+      ],
+      "related_tags": [
+        "secret_unions",
+        "lighting_effects",
+        "fear_and_anxiety",
+        "passion_and_desire"
+      ]
+    },
+
+    {
+      "id": "auspicious_timing",
+      "sanskrit": "Muhūrta",
+      "description": "Astrology applied to meeting a partner or performing actions at favorable times.",
+      "keywords": ["muhurta", "auspicious", "timing", "astrology", "alignment"],
+      "examples": [
+        "Choosing a favorable time for meetings",
+        "Aligning actions with astrological indications",
+        "Avoiding inauspicious periods"
+      ],
+      "related_tags": [
+        "astrology_and_timing",
+        "omens_and_dreams",
+        "auspicious_signs",
+        "fate_vs_free_will"
+      ]
+    },
+
+    {
+      "id": "duration_of_acts",
+      "sanskrit": null,
+      "description": "Technical categorization of short, medium, and long acts, including pacing and temporal structure of activities.",
+      "keywords": ["duration", "timing", "length", "pace", "classification"],
+      "examples": [
+        "Short versus prolonged interactions",
+        "Structuring activities based on duration",
+        "Balancing intensity with timing"
+      ],
+      "related_tags": [
+        "intimacy_and_technique",
+        "satisfaction_and_satiety",
+        "pre_and_post_coital",
+        "trivarga_balance"
+      ]
+    },
+
+    {
+      "id": "age_appropriateness",
+      "sanskrit": null,
+      "description": "Conduct suitable for youth, middle age, and elders, taking into account physical, social, and ethical considerations.",
+      "keywords": ["age", "stage", "appropriateness", "life phase", "conduct"],
+      "examples": [
+        "Behavior suited to youth and early life",
+        "Responsibilities in middle age",
+        "Restraint or adaptation in later life"
+      ],
+      "related_tags": [
+        "life_stages",
+        "duty_and_obligation",
+        "asceticism_and_restraint",
+        "human_goals"
+      ]
+    },
+
+    {
+      "id": "menstrual_timing",
+      "sanskrit": "Ṛtu-kāla",
+      "description": "Rules regarding the period after menstruation and appropriate timing of interaction based on biological cycles.",
+      "keywords": ["cycle", "timing", "biological", "rutukala", "health"],
+      "examples": [
+        "Observing appropriate timing after menstruation",
+        "Understanding biological rhythms",
+        "Aligning behavior with natural cycles"
+      ],
+      "related_tags": [
+        "medical_remedies",
+        "duty_and_obligation",
+        "intimacy_and_technique",
+        "fate_vs_free_will"
+      ]
+    },
+
+    {
+      "id": "waiting_periods",
+      "sanskrit": null,
+      "description": "Rules on how long to wait before re-approaching a partner, including strategic and emotional timing.",
+      "keywords": ["waiting", "delay", "timing", "strategy", "patience"],
+      "examples": [
+        "Allowing time after conflict before reconnecting",
+        "Strategic delay to increase interest",
+        "Timing re-engagement appropriately"
+      ],
+      "related_tags": [
+        "testing_intentions",
+        "recognizing_indifference",
+        "rekindling_romance",
+        "trust_and_confidence"
+      ]
+    },
+
+    {
+      "id": "historical_precedent",
+      "sanskrit": "Purā-kalpa",
+      "description": "References to how things were done in ancient times, used as guidance or justification for present behavior.",
+      "keywords": ["history", "precedent", "tradition", "example", "authority"],
+      "examples": [
+        "Citing past practices as models",
+        "Using tradition to justify actions",
+        "Comparing present conduct with earlier norms"
+      ],
+      "related_tags": [
+        "scriptural_authority",
+        "logical_maxims",
+        "caste_dynamics",
+        "duty_and_obligation"
+      ]
+    },
+
+    {
+      "id": "spontaneous_timing",
+      "sanskrit": null,
+      "description": "Acting on impulse versus acting according to a planned schedule, balancing spontaneity and structure.",
+      "keywords": ["spontaneous", "impulse", "timing", "decision", "flexibility"],
+      "examples": [
+        "Acting immediately based on emotion",
+        "Choosing not to delay action",
+        "Balancing planned timing with instinct"
+      ],
+      "related_tags": [
+        "passion_and_desire",
+        "fate_vs_free_will",
+        "assessing_risks",
+        "trivarga_balance"
+      ]
+    }
+  ]
+}

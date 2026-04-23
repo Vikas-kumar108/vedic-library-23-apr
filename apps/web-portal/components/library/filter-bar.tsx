@@ -1,21 +1,21 @@
 'use client'
 
 import { useAppStore } from '@/lib/store'
-import { AgeGroup, Category } from '@/lib/types'
+import { LifeStage, Category } from '@/lib/types'
 import { cn } from '@/lib/utils'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 import { Button } from '@/components/ui/button'
-import { Baby, GraduationCap, Briefcase, Heart } from 'lucide-react'
+import { GraduationCap, Briefcase, Heart, Sun } from 'lucide-react'
 
 interface FilterBarProps {
   className?: string
 }
 
-const ageGroups: { value: AgeGroup; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
-  { value: 'kids', label: 'Kids', icon: Baby },
-  { value: 'students', label: 'Students', icon: GraduationCap },
-  { value: 'professionals', label: 'Professionals', icon: Briefcase },
-  { value: 'elders', label: 'Elders', icon: Heart },
+const lifeStages: { value: LifeStage; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
+  { value: 'student', label: 'Brahmacharya', icon: GraduationCap },
+  { value: 'married', label: 'Grihastha', icon: Briefcase },
+  { value: 'vanaprastha', label: 'Vanaprastha', icon: Heart },
+  { value: 'renunciate', label: 'Sannyasa', icon: Sun },
 ]
 
 const categories: { value: Category; label: string }[] = [
@@ -30,9 +30,9 @@ const categories: { value: Category; label: string }[] = [
 export function FilterBar({ className }: FilterBarProps) {
   const { filters, setFilters } = useAppStore()
 
-  const handleAgeGroupClick = (value: AgeGroup) => {
+  const handleLifeStageClick = (value: LifeStage) => {
     setFilters({
-      ageGroup: filters.ageGroup === value ? undefined : value
+      lifeStage: filters.lifeStage === value ? undefined : value
     })
   }
 
@@ -46,18 +46,18 @@ export function FilterBar({ className }: FilterBarProps) {
     <div className={cn("border-b border-border bg-secondary/30 py-2", className)}>
       <ScrollArea className="w-full">
         <div className="flex items-center gap-6 px-4">
-          {/* Age Group Filters */}
+          {/* Life Stage Filters */}
           <div className="flex items-center gap-2 shrink-0">
             <span className="text-xs text-muted-foreground font-medium mr-1">For:</span>
-            {ageGroups.map(({ value, label, icon: Icon }) => (
+            {lifeStages.map(({ value, label, icon: Icon }) => (
               <Button
                 key={value}
                 variant="ghost"
                 size="sm"
-                onClick={() => handleAgeGroupClick(value)}
+                onClick={() => handleLifeStageClick(value)}
                 className={cn(
                   "h-7 px-2.5 text-xs gap-1.5 rounded-full",
-                  filters.ageGroup === value
+                  filters.lifeStage === value
                     ? "bg-primary text-primary-foreground hover:bg-primary/90"
                     : "bg-card hover:bg-accent/50"
                 )}
@@ -94,13 +94,13 @@ export function FilterBar({ className }: FilterBarProps) {
           </div>
 
           {/* Clear Filters */}
-          {(filters.ageGroup || filters.category) && (
+          {(filters.lifeStage || filters.category) && (
             <>
               <div className="h-5 w-px bg-border shrink-0" />
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => setFilters({ ageGroup: undefined, category: undefined })}
+                onClick={() => setFilters({ lifeStage: undefined, category: undefined })}
                 className="h-7 px-3 text-xs text-muted-foreground hover:text-foreground"
               >
                 Clear all

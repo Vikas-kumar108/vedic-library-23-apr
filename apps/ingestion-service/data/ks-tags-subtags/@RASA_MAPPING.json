@@ -1,0 +1,224 @@
+{
+  "id": "RASA_MAPPING",
+  "title": "Rasa-Based Learning and Interpretation Layer",
+  "description": "Maps primary and secondary rasas to categories, subtags, and learning applications.",
+
+  "primary_rasas": [
+    {
+      "id": "shanta",
+      "sanskrit": "Śānta",
+      "type": "primary",
+      "description": "Neutrality and contemplative awareness toward the philosophical and cosmological aspects of Kāma.",
+      "learning_disposition": "Beginner; observing with curiosity and detachment.",
+      "category_alignment": [
+        "ETHICS_AND_PHILOSOPHY",
+        "METAPHYSICAL_OBSERVATIONS"
+      ],
+      "keywords": ["neutrality", "detachment", "philosophy", "observation", "awe"],
+      "application": [
+        "Introductory modules",
+        "Philosophical overviews",
+        "Conceptual understanding of Kāma as a system"
+      ]
+    },
+
+    {
+      "id": "dasya",
+      "sanskrit": "Dāsya",
+      "type": "primary",
+      "description": "Servitude and discipline focused on following rules (Vidhi) and fulfilling duties.",
+      "learning_disposition": "Structured learner; focused on discipline and correctness.",
+      "category_alignment": [
+        "DOMESTIC_LIFE",
+        "LEGAL_AND_NORMATIVE",
+        "MEDICO_LEGAL_CONSENT"
+      ],
+      "keywords": ["duty", "service", "discipline", "obedience", "structure"],
+      "application": [
+        "Rule-based learning",
+        "Instructional modules",
+        "Practice of prescribed behaviors"
+      ]
+    },
+
+    {
+      "id": "sakhya",
+      "sanskrit": "Sakhya",
+      "type": "primary",
+      "description": "Friendship characterized by equality, wit, and playful exchange.",
+      "learning_disposition": "Interactive learner; thrives on dialogue and social intelligence.",
+      "category_alignment": [
+        "CONVERSATIONAL_ARTS",
+        "SOCIAL_STRATEGY",
+        "COMMUNICATION_AND_SIGNS"
+      ],
+      "keywords": ["friendship", "wit", "dialogue", "exchange", "companionship"],
+      "application": [
+        "Interactive modules",
+        "Dialogue simulations",
+        "Social intelligence training"
+      ]
+    },
+
+    {
+      "id": "vatsalya",
+      "sanskrit": "Vātsalya",
+      "type": "primary",
+      "description": "Parental affection expressed through protection, guidance, and nurturing.",
+      "learning_disposition": "Mentor-oriented; focused on care and guidance.",
+      "category_alignment": [
+        "DOMESTIC_DYNAMICS",
+        "DOMESTIC_LIFE"
+      ],
+      "subtag_alignment": [
+        "child_rearing",
+        "nursemaid_confidantes"
+      ],
+      "keywords": ["care", "guidance", "protection", "nurturing", "support"],
+      "application": [
+        "Mentorship paths",
+        "Guidance modules",
+        "Protective and advisory contexts"
+      ]
+    },
+
+    {
+      "id": "madhurya",
+      "sanskrit": "Mādhurya",
+      "type": "primary",
+      "description": "Conjugal love as the most intimate and all-encompassing relational mode.",
+      "learning_disposition": "Experiential learner; focused on intimacy and emotional depth.",
+      "category_alignment": [
+        "INTIMACY_AND_TECHNIQUE",
+        "COURTSHIP_AND_MARRIAGE"
+      ],
+      "keywords": ["love", "intimacy", "union", "emotion", "connection"],
+      "application": [
+        "Core experiential modules",
+        "Relationship dynamics",
+        "Advanced engagement paths"
+      ]
+    }
+  ],
+
+  "secondary_rasas": [
+    {
+      "id": "hasya",
+      "sanskrit": "Hāsya",
+      "type": "secondary",
+      "description": "Humor and lightness used to ease tension and create connection.",
+      "subtag_alignment": [
+        "playful_insults",
+        "flirtatious_banter"
+      ],
+      "keywords": ["humor", "joking", "playfulness", "wit"],
+      "application": [
+        "Social wit modules",
+        "Ice-breaking interactions",
+        "Tension reduction"
+      ]
+    },
+
+    {
+      "id": "adbhuta",
+      "sanskrit": "Adbhuta",
+      "type": "secondary",
+      "description": "Wonder and astonishment at the extraordinary or mysterious.",
+      "subtag_alignment": [
+        "magic_and_illusions",
+        "indrajala"
+      ],
+      "keywords": ["wonder", "mystery", "astonishment", "curiosity"],
+      "application": [
+        "Esoteric learning",
+        "Aupaniṣadikam sections",
+        "Exploration modules"
+      ]
+    },
+
+    {
+      "id": "vira",
+      "sanskrit": "Vīra",
+      "type": "secondary",
+      "description": "Chivalry, courage, and heroic effort in pursuit of goals.",
+      "subtag_alignment": [
+        "strength_assessment",
+        "power_and_control"
+      ],
+      "keywords": ["heroism", "courage", "strength", "effort"],
+      "application": [
+        "Winning the beloved scenarios",
+        "Challenge-based learning",
+        "Strategic advancement"
+      ]
+    },
+
+    {
+      "id": "karuna",
+      "sanskrit": "Karuṇa",
+      "type": "secondary",
+      "description": "Compassion and empathy arising from vulnerability or suffering.",
+      "subtag_alignment": [
+        "vulnerability_tactics",
+        "grief_and_longing"
+      ],
+      "keywords": ["compassion", "empathy", "sadness", "care"],
+      "application": [
+        "Reconciliation paths",
+        "Emotional repair modules",
+        "Sensitive scenarios"
+      ]
+    },
+
+    {
+      "id": "raudra",
+      "sanskrit": "Raudra",
+      "type": "secondary",
+      "description": "Anger and controlled intensity within conflict.",
+      "subtag_alignment": [
+        "lovers_quarrels",
+        "jealousy_and_anger"
+      ],
+      "keywords": ["anger", "conflict", "intensity", "fury"],
+      "application": [
+        "Conflict modules",
+        "Understanding emotional spikes",
+        "Managing tension"
+      ]
+    },
+
+    {
+      "id": "bhayanaka",
+      "sanskrit": "Bhayānaka",
+      "type": "secondary",
+      "description": "Fear and anxiety related to risk, secrecy, or danger.",
+      "subtag_alignment": [
+        "forbidden_partners",
+        "covert_operations"
+      ],
+      "keywords": ["fear", "risk", "danger", "anxiety"],
+      "application": [
+        "Risk assessment modules",
+        "Boundary awareness",
+        "Decision caution"
+      ]
+    },
+
+    {
+      "id": "bibhatsa",
+      "sanskrit": "Bībhatsa",
+      "type": "secondary",
+      "description": "Disgust or aversion arising from harmful, unethical, or disturbing actions.",
+      "subtag_alignment": [
+        "toxic_botanicals",
+        "infidelity"
+      ],
+      "keywords": ["disgust", "aversion", "warning", "repulsion"],
+      "application": [
+        "Warning sections",
+        "Ethical boundaries",
+        "Avoidance learning"
+      ]
+    }
+  ]
+}

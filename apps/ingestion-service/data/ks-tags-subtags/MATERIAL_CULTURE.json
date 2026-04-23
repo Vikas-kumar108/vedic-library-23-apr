@@ -1,0 +1,188 @@
+{
+  "id": "MATERIAL_CULTURE",
+  "title": "The Tools of the Nagaraka",
+  "description": "Focuses on the physical objects mentioned in the text.",
+  "keywords": ["objects", "material culture", "tools", "artifacts", "lifestyle", "nagaraka"],
+
+  "subtags": [
+    {
+      "id": "bedroom_furniture",
+      "sanskrit": null,
+      "description": "Bed types, pillows, footstools, and paintings that define the physical and aesthetic arrangement of private spaces.",
+      "keywords": ["furniture", "bed", "interior", "comfort", "decor"],
+      "examples": [
+        "Arrangement of beds and cushions",
+        "Use of decorative paintings in rooms",
+        "Furniture designed for comfort and aesthetics"
+      ],
+      "related_tags": [
+        "architecture_and_space",
+        "visual_composition",
+        "environmental_comfort",
+        "intimacy_and_technique"
+      ]
+    },
+
+    {
+      "id": "beauty_implements",
+      "sanskrit": null,
+      "description": "Mirrors, combs, brushes, and unguent pots used for grooming and personal care.",
+      "keywords": ["grooming", "tools", "cosmetics", "mirror", "care"],
+      "examples": [
+        "Using mirrors for self-presentation",
+        "Applying oils or unguents",
+        "Maintaining hair and appearance"
+      ],
+      "related_tags": [
+        "grooming_and_perfumery",
+        "enhancing_attractiveness",
+        "skin_aesthetics",
+        "arts_and_aesthetics"
+      ]
+    },
+
+    {
+      "id": "clothing_accessories",
+      "sanskrit": null,
+      "description": "Belts, rings, necklaces, hair-pins, and other adornments used to enhance appearance and social presentation.",
+      "keywords": ["accessory", "ornament", "jewelry", "adornment", "fashion"],
+      "examples": [
+        "Wearing rings and necklaces",
+        "Using belts and decorative elements",
+        "Adornment as part of identity and status"
+      ],
+      "related_tags": [
+        "fashion_and_textiles",
+        "grooming_and_perfumery",
+        "public_reputation",
+        "visual_composition"
+      ]
+    },
+
+    {
+      "id": "writing_materials",
+      "sanskrit": null,
+      "description": "Leaf-papers, pens, and inks used for writing letters and messages.",
+      "keywords": ["writing", "materials", "ink", "paper", "communication"],
+      "examples": [
+        "Composing letters using traditional materials",
+        "Preparing writing surfaces",
+        "Maintaining tools for correspondence"
+      ],
+      "related_tags": [
+        "love_letters",
+        "literary_arts",
+        "secret_codes",
+        "communication_and_signs"
+      ]
+    },
+
+    {
+      "id": "musical_instruments",
+      "sanskrit": "Vīṇā, drums, flutes",
+      "description": "Instruments used for musical performance, including string, percussion, and wind instruments.",
+      "keywords": ["instrument", "music", "sound", "performance", "art"],
+      "examples": [
+        "Playing the vīṇā or flute",
+        "Using drums in performance",
+        "Music as part of social gatherings"
+      ],
+      "related_tags": [
+        "music_and_dance",
+        "auditory_pleasure",
+        "festivals_and_gatherings",
+        "arts_and_aesthetics"
+      ]
+    },
+
+    {
+      "id": "sculpture_and_icons",
+      "sanskrit": null,
+      "description": "Use of statues or representations, including their role in symbolic or proxy interactions ('Saṅkrāntaka').",
+      "keywords": ["sculpture", "icon", "representation", "symbol", "art"],
+      "examples": [
+        "Use of statues in decorative settings",
+        "Symbolic representation of individuals",
+        "Objects acting as proxies in interaction"
+      ],
+      "related_tags": [
+        "painting_and_design",
+        "symbolic_marks",
+        "arts_and_aesthetics",
+        "religious_observances"
+      ]
+    },
+
+    {
+      "id": "aphrodisiac_vessels",
+      "sanskrit": null,
+      "description": "Specific cups, bowls, and containers used for preparing or consuming tonics and special substances.",
+      "keywords": ["vessel", "container", "cup", "preparation", "object"],
+      "examples": [
+        "Using designated vessels for drinks",
+        "Preparing mixtures in specific containers",
+        "Association of vessels with ritual or function"
+      ],
+      "related_tags": [
+        "aphrodisiacs",
+        "culinary_arts",
+        "medical_remedies",
+        "environmental_comfort"
+      ]
+    },
+
+    {
+      "id": "smoking_and_incense",
+      "sanskrit": "Dhūpa",
+      "description": "Use of incense, aromatic resins, and smoke to create atmosphere and sensory enhancement.",
+      "keywords": ["incense", "smoke", "aroma", "dhupa", "environment"],
+      "examples": [
+        "Burning incense for fragrance",
+        "Using aromatic resins in rooms",
+        "Creating ambiance through scent"
+      ],
+      "related_tags": [
+        "olfactory_triggers",
+        "floral_scents",
+        "grooming_and_perfumery",
+        "environmental_comfort"
+      ]
+    },
+
+    {
+      "id": "game_boards",
+      "sanskrit": "Akṣa",
+      "description": "Dice, boards, and other gaming tools used for recreation and social interaction.",
+      "keywords": ["game", "board", "dice", "play", "entertainment"],
+      "examples": [
+        "Playing dice games",
+        "Using boards for strategic games",
+        "Engaging in recreational activities"
+      ],
+      "related_tags": [
+        "games_and_puzzles",
+        "festivals_and_gatherings",
+        "friendship_and_allies",
+        "trust_and_confidence"
+      ]
+    },
+
+    {
+      "id": "pet_cages",
+      "sanskrit": null,
+      "description": "Parrot and starling cages used as decorative and interactive elements within living spaces.",
+      "keywords": ["pets", "cage", "birds", "decor", "interaction"],
+      "examples": [
+        "Keeping parrots as companions",
+        "Using bird cages as decoration",
+        "Interaction with trained birds"
+      ],
+      "related_tags": [
+        "animal_training_and_fights",
+        "architecture_and_space",
+        "communication_and_signs",
+        "arts_and_aesthetics"
+      ]
+    }
+  ]
+}

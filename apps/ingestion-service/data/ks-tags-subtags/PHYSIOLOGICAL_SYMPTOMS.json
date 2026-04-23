@@ -1,0 +1,188 @@
+{
+  "id": "PHYSIOLOGICAL_SYMPTOMS",
+  "title": "Physical Manifestations",
+  "description": "Focuses on the body's involuntary reactions to emotion.",
+  "keywords": ["physiology", "symptoms", "body", "reaction", "emotion", "manifestation"],
+
+  "subtags": [
+    {
+      "id": "horripilation",
+      "sanskrit": "Romāñca",
+      "description": "Goosebumps arising on the skin as a response to touch, emotion, or heightened sensation.",
+      "keywords": ["goosebumps", "skin", "reaction", "sensation", "response"],
+      "examples": [
+        "Skin reacting to emotional intensity",
+        "Physical response to touch or environment",
+        "Visible signs of heightened sensitivity"
+      ],
+      "related_tags": [
+        "tactile_textures",
+        "passion_and_desire",
+        "vitality_levels",
+        "sensory_experience"
+      ]
+    },
+
+    {
+      "id": "perspiration",
+      "sanskrit": "Sveda",
+      "description": "Sweat as a physiological response to heat, anxiety, or heightened emotional states.",
+      "keywords": ["sweat", "heat", "anxiety", "body", "reaction"],
+      "examples": [
+        "Sweating due to nervousness",
+        "Physical exertion leading to perspiration",
+        "Emotional states triggering bodily heat"
+      ],
+      "related_tags": [
+        "fear_and_anxiety",
+        "passion_and_desire",
+        "environmental_comfort",
+        "skin_aesthetics"
+      ]
+    },
+
+    {
+      "id": "trembling",
+      "sanskrit": "Vepathu",
+      "description": "Shaking or trembling caused by fear, excitement, or emotional intensity.",
+      "keywords": ["tremble", "shake", "fear", "emotion", "reaction"],
+      "examples": [
+        "Shaking due to nervous anticipation",
+        "Physical instability from emotional overload",
+        "Visible trembling in intense situations"
+      ],
+      "related_tags": [
+        "fear_and_anxiety",
+        "infatuation_and_madness",
+        "body_language",
+        "hidden_intentions"
+      ]
+    },
+
+    {
+      "id": "voice_faltering",
+      "sanskrit": "Gadgada",
+      "description": "Changes in speech pitch, tone, or clarity due to emotional influence.",
+      "keywords": ["voice", "speech", "tone", "emotion", "change"],
+      "examples": [
+        "Voice breaking during emotional expression",
+        "Altered tone due to nervousness",
+        "Difficulty speaking clearly under stress"
+      ],
+      "related_tags": [
+        "vocalizations",
+        "confession_of_love",
+        "fear_and_anxiety",
+        "trust_and_confidence"
+      ]
+    },
+
+    {
+      "id": "eye_redness",
+      "sanskrit": null,
+      "description": "Redness of the eyes as a sign of passion, fatigue, or emotional disturbance.",
+      "keywords": ["eyes", "redness", "fatigue", "emotion", "sign"],
+      "examples": [
+        "Red eyes due to lack of sleep",
+        "Visual signs of emotional strain",
+        "Indicators of intensity or exhaustion"
+      ],
+      "related_tags": [
+        "grief_and_longing",
+        "passion_and_desire",
+        "eye_movements",
+        "vitality_levels"
+      ]
+    },
+
+    {
+      "id": "facial_pallor",
+      "sanskrit": null,
+      "description": "Turning pale due to fear, shock, or emotional disturbance.",
+      "keywords": ["pale", "face", "fear", "shock", "reaction"],
+      "examples": [
+        "Loss of color in the face during fear",
+        "Paleness due to emotional stress",
+        "Visible change in complexion"
+      ],
+      "related_tags": [
+        "fear_and_anxiety",
+        "grief_and_longing",
+        "skin_aesthetics",
+        "hidden_intentions"
+      ]
+    },
+
+    {
+      "id": "pupil_dilation",
+      "sanskrit": null,
+      "description": "Changes in the eyes indicating heightened focus, attention, or emotional intensity.",
+      "keywords": ["pupil", "eyes", "focus", "attention", "reaction"],
+      "examples": [
+        "Eyes widening in response to stimuli",
+        "Focused gaze indicating engagement",
+        "Subtle visual cues of interest"
+      ],
+      "related_tags": [
+        "eye_movements",
+        "body_language",
+        "passion_and_desire",
+        "hidden_intentions"
+      ]
+    },
+
+    {
+      "id": "fainting_spells",
+      "sanskrit": "Mūrchā",
+      "description": "Loss of consciousness due to overwhelming emotional or physical intensity.",
+      "keywords": ["faint", "consciousness", "intensity", "reaction", "collapse"],
+      "examples": [
+        "Fainting from emotional overload",
+        "Physical collapse due to stress",
+        "Temporary loss of awareness"
+      ],
+      "related_tags": [
+        "infatuation_and_madness",
+        "fear_and_anxiety",
+        "grief_and_longing",
+        "vitality_levels"
+      ]
+    },
+
+    {
+      "id": "heavy_breathing",
+      "sanskrit": "Śvāsa",
+      "description": "Changes in breathing patterns analyzed as indicators of emotional or physical state.",
+      "keywords": ["breathing", "respiration", "rhythm", "body", "state"],
+      "examples": [
+        "Rapid breathing during excitement",
+        "Irregular breathing under stress",
+        "Controlled breathing indicating calmness"
+      ],
+      "related_tags": [
+        "breath_control",
+        "vitality_levels",
+        "passion_and_desire",
+        "fear_and_anxiety"
+      ]
+    },
+
+    {
+      "id": "involuntary_gestures",
+      "sanskrit": null,
+      "description": "Unconscious movements such as fidgeting with clothes or hair, reflecting internal emotional states.",
+      "keywords": ["gesture", "fidget", "movement", "unconscious", "signal"],
+      "examples": [
+        "Adjusting clothing nervously",
+        "Touching hair repeatedly",
+        "Small movements revealing inner tension"
+      ],
+      "related_tags": [
+        "body_language",
+        "hidden_intentions",
+        "shame_and_modesty",
+        "tactile_textures"
+      ]
+    }
+  ]
+}

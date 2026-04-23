@@ -114,11 +114,13 @@ export type SevaDomain = {
   description: string
 }
 
-export type AgeGroup =
-  | 'kids'
-  | 'students'
-  | 'professionals'
-  | 'elders'
+export type LifeStage =
+  | 'student'
+  | 'unmarried'
+  | 'married'
+  | 'parent'
+  | 'vanaprastha'
+  | 'renunciate'
 
 
   export type TreeNode = {

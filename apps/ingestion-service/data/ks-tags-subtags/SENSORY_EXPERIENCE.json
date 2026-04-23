@@ -1,0 +1,188 @@
+{
+  "id": "SENSORY_EXPERIENCE",
+  "title": "Aesthetics of the Senses",
+  "description": "Focuses on the biological and environmental triggers of pleasure.",
+  "keywords": ["senses", "perception", "aesthetics", "environment", "experience", "stimuli"],
+
+  "subtags": [
+    {
+      "id": "olfactory_triggers",
+      "sanskrit": null,
+      "description": "Specific smells like wet earth, jasmine, or musk that evoke emotional and sensory responses.",
+      "keywords": ["smell", "fragrance", "scent", "olfactory", "aroma"],
+      "examples": [
+        "Fragrance of wet earth after rain",
+        "Use of jasmine or sandalwood scents",
+        "Association of smell with memory and mood"
+      ],
+      "related_tags": [
+        "floral_scents",
+        "grooming_and_perfumery",
+        "passion_and_desire",
+        "environmental_comfort"
+      ]
+    },
+
+    {
+      "id": "auditory_pleasure",
+      "sanskrit": null,
+      "description": "Pleasure derived from sound, including ornaments, birds, musical tones, and ambient auditory elements.",
+      "keywords": ["sound", "hearing", "music", "tone", "auditory"],
+      "examples": [
+        "Sound of anklets or ornaments",
+        "Birdsong in gardens",
+        "Musical notes creating atmosphere"
+      ],
+      "related_tags": [
+        "music_and_dance",
+        "vocalizations",
+        "environmental_comfort",
+        "passion_and_desire"
+      ]
+    },
+
+    {
+      "id": "visual_composition",
+      "sanskrit": null,
+      "description": "The arrangement of a room or the visual appearance of a person, including color, symmetry, and aesthetic presentation.",
+      "keywords": ["visual", "appearance", "design", "aesthetic", "arrangement"],
+      "examples": [
+        "Arrangement of furniture and decoration",
+        "Visual harmony of clothing and ornaments",
+        "Overall presentation of a person or space"
+      ],
+      "related_tags": [
+        "architecture_and_space",
+        "fashion_and_textiles",
+        "painting_and_design",
+        "lighting_effects"
+      ]
+    },
+
+    {
+      "id": "tactile_textures",
+      "sanskrit": null,
+      "description": "Sensations of touch, including softness, hardness, smoothness, and temperature of objects and surfaces.",
+      "keywords": ["touch", "texture", "surface", "temperature", "sensation"],
+      "examples": [
+        "Softness of fabrics",
+        "Coolness of stone floors",
+        "Smoothness of polished objects"
+      ],
+      "related_tags": [
+        "embraces",
+        "environmental_comfort",
+        "grooming_and_perfumery",
+        "architecture_and_space"
+      ]
+    },
+
+    {
+      "id": "gustatory_delights",
+      "sanskrit": null,
+      "description": "Taste experiences, including wines, juices, betel, and other flavorful substances.",
+      "keywords": ["taste", "flavor", "food", "drink", "gustatory"],
+      "examples": [
+        "Flavor of prepared drinks",
+        "Use of betel for taste and refreshment",
+        "Combination of sweet, sour, and aromatic tastes"
+      ],
+      "related_tags": [
+        "culinary_arts",
+        "aphrodisiacs",
+        "festivals_and_gatherings",
+        "environmental_comfort"
+      ]
+    },
+
+    {
+      "id": "synesthesia",
+      "sanskrit": null,
+      "description": "Passages where senses overlap, such as describing sound as 'sweet' or colors as 'warm', blending sensory experiences.",
+      "keywords": ["synesthesia", "overlap", "senses", "perception", "metaphor"],
+      "examples": [
+        "Describing music as sweet or soft",
+        "Associating colors with emotional warmth",
+        "Blending sensory descriptions in expression"
+      ],
+      "related_tags": [
+        "literary_arts",
+        "auditory_pleasure",
+        "visual_composition",
+        "passion_and_desire"
+      ]
+    },
+
+    {
+      "id": "lighting_effects",
+      "sanskrit": null,
+      "description": "Use of moonlight, lamps, shadows, or darkness to influence mood and perception.",
+      "keywords": ["light", "darkness", "illumination", "mood", "atmosphere"],
+      "examples": [
+        "Moonlight creating a calm atmosphere",
+        "Use of lamps for warmth and intimacy",
+        "Darkness enhancing privacy"
+      ],
+      "related_tags": [
+        "visual_composition",
+        "environmental_comfort",
+        "architecture_and_space",
+        "passion_and_desire"
+      ]
+    },
+
+    {
+      "id": "floral_scents",
+      "sanskrit": null,
+      "description": "Specific flowers used for their mood-altering fragrance and symbolic associations.",
+      "keywords": ["flowers", "fragrance", "scent", "nature", "aroma"],
+      "examples": [
+        "Use of jasmine or lotus flowers",
+        "Garlands for scent and decoration",
+        "Flowers influencing emotional atmosphere"
+      ],
+      "related_tags": [
+        "olfactory_triggers",
+        "floral_arts",
+        "grooming_and_perfumery",
+        "festivals_and_gatherings"
+      ]
+    },
+
+    {
+      "id": "skin_aesthetics",
+      "sanskrit": null,
+      "description": "Descriptions of complexion, sweat, radiance, and surface qualities of the body as perceived visually and tactilely.",
+      "keywords": ["skin", "complexion", "radiance", "appearance", "texture"],
+      "examples": [
+        "Glow or radiance of the skin",
+        "Natural perspiration as a sensory element",
+        "Perceived smoothness or warmth"
+      ],
+      "related_tags": [
+        "grooming_and_perfumery",
+        "tactile_textures",
+        "visual_composition",
+        "passion_and_desire"
+      ]
+    },
+
+    {
+      "id": "environmental_comfort",
+      "sanskrit": null,
+      "description": "Use of fans, water-sprays, cool floors, and other environmental adjustments to enhance comfort and sensory pleasure.",
+      "keywords": ["comfort", "environment", "cooling", "space", "climate"],
+      "examples": [
+        "Using fans or breezes for cooling",
+        "Sprinkling water to reduce heat",
+        "Creating a comfortable physical setting"
+      ],
+      "related_tags": [
+        "architecture_and_space",
+        "tactile_textures",
+        "lighting_effects",
+        "auditory_pleasure"
+      ]
+    }
+  ]
+}

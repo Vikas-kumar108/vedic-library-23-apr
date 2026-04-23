@@ -1,0 +1,188 @@
+{
+  "id": "RELATIONSHIP_DYNAMICS",
+  "title": "Social Power & Conflict",
+  "description": "Focuses on the strategic, often manipulative side of relationships (heavy in Books 5 & 6).",
+  "keywords": ["relationships", "strategy", "power", "conflict", "manipulation", "social dynamics"],
+
+  "subtags": [
+    {
+      "id": "power_and_control",
+      "sanskrit": "Vaśīkaraṇa",
+      "description": "Making someone submissive or influenced, including methods of gaining emotional, psychological, or social control over another.",
+      "keywords": ["power", "control", "influence", "dominance", "strategy"],
+      "examples": [
+        "Gaining emotional dependence of a partner",
+        "Using charm or pressure to influence decisions",
+        "Maintaining control in a relationship dynamic"
+      ],
+      "related_tags": [
+        "righteous_deception",
+        "hidden_intentions",
+        "persuasion_and_debate",
+        "courtesan_culture"
+      ]
+    },
+
+    {
+      "id": "lovers_quarrels",
+      "sanskrit": "Praṇaya-kalaha",
+      "description": "Fighting out of love or jealousy, including emotional conflicts that arise within intimate relationships.",
+      "keywords": ["quarrel", "conflict", "jealousy", "argument", "emotion"],
+      "examples": [
+        "Arguments caused by jealousy or neglect",
+        "Emotional disputes between partners",
+        "Conflicts that arise from attachment"
+      ],
+      "related_tags": [
+        "jealousy_and_anger",
+        "hidden_intentions",
+        "reconciliation",
+        "trust_and_confidence"
+      ]
+    },
+
+    {
+      "id": "reconciliation",
+      "sanskrit": "Anunaya / Prasāda",
+      "description": "Falling at the feet, apologizing, and restoring harmony after conflict through emotional or symbolic gestures.",
+      "keywords": ["reconciliation", "apology", "repair", "forgiveness", "peace"],
+      "examples": [
+        "Apologizing after a quarrel",
+        "Using gestures of humility to restore trust",
+        "Rebuilding emotional connection"
+      ],
+      "related_tags": [
+        "lovers_quarrels",
+        "trust_and_confidence",
+        "pre_and_post_coital",
+        "grief_and_longing"
+      ]
+    },
+
+    {
+      "id": "extorting_wealth",
+      "sanskrit": "Artha-haraṇa",
+      "description": "Courtesans draining a lover's money through strategic emotional engagement and manipulation.",
+      "keywords": ["wealth", "exploitation", "finance", "strategy", "gain"],
+      "examples": [
+        "Encouraging excessive spending by a lover",
+        "Using emotional attachment to extract resources",
+        "Maintaining dependency for financial benefit"
+      ],
+      "related_tags": [
+        "courtesan_culture",
+        "finances_and_budgeting",
+        "power_and_control",
+        "deception"
+      ]
+    },
+
+    {
+      "id": "recognizing_indifference",
+      "sanskrit": "Virakta-liṅgāni",
+      "description": "Signs your partner is pulling away, including behavioral and emotional indicators of detachment.",
+      "keywords": ["indifference", "withdrawal", "signals", "detachment", "awareness"],
+      "examples": [
+        "Reduced communication or attention",
+        "Lack of emotional responsiveness",
+        "Avoidance of interaction"
+      ],
+      "related_tags": [
+        "indifference_and_aversion",
+        "testing_intentions",
+        "hidden_intentions",
+        "getting_rid_of_lovers"
+      ]
+    },
+
+    {
+      "id": "getting_rid_of_lovers",
+      "sanskrit": "Niṣkāsana",
+      "description": "How to politely or rudely end a relationship, including strategies for disengagement.",
+      "keywords": ["ending", "separation", "detachment", "strategy", "closure"],
+      "examples": [
+        "Gradually reducing interaction to signal disinterest",
+        "Directly ending a relationship",
+        "Using indirect methods to create distance"
+      ],
+      "related_tags": [
+        "recognizing_indifference",
+        "indifference_and_aversion",
+        "public_reputation",
+        "righteous_deception"
+      ]
+    },
+
+    {
+      "id": "rekindling_romance",
+      "sanskrit": "Naṣṭarāga-pratyānayana",
+      "description": "Getting an ex back or restoring lost affection through emotional, strategic, or symbolic actions.",
+      "keywords": ["rekindling", "romance", "restoration", "affection", "strategy"],
+      "examples": [
+        "Rebuilding attraction after separation",
+        "Using memory and nostalgia to reconnect",
+        "Gradual restoration of emotional bond"
+      ],
+      "related_tags": [
+        "grief_and_longing",
+        "passion_and_desire",
+        "reconciliation",
+        "trust_and_confidence"
+      ]
+    },
+
+    {
+      "id": "assessing_risks",
+      "sanskrit": "Anartha-saṁśaya",
+      "description": "Calculating the danger of an affair or relationship, including social, emotional, and material risks.",
+      "keywords": ["risk", "danger", "calculation", "consequence", "strategy"],
+      "examples": [
+        "Evaluating consequences of a secret relationship",
+        "Weighing social and personal risks",
+        "Avoiding harmful situations"
+      ],
+      "related_tags": [
+        "fear_and_anxiety",
+        "public_reputation",
+        "secret_unions",
+        "fate_vs_free_will"
+      ]
+    },
+
+    {
+      "id": "friendship_and_allies",
+      "sanskrit": "Mitra-saṁpatti",
+      "description": "Choosing the right wingman or allies to support, influence, or facilitate relationships.",
+      "keywords": ["friendship", "allies", "support", "network", "strategy"],
+      "examples": [
+        "Using friends to assist in communication",
+        "Relying on allies for advice or support",
+        "Building a supportive social network"
+      ],
+      "related_tags": [
+        "messengers_and_go_betweens",
+        "trust_and_confidence",
+        "power_and_control",
+        "communication_and_signs"
+      ]
+    },
+
+    {
+      "id": "public_reputation",
+      "sanskrit": "Yaśas / Kīrti",
+      "description": "Protecting your good name in society, including managing perception, honor, and social standing.",
+      "keywords": ["reputation", "honor", "status", "image", "society"],
+      "examples": [
+        "Maintaining dignity in public behavior",
+        "Avoiding scandal or social disapproval",
+        "Managing how others perceive relationships"
+      ],
+      "related_tags": [
+        "assessing_risks",
+        "caste_dynamics",
+        "gender_roles",
+        "duty_and_obligation"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,188 @@
+{
+  "id": "ARTS_AND_AESTHETICS",
+  "title": "The 64 Kalas & Lifestyle",
+  "description": "Focuses on education, refined hobbies, and the life of a 'Nagaraka' (urbane citizen).",
+  "keywords": ["arts", "aesthetics", "kalas", "culture", "refinement", "lifestyle"],
+
+  "subtags": [
+    {
+      "id": "music_and_dance",
+      "sanskrit": "Gīta-Vādya-Nṛtya",
+      "description": "Singing, instrumental music, and dance as refined arts cultivated for expression, entertainment, and social charm.",
+      "keywords": ["music", "dance", "performance", "rhythm", "expression"],
+      "examples": [
+        "Singing in social gatherings",
+        "Playing musical instruments skillfully",
+        "Performing dance as an expressive art"
+      ],
+      "related_tags": [
+        "flirtatious_banter",
+        "festivals_and_gatherings",
+        "courtesan_culture",
+        "passion_and_desire"
+      ]
+    },
+
+    {
+      "id": "grooming_and_perfumery",
+      "sanskrit": "Prasādhana / Gandhayukti",
+      "description": "Use of cosmetics, perfumes, and personal grooming to enhance attractiveness and presence.",
+      "keywords": ["grooming", "perfume", "cosmetics", "appearance", "scent"],
+      "examples": [
+        "Applying fragrances to enhance appeal",
+        "Use of cosmetics for beautification",
+        "Maintaining personal hygiene and elegance"
+      ],
+      "related_tags": [
+        "fashion_and_textiles",
+        "enhancing_attractiveness",
+        "passion_and_desire",
+        "courtesan_culture"
+      ]
+    },
+
+    {
+      "id": "culinary_arts",
+      "sanskrit": "Pāka-kalā",
+      "description": "Cooking, preparation of drinks, and knowledge of foods including those believed to influence vitality and enjoyment.",
+      "keywords": ["cooking", "food", "drinks", "hospitality", "taste"],
+      "examples": [
+        "Preparing elaborate meals for guests",
+        "Creating flavorful beverages",
+        "Using ingredients with specific effects"
+      ],
+      "related_tags": [
+        "household_duties",
+        "gardening_and_agriculture",
+        "medical_remedies",
+        "festivals_and_gatherings"
+      ]
+    },
+
+    {
+      "id": "fashion_and_textiles",
+      "sanskrit": "Vastra-veṣa",
+      "description": "Clothing, tailoring, and personal style, including the selection and arrangement of garments for aesthetic and social effect.",
+      "keywords": ["fashion", "clothing", "textiles", "style", "appearance"],
+      "examples": [
+        "Selecting garments appropriate to occasion",
+        "Coordinating colors and fabrics",
+        "Adornment with accessories"
+      ],
+      "related_tags": [
+        "grooming_and_perfumery",
+        "gender_roles",
+        "public_reputation",
+        "arts_and_aesthetics"
+      ]
+    },
+
+    {
+      "id": "painting_and_design",
+      "sanskrit": "Ālekhya / Patracchedya",
+      "description": "Visual arts including painting, drawing, and decorative design such as leaf-cutting and pattern creation.",
+      "keywords": ["painting", "design", "visual art", "decoration", "craft"],
+      "examples": [
+        "Creating decorative patterns",
+        "Painting scenes or motifs",
+        "Designing ornamental objects"
+      ],
+      "related_tags": [
+        "floral_arts",
+        "architecture_and_space",
+        "literary_arts",
+        "gift_giving"
+      ]
+    },
+
+    {
+      "id": "games_and_puzzles",
+      "sanskrit": "Krīḍā / Prahelikā",
+      "description": "Dice, riddles, word games, and other recreational activities that engage intellect and provide entertainment.",
+      "keywords": ["games", "puzzles", "riddles", "play", "entertainment"],
+      "examples": [
+        "Playing dice or board games",
+        "Solving riddles and word challenges",
+        "Engaging in playful competitions"
+      ],
+      "related_tags": [
+        "flirtatious_banter",
+        "literary_arts",
+        "festivals_and_gatherings",
+        "trust_and_confidence"
+      ]
+    },
+
+    {
+      "id": "floral_arts",
+      "sanskrit": "Mālya-vidhi",
+      "description": "Garland making and flower arranging, including aesthetic and symbolic use of flowers.",
+      "keywords": ["flowers", "garland", "arrangement", "decoration", "symbolism"],
+      "examples": [
+        "Creating garlands for adornment",
+        "Decorating spaces with flowers",
+        "Using flowers as symbolic gifts"
+      ],
+      "related_tags": [
+        "gift_giving",
+        "painting_and_design",
+        "festivals_and_gatherings",
+        "grooming_and_perfumery"
+      ]
+    },
+
+    {
+      "id": "animal_training_and_fights",
+      "sanskrit": null,
+      "description": "Training animals and organizing animal contests, including teaching birds to speak and arranging competitive displays.",
+      "keywords": ["animals", "training", "competition", "entertainment"],
+      "examples": [
+        "Teaching parrots to mimic speech",
+        "Organizing animal contests",
+        "Training animals for performance"
+      ],
+      "related_tags": [
+        "games_and_puzzles",
+        "festivals_and_gatherings",
+        "royal_and_elite_customs",
+        "communication_and_signs"
+      ]
+    },
+
+    {
+      "id": "magic_and_illusions",
+      "sanskrit": "Indrajāla",
+      "description": "Sleight of hand, illusion, and spectacle used for entertainment and wonder.",
+      "keywords": ["magic", "illusion", "trick", "spectacle", "entertainment"],
+      "examples": [
+        "Performing illusion-based tricks",
+        "Creating visual spectacles",
+        "Entertaining audiences through deception"
+      ],
+      "related_tags": [
+        "secret_codes",
+        "persuasion_and_debate",
+        "games_and_puzzles",
+        "power_and_control"
+      ]
+    },
+
+    {
+      "id": "literary_arts",
+      "sanskrit": "Kāvya-kriyā",
+      "description": "Poetry, recitation of texts, composing verses, and literary creativity as refined intellectual arts.",
+      "keywords": ["poetry", "literature", "composition", "recitation", "language"],
+      "examples": [
+        "Composing poetic verses",
+        "Reciting classical texts",
+        "Completing or improvising lines of poetry"
+      ],
+      "related_tags": [
+        "love_letters",
+        "flirtatious_banter",
+        "logical_maxims",
+        "painting_and_design"
+      ]
+    }
+  ]
+}

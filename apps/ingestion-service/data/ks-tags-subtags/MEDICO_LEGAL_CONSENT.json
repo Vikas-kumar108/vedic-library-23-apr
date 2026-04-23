@@ -1,0 +1,188 @@
+{
+  "id": "MEDICO_LEGAL_CONSENT",
+  "title": "Ethics and Boundaries",
+  "description": "Focuses on the ethics of the encounter.",
+  "keywords": ["ethics", "consent", "boundaries", "safety", "law", "norms"],
+
+  "subtags": [
+    {
+      "id": "overcoming_vulnerability",
+      "sanskrit": null,
+      "description": "The ethics of approaching a distressed individual, including considerations of fairness, timing, and responsibility.",
+      "keywords": ["vulnerability", "ethics", "timing", "care", "responsibility"],
+      "examples": [
+        "Recognizing distress before initiating interaction",
+        "Avoiding advantage during emotional weakness",
+        "Prioritizing well-being over opportunity"
+      ],
+      "related_tags": [
+        "fear_and_anxiety",
+        "duty_and_obligation",
+        "harm_prevention",
+        "ethical_refusal"
+      ]
+    },
+
+    {
+      "id": "proxy_consent",
+      "sanskrit": "Dhātreyikā",
+      "description": "The role of intermediaries in signaling approval or facilitating agreement between parties.",
+      "keywords": ["proxy", "consent", "intermediary", "approval", "signal"],
+      "examples": [
+        "Using a trusted confidante to communicate acceptance",
+        "Relying on intermediaries for introductions",
+        "Indirect confirmation of willingness"
+      ],
+      "related_tags": [
+        "messengers_and_go_betweens",
+        "consent_mechanisms",
+        "nursemaid_confidantes",
+        "social_strategy"
+      ]
+    },
+
+    {
+      "id": "verbal_vs_nonverbal",
+      "sanskrit": null,
+      "description": "Distinguishing explicit verbal refusal from subtle or nonverbal signals, and interpreting intent responsibly.",
+      "keywords": ["verbal", "nonverbal", "signal", "interpretation", "communication"],
+      "examples": [
+        "Differentiating spoken refusal from hesitation",
+        "Reading body language with caution",
+        "Ensuring clarity in communication"
+      ],
+      "related_tags": [
+        "body_language",
+        "testing_intentions",
+        "shame_and_modesty",
+        "consent_mechanisms"
+      ]
+    },
+
+    {
+      "id": "harm_prevention",
+      "sanskrit": "Atyayika",
+      "description": "Avoiding physical injury or harm, emphasizing safety and well-being in all actions.",
+      "keywords": ["harm", "safety", "prevention", "injury", "care"],
+      "examples": [
+        "Adjusting behavior to prevent harm",
+        "Recognizing limits of physical endurance",
+        "Ensuring mutual safety"
+      ],
+      "related_tags": [
+        "strength_assessment",
+        "medical_remedies",
+        "duty_and_obligation",
+        "physiological_symptoms"
+      ]
+    },
+
+    {
+      "id": "sanity_checks",
+      "sanskrit": "Unmatta",
+      "description": "Rules regarding individuals who are mentally unsound, emphasizing incapacity and protection.",
+      "keywords": ["sanity", "mental state", "capacity", "protection", "ethics"],
+      "examples": [
+        "Recognizing impaired judgment",
+        "Avoiding engagement with those lacking capacity",
+        "Ensuring ethical boundaries"
+      ],
+      "related_tags": [
+        "infatuation_and_madness",
+        "duty_and_obligation",
+        "legal_and_normative",
+        "harm_prevention"
+      ]
+    },
+
+    {
+      "id": "age_of_discretion",
+      "sanskrit": "Yuvati",
+      "description": "Identifying when a girl becomes of age for participation, based on social and cultural definitions.",
+      "keywords": ["age", "maturity", "eligibility", "stage", "development"],
+      "examples": [
+        "Recognizing transition to adulthood",
+        "Applying social definitions of maturity",
+        "Observing culturally defined thresholds"
+      ],
+      "related_tags": [
+        "life_stages",
+        "duty_and_obligation",
+        "legal_and_normative",
+        "mate_selection"
+      ]
+    },
+
+    {
+      "id": "forbidden_times",
+      "sanskrit": null,
+      "description": "Periods considered inappropriate for interaction, such as menstruation or mourning.",
+      "keywords": ["time", "restriction", "ritual", "period", "prohibition"],
+      "examples": [
+        "Observing ritual restrictions",
+        "Avoiding interaction during mourning",
+        "Respecting culturally defined timings"
+      ],
+      "related_tags": [
+        "menstrual_timing",
+        "religious_observances",
+        "temporal_dynamics",
+        "purity_standards"
+      ]
+    },
+
+    {
+      "id": "social_contract",
+      "sanskrit": "Samaya",
+      "description": "The unwritten rules governing acceptable conduct within society.",
+      "keywords": ["social", "contract", "norm", "rule", "custom"],
+      "examples": [
+        "Following expected behavioral norms",
+        "Maintaining mutual understanding",
+        "Adhering to community standards"
+      ],
+      "related_tags": [
+        "society_and_culture",
+        "public_reputation",
+        "societal_scandal",
+        "legal_and_normative"
+      ]
+    },
+
+    {
+      "id": "purity_standards",
+      "sanskrit": "Śauca",
+      "description": "Technical rules regarding cleanliness, hygiene, and ritual purity.",
+      "keywords": ["purity", "cleanliness", "hygiene", "ritual", "standard"],
+      "examples": [
+        "Maintaining personal cleanliness",
+        "Observing ritual purification practices",
+        "Ensuring hygienic conditions"
+      ],
+      "related_tags": [
+        "grooming_and_perfumery",
+        "medical_remedies",
+        "religious_observances",
+        "sensory_experience"
+      ]
+    },
+
+    {
+      "id": "ethical_refusal",
+      "sanskrit": null,
+      "description": "Situations where it is appropriate or necessary to refuse participation based on ethical, social, or personal considerations.",
+      "keywords": ["refusal", "ethics", "boundary", "decision", "judgment"],
+      "examples": [
+        "Walking away from inappropriate situations",
+        "Setting firm personal boundaries",
+        "Prioritizing ethics over desire"
+      ],
+      "related_tags": [
+        "refusal_as_agency",
+        "duty_and_obligation",
+        "harm_prevention",
+        "legal_and_normative"
+      ]
+    }
+  ]
+}

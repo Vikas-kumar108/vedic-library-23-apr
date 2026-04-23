@@ -1,0 +1,188 @@
+{
+  "id": "GASTRONOMY_AND_VITALS",
+  "title": "Food and Vigor",
+  "description": "Focuses on the fuel for desire.",
+  "keywords": ["food", "diet", "vitality", "nutrition", "digestion", "ojas"],
+
+  "subtags": [
+    {
+      "id": "aphrodisiac_diet",
+      "sanskrit": "Vṛṣya-anna",
+      "description": "Foods believed to build ojas and support strength, vitality, and sustained energy.",
+      "keywords": ["aphrodisiac", "diet", "ojas", "strength", "vitality"],
+      "examples": [
+        "Consuming nutrient-rich preparations",
+        "Selecting foods for long-term vitality",
+        "Balancing diet for strength and endurance"
+      ],
+      "related_tags": [
+        "aphrodisiacs",
+        "body_types",
+        "vitality_levels",
+        "medical_remedies"
+      ]
+    },
+
+    {
+      "id": "stimulant_drinks",
+      "sanskrit": null,
+      "description": "Juices and fermented asavas used to refresh, stimulate, or alter mood and energy.",
+      "keywords": ["drink", "stimulant", "asava", "juice", "refreshment"],
+      "examples": [
+        "Consuming fermented beverages",
+        "Using drinks to elevate mood",
+        "Serving juices in social settings"
+      ],
+      "related_tags": [
+        "culinary_arts",
+        "drinking_saloons",
+        "gustatory_delights",
+        "overcoming_vices"
+      ]
+    },
+
+    {
+      "id": "light_suppers",
+      "sanskrit": null,
+      "description": "Guidelines on eating light meals before engagements to maintain comfort and ease.",
+      "keywords": ["meal", "light", "diet", "timing", "comfort"],
+      "examples": [
+        "Eating small portions before activity",
+        "Choosing easily digestible foods",
+        "Avoiding heaviness before meetings"
+      ],
+      "related_tags": [
+        "temporal_dynamics",
+        "digestive_aesthetics",
+        "environmental_comfort",
+        "body_types"
+      ]
+    },
+
+    {
+      "id": "hangover_cures",
+      "sanskrit": null,
+      "description": "Methods and foods used for recovery after indulgence or festivals.",
+      "keywords": ["recovery", "hangover", "remedy", "restoration", "balance"],
+      "examples": [
+        "Consuming restorative foods or drinks",
+        "Using traditional remedies for recovery",
+        "Balancing body after excess"
+      ],
+      "related_tags": [
+        "medical_remedies",
+        "overcoming_vices",
+        "cooling_foods",
+        "vitality_levels"
+      ]
+    },
+
+    {
+      "id": "digestive_aesthetics",
+      "sanskrit": null,
+      "description": "The connection between digestion and outward appearance such as complexion and radiance.",
+      "keywords": ["digestion", "aesthetics", "complexion", "health", "gut"],
+      "examples": [
+        "Healthy digestion reflecting in skin quality",
+        "Diet influencing outward appearance",
+        "Balancing intake for visible vitality"
+      ],
+      "related_tags": [
+        "skin_aesthetics",
+        "body_types",
+        "medical_remedies",
+        "sensory_experience"
+      ]
+    },
+
+    {
+      "id": "cooling_foods",
+      "sanskrit": null,
+      "description": "Foods that reduce excess heat (Pitta), providing balance and comfort.",
+      "keywords": ["cooling", "pitta", "balance", "temperature", "food"],
+      "examples": [
+        "Consuming foods that reduce internal heat",
+        "Balancing diet according to climate",
+        "Choosing ingredients for comfort"
+      ],
+      "related_tags": [
+        "body_types",
+        "seasonal_adaptation",
+        "water_treatments",
+        "environmental_comfort"
+      ]
+    },
+
+    {
+      "id": "meat_vs_veg",
+      "sanskrit": null,
+      "description": "Contextual recommendations for different types of food based on need, energy, or situation.",
+      "keywords": ["diet", "protein", "meat", "vegetarian", "nutrition"],
+      "examples": [
+        "Choosing food based on activity level",
+        "Balancing different sources of nutrition",
+        "Adapting diet to context"
+      ],
+      "related_tags": [
+        "aphrodisiac_diet",
+        "body_types",
+        "seasonal_adaptation",
+        "culinary_arts"
+      ]
+    },
+
+    {
+      "id": "honey_preparations",
+      "sanskrit": "Madhu",
+      "description": "Use of honey in tonics and preparations for nourishment and enhancement.",
+      "keywords": ["honey", "madhu", "tonic", "sweet", "preparation"],
+      "examples": [
+        "Mixing honey with herbs",
+        "Using honey as a base ingredient",
+        "Preparing nourishing tonics"
+      ],
+      "related_tags": [
+        "aphrodisiacs",
+        "medicinal_herbs",
+        "culinary_arts",
+        "digestive_aesthetics"
+      ]
+    },
+
+    {
+      "id": "seasonal_fruits",
+      "sanskrit": null,
+      "description": "Fruits like mangoes and wood-apples used in specific seasons for nourishment and enjoyment.",
+      "keywords": ["fruit", "seasonal", "nutrition", "fresh", "timing"],
+      "examples": [
+        "Consuming fruits in their natural season",
+        "Using fruits in social or romantic contexts",
+        "Selecting fruits for taste and vitality"
+      ],
+      "related_tags": [
+        "seasonal_adaptation",
+        "gustatory_delights",
+        "sensory_experience",
+        "festivals_and_gatherings"
+      ]
+    },
+
+    {
+      "id": "saline_restrictions",
+      "sanskrit": "Kṣāra-lavaṇa-varja",
+      "description": "Dietary restrictions such as avoiding salt, often tied to fasting or purification practices.",
+      "keywords": ["restriction", "salt", "fasting", "diet", "purification"],
+      "examples": [
+        "Observing salt-free dietary rules",
+        "Following fasting practices",
+        "Adapting diet for ritual or health reasons"
+      ],
+      "related_tags": [
+        "religious_observances",
+        "asceticism_and_restraint",
+        "purity_standards",
+        "medical_remedies"
+      ]
+    }
+  ]
+}

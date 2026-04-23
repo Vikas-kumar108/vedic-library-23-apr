@@ -1,0 +1,188 @@
+{
+  "id": "LEGAL_AND_NORMATIVE",
+  "title": "The Boundary Layer",
+  "description": "Focuses on the rules, laws, and 'gray areas'.",
+  "keywords": ["law", "norms", "rules", "ethics", "boundaries", "regulation"],
+
+  "subtags": [
+    {
+      "id": "forbidden_partners",
+      "sanskrit": "Agamyā",
+      "description": "The detailed list of partners considered off-limits, based on social, familial, or ethical prohibitions.",
+      "keywords": ["forbidden", "prohibition", "boundary", "ethics", "restriction"],
+      "examples": [
+        "Restrictions based on kinship or social role",
+        "Identifying relationships considered inappropriate",
+        "Observing boundaries defined by custom and law"
+      ],
+      "related_tags": [
+        "caste_dynamics",
+        "duty_and_obligation",
+        "sin_and_expiation",
+        "public_reputation"
+      ]
+    },
+
+    {
+      "id": "adultery_risks",
+      "sanskrit": null,
+      "description": "The physical and social dangers of affairs, including punishment, exposure, and reputational harm.",
+      "keywords": ["adultery", "risk", "danger", "consequence", "exposure"],
+      "examples": [
+        "Risk of being discovered in an affair",
+        "Social consequences of infidelity",
+        "Physical or legal repercussions"
+      ],
+      "related_tags": [
+        "assessing_risks",
+        "fear_and_anxiety",
+        "public_reputation",
+        "secret_unions"
+      ]
+    },
+
+    {
+      "id": "consent_mechanisms",
+      "sanskrit": null,
+      "description": "Signals that a woman is ready versus not ready, including behavioral, verbal, and contextual indicators.",
+      "keywords": ["consent", "signals", "readiness", "communication", "boundaries"],
+      "examples": [
+        "Recognizing acceptance or hesitation",
+        "Interpreting verbal and nonverbal cues",
+        "Understanding context of agreement"
+      ],
+      "related_tags": [
+        "body_language",
+        "testing_intentions",
+        "trust_and_confidence",
+        "shame_and_modesty"
+      ]
+    },
+
+    {
+      "id": "breach_of_contract",
+      "sanskrit": null,
+      "description": "When a courtesan or lover fails their promise, including violation of agreed expectations or duties.",
+      "keywords": ["contract", "breach", "promise", "obligation", "failure"],
+      "examples": [
+        "Failure to fulfill agreed terms",
+        "Breaking trust in an arrangement",
+        "Disputes arising from unmet expectations"
+      ],
+      "related_tags": [
+        "financial_negotiation",
+        "extorting_wealth",
+        "duty_and_obligation",
+        "reconciliation"
+      ]
+    },
+
+    {
+      "id": "witness_logic",
+      "sanskrit": null,
+      "description": "Who can be a witness to a secret marriage, and how testimony is validated in such contexts.",
+      "keywords": ["witness", "testimony", "evidence", "validation", "law"],
+      "examples": [
+        "Selecting trustworthy witnesses",
+        "Validating claims through testimony",
+        "Role of intermediaries in confirmation"
+      ],
+      "related_tags": [
+        "messengers_and_go_betweens",
+        "secret_unions",
+        "scriptural_authority",
+        "logical_maxims"
+      ]
+    },
+
+    {
+      "id": "property_rights",
+      "sanskrit": "Strī-dhana",
+      "description": "Ownership of gifts given in romance, including rights over wealth, ornaments, and property.",
+      "keywords": ["property", "ownership", "wealth", "rights", "stridhana"],
+      "examples": [
+        "Determining ownership of gifts",
+        "Rights over personal ornaments",
+        "Disputes regarding transfer of wealth"
+      ],
+      "related_tags": [
+        "dowry_and_wealth",
+        "finances_and_budgeting",
+        "financial_negotiation",
+        "caste_dynamics"
+      ]
+    },
+
+    {
+      "id": "paternal_authority",
+      "sanskrit": null,
+      "description": "The role of the father in betrothal decisions, including authority, consent, and negotiation.",
+      "keywords": ["father", "authority", "family", "consent", "control"],
+      "examples": [
+        "Father approving or rejecting proposals",
+        "Negotiation through parental authority",
+        "Balancing personal choice and family control"
+      ],
+      "related_tags": [
+        "parental_consent",
+        "mate_selection",
+        "duty_and_obligation",
+        "caste_dynamics"
+      ]
+    },
+
+    {
+      "id": "clandestine_law",
+      "sanskrit": null,
+      "description": "Rules for 'Gāndharva' and 'Rākṣasa' unions, including informal or force-based relationships and their recognition.",
+      "keywords": ["clandestine", "union", "law", "marriage", "recognition"],
+      "examples": [
+        "Recognition of non-traditional unions",
+        "Rules governing secret or forceful marriages",
+        "Social and legal status of such unions"
+      ],
+      "related_tags": [
+        "types_of_marriage",
+        "secret_unions",
+        "abduction_tactics",
+        "adultery_risks"
+      ]
+    },
+
+    {
+      "id": "societal_scandal",
+      "sanskrit": "Apavāda",
+      "description": "Avoiding public gossip and maintaining social standing by managing perception and behavior.",
+      "keywords": ["scandal", "gossip", "reputation", "society", "image"],
+      "examples": [
+        "Avoiding situations that lead to gossip",
+        "Managing public perception carefully",
+        "Maintaining dignity in social conduct"
+      ],
+      "related_tags": [
+        "public_reputation",
+        "assessing_risks",
+        "fear_and_anxiety",
+        "gender_roles"
+      ]
+    },
+
+    {
+      "id": "judicial_intervention",
+      "sanskrit": null,
+      "description": "When the King or Court gets involved in disputes, including enforcement of rules and resolution of conflicts.",
+      "keywords": ["court", "king", "judgment", "law", "authority"],
+      "examples": [
+        "Appealing to authority for dispute resolution",
+        "Legal enforcement of agreements",
+        "Intervention in cases of conflict or wrongdoing"
+      ],
+      "related_tags": [
+        "breach_of_contract",
+        "property_rights",
+        "adultery_risks",
+        "scriptural_authority"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+
+> dharma-monorepo@0.1.0 db:push /Users/ppublications/Workspace/system/ui-lab/playground/ui-vedic-library-frontend-v2
+> pnpm --filter @dharma/data-access db:push
+
+
+> @dharma/data-access@0.1.0 db:push /Users/ppublications/Workspace/system/ui-lab/playground/ui-vedic-library-frontend-v2/packages/data-access
+> prisma db push
+
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "vedic_library", schema "public" at "localhost:5432"
+Error: ERROR: column "fts_vector" of relation "texts" is a generated column
+HINT: Use ALTER TABLE ... ALTER COLUMN ... DROP EXPRESSION instead.
+   0: sql_schema_connector::apply_migration::migration_step
+           with step=AlterTable(AlterTable { table_ids: MigrationPair { previous: TableId(17), next: TableId(3) }, changes: [AlterColumn(AlterColumn { column_id: MigrationPair { previous: TableColumnId(119), next: TableColumnId(34) }, changes: ColumnChanges { type_change: None, changes: BitFlags<ColumnChange>(0b10, Default) }, type_change: None })] })
+             at schema-engine/connectors/sql-schema-connector/src/apply_migration.rs:21
+   1: sql_schema_connector::apply_migration::apply_migration
+             at schema-engine/connectors/sql-schema-connector/src/apply_migration.rs:10
+   2: schema_core::state::SchemaPush
+             at schema-engine/core/src/state.rs:504
+
+/Users/ppublications/Workspace/system/ui-lab/playground/ui-vedic-library-frontend-v2/packages/data-access:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @dharma/data-access@0.1.0 db:push: `prisma db push`
+Exit status 1
+ ELIFECYCLE  Command failed with exit code 1.

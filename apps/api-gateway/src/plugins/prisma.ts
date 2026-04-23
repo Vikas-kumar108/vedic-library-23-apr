@@ -1,5 +1,5 @@
 import fp from 'fastify-plugin'
-import prismaInstance from '@dharma/data-access'
+import prismaInstance, { PrismaClient } from '@dharma/data-access'
 
 export default fp(async (fastify) => {
   // Handle ESM interop if needed
@@ -8,12 +8,12 @@ export default fp(async (fastify) => {
   fastify.decorate('prisma', actualPrisma)
   
   fastify.addHook('onClose', async (instance) => {
-    await instance.prisma.$disconnect()
+    await (instance.prisma as PrismaClient).$disconnect()
   })
 })
 
 declare module 'fastify' {
   interface FastifyInstance {
-    prisma: typeof prisma
+    prisma: PrismaClient
   }
 }

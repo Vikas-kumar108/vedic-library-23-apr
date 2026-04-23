@@ -1,0 +1,179 @@
+{
+  "id": "RASA_ENGINE_RULES",
+  "title": "Rasa Stimulation and Compatibility Engine",
+  "description": "Defines the pañca-aṅga (five components of rasa generation) and compatibility rules to prevent rasābhāsa.",
+
+  "panca_anga": [
+    {
+      "id": "vibhava",
+      "sanskrit": "Vibhāva",
+      "type": "stimulus",
+      "description": "The environmental or object-based stimulus that sets the stage for emotional experience.",
+      "tag_targets": [
+        "URBAN_INFRASTRUCTURE",
+        "MATERIAL_LUXURY_GOODS",
+        "SENSORY_EXPERIENCE",
+        "ARTS_AND_AESTHETICS"
+      ],
+      "examples": [
+        "Gardens (Udyāna) as romantic settings",
+        "Perfumed rooms or decorated spaces",
+        "Lighting, scent, and spatial arrangement"
+      ],
+      "application": [
+        "Context-setting in commentary",
+        "Environment tagging in sūtra mapping",
+        "Scene-building in UI/UX"
+      ]
+    },
+
+    {
+      "id": "anubhava",
+      "sanskrit": "Anubhāva",
+      "type": "deliberate_expression",
+      "description": "Conscious actions and expressions that manifest internal states.",
+      "tag_targets": [
+        "INTIMACY_AND_TECHNIQUE",
+        "CONVERSATIONAL_ARTS",
+        "COMMUNICATION_AND_SIGNS",
+        "ARTS_AND_AESTHETICS"
+      ],
+      "examples": [
+        "Singing, glancing, touching",
+        "Performing one of the 64 arts",
+        "Deliberate gestures or speech"
+      ],
+      "application": [
+        "Tagging vidhi (instructions)",
+        "Mapping behavior to emotional intent",
+        "Frontend interaction modeling"
+      ]
+    },
+
+    {
+      "id": "sattvika_bhava",
+      "sanskrit": "Sāttvika-bhāva",
+      "type": "involuntary_expression",
+      "description": "Involuntary physiological reactions that reveal authentic emotional states.",
+      "tag_targets": [
+        "PHYSIOLOGICAL_SYMPTOMS"
+      ],
+      "examples": [
+        "Horripilation (Romāñca)",
+        "Perspiration (Sveda)",
+        "Trembling (Vepathu)"
+      ],
+      "application": [
+        "Truth-validation layer",
+        "Emotional authenticity markers",
+        "AI interpretation of intensity"
+      ]
+    },
+
+    {
+      "id": "vyabhicari_bhava",
+      "sanskrit": "Vyabhicāri-bhāva",
+      "type": "transient_states",
+      "description": "Temporary emotional states that arise and fade, enriching the dominant mood.",
+      "tag_targets": [
+        "PSYCHOLOGY_AND_EMOTION",
+        "PSYCHOLOGICAL_WARFARE"
+      ],
+      "examples": [
+        "Shyness, anxiety, jealousy",
+        "Moments of doubt or excitement",
+        "Fluctuating emotional waves"
+      ],
+      "application": [
+        "Dynamic tagging of sūtras",
+        "Tracking emotional transitions",
+        "Narrative flow modeling"
+      ]
+    },
+
+    {
+      "id": "sthayi_bhava",
+      "sanskrit": "Sthāyi-bhāva",
+      "type": "foundational_state",
+      "description": "The stable, enduring emotional foundation that defines the relationship.",
+      "tag_targets": [
+        "USER_PROFILE"
+      ],
+      "examples": [
+        "Primary rasa (e.g., Mādhurya)",
+        "Life stage (e.g., Gṛhastha)",
+        "Guidance level"
+      ],
+      "application": [
+        "User personalization",
+        "Learning path control",
+        "Baseline emotional context"
+      ]
+    }
+  ],
+
+  "compatibility_rules": {
+    "maitra_filter": {
+      "description": "Defines compatible rasa combinations that enhance experience.",
+      "rules": [
+        {
+          "primary_rasa": "madhurya",
+          "allowed_secondary": ["hasya", "vira", "adbhuta"],
+          "effect": "enrichment",
+          "application": [
+            "Suggest humor to soften intimacy",
+            "Introduce heroism to intensify pursuit",
+            "Add wonder to deepen experience"
+          ]
+        },
+        {
+          "primary_rasa": "sakhya",
+          "allowed_secondary": ["hasya", "adbhuta"],
+          "effect": "playful_expansion"
+        },
+        {
+          "primary_rasa": "dasya",
+          "allowed_secondary": ["vira", "karuna"],
+          "effect": "discipline_with_emotion"
+        }
+      ]
+    },
+
+    "rasabhasa_guardrail": {
+      "description": "Defines incompatible rasa combinations to prevent distortion.",
+      "rules": [
+        {
+          "primary_rasa": "vatsalya",
+          "blocked_secondary": ["madhurya"],
+          "reason": "boundary_violation",
+          "application": [
+            "Hide romantic techniques in parental contexts",
+            "Flag inappropriate cross-context content"
+          ]
+        },
+        {
+          "primary_rasa": "shanta",
+          "blocked_secondary": ["raudra", "bibhatsa"],
+          "reason": "emotional_disruption"
+        },
+        {
+          "primary_rasa": "dasya",
+          "blocked_secondary": ["bibhatsa"],
+          "reason": "ethical_conflict"
+        }
+      ]
+    }
+  },
+
+  "processing_logic": {
+    "rasa_generation_pipeline": [
+      "vibhava -> anubhava -> sattvika_bhava -> vyabhicari_bhava -> sthayi_bhava"
+    ],
+    "description": "Defines the sequence by which rasa is generated and experienced.",
+    "application": [
+      "Content tagging engine",
+      "AI interpretation of sūtras",
+      "Adaptive learning systems"
+    ]
+  }
+}

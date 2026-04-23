@@ -1,0 +1,188 @@
+{
+  "id": "DOMESTIC_DYNAMICS",
+  "title": "The Inner Circle",
+  "description": "Focuses on the non-romantic inhabitants of the home.",
+  "keywords": ["household", "family", "relations", "domestic", "social network", "inner circle"],
+
+  "subtags": [
+    {
+      "id": "mother_in_law_tensions",
+      "sanskrit": "Śvaśrū",
+      "description": "Navigating the authority and influence of the mother-in-law within the household.",
+      "keywords": ["mother-in-law", "authority", "tension", "family", "power"],
+      "examples": [
+        "Managing expectations of the mother-in-law",
+        "Balancing respect with personal autonomy",
+        "Resolving domestic conflicts involving elders"
+      ],
+      "related_tags": [
+        "in_law_relations",
+        "power_and_control",
+        "duty_and_obligation",
+        "family_feuds"
+      ]
+    },
+
+    {
+      "id": "brother_in_law_alliances",
+      "sanskrit": "Syāla / Devara",
+      "description": "Winning over the brother-in-law as an ally within household and social dynamics.",
+      "keywords": ["brother-in-law", "alliance", "support", "family", "strategy"],
+      "examples": [
+        "Building friendly relations with in-laws",
+        "Using alliances for support within the home",
+        "Gaining influence through family ties"
+      ],
+      "related_tags": [
+        "friendship_and_allies",
+        "in_law_relations",
+        "power_and_control",
+        "domestic_life"
+      ]
+    },
+
+    {
+      "id": "nursemaid_confidantes",
+      "sanskrit": "Dhātreyikā",
+      "description": "The crucial role of nursemaids or caretakers as confidantes and intermediaries.",
+      "keywords": ["nursemaid", "confidante", "caretaker", "trust", "intermediary"],
+      "examples": [
+        "Sharing secrets with a trusted caretaker",
+        "Using nursemaids as messengers",
+        "Relying on caregivers for advice"
+      ],
+      "related_tags": [
+        "messengers_and_go_betweens",
+        "trust_and_confidence",
+        "hidden_intentions",
+        "household_duties"
+      ]
+    },
+
+    {
+      "id": "child_rearing",
+      "sanskrit": null,
+      "description": "Mention of children within the household, including their upbringing and presence in domestic life.",
+      "keywords": ["children", "upbringing", "family", "care", "growth"],
+      "examples": [
+        "Raising children within the household",
+        "Balancing family and personal life",
+        "Influence of children on domestic dynamics"
+      ],
+      "related_tags": [
+        "life_stages",
+        "household_duties",
+        "duty_and_obligation",
+        "family_feuds"
+      ]
+    },
+
+    {
+      "id": "servant_gossip",
+      "sanskrit": null,
+      "description": "Managing what the household staff knows, including the spread of information and rumor.",
+      "keywords": ["servant", "gossip", "information", "control", "household"],
+      "examples": [
+        "Preventing leakage of private information",
+        "Managing staff conversations",
+        "Controlling narratives within the household"
+      ],
+      "related_tags": [
+        "information_gathering",
+        "hidden_intentions",
+        "public_reputation",
+        "treatment_of_servants"
+      ]
+    },
+
+    {
+      "id": "foster_relations",
+      "sanskrit": null,
+      "description": "Conduct with adopted or foster family members, including obligations and emotional bonds.",
+      "keywords": ["foster", "adopted", "family", "relation", "care"],
+      "examples": [
+        "Maintaining harmony with foster relations",
+        "Recognizing duties toward non-biological kin",
+        "Balancing emotional and social roles"
+      ],
+      "related_tags": [
+        "duty_and_obligation",
+        "life_stages",
+        "child_rearing",
+        "family_feuds"
+      ]
+    },
+
+    {
+      "id": "neighborly_relations",
+      "sanskrit": "Prātiveśya",
+      "description": "Conduct with neighbors, including maintaining harmony, reputation, and social awareness.",
+      "keywords": ["neighbor", "community", "relation", "society", "interaction"],
+      "examples": [
+        "Maintaining cordial relations with neighbors",
+        "Avoiding disputes or misunderstandings",
+        "Managing shared social spaces"
+      ],
+      "related_tags": [
+        "public_reputation",
+        "societal_scandal",
+        "friendship_and_allies",
+        "society_and_culture"
+      ]
+    },
+
+    {
+      "id": "household_animals",
+      "sanskrit": null,
+      "description": "Parrots, starlings, monkeys, and other animals as active participants in the domestic environment.",
+      "keywords": ["animals", "pets", "household", "interaction", "environment"],
+      "examples": [
+        "Keeping parrots or birds as companions",
+        "Animals influencing household atmosphere",
+        "Interaction with trained animals"
+      ],
+      "related_tags": [
+        "animal_training_and_fights",
+        "pet_cages",
+        "communication_and_signs",
+        "environmental_comfort"
+      ]
+    },
+
+    {
+      "id": "visitor_etiquette",
+      "sanskrit": null,
+      "description": "How to receive guests in a polite and cultured home, including hospitality and behavior.",
+      "keywords": ["guest", "etiquette", "hospitality", "conduct", "home"],
+      "examples": [
+        "Welcoming guests respectfully",
+        "Providing comfort and hospitality",
+        "Maintaining decorum during visits"
+      ],
+      "related_tags": [
+        "festivals_and_gatherings",
+        "public_reputation",
+        "household_duties",
+        "arts_and_aesthetics"
+      ]
+    },
+
+    {
+      "id": "family_feuds",
+      "sanskrit": null,
+      "description": "How romance affects family alliances, including conflict, division, or strengthening of bonds.",
+      "keywords": ["feud", "conflict", "family", "alliance", "relationship"],
+      "examples": [
+        "Romantic choices causing family tension",
+        "Conflicts between households",
+        "Strengthening alliances through relationships"
+      ],
+      "related_tags": [
+        "lovers_quarrels",
+        "power_and_control",
+        "paternal_authority",
+        "public_reputation"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,188 @@
+{
+  "id": "COMMUNICATION_AND_SIGNS",
+  "title": "Interaction & Messaging",
+  "description": "Focuses on how lovers communicate, both overtly and covertly.",
+  "keywords": ["communication", "signals", "interaction", "messaging", "expression", "semiotics"],
+
+  "subtags": [
+    {
+      "id": "body_language",
+      "sanskrit": "Iṅgita-ākāra",
+      "description": "Glances, sweat, trembling, and other physical cues that convey emotional and relational states without spoken words.",
+      "keywords": ["body language", "gesture", "nonverbal", "expression", "signal"],
+      "examples": [
+        "Eye contact indicating attraction or hesitation",
+        "Subtle gestures revealing emotional state",
+        "Physical signs of nervousness or excitement"
+      ],
+      "related_tags": [
+        "passion_and_desire",
+        "shame_and_modesty",
+        "hidden_intentions",
+        "vocalizations"
+      ]
+    },
+
+    {
+      "id": "messengers_and_go_betweens",
+      "sanskrit": "Dūtī-karma",
+      "description": "Using friends, nuns, servants, or intermediaries to convey messages, intentions, or proposals between individuals.",
+      "keywords": ["messenger", "intermediary", "communication", "network", "strategy"],
+      "examples": [
+        "Sending a trusted friend to convey interest",
+        "Using a servant to arrange meetings",
+        "Relaying messages indirectly through third parties"
+      ],
+      "related_tags": [
+        "secret_unions",
+        "gift_giving",
+        "testing_intentions",
+        "hidden_intentions"
+      ]
+    },
+
+    {
+      "id": "secret_codes",
+      "sanskrit": "Mlecchita-vikalpa",
+      "description": "Cryptography and hidden languages used to communicate secretly without being understood by others.",
+      "keywords": ["code", "cryptography", "hidden language", "secret", "symbol"],
+      "examples": [
+        "Using coded phrases to convey meaning",
+        "Writing messages that only a specific person can understand",
+        "Symbolic communication embedded in ordinary speech"
+      ],
+      "related_tags": [
+        "indirect_hints",
+        "hidden_intentions",
+        "messengers_and_go_betweens",
+        "love_letters"
+      ]
+    },
+
+    {
+      "id": "gift_giving",
+      "sanskrit": "Prābhṛta / Upāyana",
+      "description": "Sending tokens of affection or intention, using objects to communicate emotional or relational meaning.",
+      "keywords": ["gift", "token", "offering", "symbol", "affection"],
+      "examples": [
+        "Sending flowers or ornaments to express interest",
+        "Using gifts to strengthen relationships",
+        "Symbolic meaning attached to specific objects"
+      ],
+      "related_tags": [
+        "love_letters",
+        "messengers_and_go_betweens",
+        "courtship_and_marriage",
+        "arts_and_aesthetics"
+      ]
+    },
+
+    {
+      "id": "love_letters",
+      "sanskrit": "Patra / Lekhya",
+      "description": "Written communication expressing feelings, intentions, or proposals, often crafted with care and style.",
+      "keywords": ["letter", "writing", "expression", "communication", "emotion"],
+      "examples": [
+        "Writing letters to express affection",
+        "Composing poetic messages",
+        "Delivering written proposals"
+      ],
+      "related_tags": [
+        "gift_giving",
+        "secret_codes",
+        "flirtatious_banter",
+        "literary_arts"
+      ]
+    },
+
+    {
+      "id": "flirtatious_banter",
+      "sanskrit": "Parihāsa / Narmālāpa",
+      "description": "Joking, teasing, and playful conversation used to build attraction and emotional connection.",
+      "keywords": ["banter", "teasing", "humor", "playfulness", "conversation"],
+      "examples": [
+        "Light teasing to test comfort level",
+        "Playful exchanges indicating interest",
+        "Humor used to reduce tension"
+      ],
+      "related_tags": [
+        "testing_intentions",
+        "body_language",
+        "passion_and_desire",
+        "trust_and_confidence"
+      ]
+    },
+
+    {
+      "id": "testing_intentions",
+      "sanskrit": "Bhāva-parīkṣā",
+      "description": "Figuring out if someone likes you through indirect methods, observation, and subtle interaction.",
+      "keywords": ["testing", "intention", "interest", "signal", "evaluation"],
+      "examples": [
+        "Observing reactions to subtle gestures",
+        "Creating situations to gauge interest",
+        "Interpreting ambiguous responses"
+      ],
+      "related_tags": [
+        "flirtatious_banter",
+        "hidden_intentions",
+        "trust_and_confidence",
+        "messengers_and_go_betweens"
+      ]
+    },
+
+    {
+      "id": "indirect_hints",
+      "sanskrit": "Anyāpadeśa",
+      "description": "Communicating through indirect speech, such as speaking to a child, bird, or object to convey a hidden message.",
+      "keywords": ["indirect", "hint", "symbolic speech", "suggestion", "subtlety"],
+      "examples": [
+        "Speaking in a way that appears unrelated but carries hidden meaning",
+        "Using metaphors to convey intent",
+        "Addressing another entity while targeting a specific person"
+      ],
+      "related_tags": [
+        "secret_codes",
+        "hidden_intentions",
+        "flirtatious_banter",
+        "love_letters"
+      ]
+    },
+
+    {
+      "id": "persuasion_and_debate",
+      "sanskrit": "Anunaya / Vivāda",
+      "description": "Convincing a reluctant partner through reasoning, emotional appeal, or argument.",
+      "keywords": ["persuasion", "debate", "convincing", "argument", "negotiation"],
+      "examples": [
+        "Using logical reasoning to influence a decision",
+        "Appealing emotionally to gain agreement",
+        "Debating differences in opinion"
+      ],
+      "related_tags": [
+        "logical_maxims",
+        "righteous_deception",
+        "power_and_control",
+        "testing_intentions"
+      ]
+    },
+
+    {
+      "id": "symbolic_marks",
+      "sanskrit": "Lakṣaṇa-cihna",
+      "description": "Leaving a bite mark or other sign as a symbolic message, conveying meaning through physical indication.",
+      "keywords": ["symbol", "mark", "signal", "meaning", "indication"],
+      "examples": [
+        "Marks indicating emotional connection or attachment",
+        "Using physical signs to communicate privately",
+        "Interpreting marks as messages between individuals"
+      ],
+      "related_tags": [
+        "scratching_and_marking",
+        "biting",
+        "hidden_intentions",
+        "body_language"
+      ]
+    }
+  ]
+}

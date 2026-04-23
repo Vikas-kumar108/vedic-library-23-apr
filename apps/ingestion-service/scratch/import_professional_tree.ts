@@ -1,49 +1,43 @@
-import prisma, { ContentType, Language, Script } from '@dharma/data-access'
+import { PrismaClient } from '@dharma/data-access'
 import fs from 'fs'
 import path from 'path'
-const KS_DATA_DIR = './data/ks-prakarana-output'
-const GITA_BACKUP_PATH = 'scratch/verse_texts_backup.txt'
+import dotenv from 'dotenv'
+
+dotenv.config()
+
+const prisma = new PrismaClient()
+
+const PROJECT_ROOT = '/Users/ppublications/Workspace/system/ui-lab/playground/ui-vedic-library-frontend-v2'
+const INGESTION_DATA_DIR = path.join(PROJECT_ROOT, 'apps/ingestion-service/data')
+const GITA_BACKUP_PATH = path.join(INGESTION_DATA_DIR, 'gita-data/gita_verses_backup.txt')
+const KS_DATA_DIR = path.join(INGESTION_DATA_DIR, 'ks-prakarana-output')
+const TAGS_DIR = path.join(INGESTION_DATA_DIR, 'ks-tags-subtags')
 
 const treeInput = `
 sruti/
 ├── rig-veda/
-│   ├── samhita/
+│   └── samhita/
 ├── sama-veda/
 ├── yajur-veda/
 └── atharva-veda/
 
-smrti/
-├── dharma-sastra/
-├── artha-sastra/
-├── kama-sastra/
+smriti/
+├── itihasa/
+│   ├── mahabharata/
+│   │   └── bhagavad-gita/
+│   └── ramayana/
+├── purana/
+│   ├── mahapurana/
+│   ├── bhagavata/
+│   └── upapurana/
+├── darsana/
+│   ├── yoga/
+│   │   └── yoga-sutra/
+│   └── vedanta/
+│       └── brahma-sutra/
+├── kama-shastra/
 │   └── kama-sutra/
-├── niti-sastra/
-└── supplementary/
-
-itihasa/
-├── ramayana/
-└── mahabharata/
-    ├── adi-parva/
-    ├── bhisma-parva/
-    │   └── bhagavad-gita/
-    └── santi-parva/
-
-purana/
-├── mahapurana/
-├── bhagavata/
-└── upapurana/
-
-darsana/
-├── yoga/
-│   └── yoga-sutra/
-└── vedanta/
-    └── brahma-sutra/
-
-sampradaya/
-├── vaisnava-sampradayas/
-├── sri-sampradaya/
-├── rudra-sampradaya/
-├── kumara-sampradaya/
+└── sampredaya/
 `
 
 const CANONICAL_SLUG_MAP: Record<string, string> = {
@@ -52,7 +46,7 @@ const CANONICAL_SLUG_MAP: Record<string, string> = {
 }
 
 async function main() {
-  console.log('🚀 PROFESSIONAL SYNC (Phase 4 - Debugging)...')
+  console.log('🚀 PROFESSIONAL SYNC (Phase 4 - Clean)...')
   
   // Clear DB safely
   await prisma.node.deleteMany()
@@ -62,24 +56,24 @@ async function main() {
   // 1. Setup Shastras
   console.log('1. Initializing Shastras...')
   const rootShastra = await prisma.shastra.create({
-    data: { slug: 'root', name: 'Vedic Library', structureType: 'category-tree' }
+    data: { slug: 'veda', name: 'Vedic Corpus', structureType: 'tree' }
   })
   const gitaShastra = await prisma.shastra.create({
-    data: { slug: 'bg', name: 'Bhagavad Gītā', structureType: 'chapter-sloka' }
+    data: { slug: 'bg', name: 'Bhagavad Gītā', structureType: 'chapter-verse' }
   })
   const ksShastra = await prisma.shastra.create({
-    data: { slug: 'ks', name: 'Kāmasūtra', structureType: 'adhikarana-adhyaya-prakarana-sutra' }
+    data: { slug: 'ks', name: 'Kāma Sūtra', structureType: 'adhikarana-adhyaya-prakarana-sutra' }
   })
 
   // 2. Setup Sources
   console.log('2. Initializing Sources...')
-  const spSource = await prisma.source.create({ data: { name: 'Śrīla Prabhupāda', role: 'translator' } })
-  const vatsyayanaSource = await prisma.source.create({ data: { name: 'Vātsyāyana', role: 'author' } })
+  const vyasa = await prisma.source.create({ data: { name: 'Veda Vyāsa', role: 'author' } })
 
   // 3. Build Base Tree (Categories)
   console.log('3. Building Base Tree...')
   const treeLines = treeInput.split('\n').filter(l => l.trim() !== '')
-  const stack: { id: string, level: number, path: string, shastraId: string }[] = []
+  const stack: { id: string, level: number, path: string, shastraId: string, childrenCount: number }[] = []
+  const rootChildrenCount: Record<string, number> = {}
   
   for (const line of treeLines) {
     let level = 0
@@ -98,18 +92,23 @@ async function main() {
     const shastraSlug = CANONICAL_SLUG_MAP[slug]
     const currentShastraId = shastraSlug === 'bg' ? gitaShastra.id : (shastraSlug === 'ks' ? ksShastra.id : (parent?.shastraId || rootShastra.id))
 
-    const nodeData = {
+    if (!parent) {
+      if (!rootChildrenCount[currentShastraId]) rootChildrenCount[currentShastraId] = 0
+    }
+    const orderIndex = parent ? (parent as any).childrenCount++ : rootChildrenCount[currentShastraId]++
+
+    const nodeData: any = {
       shastraId: currentShastraId,
       parentId: parent?.id || null,
       level: shastraSlug ? 'text' : 'category',
       slug,
-      name: nameRaw.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' '),
+      orderIndex,
     }
 
     try {
       const node = await prisma.node.create({ data: nodeData })
       await prisma.$executeRawUnsafe(`UPDATE nodes SET path = '${currentPath}'::ltree WHERE id = '${node.id}';`)
-      stack.push({ id: node.id, level, path: currentPath, shastraId: currentShastraId })
+      stack.push({ id: node.id, level, path: currentPath, shastraId: currentShastraId, childrenCount: 0 } as any)
     } catch (err: any) {
       console.error(`Failed to create node: ${slug}`)
       console.error('Node Data:', JSON.stringify(nodeData))
@@ -120,21 +119,18 @@ async function main() {
 
   // 4. Import Gita Content
   console.log('4. Importing Gita Content...')
+  const GITA_JSON_PATH = path.join(INGESTION_DATA_DIR, 'gita-data/verse.json')
   const gitaNode = await prisma.node.findFirst({ where: { slug: 'bhagavad-gita' } })
-  if (gitaNode && fs.existsSync(GITA_BACKUP_PATH)) {
+  if (gitaNode && fs.existsSync(GITA_JSON_PATH)) {
     const rootPathResult = await prisma.$queryRawUnsafe<any[]>(`SELECT path::text FROM nodes WHERE id = '${gitaNode.id}'`)
     const rootPathStr = rootPathResult[0].path
 
-    const lines = fs.readFileSync(GITA_BACKUP_PATH, 'utf-8').split('\n')
+    const verses = JSON.parse(fs.readFileSync(GITA_JSON_PATH, 'utf-8'))
     const chapterNodes: Record<number, string> = {}
 
-    for (const line of lines) {
-      if (!line.trim()) continue
-      const [id, devanagari, iast] = line.split('|')
-      const parts = id.replace('-v', '-').split('-')
-      const chNum = parseInt(parts[1])
-      const vsNum = parseInt(parts[2])
-      if (isNaN(chNum) || isNaN(vsNum)) continue
+    for (const v of verses) {
+      const chNum = v.chapter_number
+      const vsNum = v.verse_number
 
       if (!chapterNodes[chNum]) {
         const chNode = await prisma.node.create({
@@ -143,7 +139,6 @@ async function main() {
             parentId: gitaNode.id,
             level: 'chapter',
             slug: `ch-${chNum}`,
-            name: `Chapter ${chNum}`,
             orderIndex: chNum
           }
         })
@@ -158,7 +153,6 @@ async function main() {
           parentId: chapterNodes[chNum],
           level: 'verse',
           slug: `v-${vsNum}`,
-          name: vsNum.toString(),
           orderIndex: vsNum,
           canonicalRef: `BG ${chNum}.${vsNum}`
         }
@@ -169,21 +163,22 @@ async function main() {
       await prisma.text.create({
         data: {
           nodeId: vsNode.id,
-          contentType: ContentType.sutra,
-          language: Language.sa,
-          script: Script.devanagari,
-          content: devanagari,
-          isPrimary: true
+          contentType: 'sutra',
+          language: 'sa',
+          script: 'devanagari',
+          content: v.text,
+          sourceId: vyasa.id
         }
       })
-      if (iast) {
+      if (v.transliteration) {
         await prisma.text.create({
           data: {
             nodeId: vsNode.id,
-            contentType: ContentType.translation,
-            language: Language.sa,
-            script: Script.latin,
-            content: iast
+            contentType: 'sutra',
+            language: 'sa',
+            script: 'latin',
+            content: v.transliteration,
+            sourceId: vyasa.id
           }
         })
       }
@@ -222,7 +217,6 @@ async function main() {
             parentId: ksNode.id,
             level: 'section',
             slug: `adhik-${aNum}`,
-            name: `Adhikarana ${aNum}`,
             orderIndex: aNum
           }
         })
@@ -238,8 +232,7 @@ async function main() {
             shastraId: ksShastra.id,
             parentId: adhikaranaNodes[aNum],
             level: 'chapter',
-            slug: `ch-${chNum}`,
-            name: `Chapter ${chNum}`,
+            slug: `adhy-${chNum}`,
             orderIndex: chNum
           }
         })
@@ -248,40 +241,52 @@ async function main() {
         adhyayaNodes[adhyayaKey] = chNode.id
       }
 
-      for (const sutra of data.sutras) {
-        const vsNumStr = sutra.number.split('.').pop() || '0'
-        const vsNum = parseInt(vsNumStr)
-        
-        const vsNode = await prisma.node.create({
+      const prakaranaNode = await prisma.node.create({
+        data: {
+          shastraId: ksShastra.id,
+          parentId: adhyayaNodes[adhyayaKey],
+          level: 'text',
+          slug: `p-${data.global_prakarana_id}`,
+          orderIndex: data.prakarana_number_within_adhyaya
+        }
+      })
+      const pPath = `${rootPathStr}.part${aNum}.ch${chNum}.p${data.global_prakarana_id}`
+      await prisma.$executeRawUnsafe(`UPDATE nodes SET path = '${pPath}'::ltree WHERE id = '${prakaranaNode.id}';`)
+
+      for (const s of data.sutras) {
+        const sNode = await prisma.node.create({
           data: {
             shastraId: ksShastra.id,
-            parentId: adhyayaNodes[adhyayaKey],
+            parentId: prakaranaNode.id,
             level: 'verse',
-            slug: `v-${vsNumStr}`,
-            name: vsNumStr,
-            orderIndex: vsNum,
-            canonicalRef: `KS ${sutra.number}`
+            slug: `s-${s.number.replace(/\./g, '-')}`,
+            canonicalRef: `KS ${s.number}`
           }
         })
-        const vsPath = `${rootPathStr}.part${aNum}.ch${chNum}.v${vsNumStr.replace(/\./g, '_')}`
-        await prisma.$executeRawUnsafe(`UPDATE nodes SET path = '${vsPath}'::ltree WHERE id = '${vsNode.id}';`)
+        const sPath = `${pPath}.s${s.number.replace(/\./g, '_')}`
+        await prisma.$executeRawUnsafe(`UPDATE nodes SET path = '${sPath}'::ltree WHERE id = '${sNode.id}';`)
 
         await prisma.text.create({
           data: {
-            nodeId: vsNode.id,
-            contentType: ContentType.sutra,
-            language: Language.sa,
-            script: Script.devanagari,
-            content: sutra.text,
-            sourceId: vatsyayanaSource.id,
-            isPrimary: true
+            nodeId: sNode.id,
+            contentType: 'sutra',
+            language: 'sa',
+            script: 'devanagari',
+            content: s.text
           }
         })
       }
     }
   }
 
-  console.log('✅ PROFESSIONAL SYNC COMPLETE.')
+  console.log('✅ SYNC COMPLETE.')
 }
 
-main().catch(e => console.error(e)).finally(() => prisma.$disconnect())
+main()
+  .catch(e => {
+    console.error(e)
+    process.exit(1)
+  })
+  .finally(async () => {
+    await prisma.$disconnect()
+  })

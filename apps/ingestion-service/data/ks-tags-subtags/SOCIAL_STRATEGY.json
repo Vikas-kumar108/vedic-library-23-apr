@@ -1,0 +1,188 @@
+{
+  "id": "SOCIAL_STRATEGY",
+  "title": "The 'Game' of Attraction",
+  "description": "Focuses on the psychological maneuvers used to win over a partner.",
+  "keywords": ["strategy", "attraction", "psychology", "manipulation", "influence", "social tactics"],
+
+  "subtags": [
+    {
+      "id": "playing_hard_to_get",
+      "sanskrit": null,
+      "description": "The art of strategic refusal, where interest is concealed or delayed to increase desirability.",
+      "keywords": ["refusal", "delay", "desire", "strategy", "attraction"],
+      "examples": [
+        "Delaying response to increase interest",
+        "Refusing initially despite attraction",
+        "Creating anticipation through distance"
+      ],
+      "related_tags": [
+        "testing_intentions",
+        "hidden_intentions",
+        "passion_and_desire",
+        "waiting_periods"
+      ]
+    },
+
+    {
+      "id": "feigning_indifference",
+      "sanskrit": "Māna / Virakti",
+      "description": "Adopting a facade of indifference or emotional distance to influence a partner’s perception and response.",
+      "keywords": ["indifference", "facade", "emotion", "distance", "strategy"],
+      "examples": [
+        "Acting uninterested despite internal attraction",
+        "Withholding emotional signals",
+        "Creating uncertainty in the partner"
+      ],
+      "related_tags": [
+        "indifference_and_aversion",
+        "hidden_intentions",
+        "playing_hard_to_get",
+        "power_and_control"
+      ]
+    },
+
+    {
+      "id": "creating_obligation",
+      "sanskrit": null,
+      "description": "Making a partner feel they owe affection or reciprocation through gestures, favors, or emotional investment.",
+      "keywords": ["obligation", "reciprocity", "favor", "debt", "emotion"],
+      "examples": [
+        "Giving gifts to create emotional indebtedness",
+        "Providing support expecting return affection",
+        "Establishing imbalance in giving and receiving"
+      ],
+      "related_tags": [
+        "gift_giving",
+        "power_and_control",
+        "financial_negotiation",
+        "trust_and_confidence"
+      ]
+    },
+
+    {
+      "id": "rivalry_management",
+      "sanskrit": null,
+      "description": "Dealing with a partner's other lovers, including competition, positioning, and strategic behavior.",
+      "keywords": ["rivalry", "competition", "jealousy", "strategy", "comparison"],
+      "examples": [
+        "Positioning oneself as more desirable than rivals",
+        "Managing jealousy and competition",
+        "Strategic interaction with competing partners"
+      ],
+      "related_tags": [
+        "jealousy_and_anger",
+        "power_and_control",
+        "friendship_and_allies",
+        "recognizing_indifference"
+      ]
+    },
+
+    {
+      "id": "reputation_building",
+      "sanskrit": null,
+      "description": "How to become a 'legendary' lover in one's social circle, including cultivating image, stories, and perception.",
+      "keywords": ["reputation", "status", "image", "fame", "perception"],
+      "examples": [
+        "Building a desirable social image",
+        "Being spoken of positively by others",
+        "Maintaining consistency in behavior and reputation"
+      ],
+      "related_tags": [
+        "public_reputation",
+        "courtesan_culture",
+        "arts_and_aesthetics",
+        "friendship_and_allies"
+      ]
+    },
+
+    {
+      "id": "vulnerability_tactics",
+      "sanskrit": "Anukampā",
+      "description": "Showing weakness or emotional openness to evoke sympathy, compassion, or protective affection.",
+      "keywords": ["vulnerability", "emotion", "sympathy", "compassion", "connection"],
+      "examples": [
+        "Expressing emotional pain to gain closeness",
+        "Appearing dependent to evoke care",
+        "Sharing weakness strategically"
+      ],
+      "related_tags": [
+        "grief_and_longing",
+        "trust_and_confidence",
+        "power_and_control",
+        "reconciliation"
+      ]
+    },
+
+    {
+      "id": "indirect_compliments",
+      "sanskrit": null,
+      "description": "Praising a partner indirectly through their friends, pets, or surroundings to convey admiration subtly.",
+      "keywords": ["compliment", "indirect", "praise", "subtlety", "communication"],
+      "examples": [
+        "Complimenting someone through a third party",
+        "Praising indirectly to avoid direct expression",
+        "Using subtle language to convey admiration"
+      ],
+      "related_tags": [
+        "indirect_hints",
+        "flirtatious_banter",
+        "communication_and_signs",
+        "testing_intentions"
+      ]
+    },
+
+    {
+      "id": "information_gathering",
+      "sanskrit": null,
+      "description": "Using spies or intermediaries to find out a partner's secrets, preferences, and behavior.",
+      "keywords": ["information", "spy", "knowledge", "strategy", "observation"],
+      "examples": [
+        "Gathering information through friends or servants",
+        "Learning preferences indirectly",
+        "Monitoring behavior discreetly"
+      ],
+      "related_tags": [
+        "messengers_and_go_betweens",
+        "hidden_intentions",
+        "testing_intentions",
+        "assessing_risks"
+      ]
+    },
+
+    {
+      "id": "testing_faithfulness",
+      "sanskrit": "Upadhā",
+      "description": "Secret tests of character and loyalty to determine a partner’s faithfulness.",
+      "keywords": ["test", "faithfulness", "loyalty", "character", "evaluation"],
+      "examples": [
+        "Creating situations to test loyalty",
+        "Observing reactions under controlled conditions",
+        "Evaluating consistency of behavior"
+      ],
+      "related_tags": [
+        "testing_intentions",
+        "trust_and_confidence",
+        "hidden_intentions",
+        "recognizing_indifference"
+      ]
+    },
+
+    {
+      "id": "financial_negotiation",
+      "sanskrit": "Bhāṭī",
+      "description": "The subtle art of discussing fees, gifts, or financial expectations within relationships.",
+      "keywords": ["finance", "negotiation", "payment", "exchange", "value"],
+      "examples": [
+        "Discussing expectations of gifts or support",
+        "Negotiating terms of engagement",
+        "Balancing affection with material exchange"
+      ],
+      "related_tags": [
+        "extorting_wealth",
+        "dowry_and_wealth",
+        "creating_obligation",
+        "courtesan_culture"
+      ]
+    }
+  ]
+}

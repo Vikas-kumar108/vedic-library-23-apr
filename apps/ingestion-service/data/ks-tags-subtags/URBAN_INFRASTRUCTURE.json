@@ -1,0 +1,188 @@
+{
+  "id": "URBAN_INFRASTRUCTURE",
+  "title": "The City Setting",
+  "description": "Focuses on the physical environment of the city.",
+  "keywords": ["city", "urban", "infrastructure", "space", "environment", "public life"],
+
+  "subtags": [
+    {
+      "id": "public_squares",
+      "sanskrit": "Catvara",
+      "description": "Meeting places for the youth and general public, serving as hubs of interaction and observation.",
+      "keywords": ["square", "public", "meeting", "gathering", "social"],
+      "examples": [
+        "Gathering in open city spaces",
+        "Observing and interacting with passersby",
+        "Participating in informal social exchanges"
+      ],
+      "related_tags": [
+        "festivals_and_gatherings",
+        "crowd_camouflage",
+        "public_reputation",
+        "social_strategy"
+      ]
+    },
+
+    {
+      "id": "temple_courtyards",
+      "sanskrit": null,
+      "description": "Religious spaces that double as social hubs, facilitating interaction under the cover of ritual activity.",
+      "keywords": ["temple", "courtyard", "religion", "social", "space"],
+      "examples": [
+        "Meeting others during rituals",
+        "Using temple spaces for social interaction",
+        "Observing etiquette in sacred environments"
+      ],
+      "related_tags": [
+        "religious_observances",
+        "societal_scandal",
+        "public_reputation",
+        "secret_unions"
+      ]
+    },
+
+    {
+      "id": "drinking_saloons",
+      "sanskrit": "Pānāgāra",
+      "description": "Wine-houses where social interaction, relaxation, and etiquette around drinking are observed.",
+      "keywords": ["wine", "saloon", "drink", "social", "etiquette"],
+      "examples": [
+        "Engaging in conversation over drinks",
+        "Observing social norms in saloons",
+        "Building relationships in relaxed settings"
+      ],
+      "related_tags": [
+        "culinary_arts",
+        "overcoming_vices",
+        "friendship_and_allies",
+        "social_strategy"
+      ]
+    },
+
+    {
+      "id": "gambling_dens",
+      "sanskrit": "Dyūta-śālā",
+      "description": "Spaces for gambling, combining strategy, risk, and social networking.",
+      "keywords": ["gambling", "game", "risk", "strategy", "network"],
+      "examples": [
+        "Participating in games of chance",
+        "Forming alliances through play",
+        "Managing risk and reward"
+      ],
+      "related_tags": [
+        "games_and_puzzles",
+        "assessing_risks",
+        "friendship_and_allies",
+        "overcoming_vices"
+      ]
+    },
+
+    {
+      "id": "public_gardens",
+      "sanskrit": "Udyāna",
+      "description": "Organized spaces for leisure such as picnics, walks, and social gatherings in a natural setting.",
+      "keywords": ["garden", "leisure", "nature", "walk", "gathering"],
+      "examples": [
+        "Walking or resting in gardens",
+        "Organizing group outings",
+        "Engaging in relaxed social interaction"
+      ],
+      "related_tags": [
+        "floral_arts",
+        "sensory_experience",
+        "festivals_and_gatherings",
+        "crowd_camouflage"
+      ]
+    },
+
+    {
+      "id": "merchants_row",
+      "sanskrit": null,
+      "description": "Marketplaces and trading streets where economic exchange and social interaction intersect.",
+      "keywords": ["market", "merchant", "trade", "interaction", "commerce"],
+      "examples": [
+        "Browsing goods in busy markets",
+        "Engaging in conversation with merchants",
+        "Observing social behavior in economic spaces"
+      ],
+      "related_tags": [
+        "professions_and_guilds",
+        "finances_and_budgeting",
+        "public_reputation",
+        "social_strategy"
+      ]
+    },
+
+    {
+      "id": "the_king_s_highway",
+      "sanskrit": "Rāja-mārga",
+      "description": "Main thoroughfares used for movement and display, acting as stages for public visibility.",
+      "keywords": ["road", "highway", "display", "movement", "visibility"],
+      "examples": [
+        "Walking along main roads to be seen",
+        "Displaying status through presence",
+        "Observing others in public transit"
+      ],
+      "related_tags": [
+        "public_reputation",
+        "reputation_building",
+        "social_climbing",
+        "visual_composition"
+      ]
+    },
+
+    {
+      "id": "secret_tunnels",
+      "sanskrit": "Suruṅgā",
+      "description": "Hidden passageways used for clandestine movement and meetings.",
+      "keywords": ["tunnel", "secret", "passage", "hidden", "movement"],
+      "examples": [
+        "Using concealed routes for access",
+        "Avoiding detection through hidden paths",
+        "Connecting spaces discreetly"
+      ],
+      "related_tags": [
+        "covert_operations",
+        "hiding_spots",
+        "emergency_exits",
+        "secret_unions"
+      ]
+    },
+
+    {
+      "id": "water_ghats",
+      "sanskrit": null,
+      "description": "Riverbanks and bathing stations that serve as both functional and social spaces.",
+      "keywords": ["ghat", "water", "river", "bath", "social"],
+      "examples": [
+        "Bathing in public water spaces",
+        "Meeting others at riverbanks",
+        "Participating in shared routines"
+      ],
+      "related_tags": [
+        "water_treatments",
+        "religious_observances",
+        "public_reputation",
+        "sensory_experience"
+      ]
+    },
+
+    {
+      "id": "neighborhood_clusters",
+      "sanskrit": "Prātiveśya",
+      "description": "The micro-politics of the street, including interactions, alliances, and tensions within local neighborhoods.",
+      "keywords": ["neighborhood", "community", "cluster", "interaction", "local"],
+      "examples": [
+        "Managing relations with nearby households",
+        "Navigating local alliances and rivalries",
+        "Understanding social dynamics of the street"
+      ],
+      "related_tags": [
+        "neighborly_relations",
+        "public_reputation",
+        "societal_scandal",
+        "family_feuds"
+      ]
+    }
+  ]
+}

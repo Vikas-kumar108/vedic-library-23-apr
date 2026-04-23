@@ -1,0 +1,188 @@
+{
+  "id": "SOCIETY_AND_CULTURE",
+  "title": "Societal Frameworks",
+  "description": "Focuses on the sociological structures, demographics, and regional observations.",
+  "keywords": ["society", "culture", "social structure", "norms", "community", "hierarchy"],
+
+  "subtags": [
+    {
+      "id": "regional_customs",
+      "sanskrit": "Deśa-dharma",
+      "description": "Customs specific to Andhras, Gaudas, and other regions, including variations in behavior, rituals, dress, food, and social expectations based on geographical and cultural context.",
+      "keywords": ["region", "custom", "local traditions", "geography", "cultural variation"],
+      "examples": [
+        "Differences in marriage rituals between Andhra and Gauda regions",
+        "Regional dress styles and ornamentation",
+        "Variation in dietary habits and food restrictions"
+      ],
+      "related_tags": [
+        "festivals_and_gatherings",
+        "marriage_types",
+        "architecture_and_space",
+        "gender_roles"
+      ]
+    },
+
+    {
+      "id": "caste_dynamics",
+      "sanskrit": "Varṇa",
+      "description": "Rules based on Brahmin, Kshatriya, Vaishya, and Shudra, including social hierarchy, duties, privileges, marriage restrictions, and behavioral expectations tied to caste identity.",
+      "keywords": ["varna", "caste", "hierarchy", "social order", "duty"],
+      "examples": [
+        "Restrictions on inter-caste marriage",
+        "Occupation assigned according to caste",
+        "Differences in ritual purity rules"
+      ],
+      "related_tags": [
+        "duty_and_obligation",
+        "mate_selection",
+        "professions_and_guilds",
+        "outcasts_and_foreigners"
+      ]
+    },
+
+    {
+      "id": "life_stages",
+      "sanskrit": "Āśrama",
+      "description": "Stages such as Student (brahmacarya), Householder (gṛhastha), and others, defining duties, behavior, and priorities appropriate to each phase of life.",
+      "keywords": ["ashrama", "life stages", "dharma", "age roles", "progression"],
+      "examples": [
+        "Discipline and celibacy during student life",
+        "Householder responsibilities including marriage and wealth",
+        "Transition from study to family life"
+      ],
+      "related_tags": [
+        "duty_and_obligation",
+        "trivarga_balance",
+        "household_duties",
+        "asceticism_and_restraint"
+      ]
+    },
+
+    {
+      "id": "professions_and_guilds",
+      "sanskrit": null,
+      "description": "Occupations, artisans, merchants, and organized guild systems that structure economic and professional life in society.",
+      "keywords": ["profession", "guild", "trade", "occupation", "economy"],
+      "examples": [
+        "Merchant guilds operating in cities",
+        "Artisan specialization such as jewelers or perfumers",
+        "Division of labor in urban environments"
+      ],
+      "related_tags": [
+        "caste_dynamics",
+        "finances_and_budgeting",
+        "royal_and_elite_customs",
+        "courtesan_culture"
+      ]
+    },
+
+    {
+      "id": "courtesan_culture",
+      "sanskrit": "Veśyā / Gaṇikā",
+      "description": "Social standing of sex workers, including their training, economic role, cultural refinement, and interactions with patrons and elites.",
+      "keywords": ["courtesan", "ganika", "urban culture", "sexual economy", "patronage"],
+      "examples": [
+        "Courtesans trained in music, poetry, and conversation",
+        "Financial relationships between courtesans and wealthy patrons",
+        "Role of courtesans in elite social life"
+      ],
+      "related_tags": [
+        "power_and_control",
+        "extorting_wealth",
+        "arts_and_aesthetics",
+        "relationship_dynamics"
+      ]
+    },
+
+    {
+      "id": "royal_and_elite_customs",
+      "sanskrit": "Rāja-vṛtta",
+      "description": "Behaviors of kings and ministers, including etiquette, governance style, luxury, and expectations of conduct within elite circles.",
+      "keywords": ["royalty", "elite", "court life", "politics", "status"],
+      "examples": [
+        "Conduct expected in royal courts",
+        "Display of wealth and refinement among elites",
+        "Ministerial etiquette and diplomacy"
+      ],
+      "related_tags": [
+        "public_reputation",
+        "professions_and_guilds",
+        "arts_and_aesthetics",
+        "power_and_control"
+      ]
+    },
+
+    {
+      "id": "festivals_and_gatherings",
+      "sanskrit": "Samāja / Utsava",
+      "description": "Social events and holidays that bring people together, including festivals, public celebrations, and communal gatherings.",
+      "keywords": ["festival", "celebration", "gathering", "community", "ritual"],
+      "examples": [
+        "Spring festivals where social interaction increases",
+        "Public gatherings allowing courtship opportunities",
+        "Seasonal religious celebrations"
+      ],
+      "related_tags": [
+        "regional_customs",
+        "communication_and_signs",
+        "courtship_and_marriage",
+        "arts_and_aesthetics"
+      ]
+    },
+
+    {
+      "id": "gender_roles",
+      "sanskrit": "Strī-Pumān",
+      "description": "Expected duties of men vs. women, including behavioral norms, responsibilities, and ideals associated with masculinity and femininity.",
+      "keywords": ["gender", "roles", "expectations", "masculine", "feminine"],
+      "examples": [
+        "Household responsibilities of a wife",
+        "Masculine ideals in courtship and leadership",
+        "Social expectations regarding modesty and conduct"
+      ],
+      "related_tags": [
+        "mate_selection",
+        "household_duties",
+        "power_and_control",
+        "third_gender_and_eunuchs"
+      ]
+    },
+
+    {
+      "id": "third_gender_and_eunuchs",
+      "sanskrit": "Tṛtīyā-prakṛti",
+      "description": "Non-binary societal roles, including recognition and participation of individuals outside the male-female binary in social and intimate contexts.",
+      "keywords": ["third gender", "non-binary", "identity", "eunuchs", "sexual diversity"],
+      "examples": [
+        "Roles of third-gender individuals in matchmaking or communication",
+        "Descriptions of alternative sexual identities",
+        "Participation in certain social or ritual contexts"
+      ],
+      "related_tags": [
+        "gender_roles",
+        "intimacy_and_technique",
+        "psychology_and_emotion",
+        "courtesan_culture"
+      ]
+    },
+
+    {
+      "id": "outcasts_and_foreigners",
+      "sanskrit": "Mleccha / Bāhya",
+      "description": "Those outside the standard caste system, including foreigners and socially excluded groups, and their interaction with mainstream society.",
+      "keywords": ["outcast", "foreign", "mleccha", "social exclusion", "boundary"],
+      "examples": [
+        "Interactions between caste society and outsiders",
+        "Perceived differences in customs and behavior",
+        "Restrictions on social or marital integration"
+      ],
+      "related_tags": [
+        "caste_dynamics",
+        "regional_customs",
+        "public_reputation",
+        "duty_and_obligation"
+      ]
+    }
+  ]
+}

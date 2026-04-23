@@ -1,0 +1,188 @@
+{
+  "id": "PSYCHOLOGY_AND_EMOTION",
+  "title": "Mental States",
+  "description": "Focuses on the internal emotional landscapes of the characters.",
+  "keywords": ["emotion", "psychology", "mental states", "feelings", "behavior", "inner life"],
+
+  "subtags": [
+    {
+      "id": "passion_and_desire",
+      "sanskrit": "Rāga / Kāma",
+      "description": "The mechanics of arousal, attraction, and desire, including how passion arises, intensifies, and is directed toward a person or object.",
+      "keywords": ["desire", "passion", "attraction", "arousal", "love"],
+      "examples": [
+        "Gradual development of attraction through repeated interaction",
+        "Physical and emotional signs of desire",
+        "Intensification of longing through absence"
+      ],
+      "related_tags": [
+        "infatuation_and_madness",
+        "courtship_and_marriage",
+        "intimacy_and_technique",
+        "trivarga_balance"
+      ]
+    },
+
+    {
+      "id": "trust_and_confidence",
+      "sanskrit": "Viśvāsa",
+      "description": "Building or breaking faith between individuals, including emotional security, reliability, and mutual openness in relationships.",
+      "keywords": ["trust", "confidence", "faith", "loyalty", "security"],
+      "examples": [
+        "Gaining a partner’s trust through consistent behavior",
+        "Loss of trust due to betrayal",
+        "Testing reliability before emotional commitment"
+      ],
+      "related_tags": [
+        "gaining_trust",
+        "relationship_dynamics",
+        "hidden_intentions",
+        "communication_and_signs"
+      ]
+    },
+
+    {
+      "id": "jealousy_and_anger",
+      "sanskrit": "Īrṣyā / Kopa",
+      "description": "Dealing with rivals, perceived slights, and emotional reactions such as jealousy, possessiveness, and anger in relationships.",
+      "keywords": ["jealousy", "anger", "rivalry", "conflict", "emotion"],
+      "examples": [
+        "Jealousy arising from attention given to another partner",
+        "Anger due to neglect or insult",
+        "Conflict between lovers driven by suspicion"
+      ],
+      "related_tags": [
+        "lovers_quarrels",
+        "power_and_control",
+        "hidden_intentions",
+        "reconciliation"
+      ]
+    },
+
+    {
+      "id": "shame_and_modesty",
+      "sanskrit": "Lajjā / Vrīḍā",
+      "description": "Overcoming shyness, modesty, and social inhibition, especially in romantic or intimate situations.",
+      "keywords": ["shame", "modesty", "shyness", "inhibition", "social norms"],
+      "examples": [
+        "Initial hesitation in expressing affection",
+        "Modest behavior in public interactions",
+        "Gradual easing of shyness in private settings"
+      ],
+      "related_tags": [
+        "body_language",
+        "courtship_and_marriage",
+        "passion_and_desire",
+        "gender_roles"
+      ]
+    },
+
+    {
+      "id": "fear_and_anxiety",
+      "sanskrit": "Bhaya / Sādhvasa",
+      "description": "Fear of discovery, harm, rejection, or social consequences, influencing decisions and behavior in relationships.",
+      "keywords": ["fear", "anxiety", "risk", "danger", "uncertainty"],
+      "examples": [
+        "Fear of being discovered in a secret relationship",
+        "Anxiety about rejection by a desired partner",
+        "Caution in risky romantic situations"
+      ],
+      "related_tags": [
+        "assessing_risks",
+        "hidden_intentions",
+        "secret_unions",
+        "public_reputation"
+      ]
+    },
+
+    {
+      "id": "grief_and_longing",
+      "sanskrit": "Utkaṇṭhā / Śoka",
+      "description": "Separation anxiety, longing for union, and emotional suffering due to absence or loss of a loved one.",
+      "keywords": ["grief", "longing", "separation", "yearning", "loss"],
+      "examples": [
+        "Longing for a partner during absence",
+        "Emotional distress caused by separation",
+        "Yearning intensified through memory and imagination"
+      ],
+      "related_tags": [
+        "absence_of_spouse",
+        "passion_and_desire",
+        "infatuation_and_madness",
+        "rekindling_romance"
+      ]
+    },
+
+    {
+      "id": "satisfaction_and_satiety",
+      "sanskrit": "Tṛpti / Rati",
+      "description": "Achieving fulfillment, emotional satisfaction, and contentment after desire is fulfilled.",
+      "keywords": ["satisfaction", "pleasure", "fulfillment", "contentment", "enjoyment"],
+      "examples": [
+        "Emotional and physical satisfaction after union",
+        "Contentment in a stable relationship",
+        "Sense of completeness after desires are fulfilled"
+      ],
+      "related_tags": [
+        "pre_and_post_coital",
+        "passion_and_desire",
+        "relationship_dynamics",
+        "trivarga_balance"
+      ]
+    },
+
+    {
+      "id": "indifference_and_aversion",
+      "sanskrit": "Virāga",
+      "description": "Losing interest, emotional detachment, or developing aversion toward a person or relationship.",
+      "keywords": ["indifference", "aversion", "detachment", "disinterest", "withdrawal"],
+      "examples": [
+        "Loss of attraction over time",
+        "Emotional distancing from a partner",
+        "Aversion due to repeated conflict"
+      ],
+      "related_tags": [
+        "recognizing_indifference",
+        "getting_rid_of_lovers",
+        "relationship_dynamics",
+        "grief_and_longing"
+      ]
+    },
+
+    {
+      "id": "infatuation_and_madness",
+      "sanskrit": "Unmāda",
+      "description": "The extreme stages of love, including obsession, irrational behavior, and loss of emotional control due to intense attachment.",
+      "keywords": ["infatuation", "madness", "obsession", "intensity", "love"],
+      "examples": [
+        "Obsessive thinking about a lover",
+        "Irrational actions driven by desire",
+        "Emotional instability due to intense attachment"
+      ],
+      "related_tags": [
+        "passion_and_desire",
+        "grief_and_longing",
+        "jealousy_and_anger",
+        "power_and_control"
+      ]
+    },
+
+    {
+      "id": "hidden_intentions",
+      "sanskrit": "Gūḍha-bhāva",
+      "description": "Concealing true feelings, motives, or desires, and the internal strategies behind outward behavior.",
+      "keywords": ["hidden", "intention", "deception", "motive", "strategy"],
+      "examples": [
+        "Feigning indifference while feeling attraction",
+        "Concealing jealousy or resentment",
+        "Strategic behavior to influence a partner"
+      ],
+      "related_tags": [
+        "communication_and_signs",
+        "righteous_deception",
+        "power_and_control",
+        "testing_intentions"
+      ]
+    }
+  ]
+}

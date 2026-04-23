@@ -21,6 +21,8 @@ enum ContentType {
   title
   subtitle
   colophon
+
+  @@map("content_type_enum")
 }
 
 enum Language {
@@ -32,6 +34,8 @@ enum Language {
   or
   mr
   gu
+
+  @@map("language_enum")
 }
 
 enum Script {
@@ -40,6 +44,8 @@ enum Script {
   bengali
   tamil
   oriya
+
+  @@map("script_enum")
 }
 
 enum LifeStage {
@@ -47,8 +53,10 @@ enum LifeStage {
   unmarried
   married
   parent
-  retired
+  vanaprastha
   renunciate
+
+  @@map("life_stage_enum")
 }
 
 enum GuidanceLevel {
@@ -56,6 +64,56 @@ enum GuidanceLevel {
   intermediate
   advanced
   teacher
+
+  @@map("guidance_level_enum")
+}
+
+enum Gender {
+  male
+  female
+
+  @@map("gender_enum")
+}
+
+enum UserRole {
+  student
+  mentor
+  teacher
+  coordinator
+  admin
+
+  @@map("user_role_enum")
+}
+
+enum AssignmentType {
+  mentor
+  teacher
+  coordinator
+
+  @@map("assignment_type_enum")
+}
+
+enum RelationshipType {
+  pitara
+  matara
+  sapinda
+  vaivahika
+  shishya
+  guru
+  prapautra
+  pautra
+  sahodara
+
+  @@map("relationship_type_enum")
+}
+
+enum AuthorityStatus {
+  guardian
+  dependant
+  karta
+  shakha_head
+
+  @@map("authority_status_enum")
 }
 
 // =====================================================
@@ -92,7 +150,6 @@ model Node {
   shastraId    String               @map("shastra_id") @db.Uuid
   parentId     String?              @map("parent_id") @db.Uuid
   level        String               // category, text, section, chapter, verse
-  name         String
   slug         String?
   orderIndex   Int                  @default(0) @map("order_index")
   canonicalRef String?              @map("canonical_ref")
@@ -107,6 +164,10 @@ model Node {
   fromRelations NodeRelation[]      @relation("FromNode")
   toRelations   NodeRelation[]      @relation("ToNode")
   tags         NodeTag[]
+  accessRules  ContentAccessRule[]
+  stepInCurves LearningCurveStep[]
+  userProgress UserNodeProgress[]
+  bookmarks    Bookmark[]
 
   @@index([path], type: Gist)
   @@map("nodes")
@@ -125,7 +186,6 @@ model Text {
   segmentOrder Int?           @map("segment_order")
   deletedAt    DateTime?      @map("deleted_at")
   createdAt    DateTime       @default(now()) @map("created_at")
-  ftsVector    Unsupported("tsvector")? @map("fts_vector")
 
   node         Node           @relation(fields: [nodeId], references: [id], onDelete: Cascade)
   source       Source?        @relation(fields: [sourceId], references: [id])
@@ -133,6 +193,7 @@ model Text {
   synonyms     Synonym[]
   versions     TextVersion[]
   embedding    TextEmbedding?
+  highlights   Highlight[]
 
   @@index([nodeId])
   @@index([nodeId, contentType, language])
@@ -164,11 +225,22 @@ model Synonym {
 }
 
 model Tag {
-  id        String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  name      String?   @unique
-  type      String?
-  createdAt DateTime  @default(now()) @map("created_at")
-  nodes     NodeTag[]
+  id          String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  slug        String    @unique // Added slug for structured IDs like DOMESTIC_DYNAMICS
+  name        String?   // title
+  description String?
+  keywords    String[]
+  type        String?
+  createdAt   DateTime  @default(now()) @map("created_at")
+  nodes       NodeTag[]
+  
+  // For hierarchical tags (tags/subtags)
+  parentId    String?   @map("parent_id") @db.Uuid
+  parent      Tag?      @relation("TagToTag", fields: [parentId], references: [id])
+  subtags     Tag[]     @relation("TagToTag")
+  
+  // Sanskrit name for subtags
+  sanskritName String?  @map("sanskrit_name")
 
   @@map("tags")
 }
@@ -224,4 +296,174 @@ model TextEmbedding {
   text      Text                     @relation(fields: [textId], references: [id], onDelete: Cascade)
 
   @@map("text_embeddings")
+}
+
+// =====================================================
+// USER & GUIDANCE LAYER
+// =====================================================
+
+model User {
+  id             String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  email          String          @unique
+  roles          UserRole[]      @default([student])
+  gender         Gender?
+  lifeStage      LifeStage?      @map("life_stage")
+  guidanceLevel  GuidanceLevel?  @map("guidance_level")
+  createdAt      DateTime        @default(now()) @map("created_at")
+  lastActive     DateTime?       @map("last_active")
+  
+  statistics     UserStatistics?
+  bookmarks      Bookmark[]
+  highlights     Highlight[]
+  nodeProgress   UserNodeProgress[]
+  curveProgress  UserCurveProgress[]
+  
+  assignmentsAsGuide   GuidanceAssignment[] @relation("Guide")
+  assignmentsAsStudent GuidanceAssignment[] @relation("Student")
+
+  @@map("users")
+}
+
+model UserStatistics {
+  userId             String   @id @map("user_id") @db.Uuid
+  nodesReadCount     Int      @default(0) @map("nodes_read_count")
+  coursesCompleted   Int      @default(0) @map("courses_completed")
+  contributionPoints Int      @default(0) @map("contribution_points")
+  updatedAt          DateTime @default(now()) @map("updated_at")
+
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_statistics")
+}
+
+model GuidanceAssignment {
+  id             String         @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  guideId        String         @map("guide_id") @db.Uuid
+  studentId      String         @map("student_id") @db.Uuid
+  assignmentType AssignmentType @map("assignment_type")
+  subject        String?
+  status         String         @default("active")
+  createdAt      DateTime       @default(now()) @map("created_at")
+
+  guide          User           @relation("Guide", fields: [guideId], references: [id], onDelete: Cascade)
+  student        User           @relation("Student", fields: [studentId], references: [id], onDelete: Cascade)
+  sessions       GuidanceSession[]
+
+  @@unique([guideId, studentId, assignmentType])
+  @@map("guidance_assignments")
+}
+
+model GuidanceSession {
+  id            String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  assignmentId  String   @map("assignment_id") @db.Uuid
+  topic         String?
+  summaryNotes  String?  @map("summary_notes")
+  sessionDate   DateTime @default(now()) @map("session_date")
+  durationMins  Int?     @map("duration_minutes")
+
+  assignment    GuidanceAssignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
+
+  @@map("guidance_sessions")
+}
+
+model LearningCurve {
+  id               String              @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  title            String
+  description      String?
+  targetLifeStages LifeStage[]         @map("target_life_stages")
+  isPublished      Boolean             @default(false) @map("is_published")
+  createdAt        DateTime            @default(now()) @map("created_at")
+  steps            LearningCurveStep[]
+  userProgress     UserCurveProgress[]
+
+  @@map("learning_curves")
+}
+
+model LearningCurveStep {
+  id               String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  curveId          String   @map("curve_id") @db.Uuid
+  stepOrder        Int      @map("step_order")
+  title            String
+  nodeId           String?  @map("node_id") @db.Uuid
+  unlockRequirement Json?    @map("unlock_requirement")
+  createdAt        DateTime @default(now()) @map("created_at")
+
+  curve            LearningCurve @relation(fields: [curveId], references: [id], onDelete: Cascade)
+  node             Node?         @relation(fields: [nodeId], references: [id], onDelete: SetNull)
+  userProgress     UserCurveProgress[]
+
+  @@unique([curveId, stepOrder])
+  @@map("learning_curve_steps")
+}
+
+model UserCurveProgress {
+  id            String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  userId        String   @map("user_id") @db.Uuid
+  curveId       String   @map("curve_id") @db.Uuid
+  currentStepId String?  @map("current_step_id") @db.Uuid
+  isCompleted   Boolean  @default(false) @map("is_completed")
+  startedAt     DateTime @default(now()) @map("started_at")
+  completedAt   DateTime? @map("completed_at")
+
+  user          User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  curve         LearningCurve     @relation(fields: [curveId], references: [id], onDelete: Cascade)
+  currentStep   LearningCurveStep? @relation(fields: [currentStepId], references: [id])
+
+  @@unique([userId, curveId])
+  @@map("user_curve_progress")
+}
+
+model UserNodeProgress {
+  userId       String   @map("user_id") @db.Uuid
+  nodeId       String   @map("node_id") @db.Uuid
+  isRead       Boolean  @default(false) @map("is_read")
+  lastAccessed DateTime @default(now()) @map("last_accessed")
+
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  node         Node     @relation(fields: [nodeId], references: [id], onDelete: Cascade)
+
+  @@id([userId, nodeId])
+  @@map("user_node_progress")
+}
+
+model Bookmark {
+  id         String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  userId     String   @map("user_id") @db.Uuid
+  nodeId     String   @map("node_id") @db.Uuid
+  folderName String   @default("Main") @map("folder_name")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  node       Node     @relation(fields: [nodeId], references: [id], onDelete: Cascade)
+
+  @@map("bookmarks")
+}
+
+model Highlight {
+  id             String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  userId         String   @map("user_id") @db.Uuid
+  textId         String   @map("text_id") @db.Uuid
+  selectionRange String?  @map("selection_range") // Prisma doesn't support int4range natively, using string or json
+  note           String?
+  colorCode      String?  @map("color_code")
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  text           Text     @relation(fields: [textId], references: [id], onDelete: Cascade)
+
+  @@map("highlights")
+}
+
+model ContentAccessRule {
+  id                   String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  nodeId               String          @map("node_id") @db.Uuid
+  allowedRoles         UserRole[]      @map("allowed_roles")
+  allowedLifeStages    LifeStage[]     @map("allowed_life_stages")
+  allowedGuidanceLevels GuidanceLevel[] @map("allowed_guidance_levels")
+  isRestricted         Boolean         @default(true) @map("is_restricted")
+  messageIfLocked      String?         @map("message_if_locked")
+
+  node                 Node            @relation(fields: [nodeId], references: [id], onDelete: Cascade)
+
+  @@map("content_access_rules")
 }

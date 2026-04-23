@@ -1,0 +1,188 @@
+{
+  "id": "COVERT_OPERATIONS",
+  "title": "The Art of Secrecy",
+  "description": "Focuses on how affairs are hidden and conducted in the shadows.",
+  "keywords": ["secrecy", "covert", "stealth", "concealment", "operations", "tactics"],
+
+  "subtags": [
+    {
+      "id": "nocturnal_entry",
+      "sanskrit": null,
+      "description": "Tactics for entering a house at night, leveraging darkness, timing, and reduced visibility.",
+      "keywords": ["night", "entry", "stealth", "timing", "access"],
+      "examples": [
+        "Choosing late hours for minimal observation",
+        "Using shadows and low light to avoid notice",
+        "Coordinating entry with quiet surroundings"
+      ],
+      "related_tags": [
+        "nocturnal_phases",
+        "lighting_effects",
+        "secret_unions",
+        "assessing_risks"
+      ]
+    },
+
+    {
+      "id": "signal_codes",
+      "sanskrit": null,
+      "description": "Non-verbal signals such as lamps, coughs, or gestures used to coordinate actions discreetly.",
+      "keywords": ["signal", "code", "nonverbal", "coordination", "cue"],
+      "examples": [
+        "Using a lamp placement to indicate readiness",
+        "Coughs or small sounds as pre-arranged cues",
+        "Gestures conveying timing or safety"
+      ],
+      "related_tags": [
+        "secret_codes",
+        "body_language",
+        "communication_and_signs",
+        "testing_intentions"
+      ]
+    },
+
+    {
+      "id": "hiding_spots",
+      "sanskrit": null,
+      "description": "Basements, thickets, and secret rooms used for concealment and temporary refuge.",
+      "keywords": ["hiding", "concealment", "space", "refuge", "location"],
+      "examples": [
+        "Using concealed rooms within a house",
+        "Taking cover in gardens or thickets",
+        "Identifying safe temporary shelters"
+      ],
+      "related_tags": [
+        "architecture_and_space",
+        "environmental_comfort",
+        "assessing_risks",
+        "secret_unions"
+      ]
+    },
+
+    {
+      "id": "disguise_tactics",
+      "sanskrit": null,
+      "description": "Using the clothes or appearance of a servant, traveler, or other role to avoid recognition.",
+      "keywords": ["disguise", "appearance", "role", "mask", "identity"],
+      "examples": [
+        "Wearing attire associated with another role",
+        "Blending into expected social types",
+        "Altering appearance to pass unnoticed"
+      ],
+      "related_tags": [
+        "disguise_and_masquerade",
+        "social_climbing",
+        "hidden_intentions",
+        "information_gathering"
+      ]
+    },
+
+    {
+      "id": "bribery_logic",
+      "sanskrit": null,
+      "description": "How to pay off guards and servants effectively, balancing cost, trust, and discretion.",
+      "keywords": ["bribe", "payment", "incentive", "strategy", "loyalty"],
+      "examples": [
+        "Offering compensation for silence",
+        "Selecting trustworthy intermediaries",
+        "Maintaining discretion in exchanges"
+      ],
+      "related_tags": [
+        "financial_negotiation",
+        "extorting_wealth",
+        "servant_gossip",
+        "power_and_control"
+      ]
+    },
+
+    {
+      "id": "alibi_creation",
+      "sanskrit": null,
+      "description": "Inventing plausible excuses for one's absence to avoid suspicion or inquiry.",
+      "keywords": ["alibi", "excuse", "cover", "story", "justification"],
+      "examples": [
+        "Preparing explanations in advance",
+        "Aligning alibis with known routines",
+        "Coordinating stories with others"
+      ],
+      "related_tags": [
+        "narrative_persuasion",
+        "hidden_intentions",
+        "public_reputation",
+        "assessing_risks"
+      ]
+    },
+
+    {
+      "id": "crowd_camouflage",
+      "sanskrit": null,
+      "description": "Using festivals or gatherings to meet unnoticed by blending into crowds.",
+      "keywords": ["crowd", "camouflage", "festival", "blend", "cover"],
+      "examples": [
+        "Meeting during large public events",
+        "Using noise and movement as cover",
+        "Avoiding attention through anonymity"
+      ],
+      "related_tags": [
+        "festivals_and_gatherings",
+        "societal_scandal",
+        "public_reputation",
+        "secret_unions"
+      ]
+    },
+
+    {
+      "id": "surveillance_evasion",
+      "sanskrit": null,
+      "description": "How to spot and avoid watchers or spies, including patterns of observation and counter-measures.",
+      "keywords": ["surveillance", "evasion", "spy", "detection", "avoidance"],
+      "examples": [
+        "Identifying unusual patterns of observation",
+        "Changing routes or timing to avoid tracking",
+        "Using misdirection to confuse observers"
+      ],
+      "related_tags": [
+        "information_gathering",
+        "assessing_risks",
+        "fear_and_anxiety",
+        "hidden_intentions"
+      ]
+    },
+
+    {
+      "id": "emergency_exits",
+      "sanskrit": "Apasara-bhūmi",
+      "description": "Pre-planned escape routes and fallback options in case of sudden danger or exposure.",
+      "keywords": ["escape", "exit", "route", "emergency", "fallback"],
+      "examples": [
+        "Identifying alternate exit paths",
+        "Preparing quick departure strategies",
+        "Maintaining awareness of surroundings"
+      ],
+      "related_tags": [
+        "assessing_risks",
+        "hiding_spots",
+        "fear_and_anxiety",
+        "nocturnal_entry"
+      ]
+    },
+
+    {
+      "id": "coded_gifts",
+      "sanskrit": null,
+      "description": "Gifts that carry a secret meaning unknown to others, used as symbolic communication.",
+      "keywords": ["gift", "code", "symbol", "meaning", "communication"],
+      "examples": [
+        "Objects indicating specific messages",
+        "Using items as signals of intent",
+        "Embedding meaning within ordinary gifts"
+      ],
+      "related_tags": [
+        "gift_giving",
+        "secret_codes",
+        "symbolic_marks",
+        "hidden_intentions"
+      ]
+    }
+  ]
+}

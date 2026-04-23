@@ -1,0 +1,188 @@
+{
+  "id": "BOTANICAL_AND_CHEMICAL",
+  "title": "The Science of Ingredients",
+  "description": "Focuses on the plants and minerals used in remedies and arts.",
+  "keywords": ["botany", "chemistry", "ingredients", "herbs", "minerals", "preparation"],
+
+  "subtags": [
+    {
+      "id": "medicinal_herbs",
+      "sanskrit": null,
+      "description": "Specific plants like Tagara, Kuṣṭha, or Vacā used for healing, vitality, and physiological balance.",
+      "keywords": ["herb", "medicine", "plant", "healing", "ayurveda"],
+      "examples": [
+        "Use of herbs in traditional remedies",
+        "Combining plants for therapeutic effects",
+        "Application of herbal preparations"
+      ],
+      "related_tags": [
+        "medical_remedies",
+        "aphrodisiacs",
+        "body_types",
+        "garden_management"
+      ]
+    },
+
+    {
+      "id": "scent_compounds",
+      "sanskrit": null,
+      "description": "Techniques for mixing perfumes, combining aromatic substances to create desired fragrances.",
+      "keywords": ["perfume", "fragrance", "mixing", "aroma", "compound"],
+      "examples": [
+        "Blending floral and resin-based scents",
+        "Layering fragrances for complexity",
+        "Creating signature aromatic profiles"
+      ],
+      "related_tags": [
+        "grooming_and_perfumery",
+        "olfactory_triggers",
+        "floral_scents",
+        "smoking_and_incense"
+      ]
+    },
+
+    {
+      "id": "dye_chemistry",
+      "sanskrit": null,
+      "description": "Reddening the lips or palms with Alaktaka or Henna, and other techniques of coloring and staining.",
+      "keywords": ["dye", "color", "henna", "alaktaka", "cosmetic"],
+      "examples": [
+        "Applying henna to hands and feet",
+        "Using plant-based dyes for coloration",
+        "Enhancing visual appearance through pigments"
+      ],
+      "related_tags": [
+        "grooming_and_perfumery",
+        "fashion_and_textiles",
+        "skin_aesthetics",
+        "arts_and_aesthetics"
+      ]
+    },
+
+    {
+      "id": "oil_extractions",
+      "sanskrit": "Taila",
+      "description": "Preparation of massage and bath oils, including extraction and infusion of plant essences.",
+      "keywords": ["oil", "extraction", "taila", "massage", "preparation"],
+      "examples": [
+        "Infusing oils with herbs and fragrances",
+        "Preparing oils for application",
+        "Using oils in bathing and massage"
+      ],
+      "related_tags": [
+        "grooming_and_perfumery",
+        "medical_remedies",
+        "water_treatments",
+        "tactile_textures"
+      ]
+    },
+
+    {
+      "id": "mineral_pastes",
+      "sanskrit": null,
+      "description": "Use of sandalwood, camphor, saffron, and other substances to create cooling or aromatic pastes.",
+      "keywords": ["paste", "mineral", "sandalwood", "camphor", "application"],
+      "examples": [
+        "Applying sandalwood paste for cooling",
+        "Using camphor-based mixtures",
+        "Combining ingredients for texture and scent"
+      ],
+      "related_tags": [
+        "grooming_and_perfumery",
+        "enhancing_attractiveness",
+        "olfactory_triggers",
+        "skin_aesthetics"
+      ]
+    },
+
+    {
+      "id": "toxic_botanicals",
+      "sanskrit": null,
+      "description": "Plants used for harmful purposes or subjugation, often discussed in controlled or cautionary contexts.",
+      "keywords": ["toxic", "poison", "plant", "harm", "control"],
+      "examples": [
+        "Knowledge of harmful plant properties",
+        "Use of botanicals in strategic contexts",
+        "Understanding dosage and effect"
+      ],
+      "related_tags": [
+        "poisons_and_toxins",
+        "subjugation_spells",
+        "assessing_risks",
+        "chemistry_and_metallurgy"
+      ]
+    },
+
+    {
+      "id": "stimulant_ingredients",
+      "sanskrit": null,
+      "description": "Betel nut, lime, and leaf combinations used for stimulation, refreshment, and social interaction.",
+      "keywords": ["stimulant", "betel", "ingredient", "refreshment", "consumption"],
+      "examples": [
+        "Preparing betel combinations",
+        "Using stimulants in social settings",
+        "Enhancing alertness and enjoyment"
+      ],
+      "related_tags": [
+        "gustatory_delights",
+        "culinary_arts",
+        "aphrodisiacs",
+        "festivals_and_gatherings"
+      ]
+    },
+
+    {
+      "id": "water_treatments",
+      "sanskrit": null,
+      "description": "Perfuming and cooling bathwater, including infusion with herbs, flowers, or aromatic substances.",
+      "keywords": ["water", "bath", "treatment", "cooling", "infusion"],
+      "examples": [
+        "Adding flowers to bathwater",
+        "Cooling water for comfort",
+        "Enhancing bathing experience with scent"
+      ],
+      "related_tags": [
+        "environmental_comfort",
+        "oil_extractions",
+        "floral_scents",
+        "tactile_textures"
+      ]
+    },
+
+    {
+      "id": "forest_products",
+      "sanskrit": null,
+      "description": "Resins, barks, roots, and other materials collected from the wild and used in preparations.",
+      "keywords": ["forest", "resin", "bark", "root", "natural"],
+      "examples": [
+        "Collecting resins for incense",
+        "Using roots in remedies",
+        "Harvesting materials from forests"
+      ],
+      "related_tags": [
+        "smoking_and_incense",
+        "medicinal_herbs",
+        "chemistry_and_metallurgy",
+        "gardening_and_agriculture"
+      ]
+    },
+
+    {
+      "id": "garden_management",
+      "sanskrit": null,
+      "description": "How to grow specific romantic or useful plants, including cultivation techniques and maintenance.",
+      "keywords": ["garden", "cultivation", "plants", "growth", "management"],
+      "examples": [
+        "Growing fragrant flowers",
+        "Maintaining a garden for aesthetic and practical use",
+        "Cultivating plants for rituals or remedies"
+      ],
+      "related_tags": [
+        "gardening_and_agriculture",
+        "floral_arts",
+        "medicinal_herbs",
+        "sensory_experience"
+      ]
+    }
+  ]
+}

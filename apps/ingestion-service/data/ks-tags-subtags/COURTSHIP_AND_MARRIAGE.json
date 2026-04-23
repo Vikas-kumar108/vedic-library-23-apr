@@ -1,0 +1,188 @@
+{
+  "id": "COURTSHIP_AND_MARRIAGE",
+  "title": "Pre-marital Relations",
+  "description": "Focuses on finding a mate, betrothal, and wedding types.",
+  "keywords": ["courtship", "marriage", "relationships", "union", "family", "selection"],
+
+  "subtags": [
+    {
+      "id": "mate_selection",
+      "sanskrit": "Kanyā-varaṇa",
+      "description": "Criteria for a good bride or groom, including qualities such as family background, character, appearance, and compatibility.",
+      "keywords": ["selection", "compatibility", "marriage criteria", "qualities"],
+      "examples": [
+        "Choosing a partner based on family reputation",
+        "Evaluating physical and emotional compatibility",
+        "Assessing character and upbringing"
+      ],
+      "related_tags": [
+        "caste_dynamics",
+        "gender_roles",
+        "auspicious_signs",
+        "human_goals"
+      ]
+    },
+
+    {
+      "id": "auspicious_signs",
+      "sanskrit": "Lakṣaṇa / Śakuna",
+      "description": "Omens and physical traits used to determine suitability or future success in marriage.",
+      "keywords": ["omens", "signs", "lakshana", "auspiciousness", "divination"],
+      "examples": [
+        "Interpreting bodily features as signs of fortune",
+        "Observing omens during meetings",
+        "Judging compatibility based on symbolic indicators"
+      ],
+      "related_tags": [
+        "astrology_and_timing",
+        "mate_selection",
+        "omens_and_dreams",
+        "regional_customs"
+      ]
+    },
+
+    {
+      "id": "betrothal_rituals",
+      "sanskrit": "Pradāna",
+      "description": "The formal asking and giving in marriage arrangements, including agreements between families and ritual exchanges.",
+      "keywords": ["betrothal", "engagement", "ritual", "agreement", "family"],
+      "examples": [
+        "Formal proposal and acceptance ceremonies",
+        "Exchange of gifts between families",
+        "Ritual acknowledgment of union"
+      ],
+      "related_tags": [
+        "parental_consent",
+        "dowry_and_wealth",
+        "festivals_and_gatherings",
+        "duty_and_obligation"
+      ]
+    },
+
+    {
+      "id": "types_of_marriage",
+      "sanskrit": "Vivāha-bheda",
+      "description": "Different forms of marriage such as Brahma, Gandharva, Asura, Rakshasa, and others, each with distinct rules and social acceptance.",
+      "keywords": ["marriage types", "vivaha", "classification", "ritual forms"],
+      "examples": [
+        "Brahma marriage based on ritual and consent",
+        "Gandharva marriage based on mutual attraction",
+        "Asura and Rakshasa forms involving wealth or force"
+      ],
+      "related_tags": [
+        "abduction_tactics",
+        "secret_unions",
+        "parental_consent",
+        "caste_dynamics"
+      ]
+    },
+
+    {
+      "id": "gaining_trust",
+      "sanskrit": "Kanyā-visrambhaṇa",
+      "description": "The first days of marriage or early relationship building, focusing on establishing comfort, trust, and emotional connection.",
+      "keywords": ["trust", "early relationship", "bonding", "comfort"],
+      "examples": [
+        "Gentle behavior to ease a partner’s anxiety",
+        "Building emotional closeness after union",
+        "Gradual development of intimacy"
+      ],
+      "related_tags": [
+        "trust_and_confidence",
+        "pre_and_post_coital",
+        "shame_and_modesty",
+        "household_duties"
+      ]
+    },
+
+    {
+      "id": "self_choice",
+      "sanskrit": "Svayaṁvara",
+      "description": "A woman choosing her own husband, often in a public or ceremonial setting, emphasizing agency and personal preference.",
+      "keywords": ["self choice", "agency", "selection", "freedom", "svayamvara"],
+      "examples": [
+        "Public selection of a husband from assembled suitors",
+        "Personal preference overriding arranged decisions",
+        "Criteria based on attraction or merit"
+      ],
+      "related_tags": [
+        "mate_selection",
+        "gender_roles",
+        "parental_consent",
+        "power_and_control"
+      ]
+    },
+
+    {
+      "id": "parental_consent",
+      "sanskrit": "Mātāpitṛ-anumati",
+      "description": "Approval of parents or guardians in marriage decisions, reflecting family authority and social norms.",
+      "keywords": ["consent", "parents", "family approval", "authority"],
+      "examples": [
+        "Marriage arranged with parental agreement",
+        "Negotiation between families",
+        "Conflict between personal choice and parental wishes"
+      ],
+      "related_tags": [
+        "betrothal_rituals",
+        "mate_selection",
+        "caste_dynamics",
+        "duty_and_obligation"
+      ]
+    },
+
+    {
+      "id": "secret_unions",
+      "sanskrit": "Pracchanna-saṁyoga",
+      "description": "Elopements or hidden relationships formed without public or familial approval.",
+      "keywords": ["secret", "elopement", "hidden relationship", "union"],
+      "examples": [
+        "Couples meeting secretly without family knowledge",
+        "Elopement to avoid social restrictions",
+        "Hidden romantic relationships"
+      ],
+      "related_tags": [
+        "fear_and_anxiety",
+        "hidden_intentions",
+        "types_of_marriage",
+        "public_reputation"
+      ]
+    },
+
+    {
+      "id": "abduction_tactics",
+      "sanskrit": "Rākṣasa / Paiśāca",
+      "description": "Forceful or deceitful marriages, including abduction or coercion, as described in certain traditional classifications.",
+      "keywords": ["abduction", "force", "coercion", "deception", "marriage"],
+      "examples": [
+        "Marriage by force or capture",
+        "Deceptive tactics to obtain a partner",
+        "Situations lacking consent"
+      ],
+      "related_tags": [
+        "types_of_marriage",
+        "righteous_deception",
+        "power_and_control",
+        "sin_and_expiation"
+      ]
+    },
+
+    {
+      "id": "dowry_and_wealth",
+      "sanskrit": "Śulka / Dhana",
+      "description": "Financial aspects of marriage, including dowry, gifts, wealth exchange, and economic considerations.",
+      "keywords": ["dowry", "wealth", "finance", "exchange", "economics"],
+      "examples": [
+        "Transfer of wealth during marriage arrangements",
+        "Negotiation of financial terms between families",
+        "Economic incentives influencing marriage decisions"
+      ],
+      "related_tags": [
+        "betrothal_rituals",
+        "finances_and_budgeting",
+        "caste_dynamics",
+        "professions_and_guilds"
+      ]
+    }
+  ]
+}

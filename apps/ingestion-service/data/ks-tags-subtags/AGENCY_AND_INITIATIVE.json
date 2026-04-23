@@ -1,0 +1,188 @@
+{
+  "id": "AGENCY_AND_INITIATIVE",
+  "title": "Direction of Action",
+  "description": "Focuses on who is performing the 'Vidhi' (Instruction).",
+  "keywords": ["agency", "initiative", "action", "instruction", "control", "decision"],
+
+  "subtags": [
+    {
+      "id": "male_as_agent",
+      "sanskrit": "Puruṣa-kartṛtva",
+      "description": "Direct instructions where the man is the primary actor initiating or directing the action.",
+      "keywords": ["male", "agent", "initiative", "action", "direction"],
+      "examples": [
+        "Instructions explicitly addressed to the male partner",
+        "Situations where the man takes the lead",
+        "Male-driven progression of interaction"
+      ],
+      "related_tags": [
+        "gender_roles",
+        "intimacy_and_technique",
+        "power_and_control",
+        "duty_and_obligation"
+      ]
+    },
+
+    {
+      "id": "female_as_agent",
+      "sanskrit": "Strī-kartṛtva",
+      "description": "Direct instructions where the woman is the initiating or controlling agent in the interaction.",
+      "keywords": ["female", "agent", "initiative", "control", "action"],
+      "examples": [
+        "Instructions addressed to the female partner",
+        "Situations where the woman leads",
+        "Female-directed progression of events"
+      ],
+      "related_tags": [
+        "role_reversal",
+        "gender_roles",
+        "power_and_control",
+        "trust_and_confidence"
+      ]
+    },
+
+    {
+      "id": "mutual_agency",
+      "sanskrit": "Ubhayātmaka",
+      "description": "Actions performed by both partners simultaneously, emphasizing coordination and reciprocity.",
+      "keywords": ["mutual", "shared", "coordination", "reciprocity", "joint action"],
+      "examples": [
+        "Simultaneous participation in activity",
+        "Coordinated interaction between partners",
+        "Shared decision-making in progression"
+      ],
+      "related_tags": [
+        "trust_and_confidence",
+        "pre_and_post_coital",
+        "satisfaction_and_satiety",
+        "relationship_dynamics"
+      ]
+    },
+
+    {
+      "id": "purushayita_logic",
+      "sanskrit": null,
+      "description": "Role-reversal situations where the woman adopts the traditionally male initiative.",
+      "keywords": ["role reversal", "initiative", "gender", "agency", "dynamic"],
+      "examples": [
+        "Woman initiating actions typically assigned to men",
+        "Reversal of expected behavioral roles",
+        "Fluid shifting of control"
+      ],
+      "related_tags": [
+        "role_reversal",
+        "female_as_agent",
+        "power_and_control",
+        "social_strategy"
+      ]
+    },
+
+    {
+      "id": "solicited_action",
+      "sanskrit": null,
+      "description": "Actions performed only after the partner explicitly asks or signals readiness.",
+      "keywords": ["request", "signal", "consent", "response", "timing"],
+      "examples": [
+        "Acting only after receiving a clear signal",
+        "Responding to verbal or nonverbal cues",
+        "Waiting for invitation before proceeding"
+      ],
+      "related_tags": [
+        "consent_mechanisms",
+        "testing_intentions",
+        "body_language",
+        "waiting_periods"
+      ]
+    },
+
+    {
+      "id": "spontaneous_initiative",
+      "sanskrit": null,
+      "description": "Taking the lead without prior signal, driven by impulse, context, or perceived readiness.",
+      "keywords": ["spontaneous", "initiative", "impulse", "action", "decision"],
+      "examples": [
+        "Acting without prior communication",
+        "Responding immediately to context",
+        "Initiating based on intuition"
+      ],
+      "related_tags": [
+        "spontaneous_timing",
+        "passion_and_desire",
+        "assessing_risks",
+        "hidden_intentions"
+      ]
+    },
+
+    {
+      "id": "strategic_passivity",
+      "sanskrit": null,
+      "description": "Choosing not to act as a deliberate strategy to trigger the partner’s initiative.",
+      "keywords": ["passivity", "strategy", "delay", "control", "trigger"],
+      "examples": [
+        "Withholding action to provoke response",
+        "Remaining inactive to shift initiative",
+        "Using silence or stillness strategically"
+      ],
+      "related_tags": [
+        "playing_hard_to_get",
+        "feigning_indifference",
+        "power_and_control",
+        "waiting_periods"
+      ]
+    },
+
+    {
+      "id": "refusal_as_agency",
+      "sanskrit": null,
+      "description": "The power of saying 'No' as a way to direct, delay, or reshape the flow of interaction.",
+      "keywords": ["refusal", "boundary", "control", "agency", "decision"],
+      "examples": [
+        "Rejecting an advance to influence dynamics",
+        "Setting boundaries through refusal",
+        "Using denial to guide interaction"
+      ],
+      "related_tags": [
+        "consent_mechanisms",
+        "playing_hard_to_get",
+        "duty_and_obligation",
+        "power_and_control"
+      ]
+    },
+
+    {
+      "id": "proxy_agency",
+      "sanskrit": null,
+      "description": "Using a messenger, friend, or intermediary to act on one’s behalf.",
+      "keywords": ["proxy", "messenger", "intermediary", "representation", "action"],
+      "examples": [
+        "Sending someone to convey intent",
+        "Acting through a trusted intermediary",
+        "Delegating communication or action"
+      ],
+      "related_tags": [
+        "messengers_and_go_betweens",
+        "information_gathering",
+        "hidden_intentions",
+        "social_strategy"
+      ]
+    },
+
+    {
+      "id": "shastra_overriding_agency",
+      "sanskrit": null,
+      "description": "When the text prescribes that 'one must do this' regardless of personal desire, prioritizing rule over preference.",
+      "keywords": ["shastra", "instruction", "duty", "override", "authority"],
+      "examples": [
+        "Following prescribed actions despite reluctance",
+        "Prioritizing textual authority over personal inclination",
+        "Acting according to rule-based instruction"
+      ],
+      "related_tags": [
+        "scriptural_authority",
+        "duty_and_obligation",
+        "legal_and_normative",
+        "asceticism_and_restraint"
+      ]
+    }
+  ]
+}

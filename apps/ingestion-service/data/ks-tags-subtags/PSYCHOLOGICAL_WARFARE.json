@@ -1,0 +1,188 @@
+{
+  "id": "PSYCHOLOGICAL_WARFARE",
+  "title": "Mental Dynamics",
+  "description": "Focuses on the struggle for emotional dominance.",
+  "keywords": ["psychology", "emotion", "dominance", "influence", "conflict", "mental dynamics"],
+
+  "subtags": [
+    {
+      "id": "ego_manipulation",
+      "sanskrit": null,
+      "description": "Feeding or bruising a partner’s pride to influence behavior and emotional response.",
+      "keywords": ["ego", "pride", "manipulation", "validation", "injury"],
+      "examples": [
+        "Offering praise to increase attachment",
+        "Withholding validation to create insecurity",
+        "Using criticism to influence behavior"
+      ],
+      "related_tags": [
+        "power_and_control",
+        "flirtatious_banter",
+        "trust_and_confidence",
+        "social_strategy"
+      ]
+    },
+
+    {
+      "id": "feigned_reluctance",
+      "sanskrit": "Kṛtrimakopa",
+      "description": "Pretending to be angry or uninterested to influence the partner’s actions or emotional state.",
+      "keywords": ["reluctance", "feigned", "anger", "strategy", "emotion"],
+      "examples": [
+        "Acting upset to draw attention",
+        "Withholding engagement to provoke response",
+        "Displaying controlled disinterest"
+      ],
+      "related_tags": [
+        "feigning_indifference",
+        "playing_hard_to_get",
+        "strategic_passivity",
+        "lovers_quarrels"
+      ]
+    },
+
+    {
+      "id": "evoking_pity",
+      "sanskrit": null,
+      "description": "Using sadness, vulnerability, or illness to evoke compassion and gain affection.",
+      "keywords": ["pity", "emotion", "sadness", "sympathy", "influence"],
+      "examples": [
+        "Expressing distress to gain closeness",
+        "Appealing to compassion",
+        "Using vulnerability to strengthen bonds"
+      ],
+      "related_tags": [
+        "vulnerability_tactics",
+        "grief_and_longing",
+        "trust_and_confidence",
+        "reconciliation"
+      ]
+    },
+
+    {
+      "id": "calculated_silence",
+      "sanskrit": "Mūka-bhāva",
+      "description": "Using silence deliberately to create tension, uncertainty, or emotional impact.",
+      "keywords": ["silence", "tension", "strategy", "absence", "communication"],
+      "examples": [
+        "Withholding speech to provoke reaction",
+        "Creating uncertainty through silence",
+        "Using pauses to influence emotional state"
+      ],
+      "related_tags": [
+        "strategic_passivity",
+        "hidden_intentions",
+        "testing_intentions",
+        "trust_and_confidence"
+      ]
+    },
+
+    {
+      "id": "competitive_arousal",
+      "sanskrit": null,
+      "description": "Making a partner jealous or aware of rivals to increase desire or urgency.",
+      "keywords": ["jealousy", "competition", "arousal", "desire", "rivalry"],
+      "examples": [
+        "Highlighting attention from others",
+        "Creating perception of competition",
+        "Using rivalry to intensify interest"
+      ],
+      "related_tags": [
+        "jealousy_and_anger",
+        "rivalry_management",
+        "passion_and_desire",
+        "social_strategy"
+      ]
+    },
+
+    {
+      "id": "breaking_resistance",
+      "sanskrit": null,
+      "description": "The gradual psychological erosion of resistance, influencing a partner over time.",
+      "keywords": ["resistance", "persistence", "influence", "pressure", "strategy"],
+      "examples": [
+        "Repeated persuasion over time",
+        "Gradual change of opinion through influence",
+        "Reducing opposition through persistence"
+      ],
+      "related_tags": [
+        "persuasion_and_debate",
+        "testing_intentions",
+        "power_and_control",
+        "trust_and_confidence"
+      ]
+    },
+
+    {
+      "id": "testing_loyalty",
+      "sanskrit": null,
+      "description": "Secret trials or situations created to assess a partner’s loyalty and commitment.",
+      "keywords": ["loyalty", "test", "trust", "evaluation", "faithfulness"],
+      "examples": [
+        "Observing behavior under pressure",
+        "Creating scenarios to test commitment",
+        "Evaluating consistency in actions"
+      ],
+      "related_tags": [
+        "testing_faithfulness",
+        "trust_and_confidence",
+        "hidden_intentions",
+        "recognizing_indifference"
+      ]
+    },
+
+    {
+      "id": "gaslighting_logic",
+      "sanskrit": null,
+      "description": "Ancient forms of making a partner doubt their own perceptions or suspicions.",
+      "keywords": ["doubt", "perception", "manipulation", "confusion", "control"],
+      "examples": [
+        "Denying observable events",
+        "Reframing situations to alter perception",
+        "Creating uncertainty about reality"
+      ],
+      "related_tags": [
+        "righteous_deception",
+        "hidden_intentions",
+        "power_and_control",
+        "information_gathering"
+      ]
+    },
+
+    {
+      "id": "reconciliation_rituals",
+      "sanskrit": "Prasāda",
+      "description": "Structured methods of restoring peace after conflict through gestures, words, or actions.",
+      "keywords": ["reconciliation", "ritual", "peace", "repair", "restoration"],
+      "examples": [
+        "Offering apologies in structured form",
+        "Performing gestures of humility",
+        "Rebuilding emotional harmony"
+      ],
+      "related_tags": [
+        "reconciliation",
+        "the_art_of_apology",
+        "trust_and_confidence",
+        "lovers_quarrels"
+      ]
+    },
+
+    {
+      "id": "emotional_detachment",
+      "sanskrit": "Virakti",
+      "description": "Practicing coldness or emotional distance to regain control or reduce dependence.",
+      "keywords": ["detachment", "distance", "control", "emotion", "strategy"],
+      "examples": [
+        "Reducing emotional involvement deliberately",
+        "Creating distance to regain balance",
+        "Using detachment as a form of control"
+      ],
+      "related_tags": [
+        "indifference_and_aversion",
+        "feigning_indifference",
+        "power_and_control",
+        "assessing_risks"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,188 @@
+{
+  "id": "DOMESTIC_LIFE",
+  "title": "Household Management",
+  "description": "Focuses on the day-to-day running of a home and family dynamics.",
+  "keywords": ["household", "family", "grihastha", "management", "domestic life", "routine"],
+
+  "subtags": [
+    {
+      "id": "household_duties",
+      "sanskrit": "Kuṭumba-cintā",
+      "description": "Cleaning, cooking, storing goods, and overall maintenance of the household, ensuring order, efficiency, and comfort.",
+      "keywords": ["household work", "cleaning", "cooking", "maintenance", "organization"],
+      "examples": [
+        "Preparing daily meals and managing kitchen supplies",
+        "Maintaining cleanliness and order in the home",
+        "Storing grains, oils, and essentials for long-term use"
+      ],
+      "related_tags": [
+        "gender_roles",
+        "duty_and_obligation",
+        "finances_and_budgeting",
+        "treatment_of_servants"
+      ]
+    },
+
+    {
+      "id": "architecture_and_space",
+      "sanskrit": "Vāstu / Veśma",
+      "description": "Layout of the house and gardens, including spatial organization, aesthetics, and functional design of living spaces.",
+      "keywords": ["architecture", "layout", "space", "vastu", "design"],
+      "examples": [
+        "Arrangement of rooms for privacy and interaction",
+        "Design of gardens and courtyards",
+        "Placement of functional and decorative elements"
+      ],
+      "related_tags": [
+        "regional_customs",
+        "arts_and_aesthetics",
+        "gardening_and_agriculture",
+        "festivals_and_gatherings"
+      ]
+    },
+
+    {
+      "id": "finances_and_budgeting",
+      "sanskrit": "Āya-vyaya",
+      "description": "Managing income and expenditures, ensuring financial stability, savings, and proper allocation of resources.",
+      "keywords": ["finance", "budget", "income", "expenses", "economy"],
+      "examples": [
+        "Tracking household income and daily expenses",
+        "Allocating funds for food, rituals, and social duties",
+        "Saving resources for future needs"
+      ],
+      "related_tags": [
+        "professions_and_guilds",
+        "dowry_and_wealth",
+        "household_duties",
+        "treatment_of_servants"
+      ]
+    },
+
+    {
+      "id": "gardening_and_agriculture",
+      "sanskrit": "Vṛkṣavāṭikā",
+      "description": "Planting seeds, maintaining gardens, and cultivating herbs, flowers, and useful plants within or around the household.",
+      "keywords": ["gardening", "agriculture", "plants", "herbs", "cultivation"],
+      "examples": [
+        "Growing flowers for decoration and rituals",
+        "Cultivating herbs for cooking or medicine",
+        "Maintaining a household garden"
+      ],
+      "related_tags": [
+        "architecture_and_space",
+        "culinary_arts",
+        "religious_observances",
+        "medical_remedies"
+      ]
+    },
+
+    {
+      "id": "co_wife_relations",
+      "sanskrit": "Sapatnī-vṛtta",
+      "description": "How older and younger wives interact, including hierarchy, cooperation, rivalry, and emotional dynamics.",
+      "keywords": ["co-wives", "polygamy", "relations", "hierarchy", "conflict"],
+      "examples": [
+        "Managing rivalry between co-wives",
+        "Establishing seniority and authority",
+        "Maintaining harmony within a shared household"
+      ],
+      "related_tags": [
+        "jealousy_and_anger",
+        "power_and_control",
+        "relationship_dynamics",
+        "household_duties"
+      ]
+    },
+
+    {
+      "id": "treatment_of_servants",
+      "sanskrit": "Parijana-dākṣiṇya",
+      "description": "Managing staff and slaves, including fair treatment, supervision, delegation of duties, and maintaining discipline.",
+      "keywords": ["servants", "staff", "management", "labor", "hierarchy"],
+      "examples": [
+        "Assigning tasks to household servants",
+        "Ensuring proper conduct and discipline",
+        "Balancing authority with kindness"
+      ],
+      "related_tags": [
+        "finances_and_budgeting",
+        "duty_and_obligation",
+        "professions_and_guilds",
+        "power_and_control"
+      ]
+    },
+
+    {
+      "id": "in_law_relations",
+      "sanskrit": "Śvaśrū-śvaśura-vṛtta",
+      "description": "Dealing with parents-in-law, including respect, duty, conflict, and integration into extended family structures.",
+      "keywords": ["in-laws", "family", "relations", "respect", "conflict"],
+      "examples": [
+        "Maintaining respectful behavior toward elders",
+        "Navigating conflicts within extended family",
+        "Adapting to expectations of a new household"
+      ],
+      "related_tags": [
+        "duty_and_obligation",
+        "gender_roles",
+        "co_wife_relations",
+        "mate_selection"
+      ]
+    },
+
+    {
+      "id": "religious_observances",
+      "sanskrit": "Vrata / Pūjā",
+      "description": "Household prayers, fasts, rituals, and religious duties performed regularly or on special occasions.",
+      "keywords": ["ritual", "worship", "vrata", "puja", "religion"],
+      "examples": [
+        "Daily household worship practices",
+        "Observing fasts for auspicious outcomes",
+        "Ritual offerings during festivals"
+      ],
+      "related_tags": [
+        "festivals_and_gatherings",
+        "duty_and_obligation",
+        "sin_and_expiation",
+        "astrology_and_timing"
+      ]
+    },
+
+    {
+      "id": "absence_of_spouse",
+      "sanskrit": "Pravāsa-caryā",
+      "description": "How a wife acts when the husband travels, including emotional conduct, responsibility, and social behavior.",
+      "keywords": ["absence", "separation", "conduct", "loyalty", "waiting"],
+      "examples": [
+        "Maintaining fidelity during absence",
+        "Managing household responsibilities alone",
+        "Emotional coping with separation"
+      ],
+      "related_tags": [
+        "grief_and_longing",
+        "trust_and_confidence",
+        "public_reputation",
+        "household_duties"
+      ]
+    },
+
+    {
+      "id": "widowhood_and_remarriage",
+      "sanskrit": "Punarbhū",
+      "description": "The life of a remarried widow, including social status, challenges, and reintegration into domestic and social life.",
+      "keywords": ["widowhood", "remarriage", "status", "social norms", "transition"],
+      "examples": [
+        "Social expectations of widows",
+        "Challenges in remarriage",
+        "Reintegration into family and society"
+      ],
+      "related_tags": [
+        "caste_dynamics",
+        "duty_and_obligation",
+        "public_reputation",
+        "mate_selection"
+      ]
+    }
+  ]
+}

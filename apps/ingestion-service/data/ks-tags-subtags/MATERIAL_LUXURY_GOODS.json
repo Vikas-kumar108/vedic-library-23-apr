@@ -1,0 +1,188 @@
+{
+  "id": "MATERIAL_LUXURY_GOODS",
+  "title": "The Inventory",
+  "description": "Focuses on specific high-end items.",
+  "keywords": ["luxury", "goods", "inventory", "material", "refinement", "objects"],
+
+  "subtags": [
+    {
+      "id": "perfumed_oils",
+      "sanskrit": "Taila",
+      "description": "Fragrant oils prepared through infusion and blending, used for grooming, massage, and ambiance.",
+      "keywords": ["oil", "perfume", "taila", "fragrance", "application"],
+      "examples": [
+        "Applying scented oils to the body",
+        "Infusing oils with herbs and resins",
+        "Using oils in bathing or massage"
+      ],
+      "related_tags": [
+        "oil_extractions",
+        "grooming_and_perfumery",
+        "olfactory_triggers",
+        "tactile_textures"
+      ]
+    },
+
+    {
+      "id": "exotic_incense",
+      "sanskrit": "Dhūpa",
+      "description": "Aromatic resins and compounds burned to create mood and atmosphere within spaces.",
+      "keywords": ["incense", "dhupa", "aroma", "resin", "environment"],
+      "examples": [
+        "Burning incense to enhance ambiance",
+        "Selecting scents for specific moods",
+        "Using aromatic smoke in rooms"
+      ],
+      "related_tags": [
+        "smoking_and_incense",
+        "scent_compounds",
+        "olfactory_triggers",
+        "environmental_comfort"
+      ]
+    },
+
+    {
+      "id": "silk_and_muslin",
+      "sanskrit": null,
+      "description": "Fine textiles valued for softness, drape, and visual elegance.",
+      "keywords": ["textile", "silk", "muslin", "fabric", "clothing"],
+      "examples": [
+        "Wearing finely woven garments",
+        "Draping cloth for aesthetic effect",
+        "Using textiles to signal status"
+      ],
+      "related_tags": [
+        "fashion_and_textiles",
+        "tactile_textures",
+        "visual_composition",
+        "public_reputation"
+      ]
+    },
+
+    {
+      "id": "gemstone_compatibility",
+      "sanskrit": null,
+      "description": "Selection of gemstones based on aesthetic, symbolic, or astrological associations.",
+      "keywords": ["gemstone", "jewelry", "astrology", "symbol", "ornament"],
+      "examples": [
+        "Choosing stones for visual appeal",
+        "Wearing gems for symbolic effect",
+        "Matching ornaments to context"
+      ],
+      "related_tags": [
+        "clothing_accessories",
+        "astrology_and_timing",
+        "enhancing_attractiveness",
+        "material_culture"
+      ]
+    },
+
+    {
+      "id": "flower_garlands",
+      "sanskrit": "Muṇḍa-mālā, Sraja",
+      "description": "Types of garlands crafted from flowers, used for adornment and ambiance.",
+      "keywords": ["flower", "garland", "decoration", "fragrance", "art"],
+      "examples": [
+        "Wearing garlands as adornment",
+        "Decorating spaces with flowers",
+        "Using floral arrangements for mood"
+      ],
+      "related_tags": [
+        "floral_arts",
+        "floral_scents",
+        "sensory_experience",
+        "arts_and_aesthetics"
+      ]
+    },
+
+    {
+      "id": "ivory_carvings",
+      "sanskrit": null,
+      "description": "Decorative and functional objects carved from ivory, reflecting craftsmanship and status.",
+      "keywords": ["ivory", "carving", "decor", "craft", "object"],
+      "examples": [
+        "Displaying carved items in living spaces",
+        "Using crafted objects in daily life",
+        "Showcasing fine workmanship"
+      ],
+      "related_tags": [
+        "sculpture_and_icons",
+        "material_culture",
+        "arts_and_aesthetics",
+        "public_reputation"
+      ]
+    },
+
+    {
+      "id": "betel_preparations",
+      "sanskrit": "Tāmbūla",
+      "description": "Complex preparation of betel leaf with multiple ingredients, used for refreshment and social interaction.",
+      "keywords": ["betel", "tambula", "preparation", "consumption", "social"],
+      "examples": [
+        "Preparing multi-ingredient betel leaves",
+        "Offering betel in social settings",
+        "Using betel as a cultural practice"
+      ],
+      "related_tags": [
+        "stimulant_ingredients",
+        "gustatory_delights",
+        "culinary_arts",
+        "festivals_and_gatherings"
+      ]
+    },
+
+    {
+      "id": "wine_vessels",
+      "sanskrit": null,
+      "description": "Cups and decanters made of materials like gold or clay, used in the serving and consumption of drinks.",
+      "keywords": ["vessel", "cup", "wine", "container", "material"],
+      "examples": [
+        "Serving drinks in crafted vessels",
+        "Choosing material based on status",
+        "Enhancing experience through presentation"
+      ],
+      "related_tags": [
+        "aphrodisiac_vessels",
+        "drinking_saloons",
+        "culinary_arts",
+        "material_culture"
+      ]
+    },
+
+    {
+      "id": "fans_and_cooling",
+      "sanskrit": null,
+      "description": "Use of fans (Vyalani) and water-screens to regulate temperature and comfort.",
+      "keywords": ["fan", "cooling", "comfort", "environment", "device"],
+      "examples": [
+        "Using fans for air circulation",
+        "Cooling spaces with water screens",
+        "Maintaining comfort in warm climates"
+      ],
+      "related_tags": [
+        "environmental_comfort",
+        "water_treatments",
+        "tactile_textures",
+        "architecture_and_space"
+      ]
+    },
+
+    {
+      "id": "musical_strings",
+      "sanskrit": null,
+      "description": "Maintenance and care of strings for instruments like the Vīṇā, ensuring quality of sound.",
+      "keywords": ["string", "instrument", "maintenance", "music", "sound"],
+      "examples": [
+        "Tuning and replacing strings",
+        "Maintaining instrument quality",
+        "Ensuring proper sound production"
+      ],
+      "related_tags": [
+        "musical_instruments",
+        "music_and_dance",
+        "auditory_pleasure",
+        "arts_and_aesthetics"
+      ]
+    }
+  ]
+}

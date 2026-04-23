@@ -1,0 +1,23 @@
+
+> @dharma/web-portal@0.1.0 dev /Users/ppublications/Workspace/system/ui-lab/playground/ui-vedic-library-frontend-v2/apps/web-portal
+> next dev
+
+▲ Next.js 16.2.0 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.0.101:3000
+- Environments: .env
+✓ Ready in 295ms
+⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /Users/ppublications/Workspace/system/ui-lab/pnpm-lock.yaml as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * /Users/ppublications/Workspace/system/ui-lab/playground/ui-vedic-library-frontend-v2/pnpm-workspace.yaml
+
+
+ GET / 200 in 542ms (next.js: 350ms, application-code: 192ms)
+ GET / 200 in 65ms (next.js: 9ms, application-code: 56ms)
+ GET /api/library/tree 200 in 631ms (next.js: 91ms, application-code: 540ms)
+ GET /api/library/tree 200 in 456ms (next.js: 2ms, application-code: 454ms)
+ GET / 200 in 76ms (next.js: 27ms, application-code: 49ms)
+ GET /api/library/tree 200 in 67ms (next.js: 1818µs, application-code: 65ms)

@@ -1,0 +1,188 @@
+{
+  "id": "METAPHYSICAL_OBSERVATIONS",
+  "title": "The Universal Laws",
+  "description": "Focuses on Vātsyāyana’s wider observations on life.",
+  "keywords": ["metaphysics", "philosophy", "principles", "observation", "life", "universal"],
+
+  "subtags": [
+    {
+      "id": "impermanence_of_passion",
+      "sanskrit": "Anityatā",
+      "description": "The transient nature of passion (Rāga), highlighting how emotional intensity rises and fades over time.",
+      "keywords": ["impermanence", "passion", "change", "time", "emotion"],
+      "examples": [
+        "Initial attraction diminishing over time",
+        "Fluctuating intensity of emotional states",
+        "Cycles of attachment and detachment"
+      ],
+      "related_tags": [
+        "indifference_and_aversion",
+        "temporal_dynamics",
+        "relationship_dynamics",
+        "emotional_detachment"
+      ]
+    },
+
+    {
+      "id": "universality_of_desire",
+      "sanskrit": null,
+      "description": "The presence of desire across beings, comparing human experience with that of animals.",
+      "keywords": ["desire", "universal", "instinct", "nature", "comparison"],
+      "examples": [
+        "Observing desire in animal behavior",
+        "Comparing instinctual and refined expressions",
+        "Recognizing shared biological drives"
+      ],
+      "related_tags": [
+        "passion_and_desire",
+        "animal_training_and_fights",
+        "biometric_typology",
+        "psychology_and_emotion"
+      ]
+    },
+
+    {
+      "id": "dominance_of_habit",
+      "sanskrit": "Sātmya",
+      "description": "The power of conditioning and habituation in shaping preferences and responses.",
+      "keywords": ["habit", "conditioning", "pattern", "learning", "behavior"],
+      "examples": [
+        "Repeated exposure shaping taste",
+        "Routine influencing behavior",
+        "Conditioned responses to stimuli"
+      ],
+      "related_tags": [
+        "cultivating_sophistication",
+        "overcoming_vices",
+        "testing_intentions",
+        "body_types"
+      ]
+    },
+
+    {
+      "id": "social_mimicry",
+      "sanskrit": "Anuvidhāna",
+      "description": "How lower or aspiring groups imitate the behavior and customs of the elite.",
+      "keywords": ["mimicry", "imitation", "social", "class", "behavior"],
+      "examples": [
+        "Adoption of elite fashion or speech",
+        "Copying cultural practices",
+        "Imitation as a path to status"
+      ],
+      "related_tags": [
+        "social_climbing",
+        "reputation_building",
+        "society_and_culture",
+        "public_reputation"
+      ]
+    },
+
+    {
+      "id": "the_entropy_of_boredom",
+      "sanskrit": null,
+      "description": "Recognizing the gradual decline of interest within a relationship, leading to disengagement.",
+      "keywords": ["boredom", "decline", "interest", "relationship", "entropy"],
+      "examples": [
+        "Reduced enthusiasm over time",
+        "Loss of novelty in interaction",
+        "Signs of disengagement"
+      ],
+      "related_tags": [
+        "recognizing_indifference",
+        "indifference_and_aversion",
+        "relationship_dynamics",
+        "rekindling_romance"
+      ]
+    },
+
+    {
+      "id": "karmic_predestination",
+      "sanskrit": "Daiva",
+      "description": "The role of fate or destiny in determining encounters and outcomes.",
+      "keywords": ["fate", "destiny", "karma", "chance", "outcome"],
+      "examples": [
+        "Unexpected meetings shaping life paths",
+        "Attributing events to destiny",
+        "Balancing effort with acceptance"
+      ],
+      "related_tags": [
+        "fate_vs_free_will",
+        "human_goals",
+        "temporal_dynamics",
+        "astrology_and_timing"
+      ]
+    },
+
+    {
+      "id": "nature_vs_nurture",
+      "sanskrit": "Svabhāva vs Abhyāsa",
+      "description": "The interplay between inherent nature and learned behavior in shaping personality and action.",
+      "keywords": ["nature", "nurture", "learning", "innate", "development"],
+      "examples": [
+        "Innate tendencies influencing behavior",
+        "Learning modifying natural inclinations",
+        "Balancing instinct and training"
+      ],
+      "related_tags": [
+        "body_types",
+        "intellectual_growth",
+        "dominance_of_habit",
+        "transformative_conduct"
+      ]
+    },
+
+    {
+      "id": "the_relativity_of_beauty",
+      "sanskrit": null,
+      "description": "Beauty as a subjective and psychological construct, varying across individuals and contexts.",
+      "keywords": ["beauty", "subjective", "perception", "aesthetic", "relativity"],
+      "examples": [
+        "Different standards of attractiveness",
+        "Context influencing perception",
+        "Personal taste shaping judgment"
+      ],
+      "related_tags": [
+        "visual_composition",
+        "enhancing_attractiveness",
+        "social_strategy",
+        "passion_and_desire"
+      ]
+    },
+
+    {
+      "id": "knowledge_as_power",
+      "sanskrit": "Vidvad",
+      "description": "The principle that knowledge, skill, and refinement grant influence and control in relationships.",
+      "keywords": ["knowledge", "power", "skill", "influence", "learning"],
+      "examples": [
+        "Using knowledge to guide interactions",
+        "Gaining advantage through education",
+        "Influencing others through expertise"
+      ],
+      "related_tags": [
+        "intellectual_growth",
+        "social_strategy",
+        "power_and_control",
+        "literary_arts"
+      ]
+    },
+
+    {
+      "id": "renunciation_logic",
+      "sanskrit": "Vairāgya",
+      "description": "The logic of detachment and the eventual cessation of pursuit of Kāma.",
+      "keywords": ["renunciation", "detachment", "vairagya", "withdrawal", "end"],
+      "examples": [
+        "Turning away from worldly pursuits",
+        "Reducing attachment to desire",
+        "Transitioning to a different life stage"
+      ],
+      "related_tags": [
+        "abandoning_the_world",
+        "asceticism_and_restraint",
+        "human_goals",
+        "life_stages"
+      ]
+    }
+  ]
+}
