@@ -1,4 +1,5 @@
 import { EmailProvider, EmailPayload } from './adapter.foundation'
+import { SESClient, SendEmailCommand } from '@aws-sdk/client-ses'
 
 /**
  * 🛰️ Resend Adapter (Primary)
@@ -37,6 +38,48 @@ export class ResendEmailProvider implements EmailProvider {
       }
     } catch (error) {
       console.error(`❌ [RESEND] Connection Error:`, error)
+      return false
+    }
+  }
+}
+/**
+ * 🛰️ AWS SES Adapter (Secondary Production Fallback)
+ */
+export class AWSSESEmailProvider implements EmailProvider {
+  name = 'AWS_SES'
+  private client: SESClient
+
+  constructor(config: { region: string; accessKeyId: string; secretAccessKey: string }) {
+    this.client = new SESClient({
+      region: config.region,
+      credentials: {
+        accessKeyId: config.accessKeyId,
+        secretAccessKey: config.secretAccessKey
+      }
+    })
+  }
+
+  async send(payload: EmailPayload): Promise<boolean> {
+    console.log(`[AWS_SES] Attempting to send email to ${payload.to}...`)
+    
+    const command = new SendEmailCommand({
+      Source: payload.from || process.env.INSTITUTIONAL_EMAIL_FROM || 'Vedic Library <onboarding@resend.dev>',
+      Destination: { ToAddresses: [payload.to] },
+      Message: {
+        Subject: { Data: payload.subject },
+        Body: {
+          Html: { Data: payload.html || payload.body },
+          Text: { Data: payload.body }
+        }
+      }
+    })
+
+    try {
+      const res = await this.client.send(command)
+      console.log(`✅ [AWS_SES] Email sent successfully: ${res.MessageId}`)
+      return true
+    } catch (error) {
+      console.error(`❌ [AWS_SES] Failed:`, error)
       return false
     }
   }

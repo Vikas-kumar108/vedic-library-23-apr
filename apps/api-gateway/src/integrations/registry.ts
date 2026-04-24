@@ -2,7 +2,11 @@ import {
   InstitutionalEmailService, 
   InstitutionalStorageService 
 } from './adapter.foundation'
-import { ResendEmailProvider, ConsoleEmailProvider } from './email.providers'
+import { 
+  ResendEmailProvider, 
+  AWSSESEmailProvider, 
+  ConsoleEmailProvider 
+} from './email.providers'
 
 /**
  * 🧠 Integration Registry
@@ -11,15 +15,24 @@ import { ResendEmailProvider, ConsoleEmailProvider } from './email.providers'
 export class IntegrationRegistry {
   
   static getEmailService(): InstitutionalEmailService {
-    const primary = new ResendEmailProvider(process.env.RESEND_API_KEY || '')
-    const finalFallback = new ConsoleEmailProvider()
-    
-    // Pick providers that have keys, always include Console as final fallback
     const activeProviders = []
-    if (process.env.RESEND_API_KEY) activeProviders.push(primary)
+
+    // 1. Primary: Resend
+    if (process.env.RESEND_API_KEY) {
+      activeProviders.push(new ResendEmailProvider(process.env.RESEND_API_KEY))
+    }
     
-    // Console is always added as the ultimate witness
-    activeProviders.push(finalFallback)
+    // 2. Secondary: AWS SES
+    if (process.env.AWS_SES_ACCESS_KEY && process.env.AWS_SES_SECRET_KEY) {
+      activeProviders.push(new AWSSESEmailProvider({
+        region: process.env.AWS_REGION || 'us-east-1',
+        accessKeyId: process.env.AWS_SES_ACCESS_KEY,
+        secretAccessKey: process.env.AWS_SES_SECRET_KEY
+      }))
+    }
+
+    // 3. Ultimate Witness: Console (Always Active)
+    activeProviders.push(new ConsoleEmailProvider())
 
     return new InstitutionalEmailService(activeProviders)
   }
