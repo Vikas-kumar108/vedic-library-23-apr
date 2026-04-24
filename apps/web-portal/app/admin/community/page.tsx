@@ -14,30 +14,23 @@ import {
   Calendar,
   Search
 } from 'lucide-react'
-import { InstitutionalService } from '@/services/institutional-service'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import { useAcademy } from '@/hooks/use-academy'
+import { toast } from 'sonner'
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
 
 export default function SeekerAcademyPage() {
-  const [pulse, setPulse] = useState<any>(null)
-  const [loading, setLoading] = useState(true)
-  const orgId = '75d867c4-f25b-419b-9a84-0a373b5c1c8a' // Mock
+  const { pulse, loading, error, fetchPulse } = useAcademy()
+  const orgId = '75d867c4-f25b-419b-9a84-0a373b5c1c8a' // Mock Org
 
   useEffect(() => {
-    fetchPulse()
-  }, [])
+    fetchPulse(orgId)
+  }, [fetchPulse])
 
-  const fetchPulse = async () => {
-    try {
-      const data = await InstitutionalService.getAcademyPulse(orgId)
-      setPulse(data)
-    } catch (error) {
-      console.error(error)
-    } finally {
-      setLoading(false)
-    }
+  if (error) {
+    toast.error('Failed to manifest community pulse: ' + error)
   }
 
   return (

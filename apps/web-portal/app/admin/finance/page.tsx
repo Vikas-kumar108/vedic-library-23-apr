@@ -24,50 +24,39 @@ import {
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { InstitutionalService } from '@/services/institutional-service'
-import { ComplianceVault } from './components/ComplianceVault'
 import { cn } from '@/lib/utils'
 import { format } from 'date-fns'
 import { toast } from 'sonner'
+import { useFinance } from '@/hooks/use-finance'
+import { useInstitutional } from '@/hooks/use-institutional'
 
 export default function FinanceDashboard() {
-  const [transactions, setTransactions] = useState<any[]>([])
-  const [accounts, setAccounts] = useState<any[]>([])
-  const [compliance, setCompliance] = useState<any>(null)
-  const [loading, setLoading] = useState(true)
+  const { ledger, fetchLedger, loading: financeLoading, error: financeError } = useFinance()
+  const { overview, fetchOverview, loading: instLoading, error: instError } = useInstitutional()
 
   // Mock Org ID
   const orgId = '5d97f5d9-7e5d-4d97-b5d9-7e5d4d97b5d9'
 
   useEffect(() => {
-    loadFinancialData()
-  }, [])
+    fetchLedger(orgId)
+    fetchOverview(orgId)
+  }, [fetchLedger, fetchOverview, orgId])
 
-  const loadFinancialData = async () => {
-    try {
-      setLoading(true)
-      const [ledgerData, compData] = await Promise.all([
-        InstitutionalService.getLedger(orgId),
-        InstitutionalService.getCompliance(orgId)
-      ])
-      // Note: In real app, accounts would come from a separate call
-      // We'll mock accounts based on ledger for now or just hardcode
-      setTransactions(ledgerData)
-      setCompliance(compData)
-      
-      // Mock accounts for visualization
-      setAccounts([
-        { name: 'SBI Institutional A/C', balance: 4500000, type: 'BANK' },
-        { name: 'HDFC Grant Reserve', balance: 1200000, type: 'BANK' },
-        { name: 'Petty Cash - Main Office', balance: 25000, type: 'CASH' },
-      ])
-    } catch (error) {
-      console.error(error)
-      toast.error('Failed to sync financial dharma')
-    } finally {
-      setLoading(false)
+  useEffect(() => {
+    if (financeError || instError) {
+      toast.error('Financial Dharma Sync Interrupted')
     }
-  }
+  }, [financeError, instError])
+
+  // Mock accounts for visualization (Can be moved to a service later)
+  const accounts = [
+    { name: 'SBI Institutional A/C', balance: 4500000, type: 'BANK' },
+    { name: 'HDFC Grant Reserve', balance: 1200000, type: 'BANK' },
+    { name: 'Petty Cash - Main Office', balance: 25000, type: 'CASH' },
+  ]
+
+  const loading = financeLoading || instLoading
+  const transactions = ledger
 
   const totalBalance = accounts.reduce((acc, curr) => acc + Number(curr.balance), 0)
   const pendingTransactions = transactions.filter(t => t.status === 'PENDING')
@@ -248,7 +237,7 @@ export default function FinanceDashboard() {
         </TabsContent>
 
         <TabsContent value="compliance">
-          <ComplianceVault data={compliance} />
+          <ComplianceVault data={overview?.compliance} />
         </TabsContent>
       </Tabs>
     </div>

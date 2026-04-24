@@ -17,12 +17,32 @@ import {
   Terminal
 } from 'lucide-react'
 import Link from 'next/link'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
 import { TaskMonitor } from '@/components/organisms/task-monitor'
 import { cn } from '@/lib/utils'
+import { useInstitutional } from '@/hooks/use-institutional'
+import { useAcademy } from '@/hooks/use-academy'
+import { useFinance } from '@/hooks/use-finance'
+import { useEffect } from 'react'
 
 export default function AdminDashboardPage() {
+  const { health, overview, fetchOverview, fetchContentHealth } = useInstitutional()
+  const { pulse, fetchPulse } = useAcademy()
+  const { ledger, fetchLedger } = useFinance()
+
+  const orgId = '75d867c4-f25b-419b-9a84-0a373b5c1c8a' // Root Org
+
+  useEffect(() => {
+    fetchOverview(orgId)
+    fetchContentHealth()
+    fetchPulse(orgId)
+    fetchLedger(orgId)
+  }, [fetchOverview, fetchContentHealth, fetchPulse, fetchLedger, orgId])
+
+  // Aggregate stats
+  const totalNodes = health?.shastras?.reduce((acc: number, s: any) => acc + s.nodeCount, 0) || 0
+  const netCapital = overview?.stats?.totalFunding || 0
+  const seekerCount = pulse?.circles?.reduce((acc: number, c: any) => acc + c._count.members, 0) || 0
+
   return (
     <div className="min-h-screen bg-slate-950 p-8 space-y-8 animate-in fade-in duration-1000">
       
@@ -54,7 +74,7 @@ export default function AdminDashboardPage() {
           <div className="relative z-10">
             <Badge variant="outline" className="border-indigo-500/30 text-indigo-400 text-[8px] font-black uppercase tracking-widest mb-4">Pillar I: Content</Badge>
             <h2 className="text-3xl font-serif font-bold italic text-slate-100 leading-tight">Shastra <br/>Gold Library</h2>
-            <p className="text-xs text-slate-500 mt-4 max-w-[200px] leading-relaxed">2,320 Nodes verified across 12 scriptures. Ingestion engine operational.</p>
+            <p className="text-xs text-slate-500 mt-4 max-w-[200px] leading-relaxed">{totalNodes.toLocaleString()} Nodes verified across {health?.shastras?.length || 0} scriptures. Ingestion engine operational.</p>
           </div>
           <div className="flex items-end justify-between relative z-10">
             <div className="flex -space-x-2">
@@ -73,7 +93,7 @@ export default function AdminDashboardPage() {
             <div className="mt-6 flex items-center gap-6">
               <div>
                 <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Net Capital</p>
-                <p className="text-xl font-black text-emerald-400">₹5.72 Cr</p>
+                <p className="text-xl font-black text-emerald-400">₹{(netCapital / 10000000).toFixed(2)} Cr</p>
               </div>
               <div className="h-8 w-[1px] bg-slate-800" />
               <div>
@@ -171,7 +191,7 @@ export default function AdminDashboardPage() {
               <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest mt-1">Circles & Vows • Pillar IV</p>
            </div>
            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-slate-400">1,240 Seekers</span>
+              <span className="text-xs font-bold text-slate-400">{seekerCount.toLocaleString()} Seekers</span>
               <ArrowUpRight className="w-5 h-5 text-slate-700 group-hover:text-violet-400 transition-colors" />
            </div>
         </Link>
