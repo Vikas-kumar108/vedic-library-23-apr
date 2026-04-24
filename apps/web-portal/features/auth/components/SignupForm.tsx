@@ -2,24 +2,36 @@
 
 import React, { useState } from 'react'
 import Link from 'next/link'
-import { ArrowRight, Eye, EyeOff, Chrome } from 'lucide-react'
+import { ArrowRight, Eye, EyeOff, Chrome, Loader2, AlertCircle, CheckCircle2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useAuth } from '../hooks/useAuth'
 
 export function SignupForm() {
   const { register } = useAuth()
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [success, setSuccess] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [form, setForm] = useState({ name: '', email: '', password: '' })
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setError(null)
     setForm(p => ({ ...p, [e.target.name]: e.target.value }))
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
-    await register(form)
-    setLoading(false)
+    setError(null)
+    
+    try {
+      await register(form)
+      setSuccess(true)
+    } catch (err: any) {
+      setError(err.message || "An error occurred during registration.")
+    } finally {
+      setLoading(false)
+    }
   }
 
   const passwordStrength = (pw: string) => {
@@ -31,6 +43,28 @@ export function SignupForm() {
   }
   const strength = passwordStrength(form.password)
 
+  if (success) {
+    return (
+      <div className="w-full max-w-md text-center space-y-6 animate-in fade-in zoom-in duration-500">
+        <div className="inline-flex items-center justify-center size-24 rounded-full bg-emerald-50 text-emerald-500 mb-4 shadow-lg shadow-emerald-500/20">
+          <CheckCircle2 size={48} />
+        </div>
+        <div className="space-y-4">
+          <h1 className="text-4xl font-serif font-bold text-slate-900 italic">Sanctuary <span className="text-emerald-500">Secured</span></h1>
+          <p className="text-slate-500 leading-relaxed">
+            We've sent a verification link to <br/><span className="font-bold text-slate-900">{form.email}</span>. <br/>Please verify your identity to begin your journey.
+          </p>
+        </div>
+        <Link
+          href="/auth/login"
+          className="inline-flex items-center justify-center w-full h-14 rounded-2xl bg-slate-900 text-white font-bold text-sm uppercase tracking-widest hover:bg-[#e67e22] transition-all shadow-xl mt-8"
+        >
+          Proceed to Login
+        </Link>
+      </div>
+    )
+  }
+
   return (
     <div className="w-full max-w-md space-y-8 text-left">
       <div className="space-y-2">
@@ -38,7 +72,7 @@ export function SignupForm() {
         <p className="text-sm text-slate-500">Your personalized Vedic journey begins here.</p>
       </div>
 
-      <button className="w-full h-12 bg-white border border-slate-200 rounded-xl flex items-center justify-center gap-3 font-semibold text-slate-700 hover:border-slate-300 transition-all text-sm">
+      <button className="w-full h-12 bg-white border border-slate-200 rounded-xl flex items-center justify-center gap-3 font-semibold text-slate-700 hover:border-slate-300 transition-all text-sm shadow-sm">
         <Chrome className="w-5 h-5 text-blue-500" />
         Continue with Google
       </button>
@@ -50,6 +84,14 @@ export function SignupForm() {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-5">
+        
+        {error && (
+          <div className="bg-rose-50 border border-rose-100 text-rose-600 px-4 py-3 rounded-xl flex items-center gap-3 text-sm animate-in fade-in slide-in-from-top-1 shadow-sm">
+            <AlertCircle size={18} className="flex-shrink-0" />
+            {error}
+          </div>
+        )}
+
         <div className="space-y-1.5">
           <label className="text-[10px] font-bold text-slate-600 uppercase tracking-widest">Full Name</label>
           <input
@@ -59,7 +101,7 @@ export function SignupForm() {
             onChange={handleChange}
             placeholder="Your name as you'd like to be known"
             required
-            className="w-full h-14 px-5 rounded-2xl border border-slate-200 bg-white outline-none focus:ring-4 focus:ring-primary/8 focus:border-primary transition-all text-sm placeholder:text-slate-300"
+            className="w-full h-14 px-5 rounded-2xl border border-slate-200 bg-white outline-none focus:ring-4 focus:ring-primary/8 focus:border-primary transition-all text-sm placeholder:text-slate-300 shadow-sm"
           />
         </div>
 
@@ -72,7 +114,7 @@ export function SignupForm() {
             onChange={handleChange}
             placeholder="name@example.com"
             required
-            className="w-full h-14 px-5 rounded-2xl border border-slate-200 bg-white outline-none focus:ring-4 focus:ring-primary/8 focus:border-primary transition-all text-sm placeholder:text-slate-300"
+            className="w-full h-14 px-5 rounded-2xl border border-slate-200 bg-white outline-none focus:ring-4 focus:ring-primary/8 focus:border-primary transition-all text-sm placeholder:text-slate-300 shadow-sm"
           />
         </div>
 
@@ -86,7 +128,7 @@ export function SignupForm() {
               onChange={handleChange}
               placeholder="Min. 8 characters"
               required
-              className="w-full h-14 pl-5 pr-14 rounded-2xl border border-slate-200 bg-white outline-none focus:ring-4 focus:ring-primary/8 focus:border-primary transition-all text-sm placeholder:text-slate-300"
+              className="w-full h-14 pl-5 pr-14 rounded-2xl border border-slate-200 bg-white outline-none focus:ring-4 focus:ring-primary/8 focus:border-primary transition-all text-sm placeholder:text-slate-300 shadow-sm"
             />
             <button
               type="button"
@@ -127,6 +169,7 @@ export function SignupForm() {
               : "bg-primary text-white shadow-xl shadow-primary/25 hover:shadow-primary/40 hover:scale-[1.01] active:scale-[0.99]"
           )}
         >
+          {loading ? <Loader2 className="animate-spin size-5" /> : null}
           {loading ? 'Creating sanctuary...' : 'Initiate Journey'}
           {!loading && <ArrowRight className="w-5 h-5" />}
         </button>

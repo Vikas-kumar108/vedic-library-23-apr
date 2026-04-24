@@ -26,4 +26,10 @@ export default async function academyRoutes(fastify: FastifyInstance) {
     const { id } = request.params as { id: string }
     return await service.getMentorProfile(id)
   })
+
+  // 4. Learning Curves (Courses)
+  typedFastify.get('/courses', async (request) => {
+    const service = new AcademyService(request.server.prisma)
+    return await service.getLearningCurves()
+  })
 }

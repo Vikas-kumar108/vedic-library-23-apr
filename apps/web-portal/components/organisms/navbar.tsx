@@ -1,34 +1,54 @@
 import React from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 
 export function Navbar() {
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 h-20">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#fdfcf5]/80 backdrop-blur-md border-b border-slate-100 h-24">
       <div className="container mx-auto px-4 h-full flex items-center justify-between">
         {/* Left: Logo */}
-        <Link href="/" className="flex items-center gap-2 group">
-          <div className="w-10 h-10 bg-orange-600 rounded-xl flex items-center justify-center text-white font-bold text-xl group-hover:rotate-12 transition-transform">V</div>
-          <span className="text-xl font-bold tracking-tight text-slate-900">VedicSkills</span>
+        <Link href="/" className="flex items-center gap-4 group">
+          <div className="size-12 bg-[#e67e22] rounded-[1rem] flex items-center justify-center text-white font-black text-2xl group-hover:rotate-12 transition-transform shadow-lg shadow-[#e67e22]/20">V</div>
+          <span className="text-2xl font-serif font-bold italic tracking-tight text-slate-900">VedicSkills</span>
         </Link>
 
         {/* Center: Navigation */}
-        <div className="hidden md:flex items-center gap-8">
-          <Link href="/explore" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Explore</Link>
-          <Link href="/courses" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Courses</Link>
-          <Link href="/library" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Library</Link>
-          <Link href="/dana" className="text-sm font-bold text-orange-600 hover:text-orange-700 transition-colors bg-orange-50 px-4 py-2 rounded-full">Dāna</Link>
-          <Link href="/about" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">About</Link>
+        <div className="hidden md:flex items-center gap-10">
+          <NavLink href="/explore">Explore</NavLink>
+          <NavLink href="/courses">Courses</NavLink>
+          <NavLink href="/library">Library</NavLink>
+          <Link 
+            href="/dana" 
+            className="text-[10px] font-black text-[#e67e22] uppercase tracking-[0.2em] bg-[#e67e22]/5 px-6 py-2.5 rounded-full hover:bg-[#e67e22]/10 transition-all border border-[#e67e22]/10 shadow-sm"
+          >
+            Dāna
+          </Link>
+          <NavLink href="/about">About</NavLink>
         </div>
 
         {/* Right: Actions */}
-        <div className="flex items-center gap-4">
-          <Link href="/auth/login" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors px-4">Login</Link>
-          <Button asChild className="bg-orange-600 hover:bg-orange-700 text-white rounded-xl h-11 px-6 shadow-lg shadow-orange-600/20 font-bold transition-transform hover:scale-105 active:scale-95">
-            <Link href="/onboarding">Start Learning</Link>
+        <div className="flex items-center gap-6">
+          <Link href="/auth/login" className="text-[10px] font-black text-slate-500 hover:text-[#e67e22] uppercase tracking-[0.2em] transition-colors">
+            Login
+          </Link>
+          <Button asChild className="bg-slate-900 hover:bg-[#e67e22] text-white rounded-[1rem] h-14 px-8 shadow-xl shadow-slate-900/10 font-black text-[10px] uppercase tracking-widest transition-all hover:scale-105 active:scale-95">
+            <Link href="/onboarding">Start Journey</Link>
           </Button>
         </div>
       </div>
     </nav>
+  )
+}
+
+function NavLink({ href, children }: { href: string, children: React.ReactNode }) {
+  return (
+    <Link 
+      href={href} 
+      className="text-[10px] font-black text-slate-500 hover:text-[#e67e22] uppercase tracking-[0.2em] transition-all relative group"
+    >
+      {children}
+      <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#e67e22] transition-all group-hover:w-full" />
+    </Link>
   )
 }

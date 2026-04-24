@@ -98,4 +98,19 @@ export class AcademyService {
 
     return mentor
   }
+
+  /**
+   * Get all published learning curves
+   */
+  async getLearningCurves() {
+    return this.prisma.learningCurve.findMany({
+      where: { isPublished: true },
+      include: {
+        _count: {
+          select: { steps: true, userProgress: true }
+        }
+      },
+      orderBy: { createdAt: 'desc' }
+    })
+  }
 }

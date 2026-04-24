@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { ArrowRight, Eye, EyeOff, Chrome } from 'lucide-react'
+import { ArrowRight, Eye, EyeOff, Chrome, Loader2, AlertCircle } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useAuth } from '../hooks/useAuth'
 
@@ -12,17 +12,30 @@ export function LoginForm() {
   const searchParams = useSearchParams()
   const message = searchParams.get('message')
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const [showPassword, setShowPassword] = useState(false)
   const [form, setForm] = useState({ email: '', password: '' })
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setError(null)
     setForm(p => ({ ...p, [e.target.name]: e.target.value }))
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
-    const success = await login(form)
-    setLoading(false)
+    setError(null)
+    
+    try {
+      const success = await login(form)
+      if (!success) {
+         setError("Invalid credentials. Please verify your access details.")
+      }
+    } catch (err: any) {
+      setError(err.message || "An error occurred during authentication.")
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -32,7 +45,7 @@ export function LoginForm() {
         <p className="text-sm text-slate-500">Continue your journey where you left off.</p>
       </div>
 
-      <button className="w-full h-12 bg-white border border-slate-200 rounded-xl flex items-center justify-center gap-3 font-semibold text-slate-700 hover:border-slate-300 transition-all text-sm">
+      <button className="w-full h-12 bg-white border border-slate-200 rounded-xl flex items-center justify-center gap-3 font-semibold text-slate-700 hover:border-slate-300 transition-all text-sm shadow-sm">
         <Chrome className="w-5 h-5 text-blue-500" />
         Sign in with Google
       </button>
@@ -44,7 +57,18 @@ export function LoginForm() {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-5">
-        {message && <div className="p-4 bg-emerald-50 border border-emerald-100 rounded-2xl text-sm text-emerald-700">{message}</div>}
+        {message && (
+          <div className="bg-emerald-50 border border-emerald-100 text-emerald-700 px-4 py-3 rounded-xl flex items-center gap-3 text-sm animate-in fade-in slide-in-from-top-1 shadow-sm">
+            {message}
+          </div>
+        )}
+
+        {error && (
+          <div className="bg-rose-50 border border-rose-100 text-rose-600 px-4 py-3 rounded-xl flex items-center gap-3 text-sm animate-in fade-in slide-in-from-top-1 shadow-sm">
+            <AlertCircle size={18} className="flex-shrink-0" />
+            {error}
+          </div>
+        )}
 
         <div className="space-y-1.5">
           <label className="text-[10px] font-bold text-slate-600 uppercase tracking-widest">Email Address</label>
@@ -55,7 +79,7 @@ export function LoginForm() {
             onChange={handleChange}
             placeholder="name@example.com"
             required
-            className="w-full h-14 px-5 rounded-2xl border border-slate-200 bg-white outline-none focus:ring-4 focus:ring-primary/8 focus:border-primary transition-all text-sm placeholder:text-slate-300"
+            className="w-full h-14 px-5 rounded-2xl border border-slate-200 bg-white outline-none focus:ring-4 focus:ring-primary/8 focus:border-primary transition-all text-sm placeholder:text-slate-300 shadow-sm"
           />
         </div>
 
@@ -74,7 +98,7 @@ export function LoginForm() {
               onChange={handleChange}
               placeholder="••••••••"
               required
-              className="w-full h-14 pl-5 pr-14 rounded-2xl border border-slate-200 bg-white outline-none focus:ring-4 focus:ring-primary/8 focus:border-primary transition-all text-sm placeholder:text-slate-300"
+              className="w-full h-14 pl-5 pr-14 rounded-2xl border border-slate-200 bg-white outline-none focus:ring-4 focus:ring-primary/8 focus:border-primary transition-all text-sm placeholder:text-slate-300 shadow-sm"
             />
             <button
               type="button"
@@ -96,6 +120,7 @@ export function LoginForm() {
               : "bg-primary text-white shadow-xl shadow-primary/25 hover:shadow-primary/40 hover:scale-[1.01] active:scale-[0.99]"
           )}
         >
+          {loading ? <Loader2 className="animate-spin size-5" /> : null}
           {loading ? 'Entering...' : 'Enter Sanctuary'}
           {!loading && <ArrowRight className="w-5 h-5" />}
         </button>

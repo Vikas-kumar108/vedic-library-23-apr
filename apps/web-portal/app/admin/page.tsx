@@ -9,6 +9,8 @@ import { useAcademy } from '@/hooks/use-academy'
 import { useFinance } from '@/hooks/use-finance'
 import { DashboardHeader } from '@/components/admin/DashboardHeader'
 import { BentoGrid } from '@/components/admin/BentoGrid'
+import { QuickActions } from '@/components/admin/QuickActions'
+import { RecentActivity } from '@/components/admin/RecentActivity'
 
 export default function AdminDashboardPage() {
   const { health, overview, fetchOverview, fetchContentHealth } = useInstitutional()
@@ -38,16 +40,26 @@ export default function AdminDashboardPage() {
       {/* 1. Modular Header */}
       <DashboardHeader />
 
-      {/* 2. Modular Bento Grid */}
+      {/* 2. Modular Bento Grid (Stats equivalent) */}
       <BentoGrid stats={stats} />
       
-      {/* 3. System Heartbeat */}
-      <div className="max-w-4xl mx-auto w-full">
+      {/* 3. New Governance Corridors */}
+      <div className="grid lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-1">
+          <QuickActions />
+        </div>
+        <div className="lg:col-span-2">
+          <RecentActivity />
+        </div>
+      </div>
+
+      {/* 4. System Heartbeat */}
+      <div className="w-full">
          <TaskMonitor />
       </div>
 
-      {/* 4. Modular Footer */}
-      <footer className="bg-slate-900/40 border border-slate-800 p-8 rounded-[2.5rem] flex items-center justify-between">
+      {/* 5. Modular Footer */}
+      <footer className="bg-slate-900/40 border border-slate-800 p-8 rounded-[2.5rem] flex items-center justify-between mt-12">
         <div className="flex items-center gap-4">
           <ActivityIcon className="w-5 h-5 text-indigo-400" />
           <p className="text-xs font-bold text-slate-300">Live Audit Trail:</p>
