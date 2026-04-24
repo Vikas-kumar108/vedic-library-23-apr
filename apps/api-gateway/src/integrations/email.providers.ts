@@ -1,43 +1,41 @@
 import { EmailProvider, EmailPayload } from './adapter.foundation'
 import { SESClient, SendEmailCommand } from '@aws-sdk/client-ses'
+import { Resend } from 'resend'
 
 /**
  * 🛰️ Resend Adapter (Primary)
  */
 export class ResendEmailProvider implements EmailProvider {
   name = 'RESEND'
-  constructor(private apiKey: string) {}
+  private resend: Resend
+
+  constructor(apiKey: string) {
+    const cleanKey = apiKey.trim().replace(/['"]+/g, '')
+    this.resend = new Resend(cleanKey)
+  }
 
   async send(payload: EmailPayload): Promise<boolean> {
-    if (!this.apiKey) throw new Error('Resend API Key missing')
-    
-    console.log(`[RESEND] Sending real email to ${payload.to}...`)
+    console.log(`[RESEND] Sending real email via official SDK...`)
     
     try {
-      const res = await fetch('https://api.resend.com/emails', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${this.apiKey}`
-        },
-        body: JSON.stringify({
-          from: payload.from || process.env.INSTITUTIONAL_EMAIL_FROM || 'Vedic Library <onboarding@resend.dev>',
-          to: payload.to,
-          subject: payload.subject,
-          html: payload.html || payload.body
-        })
+      const { data, error } = await this.resend.emails.send({
+        from: payload.from || process.env.INSTITUTIONAL_EMAIL_FROM || 'Vedic Library <onboarding@resend.dev>',
+        to: [payload.to],
+        reply_to: payload.replyTo || 'vedic.skills@gmail.com', // 🎯 The Bridge to your Gmail
+        subject: payload.subject,
+        html: payload.html || payload.body,
+        text: payload.body,
       })
 
-      const data = await res.json()
-      if (res.ok) {
-        console.log(`✅ [RESEND] Email sent: ${data.id}`)
-        return true
-      } else {
-        console.error(`❌ [RESEND] API Error:`, data)
+      if (error) {
+        console.error(`❌ [RESEND] SDK Error:`, error)
         return false
       }
+
+      console.log(`✅ [RESEND] Email sent successfully: ${data?.id}`)
+      return true
     } catch (error) {
-      console.error(`❌ [RESEND] Connection Error:`, error)
+      console.error(`❌ [RESEND] Execution Error:`, error)
       return false
     }
   }
@@ -65,6 +63,7 @@ export class AWSSESEmailProvider implements EmailProvider {
     const command = new SendEmailCommand({
       Source: payload.from || process.env.INSTITUTIONAL_EMAIL_FROM || 'Vedic Library <onboarding@resend.dev>',
       Destination: { ToAddresses: [payload.to] },
+      ReplyToAddresses: [payload.replyTo || 'vedic.skills@gmail.com'], // 🎯 The Bridge to your Gmail
       Message: {
         Subject: { Data: payload.subject },
         Body: {
