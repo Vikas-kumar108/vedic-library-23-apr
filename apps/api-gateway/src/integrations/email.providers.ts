@@ -20,7 +20,7 @@ export class ResendEmailProvider implements EmailProvider {
           'Authorization': `Bearer ${this.apiKey}`
         },
         body: JSON.stringify({
-          from: 'Vedic Library <onboarding@resend.dev>',
+          from: payload.from || process.env.INSTITUTIONAL_EMAIL_FROM || 'Vedic Library <onboarding@resend.dev>',
           to: payload.to,
           subject: payload.subject,
           html: payload.html || payload.body

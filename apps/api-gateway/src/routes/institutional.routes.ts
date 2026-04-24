@@ -158,7 +158,7 @@ export default async function institutionalRoutes(fastify: FastifyInstance) {
             The <b>Vedic Institutional Operating System (VIOS)</b> has successfully manifest its communication pillar. 
           </p>
           <div style="margin-top: 40px; border-top: 1px solid #334155; pt: 20px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.2em; color: #64748b;">
-            System State: Booming • Provider: Resend
+            System State: Booming • Provider: Resend • Identity: ${process.env.INSTITUTIONAL_EMAIL_FROM || 'onboarding@resend.dev'}
           </div>
         </div>
       `

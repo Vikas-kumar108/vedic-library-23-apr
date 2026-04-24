@@ -124,7 +124,10 @@ export default function AdminDashboardPage() {
            <div className="space-y-2">
               <div className="flex items-center justify-between">
                  <span className="text-[9px] font-black text-slate-600 uppercase tracking-widest">Email</span>
-                 <Badge variant="outline" className="text-[8px] h-4 bg-emerald-500/10 text-emerald-500 border-emerald-500/20">Operational</Badge>
+                 <div className="text-right">
+                    <Badge variant="outline" className="text-[8px] h-4 bg-emerald-500/10 text-emerald-500 border-emerald-500/20">Operational</Badge>
+                    <p className="text-[7px] text-slate-500 font-bold mt-1 uppercase tracking-tighter italic">onboarding@resend.dev</p>
+                 </div>
               </div>
               <div className="flex items-center justify-between">
                  <span className="text-[9px] font-black text-slate-600 uppercase tracking-widest">Storage</span>
