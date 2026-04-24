@@ -11,11 +11,15 @@ import { ResendEmailProvider, SendGridEmailProvider } from './email.providers'
 export class IntegrationRegistry {
   
   static getEmailService(): InstitutionalEmailService {
-    const primary = new ResendEmailProvider(process.env.RESEND_API_KEY || 'mock_key')
-    const fallback = new SendGridEmailProvider(process.env.SENDGRID_API_KEY || 'mock_key')
+    const primary = new ResendEmailProvider(process.env.RESEND_API_KEY || '')
+    const fallback = new SendGridEmailProvider(process.env.SENDGRID_API_KEY || '')
     
-    // We can dynamically add more providers from env here
-    return new InstitutionalEmailService([primary, fallback])
+    // Pick providers that have keys
+    const activeProviders = []
+    if (process.env.RESEND_API_KEY) activeProviders.push(primary)
+    if (process.env.SENDGRID_API_KEY) activeProviders.push(fallback)
+
+    return new InstitutionalEmailService(activeProviders)
   }
 
   static getStorageService(): InstitutionalStorageService {

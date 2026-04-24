@@ -130,7 +130,21 @@ export default function AdminDashboardPage() {
                  <span className="text-[9px] font-black text-slate-600 uppercase tracking-widest">Storage</span>
                  <Badge variant="outline" className="text-[8px] h-4 bg-rose-500/10 text-rose-500 border-rose-500/20">Offline</Badge>
               </div>
-              <div className="flex items-center justify-end pt-2">
+              <div className="flex items-center justify-between pt-2">
+                 <Button 
+                   onClick={(e) => {
+                     e.preventDefault()
+                     fetch('http://localhost:3001/institutional/system/proclaim', { 
+                       method: 'POST',
+                       headers: { 'Content-Type': 'application/json' },
+                       body: JSON.stringify({ email: 'vikas@test.com' })
+                     }).then(() => alert('Proclamation Issued!'))
+                   }}
+                   variant="ghost" 
+                   className="text-[8px] font-black uppercase tracking-[0.2em] text-indigo-400 hover:text-white p-0 h-auto"
+                 >
+                   Issue Proclamation
+                 </Button>
                  <ArrowUpRight className="w-4 h-4 text-slate-700 group-hover:text-indigo-400 transition-colors" />
               </div>
            </div>

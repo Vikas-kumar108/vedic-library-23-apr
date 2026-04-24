@@ -9,6 +9,7 @@ import { WisdomEngineService, WisdomContext } from '../services/wisdom-engine.se
 import { TaskOrchestrator } from '../services/task-orchestrator.service'
 import { ProjectService } from '../services/project.service'
 import { AcademyService } from '../services/academy.service'
+import { IntegrationRegistry } from '../integrations/registry'
 import { OrgParamsSchema, LedgerQuerySchema, CreateAssetSchema } from '../schemas/institutional.schema'
 
 export default async function institutionalRoutes(fastify: FastifyInstance) {
@@ -139,5 +140,30 @@ export default async function institutionalRoutes(fastify: FastifyInstance) {
     const service = new AcademyService(request.server.prisma)
     const { userId } = request.params as { userId: string }
     return await service.getSeekerProfile(userId)
+  })
+
+  // 12. Institutional Proclamation (Email Test)
+  typedFastify.post('/system/proclaim', async (request, reply) => {
+    const { email } = request.body as { email: string }
+    const service = IntegrationRegistry.getEmailService()
+    
+    const success = await service.sendEmail({
+      to: email || 'vikas@test.com',
+      subject: '🏛️ Institutional Proclamation: The Voice is Live',
+      body: 'The Vedic Institutional Operating System has successfully manifest its communication pillar. All systems go.',
+      html: `
+        <div style="font-family: serif; background: #0f172a; color: #f1f5f9; padding: 40px; border-radius: 20px;">
+          <h1 style="color: #818cf8; font-style: italic;">Institutional Proclamation</h1>
+          <p style="font-size: 16px; line-height: 1.6;">
+            The <b>Vedic Institutional Operating System (VIOS)</b> has successfully manifest its communication pillar. 
+          </p>
+          <div style="margin-top: 40px; border-top: 1px solid #334155; pt: 20px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.2em; color: #64748b;">
+            System State: Booming • Provider: Resend
+          </div>
+        </div>
+      `
+    })
+
+    return { success }
   })
 }

@@ -10,9 +10,35 @@ export class ResendEmailProvider implements EmailProvider {
   async send(payload: EmailPayload): Promise<boolean> {
     if (!this.apiKey) throw new Error('Resend API Key missing')
     
-    // In a real implementation, we would use fetch or the SDK here
-    console.log(`[RESEND] Simulating email to ${payload.to}`)
-    return true // Simulated success
+    console.log(`[RESEND] Sending real email to ${payload.to}...`)
+    
+    try {
+      const res = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.apiKey}`
+        },
+        body: JSON.stringify({
+          from: 'Vedic Library <onboarding@resend.dev>',
+          to: payload.to,
+          subject: payload.subject,
+          html: payload.html || payload.body
+        })
+      })
+
+      const data = await res.json()
+      if (res.ok) {
+        console.log(`✅ [RESEND] Email sent: ${data.id}`)
+        return true
+      } else {
+        console.error(`❌ [RESEND] API Error:`, data)
+        return false
+      }
+    } catch (error) {
+      console.error(`❌ [RESEND] Connection Error:`, error)
+      return false
+    }
   }
 }
 
