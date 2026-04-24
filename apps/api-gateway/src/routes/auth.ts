@@ -1,9 +1,11 @@
 import { FastifyInstance, FastifyPluginOptions } from 'fastify'
 import { AuthService } from '../services/auth.service'
 import { z } from 'zod'
+import { IntegrationRegistry } from '../integrations/registry'
 
 export default async function authRoutes(fastify: FastifyInstance, options: FastifyPluginOptions) {
-  const authService = new AuthService(fastify.prisma)
+  const emailService = IntegrationRegistry.getEmailService()
+  const authService = new AuthService(fastify.prisma, emailService)
 
   const signupSchema = z.object({
     name: z.string().min(2),

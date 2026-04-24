@@ -2,11 +2,15 @@ import { PrismaClient, UserRole } from '@dharma/data-access'
 import bcrypt from 'bcryptjs'
 import crypto from 'crypto'
 import jwt from 'jsonwebtoken'
+import { InstitutionalEmailService } from '../integrations/adapter.foundation'
 
 const JWT_SECRET = process.env.JWT_SECRET || 'vedic-secret-key-108'
 
 export class AuthService {
-  constructor(private prisma: PrismaClient) {}
+  constructor(
+    private prisma: PrismaClient,
+    private emailService?: InstitutionalEmailService
+  ) {}
 
   async register(data: any) {
     const { email, password, name } = data
@@ -35,8 +39,24 @@ export class AuthService {
       include: { profile: true }
     })
 
-    // Mock sending email
-    console.log(`📧 [MOCK EMAIL] Verification link for ${email}: /auth/verify?token=${verification_token}`)
+    // 🛰️ Send Institutional Verification Email
+    if (this.emailService) {
+      await this.emailService.sendEmail({
+        to: email,
+        subject: 'Welcome to the Vedic Gurukulam • Verify Identity',
+        body: `Please verify your email using this token: ${verification_token}`,
+        html: `
+          <div style="font-family: serif; padding: 40px; border: 1px solid #eee; border-radius: 20px;">
+            <h2 style="color: #9333ea italic;">Welcome to the Gurukulam</h2>
+            <p>Your spiritual journey requires identity verification.</p>
+            <a href="${process.env.FRONTEND_URL}/auth/verify?token=${verification_token}" 
+               style="background: #9333ea; color: white; padding: 12px 24px; text-decoration: none; border-radius: 12px; font-weight: bold; display: inline-block;">
+               Complete Verification
+            </a>
+          </div>
+        `
+      })
+    }
 
     return {
       id: user.id,
@@ -88,7 +108,24 @@ export class AuthService {
       },
     })
 
-    console.log(`📧 [MOCK EMAIL] Password reset link for ${email}: /auth/reset-password?token=${reset_token}`)
+    // 🛰️ Send Institutional Reset Email
+    if (this.emailService) {
+      await this.emailService.sendEmail({
+        to: email,
+        subject: 'Password Reset • Vedic Institutional OS',
+        body: `Reset your password using this token: ${reset_token}`,
+        html: `
+          <div style="font-family: serif; padding: 40px; border: 1px solid #eee; border-radius: 20px;">
+            <h2 style="color: #9333ea italic;">Identity Recovery</h2>
+            <p>A request was made to reset your institutional credentials.</p>
+            <a href="${process.env.FRONTEND_URL}/auth/reset-password?token=${reset_token}" 
+               style="background: #9333ea; color: white; padding: 12px 24px; text-decoration: none; border-radius: 12px; font-weight: bold; display: inline-block;">
+               Reset Password
+            </a>
+          </div>
+        `
+      })
+    }
 
     return { message: 'If an account exists, a reset link has been sent' }
   }
