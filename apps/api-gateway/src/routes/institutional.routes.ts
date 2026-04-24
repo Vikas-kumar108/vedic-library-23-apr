@@ -1,7 +1,9 @@
 import { FastifyInstance } from 'fastify'
 import { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { InstitutionalService } from '../services/institutional.service'
-import { OrgParamsSchema, LedgerQuerySchema } from '../schemas/institutional.schema'
+import { AssetService } from '../services/asset.service'
+import { ComplianceService } from '../services/compliance.service'
+import { OrgParamsSchema, LedgerQuerySchema, CreateAssetSchema } from '../schemas/institutional.schema'
 
 export default async function institutionalRoutes(fastify: FastifyInstance) {
   const typedFastify = fastify.withTypeProvider<ZodTypeProvider>()
@@ -35,5 +37,31 @@ export default async function institutionalRoutes(fastify: FastifyInstance) {
     const { orgId } = request.params
     const { limit, offset } = request.query
     return await service.getLedger(orgId, limit, offset)
+  })
+
+  // 4. Asset Management
+  typedFastify.get('/assets/:orgId', {
+    schema: { params: OrgParamsSchema }
+  }, async (request) => {
+    const service = new AssetService(request.server.prisma)
+    const { orgId } = request.params
+    return await service.listAssets(orgId)
+  })
+
+  typedFastify.post('/assets', {
+    schema: { body: CreateAssetSchema }
+  }, async (request, reply) => {
+    const service = new AssetService(request.server.prisma)
+    const asset = await service.createAsset(request.body as any)
+    return reply.code(201).send(asset)
+  })
+
+  // 5. Compliance & Legal Audit
+  typedFastify.get('/compliance/:orgId', {
+    schema: { params: OrgParamsSchema }
+  }, async (request) => {
+    const service = new ComplianceService(request.server.prisma)
+    const { orgId } = request.params
+    return await service.getComplianceOverview(orgId)
   })
 }

@@ -15,7 +15,8 @@ import {
   HeartHandshake,
   IndianRupee,
   MessageSquare,
-  ChevronRight
+  ChevronRight,
+  Package
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
@@ -37,6 +38,7 @@ export function AdminSidebar() {
     { label: 'Users', icon: UsersIcon, href: '/admin/users' },
     { label: 'Content', icon: FileText, href: '/admin/content' },
     { label: 'Payments', icon: CreditCard, href: '/admin/payments' },
+    { label: 'Institutional Assets', icon: Package, href: '/admin/assets' },
     { label: 'Analytics', icon: Activity, href: '/admin/analytics' },
   ]
 

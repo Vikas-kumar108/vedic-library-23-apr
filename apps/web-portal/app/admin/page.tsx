@@ -12,8 +12,10 @@ import {
   Bell, 
   Clock, 
   ArrowUpRight,
-  MoreVertical
+  MoreVertical,
+  Package
 } from 'lucide-react'
+import Link from 'next/link'
 import { Button } from '@/components/atoms/button'
 import { AdminSidebar } from '@/components/organisms/admin-sidebar'
 import { cn } from '@/lib/utils'
@@ -144,6 +146,19 @@ export default function AdminDashboardPage() {
                 </div>
                 <ArrowUpRight className="w-6 h-6 text-slate-200 group-hover:text-primary transition-colors" />
               </button>
+
+              <Link href="/admin/assets" className="flex items-center justify-between p-6 bg-white border border-slate-100 text-slate-700 rounded-[1.5rem] shadow-sm hover:shadow-md hover:border-indigo-200 transition-all group">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-indigo-50 rounded-xl flex items-center justify-center">
+                    <Package className="w-6 h-6 text-indigo-500" />
+                  </div>
+                  <div className="text-left">
+                    <div className="font-bold text-slate-900">Institutional Assets</div>
+                    <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">QR Inventory</div>
+                  </div>
+                </div>
+                <ArrowUpRight className="w-6 h-6 text-slate-200 group-hover:text-indigo-500 transition-colors" />
+              </Link>
 
               <div className="p-8 bg-slate-900 rounded-[2rem] text-white space-y-6 relative overflow-hidden">
                 <div className="relative z-10 space-y-2">

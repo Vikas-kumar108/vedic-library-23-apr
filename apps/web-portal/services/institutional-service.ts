@@ -26,5 +26,27 @@ export const InstitutionalService = {
     const res = await fetch(`${API_URL}/institutional/ledger/${orgId}`, { cache: 'no-store' })
     if (!res.ok) throw new Error('Failed to fetch ledger')
     return res.json()
+  },
+
+  async getAssets(orgId: string): Promise<any[]> {
+    const res = await fetch(`${API_URL}/institutional/assets/${orgId}`, { cache: 'no-store' })
+    if (!res.ok) throw new Error('Failed to fetch assets')
+    return res.json()
+  },
+
+  async createAsset(data: any): Promise<any> {
+    const res = await fetch(`${API_URL}/institutional/assets`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+    if (!res.ok) throw new Error('Failed to create asset')
+    return res.json()
+  },
+
+  async getCompliance(orgId: string): Promise<any> {
+    const res = await fetch(`${API_URL}/institutional/compliance/${orgId}`, { cache: 'no-store' })
+    if (!res.ok) throw new Error('Failed to fetch compliance')
+    return res.json()
   }
 }
