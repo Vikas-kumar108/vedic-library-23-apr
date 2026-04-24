@@ -5,17 +5,17 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { toast } from "sonner"
-import { Button } from "@/components/atoms/button"
-import { Input } from "@/components/atoms/input"
-import { Checkbox } from "@/components/atoms/checkbox"
-import { Textarea } from "@/components/atoms/textarea"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Textarea } from "@/components/ui/textarea"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/atoms/card"
+} from "@/components/ui/card"
 import { CheckCircle, IndianRupee, CreditCard, Shield, Loader2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 

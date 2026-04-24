@@ -3,15 +3,15 @@
 import { useState } from "react"
 import Image from "next/image"
 import { toast } from "sonner"
-import { Button } from "@/components/atoms/button"
+import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/atoms/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/atoms/tabs"
+} from "@/components/ui/card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Copy, Check, QrCode, Building2 } from "lucide-react"
 
 interface PaymentInfoCardProps {

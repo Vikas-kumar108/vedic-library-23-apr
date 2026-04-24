@@ -5,7 +5,7 @@ import { Navbar } from "@/components/organisms/navbar"
 import { PaymentInfoCard } from "@/features/dana/PaymentInfoCard"
 import { DonationForm } from "@/features/dana/DonationForm"
 import { RazorpayCheckout } from "@/features/dana/RazorpayCheckout"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/atoms/tabs"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Heart, BookOpen, Users, Globe, CreditCard, QrCode, ShieldCheck, Zap } from "lucide-react"
 import { cn } from "@/lib/utils"
 
