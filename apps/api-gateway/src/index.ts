@@ -6,6 +6,10 @@ import libraryRoutes from './routes/library.routes'
 import authRoutes from './routes/auth'
 import discoveryRoutes from './routes/discovery.routes'
 import institutionalRoutes from './routes/institutional.routes'
+import academyRoutes from './routes/academy.routes'
+import projectRoutes from './routes/project.routes'
+import systemRoutes from './routes/system.routes'
+import complianceRoutes from './routes/compliance.routes'
 
 const fastify = Fastify({
   logger: true,
@@ -21,6 +25,10 @@ await fastify.register(libraryRoutes, { prefix: '/library' })
 await fastify.register(authRoutes, { prefix: '/auth' })
 await fastify.register(discoveryRoutes, { prefix: '/discovery' })
 await fastify.register(institutionalRoutes, { prefix: '/institutional' })
+await fastify.register(academyRoutes, { prefix: '/institutional/academy' })
+await fastify.register(projectRoutes, { prefix: '/institutional/projects' })
+await fastify.register(systemRoutes, { prefix: '/institutional/system' })
+await fastify.register(complianceRoutes, { prefix: '/institutional/compliance' })
 
 // Health Check
 fastify.get('/health', async () => {
