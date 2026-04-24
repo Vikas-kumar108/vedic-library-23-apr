@@ -1,16 +1,24 @@
-import React from 'react'
+'use client'
+
+import React, { useState } from 'react'
 import Link from 'next/link'
 import { Navbar } from '@/components/organisms/navbar'
 import { Hero } from '@/components/organisms/hero'
 import { Button } from '@/components/atoms/button'
+import { Badge } from '@/components/atoms/badge'
 import { 
   BookOpen, 
   Sparkles, 
   PenTool, 
   ChevronRight,
   Clock,
-  Quote
+  Quote,
+  ShieldCheck,
+  Zap,
+  Globe,
+  Plus
 } from 'lucide-react'
+import { RequestShastraModal } from '@/features/library/RequestShastraModal'
 
 const valueProps = [
   { id: 'learn', title: 'Learn', icon: BookOpen, desc: 'Structured paths for deep understanding', color: 'bg-blue-100 text-blue-600' },
@@ -25,6 +33,8 @@ const featuredContent = [
 ]
 
 export default function LandingPage() {
+  const [isRequestOpen, setIsRequestOpen] = useState(false)
+
   return (
     <main className="min-h-screen bg-white">
       <Navbar />
@@ -83,6 +93,69 @@ export default function LandingPage() {
             ))}
           </div>
         </div>
+      </section>
+
+      {/* 🏛️ Sovereign Institutional Outreach Section */}
+      <section className="py-32 bg-slate-900 relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-500 blur-[120px] rounded-full" />
+          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-500 blur-[120px] rounded-full" />
+        </div>
+
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-4xl mx-auto space-y-16">
+            
+            <div className="text-center space-y-6">
+              <Badge variant="outline" className="border-blue-400/30 text-blue-400 font-black tracking-widest uppercase text-[10px] px-6 py-2 rounded-full backdrop-blur-md">
+                Institutional Dharma & Outreach
+              </Badge>
+              <h2 className="text-4xl md:text-6xl font-serif font-bold italic text-white leading-tight">
+                Sovereign Wisdom for the <span className="text-blue-400">Global Seeker</span>
+              </h2>
+              <p className="text-slate-400 text-lg md:text-xl leading-relaxed font-medium">
+                The Vedic Institutional Operating System is built on the philosophy of total transparency and resilient accessibility. Explore our cloud-hosted shastra vault and request the knowledge you need.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              {[
+                { title: 'Free Digital Shastras', icon: Globe, desc: 'Unrestricted access to high-fidelity shastra scans and commentaries.', tag: 'Public Good' },
+                { title: 'Branded Transmissions', icon: Zap, desc: 'Verified wisdom updates delivered directly from wisdom@vedicskills.com.', tag: 'High Trust' },
+                { title: 'Resilient Cloud Vault', icon: ShieldCheck, desc: 'Your wisdom assets are secured by institutional-grade cloud infrastructure.', tag: 'Sovereign' },
+              ].map((item, i) => (
+                <div key={i} className="p-10 bg-white/5 border border-white/10 rounded-[3rem] backdrop-blur-xl group hover:bg-white/10 transition-all">
+                  <div className="w-12 h-12 bg-blue-500/20 text-blue-400 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <item.icon className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-4 italic font-serif">{item.title}</h3>
+                  <p className="text-slate-400 text-sm leading-relaxed mb-6">{item.desc}</p>
+                  <div className="text-[9px] font-black text-blue-400 uppercase tracking-widest opacity-60">
+                    {item.tag}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="p-12 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-[3.5rem] shadow-2xl flex flex-col md:flex-row items-center justify-between gap-10">
+              <div className="space-y-4 text-center md:text-left">
+                <h3 className="text-3xl font-serif font-bold italic text-white leading-tight">Can't find a specific Shastra?</h3>
+                <p className="text-blue-100 text-sm max-w-sm">Our institutional mandate is to provide any sacred text you seek. Tell us what you need, and we will manifest it.</p>
+              </div>
+              <Button 
+                onClick={() => setIsRequestOpen(true)}
+                className="h-16 px-10 bg-white hover:bg-slate-50 text-blue-700 rounded-2xl font-black text-xs uppercase tracking-[0.2em] shadow-xl transition-transform hover:scale-105 active:scale-95 whitespace-nowrap"
+              >
+                <Plus className="w-4 h-4 mr-2" /> Request Shastra Access
+              </Button>
+            </div>
+
+          </div>
+        </div>
+
+        <RequestShastraModal 
+          isOpen={isRequestOpen} 
+          onClose={() => setIsRequestOpen(false)} 
+        />
       </section>
 
       {/* How It Works */}
