@@ -2,7 +2,7 @@ import {
   InstitutionalEmailService, 
   InstitutionalStorageService 
 } from './adapter.foundation'
-import { ResendEmailProvider, SendGridEmailProvider } from './email.providers'
+import { ResendEmailProvider, ConsoleEmailProvider } from './email.providers'
 
 /**
  * 🧠 Integration Registry
@@ -12,12 +12,14 @@ export class IntegrationRegistry {
   
   static getEmailService(): InstitutionalEmailService {
     const primary = new ResendEmailProvider(process.env.RESEND_API_KEY || '')
-    const fallback = new SendGridEmailProvider(process.env.SENDGRID_API_KEY || '')
+    const finalFallback = new ConsoleEmailProvider()
     
-    // Pick providers that have keys
+    // Pick providers that have keys, always include Console as final fallback
     const activeProviders = []
     if (process.env.RESEND_API_KEY) activeProviders.push(primary)
-    if (process.env.SENDGRID_API_KEY) activeProviders.push(fallback)
+    
+    // Console is always added as the ultimate witness
+    activeProviders.push(finalFallback)
 
     return new InstitutionalEmailService(activeProviders)
   }

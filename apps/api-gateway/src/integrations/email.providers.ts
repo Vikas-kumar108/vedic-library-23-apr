@@ -43,16 +43,24 @@ export class ResendEmailProvider implements EmailProvider {
 }
 
 /**
- * 🛰️ SendGrid Adapter (Fallback)
+ * 🛰️ Console Adapter (Final Fallback)
+ * Purpose: Ensures emails are at least logged when all external gateways are offline.
  */
-export class SendGridEmailProvider implements EmailProvider {
-  name = 'SENDGRID'
-  constructor(private apiKey: string) {}
-
+export class ConsoleEmailProvider implements EmailProvider {
+  name = 'CONSOLE'
   async send(payload: EmailPayload): Promise<boolean> {
-    if (!this.apiKey) throw new Error('SendGrid API Key missing')
-    
-    console.log(`[SENDGRID] Simulating fallback email to ${payload.to}`)
-    return true // Simulated success
+    console.log(`
+╔══════════════════════════════════════════════════════════════════════════════
+║ 📧 [CONSOLE EMAIL FALLBACK]
+╠══════════════════════════════════════════════════════════════════════════════
+║ FROM:    ${payload.from || 'System'}
+║ TO:      ${payload.to}
+║ SUBJECT: ${payload.subject}
+╠══════════════════════════════════════════════════════════════════════════════
+║ BODY:
+║ ${payload.html || payload.body}
+╚══════════════════════════════════════════════════════════════════════════════
+`)
+    return true
   }
 }
