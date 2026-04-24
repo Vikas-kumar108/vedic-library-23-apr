@@ -166,4 +166,10 @@ export default async function institutionalRoutes(fastify: FastifyInstance) {
 
     return { success }
   })
+
+  // 13. Content Inventory & Health
+  typedFastify.get('/content/health', async (request) => {
+    const service = new InstitutionalService(request.server.prisma)
+    return await service.getContentHealth()
+  })
 }

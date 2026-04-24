@@ -128,5 +128,11 @@ export const InstitutionalService = {
       body: JSON.stringify({ email })
     })
     return res.json()
+  },
+
+  async getContentHealth(): Promise<any> {
+    const res = await fetch(`${API_URL}/institutional/content/health`, { cache: 'no-store' })
+    if (!res.ok) throw new Error('Failed to fetch content health')
+    return res.json()
   }
 }

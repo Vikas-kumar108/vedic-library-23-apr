@@ -75,4 +75,34 @@ export class InstitutionalService {
       }
     })
   }
+
+  /**
+   * Fetches the health and inventory of the Shastra database.
+   */
+  async getContentHealth() {
+    const shastras = await this.prisma.shastra.findMany({
+      include: {
+        _count: {
+          select: { nodes: true }
+        }
+      }
+    })
+
+    const textStats = await this.prisma.text.groupBy({
+      by: ['language'],
+      _count: { _all: true }
+    })
+
+    return {
+      shastras: shastras.map(s => ({
+        id: s.id,
+        name: s.name,
+        slug: s.slug,
+        nodeCount: s._count.nodes,
+        status: s.status,
+        updatedAt: s.updatedAt
+      })),
+      languages: textStats
+    }
+  }
 }
