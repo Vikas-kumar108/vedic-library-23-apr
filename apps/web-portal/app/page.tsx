@@ -15,7 +15,8 @@ import {
   Plus, 
   GraduationCap,
   PlayCircle,
-  Users
+  Users,
+  Quote
 } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
