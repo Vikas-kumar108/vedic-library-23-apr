@@ -1,6 +1,7 @@
 import Fastify from 'fastify'
 import { serializerCompiler, validatorCompiler, ZodTypeProvider } from 'fastify-type-provider-zod'
 import cors from '@fastify/cors'
+import rateLimit from '@fastify/rate-limit'
 import prismaPlugin from './plugins/prisma'
 import libraryRoutes from './routes/library.routes'
 import authRoutes from './routes/auth'
@@ -23,6 +24,10 @@ fastify.setSerializerCompiler(serializerCompiler)
 
 // Register Plugins
 await fastify.register(cors)
+await fastify.register(rateLimit, {
+  max: 100,
+  timeWindow: '1 minute'
+})
 await fastify.register(prismaPlugin)
 await fastify.register(libraryRoutes, { prefix: '/library' })
 await fastify.register(authRoutes, { prefix: '/auth' })

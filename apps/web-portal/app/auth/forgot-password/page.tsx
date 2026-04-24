@@ -10,13 +10,31 @@ export default function ForgotPasswordPage() {
   const [success, setSuccess] = useState(false)
   const [email, setEmail] = useState('')
 
+  const [error, setError] = useState<string | null>(null)
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500))
-    setSuccess(true)
-    setLoading(false)
+    setError(null)
+    
+    try {
+      const res = await fetch('/api/auth/forgot-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      })
+
+      if (res.ok) {
+        setSuccess(true)
+      } else {
+        const data = await res.json()
+        setError(data.error || 'Failed to send recovery link.')
+      }
+    } catch (err) {
+      setError('Connection failed. Please try again.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -51,6 +69,11 @@ export default function ForgotPasswordPage() {
         {/* Content */}
         {!success ? (
           <form onSubmit={handleSubmit} className="space-y-6">
+            {error && (
+              <div className="p-4 bg-rose-50 border border-rose-100 text-rose-600 rounded-2xl text-sm">
+                {error}
+              </div>
+            )}
             <div className="space-y-1.5">
               <label className="text-xs font-bold text-slate-600 uppercase tracking-widest">Email Address</label>
               <input

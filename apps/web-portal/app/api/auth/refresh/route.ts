@@ -1,30 +1,33 @@
 import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 
-export async function POST(request: Request) {
+export async function POST() {
   try {
-    const body = await request.json()
-    const response = await fetch(`${process.env.API_GATEWAY_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4444'}/auth/login`, {
+    const cookieStore = await cookies()
+    const refreshToken = cookieStore.get('vedic_refresh')?.value
+
+    if (!refreshToken) {
+      return NextResponse.json({ error: 'No refresh token' }, { status: 401 })
+    }
+
+    const response = await fetch(`${process.env.API_GATEWAY_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4444'}/auth/refresh`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
+      body: JSON.stringify({ token: refreshToken }),
     })
 
     const data = await response.json()
 
     if (response.ok && data.accessToken) {
-      const cookieStore = await cookies()
-      
-      // Access Token (15 min)
+      // Rotate cookies
       cookieStore.set('vedic_token', data.accessToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'lax',
         path: '/',
-        maxAge: 15 * 60, 
+        maxAge: 15 * 60,
       })
 
-      // Refresh Token (7 days)
       cookieStore.set('vedic_refresh', data.refreshToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
@@ -33,14 +36,11 @@ export async function POST(request: Request) {
         maxAge: 7 * 24 * 60 * 60,
       })
 
-      // Remove tokens from client response
-      const { accessToken, refreshToken, ...user } = data
-      return NextResponse.json(user, { status: 200 })
+      return NextResponse.json({ success: true })
     }
 
-    return NextResponse.json(data, { status: response.status })
+    return NextResponse.json({ error: 'Refresh failed' }, { status: 401 })
   } catch (error: any) {
-    console.error('Login Route Error:', error)
     return NextResponse.json({ error: error.message }, { status: 500 })
   }
 }

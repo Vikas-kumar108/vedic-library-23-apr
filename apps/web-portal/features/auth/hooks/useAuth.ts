@@ -22,29 +22,34 @@ export function useAuth() {
   const [isLoading, setIsLoading] = useState(true)
   const router = useRouter()
 
-  const logout = useCallback(() => {
-    localStorage.removeItem('vedic_token')
-    localStorage.removeItem('vedic_user')
-    setUser(null)
-    router.push('/auth/login')
-    toast.success('Pranams. You have been safely signed out.')
+  const logout = useCallback(async () => {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' })
+    } catch (err) {
+      console.error('Logout request failed', err)
+    } finally {
+      setUser(null)
+      router.push('/auth/login')
+      toast.success('Pranams. You have been safely signed out.')
+    }
   }, [router])
 
   const checkAuth = useCallback(async () => {
     try {
-      const token = localStorage.getItem('vedic_token')
-      const savedUser = localStorage.getItem('vedic_user')
-      
-      if (token && savedUser) {
-        setUser(JSON.parse(savedUser))
+      const res = await fetch('/api/auth/me')
+      if (res.ok) {
+        const data = await res.json()
+        setUser(data)
+      } else {
+        setUser(null)
       }
     } catch (err) {
       console.error('Session restoration failed', err)
-      logout()
+      setUser(null)
     } finally {
       setIsLoading(false)
     }
-  }, [logout])
+  }, [])
 
   useEffect(() => {
     checkAuth()
@@ -52,7 +57,7 @@ export function useAuth() {
 
   const login = async (credentials: any) => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
+      const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(credentials)
@@ -60,8 +65,6 @@ export function useAuth() {
 
       const data = await res.json()
       if (res.ok) {
-        localStorage.setItem('vedic_token', data.token)
-        localStorage.setItem('vedic_user', JSON.stringify(data.user))
         setUser(data.user)
         toast.success(`Welcome back, ${data.user.name}`)
         router.push('/dashboard')
@@ -78,7 +81,7 @@ export function useAuth() {
 
   const register = async (details: any) => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
+      const res = await fetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(details)
@@ -87,7 +90,6 @@ export function useAuth() {
       const data = await res.json()
       if (res.ok) {
         toast.success('Registration successful. Please verify your email.')
-        router.push('/auth/login')
         return true
       } else {
         toast.error(data.error || 'Registration failed')

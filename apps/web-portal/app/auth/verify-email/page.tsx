@@ -4,18 +4,43 @@ import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Mail, RefreshCcw, ArrowLeft, Sparkles, CheckCircle2, Inbox } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { useSearchParams } from 'next/navigation'
+import { toast } from 'sonner'
 
 export default function VerifyEmailPage() {
   const [loading, setLoading] = useState(false)
   const [sent, setSent] = useState(false)
 
+  const searchParams = useSearchParams()
+  const email = searchParams.get('email')
+
   const handleResend = async () => {
+    if (!email) {
+      toast.error('Email address not found. Please try signing up again.')
+      return
+    }
+
     setLoading(true)
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500))
-    setSent(true)
-    setLoading(false)
-    setTimeout(() => setSent(false), 5000)
+    try {
+      const res = await fetch('/api/auth/verify-email/request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      })
+
+      if (res.ok) {
+        setSent(true)
+        toast.success('Initiation link resent. Check your vessel.')
+        setTimeout(() => setSent(false), 5000)
+      } else {
+        const data = await res.json()
+        toast.error(data.error || 'Failed to resend link.')
+      }
+    } catch (err) {
+      toast.error('Connection failed.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (

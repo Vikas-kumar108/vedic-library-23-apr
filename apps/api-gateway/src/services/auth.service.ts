@@ -2,9 +2,11 @@ import { PrismaClient, UserRole } from '@dharma/data-access'
 import bcrypt from 'bcryptjs'
 import crypto from 'crypto'
 import jwt from 'jsonwebtoken'
+import { nanoid } from 'nanoid'
 import { InstitutionalEmailService } from '../integrations/adapter.foundation'
 
 const JWT_SECRET = process.env.JWT_SECRET || 'vedic-secret-key-108'
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000'
 
 export class AuthService {
   constructor(
@@ -191,25 +193,156 @@ export class AuthService {
       throw new Error('Invalid credentials')
     }
 
-    const isMatch = await bcrypt.compare(password, user.password || '')
-    if (!isMatch) {
-      throw new Error('Invalid credentials')
+    // 1. Check for Account Lockout
+    if (user.accountLockedUntil && user.accountLockedUntil > new Date()) {
+      throw new Error(`Account locked. Please try again after ${user.accountLockedUntil.toLocaleTimeString()}`)
     }
 
-    const token = jwt.sign(
+    const isMatch = await bcrypt.compare(password, user.password || '')
+    
+    if (!isMatch) {
+      // 2. Handle Failed Attempt
+      const failedAttempts = (user.failedLoginAttempts || 0) + 1
+      const isLockout = failedAttempts >= 5
+      
+      await this.prisma.user.update({
+        where: { id: user.id },
+        data: {
+          failedLoginAttempts: failedAttempts,
+          accountLockedUntil: isLockout ? new Date(Date.now() + 30 * 60000) : null // 30 mins lockout
+        }
+      })
+
+      // 3. Log Security Incident
+      await this.prisma.auditLog.create({
+        data: {
+          action: 'LOGIN_FAILED',
+          performedById: user.id,
+          module: 'AUTH',
+          oldData: { attempts: failedAttempts }
+        }
+      })
+
+      throw new Error(isLockout ? 'Too many failed attempts. Account locked for 30 minutes.' : 'Invalid credentials')
+    }
+
+    // 4. Reset Failed Attempts on Success
+    await this.prisma.user.update({
+      where: { id: user.id },
+      data: {
+        failedLoginAttempts: 0,
+        accountLockedUntil: null,
+        lastActive: new Date()
+      }
+    })
+
+    // 5. Log Successful Login
+    await this.prisma.auditLog.create({
+      data: {
+        action: 'LOGIN_SUCCESS',
+        performedById: user.id,
+        module: 'AUTH'
+      }
+    })
+
+    const accessToken = jwt.sign(
       { userId: user.id, email: user.email, roles: user.roles },
       JWT_SECRET,
-      { expiresIn: '7d' }
+      { expiresIn: '15m' }
     )
 
+    const refreshToken = nanoid(64)
+    const refreshTokenHash = await bcrypt.hash(refreshToken, 10)
+
+    await this.prisma.session.create({
+      data: {
+        userId: user.id,
+        refreshTokenHash,
+        expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
+      }
+    })
+
     return {
-      token,
+      accessToken,
+      refreshToken,
       user: {
         id: user.id,
         email: user.email,
         name: user.profile?.full_name,
         roles: user.roles,
         emailVerified: user.emailVerified,
+      }
+    }
+  }
+
+  async validateToken(token: string) {
+    try {
+      const decoded = jwt.verify(token, JWT_SECRET) as any
+      const user = await this.prisma.user.findUnique({
+        where: { id: decoded.userId },
+        include: { profile: true }
+      })
+
+      if (!user) {
+        throw new Error('User not found')
+      }
+
+      return {
+        id: user.id,
+        email: user.email,
+        name: user.profile?.full_name,
+        roles: user.roles,
+        emailVerified: user.emailVerified,
+      }
+    } catch (error) {
+      throw new Error('Invalid or expired token')
+    }
+  }
+
+  async refreshToken(token: string) {
+    const sessions = await this.prisma.session.findMany({
+      where: { expiresAt: { gt: new Date() } },
+      include: { user: { include: { profile: true } } }
+    })
+
+    let matchedSession = null
+    for (const s of sessions) {
+      if (await bcrypt.compare(token, s.refreshTokenHash)) {
+        matchedSession = s
+        break
+      }
+    }
+
+    if (!matchedSession) {
+      throw new Error('Invalid or expired refresh token')
+    }
+
+    const newRefreshToken = nanoid(64)
+    const newHash = await bcrypt.hash(newRefreshToken, 10)
+
+    await this.prisma.session.update({
+      where: { id: matchedSession.id },
+      data: {
+        refreshTokenHash: newHash,
+        expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+        lastActive: new Date()
+      }
+    })
+
+    const accessToken = jwt.sign(
+      { userId: matchedSession.user.id, email: matchedSession.user.email, roles: matchedSession.user.roles },
+      JWT_SECRET,
+      { expiresIn: '15m' }
+    )
+
+    return {
+      accessToken,
+      refreshToken: newRefreshToken,
+      user: {
+        id: matchedSession.user.id,
+        email: matchedSession.user.email,
+        name: matchedSession.user.profile?.full_name,
+        roles: matchedSession.user.roles,
       }
     }
   }

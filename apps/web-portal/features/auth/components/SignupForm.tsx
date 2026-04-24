@@ -25,8 +25,10 @@ export function SignupForm() {
     setError(null)
     
     try {
-      await register(form)
-      setSuccess(true)
+      const success = await register(form)
+      if (success) {
+        router.push(`/auth/verify-email?email=${encodeURIComponent(form.email)}`)
+      }
     } catch (err: any) {
       setError(err.message || "An error occurred during registration.")
     } finally {

@@ -70,4 +70,39 @@ export default async function authRoutes(fastify: FastifyInstance, options: Fast
       return reply.code(401).send({ error: error.message })
     }
   })
+
+  fastify.get('/me', async (request, reply) => {
+    const authHeader = request.headers.authorization
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return reply.code(401).send({ error: 'Missing or invalid authorization header' })
+    }
+
+    const token = authHeader.split(' ')[1]
+    try {
+      const user = await authService.validateToken(token)
+      return reply.send(user)
+    } catch (error: any) {
+      return reply.code(401).send({ error: error.message })
+    }
+  })
+
+  fastify.post('/resend-verification', async (request, reply) => {
+    const { email } = request.body as { email: string }
+    try {
+      await authService.resendVerificationEmail(email)
+      return reply.send({ message: 'Verification email resent' })
+    } catch (error: any) {
+      return reply.code(400).send({ error: error.message })
+    }
+  })
+
+  fastify.post('/refresh', async (request, reply) => {
+    const { token } = request.body as { token: string }
+    try {
+      const result = await authService.refreshToken(token)
+      return reply.send(result)
+    } catch (error: any) {
+      return reply.code(401).send({ error: error.message })
+    }
+  })
 }
