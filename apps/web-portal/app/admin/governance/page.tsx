@@ -91,7 +91,7 @@ export default async function GovernanceDashboard() {
                                 )}>{c.status}</Badge>
                              </div>
                              <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1 flex items-center gap-2">
-                               <Users className="w-3 h-3" /> Responsible: {c.responsible?.full_name || 'Unassigned'}
+                               <Users className="w-3 h-3" /> Responsible: {c.responsible?.profile?.full_name || 'Unassigned'}
                              </p>
                           </div>
                        </div>

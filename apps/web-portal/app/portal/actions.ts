@@ -14,6 +14,9 @@ export async function validatePortalToken(token: string) {
       include: {
         organization: {
           select: { name: true, type: true }
+        },
+        documents: {
+          include: { document: true }
         }
       }
     })
@@ -33,11 +36,7 @@ export async function validatePortalToken(token: string) {
     })
 
     // Fetch the actual documents
-    const documents = await prisma.legalDocument.findMany({
-      where: {
-        id: { in: shareLink.documentIds }
-      }
-    })
+    const documents = shareLink.documents.map(d => d.document)
 
     return { 
       success: true, 
@@ -56,18 +55,20 @@ export async function validatePortalToken(token: string) {
  * Fetches students assigned to a specific mentor portal token.
  */
 export async function getMentorStudents(mentorId: string) {
-  // Logic to fetch students assigned to this mentor
+  // Logic to fetch students assigned to this mentor via circles
   const students = await prisma.user.findMany({
     where: {
-      mentoredBy: {
-        some: { id: mentorId }
+      circleMemberships: {
+        some: {
+          circle: {
+            mentorId: mentorId
+          }
+        }
       }
     },
-    select: {
-      id: true,
-      full_name: true,
-      village: true,
-      journeyStage: true
+    include: {
+      profile: true,
+      spiritual: true
     }
   })
   return students

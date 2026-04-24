@@ -1,34 +1,84 @@
 import { PrismaClient } from '@prisma/client'
+import { searchByIntent } from '@dharma/search-domain'
 
-/**
- * DiscoveryService: The "Search & Recommendation" Engine.
- * 
- * Purpose: This service bridges the gap between ancient Shastra nodes and modern life situations.
- * It is responsible for finding practical wisdom that is relevant to a user's specific 
- * Life Stage and nature, while strictly enforcing Adhikāra (Eligibility) rules.
- */
 export class DiscoveryService {
   constructor(private prisma: PrismaClient) {}
 
   /**
-   * searchPractical: Performs a natural language search for life-relevant wisdom.
-   * 
-   * @param query - The search term (e.g., "family tension", "career stress").
-   * @param eligibilityLevel - The user's Adhikāra level (1-5).
-   * 
-   * Responsibility:
-   * 1. Search thematic Tags for keyword matches.
-   * 2. Filter nodes within those tags based on user eligibility.
-   * 3. Fallback to general text search if no specific tags are found.
+   * getRecommended: Suggests wisdom based on user stage and tags.
    */
+  async getRecommended(eligibilityLevel: number, tags: string[] = []) {
+    // 1. Try to find nodes by tags first
+    const results = await this.prisma.nodeTag.findMany({
+      where: {
+        node: { sensitivity: { lte: eligibilityLevel } },
+        tag: { slug: { in: tags.length > 0 ? tags : ['daily-wisdom', 'grihastha-dharma'] } }
+      },
+      include: {
+        node: {
+          include: {
+            texts: { take: 1 },
+            shastra: true
+          }
+        }
+      },
+      take: 3
+    })
+
+    if (results.length > 0) {
+      return results.map(r => ({
+        id: r.node.id,
+        slug: r.node.slug,
+        title: r.node.canonicalRef || r.node.slug,
+        shastra: r.node.shastra.name,
+        text: r.node.texts[0]?.content || '',
+        type: 'recommendation'
+      }))
+    }
+
+    // 2. Fallback to generic high-level wisdom
+    const fallback = await this.prisma.node.findMany({
+      where: { sensitivity: { lte: eligibilityLevel } },
+      include: {
+        texts: { take: 1 },
+        shastra: true
+      },
+      take: 1
+    })
+
+    return fallback.map(n => ({
+      id: n.id,
+      slug: n.slug,
+      title: n.canonicalRef || n.slug,
+      shastra: n.shastra.name,
+      text: n.texts[0]?.content || '',
+      type: 'fallback'
+    }))
+  }
+
   async searchPractical(query: string, eligibilityLevel: number = 1) {
-    // Search tags based on keywords or name
+    // Use the refined Intent-Search engine
+    const results = await searchByIntent(query, eligibilityLevel)
+
+    if (results.length > 0) {
+      return results.map(r => ({
+        tagId: 'intent-match',
+        tagName: 'Wisdom Match',
+        nodeId: r.nodeId,
+        slug: r.canonicalRef,
+        level: 'verse',
+        text: r.content,
+        language: 'mixed',
+        shastra: r.shastraName
+      }))
+    }
+
+    // Fallback to legacy tag search if no intent found
     const tags = await this.prisma.tag.findMany({
       where: {
         OR: [
           { name: { contains: query, mode: 'insensitive' } },
           { description: { contains: query, mode: 'insensitive' } },
-          { keywords: { hasSome: [query.toLowerCase()] } },
         ],
       },
       include: {
@@ -41,18 +91,15 @@ export class DiscoveryService {
           include: {
             node: {
               include: {
-                texts: {
-                  take: 1,
-                },
-              },
-            },
+                texts: { take: 1 }
+              }
+            }
           },
-          take: 5,
-        },
-      },
+          take: 5
+        }
+      }
     })
 
-    // If no tags found, try searching texts directly
     let nodeResults = tags.flatMap(tag => 
       tag.nodes.map(tn => ({
         tagId: tag.id,
@@ -103,13 +150,11 @@ export class DiscoveryService {
       include: {
         node: {
           include: {
-            texts: {
-              take: 1,
-            },
-          },
-        },
+            texts: { take: 1 }
+          }
+        }
       },
-      take: 20,
+      take: 20
     })
 
     return nodes.map(n => ({

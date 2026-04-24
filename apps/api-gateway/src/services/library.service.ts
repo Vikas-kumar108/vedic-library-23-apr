@@ -158,7 +158,7 @@ export class LibraryService {
 
     // DYNAMIC REFERENCE: Use formatReference if canonicalRef is missing
     if (!verse.meta.canonicalRef) {
-      verse.meta.canonicalRef = formatReference(node.shastra.slug, 0, node.orderIndex)
+      verse.meta.canonicalRef = formatReference(node.shastra.slug, 0, node.orderIndex || 0)
     }
 
     return verse

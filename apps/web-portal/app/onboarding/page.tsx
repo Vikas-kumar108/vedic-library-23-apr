@@ -11,7 +11,7 @@ import Link from 'next/link'
 // ─── Types ───────────────────────────────────────────────
 type Selections = {
   name: string
-  stage: string
+  ageGroup: string
   interests: string[]
   goal: string
 }
@@ -122,10 +122,10 @@ function StepStage({ sel, setSel, onNext }: { sel: Selections; setSel: React.Dis
         {STAGES.map(s => (
           <button
             key={s.id}
-            onClick={() => { setSel(p => ({ ...p, stage: s.id })); onNext() }}
+            onClick={() => { setSel(p => ({ ...p, ageGroup: s.id })); onNext() }}
             className={cn(
               "p-8 bg-white rounded-[2rem] border-2 text-left transition-all hover:scale-[1.02] hover:shadow-xl group",
-              sel.stage === s.id
+              sel.ageGroup === s.id
                 ? "border-primary ring-4 ring-primary/10 bg-primary/5"
                 : "border-slate-100 hover:border-primary/40"
             )}
@@ -338,7 +338,7 @@ export default function OnboardingPage() {
   const [step, setStep] = useState(1)
   const [selections, setSelections] = useState<Selections>({
     name: '',
-    stage: '',
+    ageGroup: '',
     interests: [],
     goal: ''
   })

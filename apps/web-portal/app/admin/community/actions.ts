@@ -21,44 +21,77 @@ export async function upsertMemberRecord(data: any, adminUser: any) {
     const result = await prisma.user.upsert({
       where: { id: id || '00000000-0000-0000-0000-000000000000' },
       update: {
-        full_name: payload.full_name,
-        phoneNumber: payload.phoneNumber,
-        whatsappNumber: payload.whatsappNumber,
-        gender: payload.gender,
-        dateOfBirth: payload.dateOfBirth ? new Date(payload.dateOfBirth) : null,
-        village: payload.village,
-        city: payload.city,
-        state: payload.state,
-        pinCode: payload.pinCode,
-        addressLine1: payload.addressLine1,
-        notes: payload.notes,
-        maritalStatus: payload.maritalStatus,
-        education: payload.education,
-        occupation: payload.occupation,
         roles: payload.roles as UserRole[],
-        metadata: {
-          ...payload.metadata,
-          lastModified: new Date().toISOString()
+        profile: {
+          upsert: {
+            create: {
+              full_name: payload.full_name,
+              phoneNumber: payload.phoneNumber,
+              whatsappNumber: payload.whatsappNumber,
+              gender: payload.gender,
+              village: payload.village,
+              city: payload.city,
+              state: payload.state,
+              pinCode: payload.pinCode,
+              addressLine1: payload.addressLine1,
+            },
+            update: {
+              full_name: payload.full_name,
+              phoneNumber: payload.phoneNumber,
+              whatsappNumber: payload.whatsappNumber,
+              gender: payload.gender,
+              village: payload.village,
+              city: payload.city,
+              state: payload.state,
+              pinCode: payload.pinCode,
+              addressLine1: payload.addressLine1,
+            }
+          }
+        },
+        preferences: {
+          upsert: {
+            create: {
+              metadata: {
+                ...payload.metadata,
+                notes: payload.notes,
+                lastModified: new Date().toISOString()
+              }
+            },
+            update: {
+              metadata: {
+                ...payload.metadata,
+                notes: payload.notes,
+                lastModified: new Date().toISOString()
+              }
+            }
+          }
         }
       },
       create: {
-        full_name: payload.full_name,
         email: payload.email || `${payload.full_name?.toLowerCase().replace(/ /g, '.')}.${Date.now()}@internal.vedic`,
-        phoneNumber: payload.phoneNumber,
-        whatsappNumber: payload.whatsappNumber,
-        gender: payload.gender,
-        dateOfBirth: payload.dateOfBirth ? new Date(payload.dateOfBirth) : null,
-        village: payload.village,
-        city: payload.city,
-        state: payload.state,
-        pinCode: payload.pinCode,
-        addressLine1: payload.addressLine1,
-        notes: payload.notes,
         roles: payload.roles as UserRole[],
         isOnline: false,
-        metadata: {
-          source: 'admin-crm',
-          createdAt: new Date().toISOString()
+        profile: {
+          create: {
+              full_name: payload.full_name,
+              phoneNumber: payload.phoneNumber,
+              whatsappNumber: payload.whatsappNumber,
+              gender: payload.gender,
+              village: payload.village,
+              city: payload.city,
+              state: payload.state,
+              pinCode: payload.pinCode,
+              addressLine1: payload.addressLine1,
+          }
+        },
+        preferences: {
+          create: {
+            metadata: {
+              notes: payload.notes,
+              source: 'admin-crm',
+              createdAt: new Date().toISOString()
+            }
+          }
         }
       }
     })
@@ -75,13 +108,27 @@ export async function addContributionRecord(userId: string, data: any, adminUser
   try {
     protectAction([UserRole.admin, UserRole.director], adminUser)
     
+    const orgId = '00000000-0000-0000-0000-000000000001' // Default Org
+    const transaction = await prisma.transaction.create({
+      data: {
+        orgId,
+        amount: data.amount,
+        type: 'INCOME',
+        purpose: data.purpose,
+        category: 'Donation',
+        paymentMethod: 'OTHER',
+        recordedById: adminUser.id,
+        status: 'PENDING'
+      }
+    })
     const contribution = await prisma.contribution.create({
       data: {
+        orgId,
         userId,
+        transactionId: transaction.id,
         amount: data.amount,
-        type: data.type,
+        type: data.type || 'FINANCIAL',
         purpose: data.purpose,
-        date: new Date()
       }
     })
     revalidatePath(`/admin/community/${userId}`)
@@ -132,14 +179,14 @@ export async function getMembers(filters: any = {}) {
       where: {
         ...filters,
       },
-      orderBy: {
-        full_name: 'asc'
-      },
       include: {
+        profile: true,
+        spiritual: true,
         familyLinks: true,
         contributions: true,
       }
     })
+    return users.sort((a, b) => (a.profile?.full_name || '').localeCompare(b.profile?.full_name || ''))
   } catch (error) {
     console.error('GET_MEMBERS_ERROR:', error)
     return []

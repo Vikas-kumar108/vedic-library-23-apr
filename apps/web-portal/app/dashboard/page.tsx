@@ -23,6 +23,7 @@ import Link from 'next/link'
 import { FinancialTransparency } from '@/components/organisms/crm/financial-transparency'
 import { MemberJourney } from '@/components/organisms/crm/member-journey'
 import { ActivityFeed } from '@/components/organisms/crm/activity-feed'
+import { useRecommendations } from '@/hooks/use-recommendations'
 
 /**
  * Integrated Dashboard
@@ -33,6 +34,7 @@ export default function DashboardPage() {
   const { user, isLoading: authLoading } = useAuth()
   const { courses, isLoading: coursesLoading } = useCourses()
   const { stats, isLoading: sadhanaLoading } = useSadhana()
+  const { recommendations, isLoading: recsLoading } = useRecommendations(3) // Default to stage 3 for demo
 
   if (authLoading) return <div className="p-12 animate-pulse text-slate-400 font-serif italic text-xl">Entering the Gurukulam...</div>
 
@@ -52,7 +54,7 @@ export default function DashboardPage() {
           </div>
           <div className="flex items-center gap-4">
             <Badge variant="outline" className="h-10 px-6 rounded-xl border-slate-100 text-slate-500 font-bold uppercase tracking-widest text-[10px]">
-              Stage: {user?.stage || 'Sadhaka'}
+              Stage: {user?.spiritual?.ageGroup || 'Sadhaka'}
             </Badge>
             <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest italic flex items-center gap-2">
               <Zap className="w-3 h-3 text-primary" /> {stats?.currentStreak || 0} Day Sadhana Streak
@@ -132,27 +134,42 @@ export default function DashboardPage() {
           {/* Recommended Readings (Semantic Guidance) */}
           <section className="space-y-6">
             <h2 className="text-xs font-bold text-slate-900 uppercase tracking-[0.2em]">Recommended Wisdom</h2>
-            <div className="bg-slate-900 rounded-[3rem] p-10 text-white relative overflow-hidden group">
-              <div className="relative z-10 space-y-8">
-                <div className="space-y-2">
-                  <div className="text-primary font-bold text-[10px] uppercase tracking-widest flex items-center gap-2">
-                    <TrendingUp className="w-4 h-4" /> Based on your Stage: {user?.stage || 'Sadhaka'}
+            {recsLoading ? (
+               <div className="h-64 bg-slate-900 rounded-[3rem] animate-pulse flex items-center justify-center text-slate-700 font-serif italic text-xl">
+                 Channeling Cosmic Insights...
+               </div>
+            ) : recommendations[0] ? (
+              <div className="bg-slate-900 rounded-[3rem] p-10 text-white relative overflow-hidden group border border-slate-800">
+                <div className="relative z-10 space-y-8">
+                  <div className="space-y-2">
+                    <div className="text-amber-500 font-bold text-[10px] uppercase tracking-widest flex items-center gap-2">
+                      <TrendingUp className="w-4 h-4" /> Based on your Stage: {user?.stage || 'Sadhaka'}
+                    </div>
+                    <h3 className="text-3xl font-serif font-bold italic leading-tight max-w-lg">
+                      {recommendations[0].title}
+                    </h3>
+                    <p className="text-white/60 text-sm leading-relaxed max-w-md italic line-clamp-3">
+                      {recommendations[0].text}
+                    </p>
+                    <div className="text-[10px] text-amber-500/50 font-bold uppercase tracking-widest mt-2">
+                      Source: {recommendations[0].shastra}
+                    </div>
                   </div>
-                  <h3 className="text-3xl font-serif font-bold italic leading-tight max-w-lg">
-                    Balance & Duty: Navigating the Grihastha Life
-                  </h3>
-                  <p className="text-white/40 text-sm leading-relaxed max-w-md italic">
-                    A collection of verses from Bhagavad Gītā Chapter 3, specifically curated for your current life path.
-                  </p>
+                  <Button asChild className="h-14 px-8 rounded-2xl bg-white text-slate-900 font-bold shadow-xl shadow-white/10 group/btn">
+                    <Link href={`/library/${recommendations[0].slug}`}>
+                      Open Revelation <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-2 transition-transform" />
+                    </Link>
+                  </Button>
                 </div>
-                <Button className="h-14 px-8 rounded-2xl bg-white text-slate-900 font-bold shadow-xl shadow-white/10 group/btn">
-                  Open Collection <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-2 transition-transform" />
-                </Button>
+                <div className="absolute top-0 right-0 p-10 opacity-10 group-hover:scale-110 transition-transform">
+                  <BookOpen className="w-48 h-48" />
+                </div>
               </div>
-              <div className="absolute top-0 right-0 p-10 opacity-10 group-hover:scale-110 transition-transform">
-                <BookOpen className="w-48 h-48" />
+            ) : (
+              <div className="p-10 border border-dashed border-slate-200 rounded-[3rem] text-center text-slate-400 text-sm italic">
+                The library is silent today. Continue your daily vows to reveal new insights.
               </div>
-            </div>
+            )}
           </section>
         </div>
 

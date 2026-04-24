@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { prisma } from '@/lib/prisma'
 import { protectAction } from '@/lib/rbac'
-import { UserRole, TransactionType } from '@/lib/prisma'
+import { UserRole, TransactionType, TransactionStatus } from '@/lib/prisma'
 
 /**
  * FINANCIAL DHARMA ACTIONS
@@ -29,7 +29,7 @@ export async function createTransaction(data: any, adminUser: any) {
           paymentMethod: data.paymentMethod,
           proofUrl: data.proofUrl,
           recordedById: adminUser.id,
-          status: 'PENDING'
+          status: TransactionStatus.PENDING
         }
       })
 
@@ -64,18 +64,18 @@ export async function approveTransaction(id: string, adminUser: any) {
       const updated = await tx.transaction.update({
         where: { id },
         data: { 
-          status: 'APPROVED',
+          status: TransactionStatus.APPROVED,
           approvedById: adminUser.id
         }
       })
 
       // Update Account Balances
-      if (updated.type === 'EXPENSE' && updated.sourceAccountId) {
+      if (updated.type === TransactionType.EXPENSE && updated.sourceAccountId) {
         await tx.financialAccount.update({
           where: { id: updated.sourceAccountId },
           data: { balance: { decrement: updated.amount } }
         })
-      } else if (updated.type === 'INCOME' && updated.destinationAccountId) {
+      } else if (updated.type === TransactionType.INCOME && updated.destinationAccountId) {
         await tx.financialAccount.update({
           where: { id: updated.destinationAccountId },
           data: { balance: { increment: updated.amount } }
@@ -110,12 +110,12 @@ export async function getFinancialReports(adminUser: any) {
     const [income, expenses, balances] = await Promise.all([
       prisma.transaction.groupBy({
         by: ['category'],
-        where: { type: 'INCOME', status: 'APPROVED' },
+        where: { type: TransactionType.INCOME, status: TransactionStatus.APPROVED },
         _sum: { amount: true }
       }),
       prisma.transaction.groupBy({
         by: ['category'],
-        where: { type: 'EXPENSE', status: 'APPROVED' },
+        where: { type: TransactionType.EXPENSE, status: TransactionStatus.APPROVED },
         _sum: { amount: true }
       }),
       prisma.financialAccount.findMany()
@@ -133,7 +133,7 @@ export async function getTransactions(filters: any = {}) {
       where: filters,
       orderBy: { date: 'desc' },
       include: {
-        recordedBy: true,
+        recordedBy: { include: { profile: true } },
         sourceAccount: true,
         destinationAccount: true,
         program: true

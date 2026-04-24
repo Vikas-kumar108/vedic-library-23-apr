@@ -68,7 +68,7 @@ export default function ProfilePage() {
             
             <div className="flex gap-4">
               <Badge className="bg-primary/5 text-primary rounded-lg text-[10px] font-bold uppercase tracking-widest py-1.5 px-4">
-                Life Stage: {user?.stage}
+                Life Stage: {user?.roles?.includes('student') ? 'Brahmacari' : 'Grihastha'}
               </Badge>
               <Badge variant="outline" className="rounded-lg text-[10px] font-bold uppercase tracking-widest py-1.5 px-4 border-slate-100 text-slate-500">
                 Seeker Level 2

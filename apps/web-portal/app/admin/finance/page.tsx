@@ -128,7 +128,7 @@ export default async function FinanceDashboard() {
                                 <div>
                                    <p className="text-sm font-bold text-slate-900">{t.purpose}</p>
                                    <p className="text-[9px] text-slate-400 font-bold uppercase tracking-widest mt-1 flex items-center gap-2 italic">
-                                     <Clock className="w-3 h-3" /> {format(new Date(t.date), 'MMM d, yyyy')} • {t.recordedBy?.full_name || 'System'}
+                                     <Clock className="w-3 h-3" /> {format(new Date(t.date), 'MMM d, yyyy')} • {t.recordedBy?.profile?.full_name || 'System'}
                                    </p>
                                 </div>
                              </div>

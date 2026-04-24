@@ -27,9 +27,9 @@ export default function AdminUsersPage() {
   const [showAddForm, setShowAddForm] = React.useState(false)
   
   const users = [
-    { id: '1', name: 'Nitai Das', email: 'nitai@vedicskills.com', stage: 'Grihastha', tier: 'PRACTITIONER', joinDate: '2026-04-10' },
-    { id: '2', name: 'Radha K.', email: 'radha@wisdom.org', stage: 'Brahmacharini', tier: 'SCHOLAR', joinDate: '2026-04-12' },
-    { id: '3', name: 'Shiva M.', email: 'shiva@gmail.com', stage: 'Grihastha', tier: 'SEEKER', joinDate: '2026-04-15' },
+    { id: '1', name: 'Nitai Das', email: 'nitai@vedicskills.com', ageGroup: 'Grihastha', tier: 'PRACTITIONER', joinDate: '2026-04-10' },
+    { id: '2', name: 'Radha K.', email: 'radha@wisdom.org', ageGroup: 'Brahmacharini', tier: 'SCHOLAR', joinDate: '2026-04-12' },
+    { id: '3', name: 'Shiva M.', email: 'shiva@gmail.com', ageGroup: 'Grihastha', tier: 'SEEKER', joinDate: '2026-04-15' },
   ]
 
   return (
@@ -190,7 +190,7 @@ export default function AdminUsersPage() {
                   </div>
                 </td>
                 <td className="px-8 py-6">
-                   <Badge variant="outline" className="rounded-lg text-[9px] border-slate-100 text-slate-500 font-bold">{user.stage}</Badge>
+                   <Badge variant="outline" className="rounded-lg text-[9px] border-slate-100 text-slate-500 font-bold">{user.ageGroup}</Badge>
                 </td>
                 <td className="px-8 py-6">
                    <div className="flex items-center gap-2">

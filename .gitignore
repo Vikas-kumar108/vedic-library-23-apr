@@ -1,12 +1,10 @@
-node_modules
-# Keep environment variables out of version control
-.env
-
-/lib/generated/prisma
-
-.next/
 node_modules/
-dist/
+**/node_modules/
+.env
+.next/
+**/dist/
 .DS_Store
 *.sst
 *.meta
+*.tsbuildinfo
+.turbo/

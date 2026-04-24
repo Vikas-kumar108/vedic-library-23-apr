@@ -80,7 +80,9 @@ export async function createSecureShareLink(orgId: string, documentIds: string[]
         token,
         purpose,
         expiresAt,
-        documentIds
+        documents: {
+          create: documentIds.map(id => ({ documentId: id, accessLevel: 'READ' }))
+        }
       }
     })
 
@@ -135,8 +137,8 @@ export async function getComplianceRecords(filters: any = {}) {
       where: filters,
       orderBy: { dueDate: 'asc' },
       include: {
-        responsible: true,
-        supervisor: true
+        responsible: { include: { profile: true } },
+        supervisor: { include: { profile: true } }
       }
     })
   } catch (error) {

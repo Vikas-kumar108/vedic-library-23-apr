@@ -7,5 +7,5 @@ declare const prisma: PrismaClient<import("@prisma/client").Prisma.PrismaClientO
 export default prisma;
 export { prisma };
 export * from '@prisma/client';
-export { PrismaClient } from '@prisma/client';
+export { PrismaClient, UserRole } from '@prisma/client';
 //# sourceMappingURL=index.d.ts.map

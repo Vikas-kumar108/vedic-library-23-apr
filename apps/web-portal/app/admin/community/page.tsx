@@ -20,7 +20,7 @@ export default async function CommunityAdminPage() {
   const stats = [
     { label: 'Total Community', value: members.length, icon: Users, color: 'bg-blue-500' },
     { label: 'Active Donors', value: members.filter(m => m.roles.includes('donor')).length, icon: HeartHandshake, color: 'bg-orange-500' },
-    { label: 'Villages Covered', value: new Set(members.map(m => m.village).filter(Boolean)).size, icon: MapPin, color: 'bg-green-500' },
+    { label: 'Villages Covered', value: new Set(members.map(m => m.profile?.village).filter(Boolean)).size, icon: MapPin, color: 'bg-green-500' },
   ]
 
   return (
@@ -99,22 +99,22 @@ export default async function CommunityAdminPage() {
                   <td className="px-8 py-6">
                     <div className="flex items-center gap-4">
                       <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center border border-slate-200 overflow-hidden">
-                        {member.avatarUrl ? (
-                          <img src={member.avatarUrl} alt="" className="w-full h-full object-cover" />
+                        {member.profile?.avatarUrl ? (
+                          <img src={member.profile.avatarUrl} alt="" className="w-full h-full object-cover" />
                         ) : (
                           <Users className="w-6 h-6 text-slate-300" />
                         )}
                       </div>
                       <div>
-                        <p className="font-bold text-slate-900 leading-tight">{member.full_name}</p>
-                        <p className="text-[11px] text-slate-400 mt-1">{member.phoneNumber || member.email}</p>
+                        <p className="font-bold text-slate-900 leading-tight">{member.profile?.full_name || 'Unknown'}</p>
+                        <p className="text-[11px] text-slate-400 mt-1">{member.profile?.phoneNumber || member.email}</p>
                       </div>
                     </div>
                   </td>
                   <td className="px-8 py-6">
                     <div className="flex items-center gap-2 text-slate-600 font-medium">
                       <MapPin className="w-3 h-3 text-orange-400" />
-                      {member.village || 'N/A'}, {member.city || ''}
+                      {member.profile?.village || 'N/A'}, {member.profile?.city || ''}
                     </div>
                   </td>
                   <td className="px-8 py-6">

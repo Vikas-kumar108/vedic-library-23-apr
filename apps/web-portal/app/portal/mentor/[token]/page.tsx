@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import { 
   Users, 
@@ -21,13 +19,12 @@ import { cn } from '@/lib/utils'
  * Path: /portal/mentor/[token]
  */
 
-const ASSIGNED_STUDENTS = [
-  { id: '1', name: 'Ramesh Kumar', village: 'Mayapur', stage: 'Gita Practitioner', progress: 75 },
-  { id: '2', name: 'Anjali Sharma', village: 'Ranaghat', stage: 'Beginner', progress: 30 },
-  { id: '3', name: 'Gopal Das', village: 'Nabadwip', stage: 'Sadhaka', progress: 92 },
-]
+import { getMentorStudents } from '../../actions'
 
-export default function MentorPortal({ params }: { params: { token: string } }) {
+export default async function MentorPortal({ params }: { params: { token: string } }) {
+  // In a real app, token would resolve to a mentorId. Using dummy mentorId for now.
+  const mentorId = '00000000-0000-0000-0000-000000000000'
+  const assignedStudents = await getMentorStudents(mentorId)
   return (
     <div className="min-h-screen bg-white p-10 space-y-12 animate-in fade-in duration-1000">
       
@@ -45,7 +42,7 @@ export default function MentorPortal({ params }: { params: { token: string } }) 
                 Authorized Mentor Access
               </Badge>
               <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest flex items-center gap-2">
-                <Users className="w-3 h-3 text-emerald-500" /> 12 Students Assigned
+                <Users className="w-3 h-3 text-emerald-500" /> {assignedStudents.length} Students Assigned
               </p>
            </div>
         </div>
@@ -66,7 +63,7 @@ export default function MentorPortal({ params }: { params: { token: string } }) 
             </div>
 
             <div className="grid md:grid-cols-3 gap-8">
-               {ASSIGNED_STUDENTS.map((student) => (
+               {assignedStudents.map((student) => (
                   <div key={student.id} className="group p-8 bg-slate-50 border border-slate-100 rounded-[2.5rem] hover:bg-white hover:shadow-2xl hover:border-emerald-100 transition-all cursor-pointer">
                      <div className="space-y-6">
                         <div className="flex justify-between items-start">
@@ -74,22 +71,22 @@ export default function MentorPortal({ params }: { params: { token: string } }) 
                               <Users className="w-6 h-6" />
                            </div>
                            <Badge className="bg-white text-emerald-600 text-[8px] font-black tracking-widest border border-emerald-50">
-                              {student.progress}% GROWTH
+                              ACTIVE GROWTH
                            </Badge>
                         </div>
                         <div className="space-y-1">
-                           <h3 className="text-xl font-bold text-slate-900">{student.name}</h3>
+                           <h3 className="text-xl font-bold text-slate-900">{student.profile?.full_name || 'Unknown'}</h3>
                            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest flex items-center gap-1 italic">
-                              <MapPin className="w-3 h-3" /> {student.village}
+                              <MapPin className="w-3 h-3" /> {student.profile?.village || 'Unknown Village'}
                            </p>
                         </div>
                         <div className="space-y-3">
                            <div className="flex justify-between text-[10px] font-black uppercase tracking-widest text-slate-400">
                               <span>Stage</span>
-                              <span className="text-slate-900">{student.stage}</span>
+                              <span className="text-slate-900">{student.spiritual?.ageGroup || 'Sadhaka'}</span>
                            </div>
                            <div className="h-1.5 w-full bg-slate-200 rounded-full overflow-hidden">
-                              <div className="h-full bg-emerald-500 rounded-full transition-all duration-1000" style={{ width: `${student.progress}%` }} />
+                              <div className="h-full bg-emerald-500 rounded-full transition-all duration-1000" style={{ width: `50%` }} />
                            </div>
                         </div>
                         <Button variant="ghost" className="w-full h-12 rounded-xl border border-slate-200 text-slate-900 font-black text-[10px] uppercase tracking-widest group-hover:bg-emerald-600 group-hover:text-white group-hover:border-emerald-600 transition-all">

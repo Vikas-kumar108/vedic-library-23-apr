@@ -1,4 +1,4 @@
-import { PrismaClient, UserRole } from '@prisma/client'
+import { PrismaClient, UserRole } from '@dharma/data-access'
 import bcrypt from 'bcryptjs'
 import crypto from 'crypto'
 import jwt from 'jsonwebtoken'
@@ -20,25 +20,28 @@ export class AuthService {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10)
-    const verificationToken = crypto.randomBytes(32).toString('hex')
+    const verification_token = crypto.randomBytes(32).toString('hex')
 
     const user = await this.prisma.user.create({
       data: {
         email,
         password: hashedPassword,
-        name,
-        verificationToken,
+        verification_token,
         roles: [UserRole.student],
+        profile: {
+          create: { full_name: name }
+        }
       },
+      include: { profile: true }
     })
 
     // Mock sending email
-    console.log(`📧 [MOCK EMAIL] Verification link for ${email}: /auth/verify?token=${verificationToken}`)
+    console.log(`📧 [MOCK EMAIL] Verification link for ${email}: /auth/verify?token=${verification_token}`)
 
     return {
       id: user.id,
       email: user.email,
-      name: user.name,
+      name: user.profile?.full_name,
       roles: user.roles,
       message: 'Please verify your email to complete registration'
     }
@@ -46,7 +49,7 @@ export class AuthService {
 
   async verifyEmail(token: string) {
     const user = await this.prisma.user.findFirst({
-      where: { verificationToken: token },
+      where: { verification_token: token },
     })
 
     if (!user) {
@@ -57,7 +60,7 @@ export class AuthService {
       where: { id: user.id },
       data: {
         emailVerified: new Date(),
-        verificationToken: null,
+        verification_token: null,
       },
     })
 
@@ -74,18 +77,18 @@ export class AuthService {
       return { message: 'If an account exists, a reset link has been sent' }
     }
 
-    const resetToken = crypto.randomBytes(32).toString('hex')
-    const resetTokenExpires = new Date(Date.now() + 3600000) // 1 hour
+    const reset_token = crypto.randomBytes(32).toString('hex')
+    const reset_token_expires = new Date(Date.now() + 3600000) // 1 hour
 
     await this.prisma.user.update({
       where: { id: user.id },
       data: {
-        resetToken,
-        resetTokenExpires,
+        reset_token,
+        reset_token_expires,
       },
     })
 
-    console.log(`📧 [MOCK EMAIL] Password reset link for ${email}: /auth/reset-password?token=${resetToken}`)
+    console.log(`📧 [MOCK EMAIL] Password reset link for ${email}: /auth/reset-password?token=${reset_token}`)
 
     return { message: 'If an account exists, a reset link has been sent' }
   }
@@ -93,8 +96,8 @@ export class AuthService {
   async resetPassword(token: string, password: any) {
     const user = await this.prisma.user.findFirst({
       where: {
-        resetToken: token,
-        resetTokenExpires: { gt: new Date() },
+        reset_token: token,
+        reset_token_expires: { gt: new Date() },
       },
     })
 
@@ -108,8 +111,8 @@ export class AuthService {
       where: { id: user.id },
       data: {
         password: hashedPassword,
-        resetToken: null,
-        resetTokenExpires: null,
+        reset_token: null,
+        reset_token_expires: null,
       },
     })
 
@@ -144,6 +147,7 @@ export class AuthService {
 
     const user = await this.prisma.user.findUnique({
       where: { email },
+      include: { profile: true }
     })
 
     if (!user) {
@@ -166,7 +170,7 @@ export class AuthService {
       user: {
         id: user.id,
         email: user.email,
-        name: user.name,
+        name: user.profile?.full_name,
         roles: user.roles,
         emailVerified: user.emailVerified,
       }
