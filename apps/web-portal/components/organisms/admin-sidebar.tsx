@@ -39,6 +39,7 @@ export function AdminSidebar() {
     { label: 'Content', icon: FileText, href: '/admin/content' },
     { label: 'Payments', icon: CreditCard, href: '/admin/payments' },
     { label: 'Institutional Assets', icon: Package, href: '/admin/assets' },
+    { label: 'Human Capital', icon: UsersIcon, href: '/admin/human-capital' },
     { label: 'Analytics', icon: Activity, href: '/admin/analytics' },
   ]
 

@@ -48,5 +48,11 @@ export const InstitutionalService = {
     const res = await fetch(`${API_URL}/institutional/compliance/${orgId}`, { cache: 'no-store' })
     if (!res.ok) throw new Error('Failed to fetch compliance')
     return res.json()
+  },
+
+  async getHumanCapital(orgId: string): Promise<any> {
+    const res = await fetch(`${API_URL}/institutional/human-capital/${orgId}`, { cache: 'no-store' })
+    if (!res.ok) throw new Error('Failed to fetch human capital')
+    return res.json()
   }
 }

@@ -3,6 +3,7 @@ import { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { InstitutionalService } from '../services/institutional.service'
 import { AssetService } from '../services/asset.service'
 import { ComplianceService } from '../services/compliance.service'
+import { HumanCapitalService } from '../services/human-capital.service'
 import { OrgParamsSchema, LedgerQuerySchema, CreateAssetSchema } from '../schemas/institutional.schema'
 
 export default async function institutionalRoutes(fastify: FastifyInstance) {
@@ -63,5 +64,14 @@ export default async function institutionalRoutes(fastify: FastifyInstance) {
     const service = new ComplianceService(request.server.prisma)
     const { orgId } = request.params
     return await service.getComplianceOverview(orgId)
+  })
+
+  // 6. Human Capital (Pillar VI)
+  typedFastify.get('/human-capital/:orgId', {
+    schema: { params: OrgParamsSchema }
+  }, async (request) => {
+    const service = new HumanCapitalService(request.server.prisma)
+    const { orgId } = request.params
+    return await service.getHROverview(orgId)
   })
 }
