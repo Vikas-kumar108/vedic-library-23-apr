@@ -1,4 +1,6 @@
-import React from 'react'
+'use client'
+
+import React, { useState } from 'react'
 import { 
   Send, 
   Mail, 
@@ -11,26 +13,39 @@ import {
   CheckCircle2,
   Filter,
   MoreVertical,
-  ChevronRight
+  ChevronRight,
+  BookOpen
 } from 'lucide-react'
 import { Button } from '@/components/atoms/button'
 import { Badge } from '@/components/atoms/badge'
 import { cn } from '@/lib/utils'
 import { getCampaigns, getSubscriptionTiers } from './actions'
 import { format } from 'date-fns'
+import { BroadcastModal } from '@/features/admin/communication/BroadcastModal'
 
 /**
  * Communication Hub Dashboard (Admin)
  * Responsibility: Manage personalized outreach across Email, SMS, and WhatsApp.
  */
 
-export default async function CommunicationHub() {
-  const [campaigns, tiers] = await Promise.all([
-    getCampaigns(),
-    getSubscriptionTiers()
-  ])
+export default function CommunicationHub() {
+  const [campaigns, setCampaigns] = useState<any[]>([])
+  const [tiers, setTiers] = useState<any[]>([])
+  const [isBroadcastOpen, setIsBroadcastOpen] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(false)
 
-  const totalSubscribers = tiers.reduce((acc, curr) => acc + curr._count.users, 0)
+  // Load data on mount since it's now a client component
+  React.useEffect(() => {
+    Promise.all([getCampaigns(), getSubscriptionTiers()]).then(([c, t]) => {
+      setCampaigns(c)
+      setTiers(t)
+      setIsLoaded(true)
+    })
+  }, [])
+
+  const totalSubscribers = tiers.reduce((acc, curr) => acc + (curr._count?.users || 0), 0)
+
+  if (!isLoaded) return <div className="p-20 text-center font-serif italic text-slate-400">Illuminating Communication Hub...</div>
 
   return (
     <div className="p-10 space-y-10 animate-in fade-in duration-700">
@@ -47,10 +62,24 @@ export default async function CommunicationHub() {
                 <CheckCircle2 className="w-3 h-3 text-green-500" /> {totalSubscribers.toLocaleString()}+ Subscribed Members
               </p>
            </div>
+           </div>
         </div>
-        <Button className="h-14 px-8 bg-blue-600 hover:bg-blue-700 text-white font-black text-xs uppercase tracking-widest rounded-2xl shadow-xl shadow-blue-200 transition-all">
-          <Plus className="w-4 h-4 mr-2" /> Create Campaign
-        </Button>
+        <div className="flex gap-4">
+          <Button 
+            onClick={() => setIsBroadcastOpen(true)}
+            className="h-14 px-8 bg-slate-900 hover:bg-black text-white font-black text-xs uppercase tracking-widest rounded-2xl shadow-xl shadow-slate-200 transition-all border border-slate-800"
+          >
+            <BookOpen className="w-4 h-4 mr-2 text-blue-400" /> Broadcast Wisdom
+          </Button>
+          <Button className="h-14 px-8 bg-blue-600 hover:bg-blue-700 text-white font-black text-xs uppercase tracking-widest rounded-2xl shadow-xl shadow-blue-200 transition-all">
+            <Plus className="w-4 h-4 mr-2" /> Create Campaign
+          </Button>
+        </div>
+
+        <BroadcastModal 
+          isOpen={isBroadcastOpen} 
+          onClose={() => setIsBroadcastOpen(false)} 
+        />
       </header>
 
       {/* Stats Overview */}
