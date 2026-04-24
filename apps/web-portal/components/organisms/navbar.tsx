@@ -17,6 +17,7 @@ export function Navbar() {
           <Link href="/explore" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Explore</Link>
           <Link href="/courses" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Courses</Link>
           <Link href="/library" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">Library</Link>
+          <Link href="/dana" className="text-sm font-bold text-orange-600 hover:text-orange-700 transition-colors bg-orange-50 px-4 py-2 rounded-full">Dāna</Link>
           <Link href="/about" className="text-sm font-semibold text-slate-600 hover:text-orange-600 transition-colors">About</Link>
         </div>
 
