@@ -158,7 +158,7 @@ export function RazorpayCheckout() {
   }
 
   return (
-    <Card className="border-slate-100 shadow-xl shadow-slate-200/40">
+    <Card className="border-[#e8e4d9] bg-[#fdfcf5] shadow-xl shadow-slate-200/40">
       <CardHeader>
         <div className="flex items-center gap-3">
           <CreditCard className="size-5 text-orange-600" />

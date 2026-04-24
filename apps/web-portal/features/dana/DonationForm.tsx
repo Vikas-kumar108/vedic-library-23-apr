@@ -17,6 +17,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { CheckCircle, IndianRupee, Loader2 } from "lucide-react"
+import { cn } from "@/lib/utils"
 
 const donationSchema = z.object({
   donorName: z.string().min(2, "Name must be at least 2 characters"),
@@ -140,7 +141,7 @@ export function DonationForm({ selectedMethod }: DonationFormProps) {
   }
 
   return (
-    <Card className="border-slate-100 shadow-xl shadow-slate-200/40">
+    <Card className="border-[#e8e4d9] bg-[#fdfcf5] shadow-xl shadow-slate-200/40">
       <CardHeader>
         <CardTitle className="font-serif italic text-2xl">Complete Your Donation</CardTitle>
         <CardDescription>
@@ -178,7 +179,7 @@ export function DonationForm({ selectedMethod }: DonationFormProps) {
                   placeholder="0.00"
                   value={customAmount}
                   onChange={handleCustomAmountChange}
-                  className="pl-10 h-12 bg-slate-50 border-slate-100 rounded-xl font-bold"
+                  className="pl-10 h-12 bg-white border-[#e8e4d9] rounded-xl font-bold"
                 />
               </div>
             </div>

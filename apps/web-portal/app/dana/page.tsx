@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { Navbar } from "@/components/organisms/navbar"
 import { PaymentInfoCard } from "@/features/dana/PaymentInfoCard"
 import { DonationForm } from "@/features/dana/DonationForm"
 import { RazorpayCheckout } from "@/features/dana/RazorpayCheckout"
@@ -23,7 +22,6 @@ export default function DonatePage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#fdfcf5]">
-      <Navbar />
 
       <main className="flex-1">
         {/* Hero Section - EXACT V2 COPY */}

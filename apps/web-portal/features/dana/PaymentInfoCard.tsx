@@ -59,7 +59,7 @@ export function PaymentInfoCard({ onMethodChange }: PaymentInfoCardProps) {
   )
 
   return (
-    <Card className="border-orange-200/50 shadow-xl shadow-orange-900/5">
+    <Card className="border-[#e8e4d9] bg-[#fdfcf5] shadow-xl shadow-orange-900/5">
       <CardHeader>
         <CardTitle className="font-serif italic text-2xl">Payment Options</CardTitle>
         <CardDescription>

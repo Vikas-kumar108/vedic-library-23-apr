@@ -67,6 +67,7 @@ export const viewport: Viewport = {
   initialScale: 1,
 }
 
+import { Navbar } from '@/components/organisms/navbar'
 import { MobileNav } from '@/components/organisms/mobile-nav'
 
 export default function RootLayout({
@@ -77,6 +78,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${notoSerif.variable} ${cormorant.variable} ${devanagari.variable} ${bengali.variable}`}>
       <body className="font-sans antialiased bg-background text-foreground">
+        <Navbar />
         <main className="pb-24 md:pb-0 min-h-screen">
           {children}
         </main>
