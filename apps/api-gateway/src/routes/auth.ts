@@ -105,4 +105,20 @@ export default async function authRoutes(fastify: FastifyInstance, options: Fast
       return reply.code(401).send({ error: error.message })
     }
   })
+
+  fastify.post('/logout', async (request, reply) => {
+    const authHeader = request.headers.authorization
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return reply.code(401).send({ error: 'Missing or invalid authorization header' })
+    }
+
+    const token = authHeader.split(' ')[1]
+    try {
+      const decoded = await authService.validateToken(token)
+      await authService.logout(decoded.id)
+      return reply.send({ message: 'Logged out successfully' })
+    } catch (error: any) {
+      return reply.code(401).send({ error: error.message })
+    }
+  })
 }

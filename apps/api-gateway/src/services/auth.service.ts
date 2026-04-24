@@ -346,4 +346,20 @@ export class AuthService {
       }
     }
   }
+
+  async logout(userId: string) {
+    // 1. Delete all active sessions for this user (Security: Logout everywhere)
+    await this.prisma.session.deleteMany({
+      where: { userId }
+    })
+
+    // 2. Log the event
+    await this.prisma.auditLog.create({
+      data: {
+        action: 'LOGOUT',
+        performedById: userId,
+        module: 'AUTH'
+      }
+    })
+  }
 }
