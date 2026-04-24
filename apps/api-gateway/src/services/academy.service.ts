@@ -78,4 +78,24 @@ export class AcademyService {
       data.userId, data.title, data.description, data.startDate, data.endDate
     )
   }
+
+  /**
+   * Get a detailed mentor profile
+   */
+  async getMentorProfile(guideId: string) {
+    const mentor = await this.prisma.user.findUnique({
+      where: { id: guideId },
+      include: {
+        profile: true,
+        mentoredCircles: true,
+        assignmentsAsGuide: {
+          include: {
+            student: { include: { profile: true } }
+          }
+        }
+      }
+    })
+
+    return mentor
+  }
 }

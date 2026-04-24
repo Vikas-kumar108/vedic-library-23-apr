@@ -18,5 +18,10 @@ export default async function academyRoutes(fastify: FastifyInstance) {
     const service = new AcademyService(request.server.prisma)
     const { userId } = request.params as { userId: string }
     return await service.getSeekerProfile(userId)
+  // 3. Mentor Profile
+  typedFastify.get('/mentor/:id', async (request) => {
+    const service = new AcademyService(request.server.prisma)
+    const { id } = request.params as { id: string }
+    return await service.getMentorProfile(id)
   })
 }
