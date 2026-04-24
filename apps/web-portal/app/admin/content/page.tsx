@@ -259,17 +259,18 @@ export default function ContentManagement() {
                        </select>
                     </div>
                  </div>
-                 <div className="bg-indigo-50/50 border-2 border-dashed border-indigo-200 rounded-[3rem] p-10 flex flex-col items-center justify-center text-center space-y-6">
-                    <div className="p-6 bg-white rounded-3xl shadow-lg shadow-indigo-100">
-                       <Upload className="w-8 h-8 text-indigo-600" />
-                    </div>
-                    <div className="space-y-2">
-                       <p className="text-sm font-black text-slate-900 uppercase tracking-widest">Drop Wisdom Here</p>
-                       <p className="text-[10px] text-slate-400 font-medium">PDF, EPUB or MarkDown supported</p>
-                    </div>
-                    <Button className="bg-indigo-600 text-white rounded-xl px-10 h-12 text-[10px] font-black uppercase tracking-widest shadow-xl shadow-indigo-200">
-                       Browse Files
-                    </Button>
+                 <div className="bg-indigo-50/50 border-2 border-dashed border-indigo-200 rounded-[3rem] p-10">
+                    <UniversalUploader 
+                      bucket={BUCKET_NAMES.CONTENT} 
+                      path="books" 
+                      label="Drop Wisdom Here" 
+                      accept="application/pdf,application/epub+zip,text/markdown"
+                      onUploadComplete={(url) => {
+                        console.log('Wisdom Manifested:', url)
+                        // In a real app, we would call a service to record this asset
+                        alert('Wisdom Manifested Successfully!')
+                      }}
+                    />
                  </div>
               </div>
            </div>
