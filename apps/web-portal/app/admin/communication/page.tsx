@@ -62,7 +62,6 @@ export default function CommunicationHub() {
                 <CheckCircle2 className="w-3 h-3 text-green-500" /> {totalSubscribers.toLocaleString()}+ Subscribed Members
               </p>
            </div>
-           </div>
         </div>
         <div className="flex gap-4">
           <Button 
