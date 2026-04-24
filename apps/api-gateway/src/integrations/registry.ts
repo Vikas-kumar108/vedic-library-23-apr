@@ -9,6 +9,7 @@ import {
 } from './email.providers'
 import { 
   R2StorageProvider, 
+  SupabaseStorageProvider,
   LocalStorageProvider 
 } from './storage.providers'
 
@@ -55,7 +56,17 @@ export class IntegrationRegistry {
       }))
     }
 
-    // 2. Fallback: Local Filesystem
+    // 2. Secondary: Supabase Storage (No card required)
+    if (process.env.SUPABASE_PROJECT_REF && process.env.SUPABASE_S3_ACCESS_KEY && process.env.SUPABASE_S3_SECRET_KEY) {
+      activeProviders.push(new SupabaseStorageProvider({
+        projectRef: process.env.SUPABASE_PROJECT_REF,
+        accessKeyId: process.env.SUPABASE_S3_ACCESS_KEY,
+        secretAccessKey: process.env.SUPABASE_S3_SECRET_KEY,
+        bucketName: process.env.SUPABASE_STORAGE_BUCKET || 'wisdom-assets'
+      }))
+    }
+
+    // 3. Fallback: Local Filesystem
     activeProviders.push(new LocalStorageProvider(process.cwd()))
 
     return new InstitutionalStorageService(activeProviders)

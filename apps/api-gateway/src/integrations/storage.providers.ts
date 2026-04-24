@@ -48,6 +48,50 @@ export class R2StorageProvider implements StorageProvider {
 }
 
 /**
+ * 📦 Supabase Storage Adapter (Cloud Vault - No Credit Card required)
+ * Logic: S3-Compatible storage via Supabase.
+ */
+export class SupabaseStorageProvider implements StorageProvider {
+  name = 'SUPABASE_STORAGE'
+  private client: S3Client
+  private bucketName: string
+  private publicUrl: string
+
+  constructor(config: { 
+    projectRef: string; 
+    accessKeyId: string; 
+    secretAccessKey: string; 
+    bucketName: string;
+  }) {
+    this.client = new S3Client({
+      region: 'auto', // Supabase S3 requires 'auto' for signature matching
+      endpoint: `https://${config.projectRef}.supabase.co/storage/v1/s3`,
+      credentials: {
+        accessKeyId: config.accessKeyId,
+        secretAccessKey: config.secretAccessKey,
+      },
+      forcePathStyle: true, // Required for Supabase S3
+    })
+    this.bucketName = config.bucketName
+    this.publicUrl = `https://${config.projectRef}.supabase.co/storage/v1/object/public/${config.bucketName}`
+  }
+
+  async upload(payload: StoragePayload): Promise<string> {
+    const key = `${payload.category.toLowerCase()}/${Date.now()}-${payload.fileName}`
+    
+    const command = new PutObjectCommand({
+      Bucket: this.bucketName,
+      Key: key,
+      Body: payload.buffer,
+      ContentType: payload.mimeType,
+    })
+
+    await this.client.send(command)
+    return `${this.publicUrl}/${key}`
+  }
+}
+
+/**
  * 💾 Local Filesystem Adapter (Resilient Fallback / Dev Storage)
  */
 export class LocalStorageProvider implements StorageProvider {
