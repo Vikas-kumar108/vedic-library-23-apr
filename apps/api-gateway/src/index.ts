@@ -1,4 +1,5 @@
 import Fastify from 'fastify'
+import 'dotenv/config'
 import { serializerCompiler, validatorCompiler, ZodTypeProvider } from 'fastify-type-provider-zod'
 import cors from '@fastify/cors'
 import rateLimit from '@fastify/rate-limit'
