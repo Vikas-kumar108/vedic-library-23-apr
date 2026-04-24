@@ -7,6 +7,10 @@ import {
   AWSSESEmailProvider, 
   ConsoleEmailProvider 
 } from './email.providers'
+import { 
+  R2StorageProvider, 
+  LocalStorageProvider 
+} from './storage.providers'
 
 /**
  * 🧠 Integration Registry
@@ -38,7 +42,22 @@ export class IntegrationRegistry {
   }
 
   static getStorageService(): InstitutionalStorageService {
-    // Similarly for Cloudflare R2, AWS S3, etc.
-    return new InstitutionalStorageService([])
+    const activeProviders = []
+
+    // 1. Primary: Cloudflare R2
+    if (process.env.R2_ACCOUNT_ID && process.env.R2_ACCESS_KEY_ID && process.env.R2_SECRET_ACCESS_KEY) {
+      activeProviders.push(new R2StorageProvider({
+        accountId: process.env.R2_ACCOUNT_ID,
+        accessKeyId: process.env.R2_ACCESS_KEY_ID,
+        secretAccessKey: process.env.R2_SECRET_ACCESS_KEY,
+        bucketName: process.env.R2_BUCKET_NAME || 'vedic-library-assets',
+        publicUrl: process.env.R2_PUBLIC_URL || 'https://assets.vedicskills.com'
+      }))
+    }
+
+    // 2. Fallback: Local Filesystem
+    activeProviders.push(new LocalStorageProvider(process.cwd()))
+
+    return new InstitutionalStorageService(activeProviders)
   }
 }
