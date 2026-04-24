@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
+import Link from 'next/link'
 import { Navbar } from '@/components/organisms/navbar'
 import { Button } from '@/components/atoms/button'
 import { Badge } from '@/components/atoms/badge'
@@ -17,6 +18,7 @@ import {
   Globe
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import Script from 'next/script'
 
 const sevas = [
   { 
@@ -51,9 +53,89 @@ export default function DanaPortal() {
   const [selectedSeva, setSelectedSeva] = useState('shastra')
   const [selectedAmount, setSelectedAmount] = useState(1008)
   const [customAmount, setCustomAmount] = useState('')
+  const [email, setEmail] = useState('')
+  const [isProcessing, setIsProcessing] = useState(false)
+  const [success, setSuccess] = useState(false)
+
+  const handleCheckout = async () => {
+    if (!email) {
+      alert('Please provide your email to receive the sacred receipt.')
+      return
+    }
+
+    setIsProcessing(true)
+    const finalAmount = Number(customAmount) || selectedAmount
+
+    try {
+      // 1. Manifest Order from our API
+      const response = await fetch('http://localhost:4444/institutional/dana/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount: finalAmount, sevaId: selectedSeva, email })
+      })
+      const { order } = await response.json()
+
+      // 2. Open Razorpay Modal
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || 'rzp_test_placeholder', 
+        amount: order.amount,
+        currency: order.currency,
+        name: 'VedicSkills Institutional',
+        description: `Sevā: ${sevas.find(s => s.id === selectedSeva)?.title}`,
+        order_id: order.id,
+        handler: async function (response: any) {
+          // 3. Verify Payment
+          const verifyRes = await fetch('http://localhost:4444/institutional/dana/verify', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(response)
+          })
+          const verifyData = await verifyRes.json()
+          if (verifyData.success) {
+            setSuccess(true)
+          }
+        },
+        prefill: {
+          email: email
+        },
+        theme: {
+          color: '#EA580C' // Institutional Orange
+        }
+      }
+
+      const rzp = new (window as any).Razorpay(options)
+      rzp.open()
+    } catch (error) {
+      console.error('🏛️ Checkout Error:', error)
+      alert('The financial gateway is currently non-manifest. Please try again shortly.')
+    } finally {
+      setIsProcessing(false)
+    }
+  }
+
+  if (success) {
+    return (
+      <main className="min-h-screen bg-white flex flex-col items-center justify-center p-4">
+        <Navbar />
+        <div className="text-center space-y-8 animate-in zoom-in duration-500 max-w-xl">
+           <div className="w-32 h-32 bg-green-50 text-green-600 rounded-full flex items-center justify-center mx-auto mb-10">
+              <CheckCircle2 className="w-16 h-16" />
+           </div>
+           <h1 className="text-5xl font-serif font-bold italic text-slate-900">With Infinite <span className="text-green-600">Gratitude</span></h1>
+           <p className="text-slate-500 text-lg leading-relaxed">Your contribution has been received by the institutional vaults. A sacred receipt has been manifest and sent to <strong>{email}</strong>.</p>
+           <div className="pt-10">
+              <Button asChild size="lg" className="rounded-2xl h-16 px-12 bg-slate-900">
+                <Link href="/">Return to Mission</Link>
+              </Button>
+           </div>
+        </div>
+      </main>
+    )
+  }
 
   return (
     <main className="min-h-screen bg-white">
+      <Script src="https://checkout.razorpay.com/v1/checkout.js" />
       <Navbar />
 
       {/* Hero Section */}
@@ -123,8 +205,21 @@ export default function DanaPortal() {
           {/* Right: Amount & Checkout */}
           <div className="lg:col-span-5 sticky top-32">
             <div className="p-12 bg-white border border-slate-100 rounded-[3.5rem] shadow-2xl space-y-10">
-              <div className="space-y-6 text-center">
-                <h3 className="text-xs font-black text-slate-900 uppercase tracking-[0.2em]">2. Contribution Amount</h3>
+              <div className="space-y-6">
+                <h3 className="text-xs font-black text-center text-slate-900 uppercase tracking-[0.2em]">2. Contribution Details</h3>
+                
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Your Email</label>
+                  <input 
+                    type="email"
+                    required
+                    placeholder="seeker@path.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full h-16 px-6 bg-slate-50 border border-slate-100 rounded-2xl outline-none focus:ring-2 focus:ring-orange-500/20 font-bold text-sm"
+                  />
+                </div>
+
                 <div className="grid grid-cols-3 gap-3">
                   {amounts.map((amt) => (
                     <button
@@ -170,8 +265,12 @@ export default function DanaPortal() {
                 </div>
               </div>
 
-              <Button className="w-full h-20 bg-orange-600 hover:bg-orange-700 text-white rounded-[2rem] font-black text-xs uppercase tracking-[0.3em] shadow-2xl shadow-orange-200 transition-all group">
-                Proceed to Secure Checkout <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-2 transition-transform" />
+              <Button 
+                onClick={handleCheckout}
+                disabled={isProcessing}
+                className="w-full h-20 bg-orange-600 hover:bg-orange-700 text-white rounded-[2rem] font-black text-xs uppercase tracking-[0.3em] shadow-2xl shadow-orange-200 transition-all group"
+              >
+                {isProcessing ? 'Manifesting Order...' : 'Proceed to Secure Checkout'} <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-2 transition-transform" />
               </Button>
 
               <div className="flex items-center justify-center gap-6 pt-4">

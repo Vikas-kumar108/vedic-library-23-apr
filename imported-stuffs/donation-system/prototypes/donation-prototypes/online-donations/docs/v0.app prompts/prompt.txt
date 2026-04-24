@@ -1,0 +1,2 @@
+Use this system specification and build a complete Next.js application.
+Follow all referenced documents for architecture, API, UX, and database design.

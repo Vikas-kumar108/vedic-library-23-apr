@@ -12,6 +12,7 @@ import systemRoutes from './routes/system.routes'
 import complianceRoutes from './routes/compliance.routes'
 import membershipRoutes from './routes/membership.routes'
 import broadcastRoutes from './routes/broadcast'
+import { paymentRoutes } from './routes/payment'
 
 const fastify = Fastify({
   logger: true,
@@ -33,6 +34,7 @@ await fastify.register(systemRoutes, { prefix: '/institutional/system' })
 await fastify.register(complianceRoutes, { prefix: '/institutional/compliance' })
 await fastify.register(membershipRoutes, { prefix: '/institutional/membership' })
 await fastify.register(broadcastRoutes, { prefix: '/institutional/broadcast' })
+await fastify.register(paymentRoutes, { prefix: '/institutional/dana' })
 
 // Health Check
 fastify.get('/health', async () => {
