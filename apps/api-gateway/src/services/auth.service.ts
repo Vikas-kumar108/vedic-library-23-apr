@@ -43,6 +43,10 @@ export class AuthService {
 
     // 🛰️ Send Institutional Verification Email
     if (this.emailService) {
+      const verificationLink = `${FRONTEND_URL}/auth/verify?token=${verification_token}`
+      console.log(`\n📧 NEW SEEKER INITIATION LINK:`)
+      console.log(`🔗 ${verificationLink}\n`)
+
       await this.emailService.sendEmail({
         to: email,
         subject: 'Welcome to the Vedic Gurukulam • Verify Identity',
@@ -51,7 +55,7 @@ export class AuthService {
           <div style="font-family: serif; padding: 40px; border: 1px solid #eee; border-radius: 20px;">
             <h2 style="color: #9333ea italic;">Welcome to the Gurukulam</h2>
             <p>Your spiritual journey requires identity verification.</p>
-            <a href="${process.env.FRONTEND_URL}/auth/verify?token=${verification_token}" 
+            <a href="${verificationLink}" 
                style="background: #9333ea; color: white; padding: 12px 24px; text-decoration: none; border-radius: 12px; font-weight: bold; display: inline-block;">
                Complete Verification
             </a>
@@ -112,6 +116,10 @@ export class AuthService {
 
     // 🛰️ Send Institutional Reset Email
     if (this.emailService) {
+      const resetLink = `${FRONTEND_URL}/auth/reset-password?token=${reset_token}`
+      console.log(`\n🔑 IDENTITY RECOVERY LINK GENERATED:`)
+      console.log(`🔗 ${resetLink}\n`)
+
       await this.emailService.sendEmail({
         to: email,
         subject: 'Password Reset • Vedic Institutional OS',
@@ -120,7 +128,7 @@ export class AuthService {
           <div style="font-family: serif; padding: 40px; border: 1px solid #eee; border-radius: 20px;">
             <h2 style="color: #9333ea italic;">Identity Recovery</h2>
             <p>A request was made to reset your institutional credentials.</p>
-            <a href="${process.env.FRONTEND_URL}/auth/reset-password?token=${reset_token}" 
+            <a href="${resetLink}" 
                style="background: #9333ea; color: white; padding: 12px 24px; text-decoration: none; border-radius: 12px; font-weight: bold; display: inline-block;">
                Reset Password
             </a>
