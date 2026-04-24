@@ -30,10 +30,8 @@ export function TaskMonitor() {
 
   const fetchTasks = async () => {
     try {
-      // Need to add getSystemTasks to InstitutionalService
-      const res = await fetch('http://localhost:3001/institutional/system/tasks')
-      const json = await res.json()
-      setData(json)
+      const data = await InstitutionalService.getSystemTasks()
+      setData(data)
     } catch (error) {
       console.error(error)
     } finally {
@@ -43,11 +41,7 @@ export function TaskMonitor() {
 
   const triggerTask = async (type: string) => {
     try {
-      await fetch('http://localhost:3001/institutional/system/tasks/trigger', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type, payload: { triggeredBy: 'Admin' } })
-      })
+      await InstitutionalService.triggerTask(type, { triggeredBy: 'Admin' })
       fetchTasks()
     } catch (error) {
       console.error(error)

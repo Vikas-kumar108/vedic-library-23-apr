@@ -104,5 +104,29 @@ export const InstitutionalService = {
     const res = await fetch(`${API_URL}/institutional/academy/seeker/${userId}`, { cache: 'no-store' })
     if (!res.ok) throw new Error('Failed to fetch seeker profile')
     return res.json()
+  },
+
+  async getSystemTasks(): Promise<any> {
+    const res = await fetch(`${API_URL}/institutional/system/tasks`, { cache: 'no-store' })
+    if (!res.ok) throw new Error('Failed to fetch system tasks')
+    return res.json()
+  },
+
+  async triggerTask(type: string, payload: any): Promise<any> {
+    const res = await fetch(`${API_URL}/institutional/system/tasks/trigger`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type, payload })
+    })
+    return res.json()
+  },
+
+  async issueProclamation(email: string): Promise<any> {
+    const res = await fetch(`${API_URL}/institutional/system/proclaim`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    })
+    return res.json()
   }
 }

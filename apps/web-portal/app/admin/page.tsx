@@ -137,11 +137,8 @@ export default function AdminDashboardPage() {
                  <Button 
                    onClick={(e) => {
                      e.preventDefault()
-                     fetch('http://localhost:3001/institutional/system/proclaim', { 
-                       method: 'POST',
-                       headers: { 'Content-Type': 'application/json' },
-                       body: JSON.stringify({ email: 'vikas@test.com' })
-                     }).then(() => alert('Proclamation Issued!'))
+                     InstitutionalService.issueProclamation('vikas@test.com')
+                       .then(() => alert('Proclamation Issued!'))
                    }}
                    variant="ghost" 
                    className="text-[8px] font-black uppercase tracking-[0.2em] text-indigo-400 hover:text-white p-0 h-auto"
