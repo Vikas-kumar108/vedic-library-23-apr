@@ -115,15 +115,24 @@ export default function AdminDashboardPage() {
         </Link>
 
         {/* 5. Digital Ecosystem (Small) */}
-        <Link href="/admin/integrations" className="md:col-span-2 lg:col-span-2 h-[240px] group relative overflow-hidden rounded-[2.5rem] border border-slate-800 bg-slate-900/40 p-8 flex flex-col justify-between hover:border-indigo-500/50 transition-all">
+        <Link href="/admin/integrations" className="md:col-span-2 lg:col-span-2 h-[240px] group relative overflow-hidden rounded-[2.5rem] border border-slate-800 bg-slate-900/40 p-8 flex flex-col justify-between hover:border-indigo-500/50 transition-all text-left">
            <div>
               <Globe className="w-8 h-8 text-indigo-400 mb-4" />
               <h3 className="text-lg font-serif font-bold italic text-slate-100">Ecosystem</h3>
               <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest mt-1">Webhooks & API • VIII</p>
            </div>
-           <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-emerald-500">3 Nodes Connected</span>
-              <ArrowUpRight className="w-5 h-5 text-slate-700 group-hover:text-indigo-400 transition-colors" />
+           <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                 <span className="text-[9px] font-black text-slate-600 uppercase tracking-widest">Email</span>
+                 <Badge variant="outline" className="text-[8px] h-4 bg-emerald-500/10 text-emerald-500 border-emerald-500/20">Operational</Badge>
+              </div>
+              <div className="flex items-center justify-between">
+                 <span className="text-[9px] font-black text-slate-600 uppercase tracking-widest">Storage</span>
+                 <Badge variant="outline" className="text-[8px] h-4 bg-rose-500/10 text-rose-500 border-rose-500/20">Offline</Badge>
+              </div>
+              <div className="flex items-center justify-end pt-2">
+                 <ArrowUpRight className="w-4 h-4 text-slate-700 group-hover:text-indigo-400 transition-colors" />
+              </div>
            </div>
         </Link>
 
