@@ -25,6 +25,16 @@ import {
 import { cn } from '@/lib/utils'
 import Script from 'next/script'
 
+// --- VEDICSKILLS SACRED COLOR DNA ---
+const THEME = {
+  background: 'bg-[#fdfcf5]', // Warm Cream (oklch(0.98 0.005 85))
+  foreground: 'text-[#4a453e]', // Wisdom Umber (oklch(0.25 0.02 50))
+  primary: 'bg-[#e67e22]',      // Institutional Saffron (oklch(0.65 0.18 55))
+  primaryText: 'text-[#e67e22]',
+  card: 'bg-white',
+  border: 'border-[#e8e4d9]'    // Muted Cream Border
+}
+
 // --- IMPACT STATS ---
 const stats = [
   { label: 'Courses Created', value: '500+', icon: BookOpen },
@@ -53,7 +63,6 @@ const sevas = [
 
 const amounts = [108, 501, 1008, 5001, 10008]
 
-// --- BANK DETAILS ---
 const BANK_DETAILS = {
   accountName: "VedicSkills Institutional",
   accountNumber: "918095108108",
@@ -92,7 +101,6 @@ export default function DanaPortal() {
     const finalAmount = Number(customAmount) || selectedAmount
 
     try {
-      // 1. Create Order
       const response = await fetch('http://localhost:4444/institutional/dana/orders', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -100,7 +108,6 @@ export default function DanaPortal() {
       })
       const { order } = await response.json()
 
-      // 2. Open Razorpay
       const options = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || 'rzp_test_placeholder', 
         amount: order.amount,
@@ -118,7 +125,7 @@ export default function DanaPortal() {
           if (verifyData.success) setSuccess(true)
         },
         prefill: { email, name },
-        theme: { color: '#EA580C' }
+        theme: { color: '#e67e22' }
       }
 
       const rzp = new (window as any).Razorpay(options)
@@ -133,13 +140,13 @@ export default function DanaPortal() {
 
   if (success) {
     return (
-      <main className="min-h-screen bg-white flex flex-col items-center justify-center p-4">
+      <main className={cn("min-h-screen flex flex-col items-center justify-center p-4", THEME.background)}>
         <Navbar />
         <div className="text-center space-y-8 animate-in zoom-in duration-500 max-w-xl">
            <div className="w-32 h-32 bg-green-50 text-green-600 rounded-full flex items-center justify-center mx-auto mb-10">
               <CheckCircle2 className="w-16 h-16" />
            </div>
-           <h1 className="text-5xl font-serif font-bold italic text-slate-900">Infinite <span className="text-green-600">Gratitude</span></h1>
+           <h1 className={cn("text-5xl font-serif font-bold italic", THEME.foreground)}>Infinite <span className="text-green-600">Gratitude</span></h1>
            <p className="text-slate-500 text-lg leading-relaxed">Your contribution has been received by the institutional vaults. A sacred receipt has been manifest and sent to <strong>{email}</strong>.</p>
            <Button asChild size="lg" className="rounded-2xl h-16 px-12 bg-slate-900 mt-10">
               <Link href="/">Return to Mission</Link>
@@ -150,18 +157,18 @@ export default function DanaPortal() {
   }
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className={cn("min-h-screen", THEME.background)}>
       <Script src="https://checkout.razorpay.com/v1/checkout.js" />
       <Navbar />
 
       {/* Hero Section */}
-      <section className="pt-40 pb-24 bg-slate-50 relative overflow-hidden">
+      <section className="pt-40 pb-24 relative overflow-hidden">
         <div className="container mx-auto px-4 text-center space-y-8 relative z-10">
-          <Badge variant="outline" className="px-6 py-2 rounded-full border-orange-200 text-orange-600 font-black tracking-widest uppercase text-[10px]">
+          <Badge variant="outline" className="px-6 py-2 rounded-full border-[#e67e22]/30 text-[#e67e22] font-black tracking-widest uppercase text-[10px] bg-[#e67e22]/5">
             The Dāna Pillar • Institutional Sovereignty
           </Badge>
-          <h1 className="text-5xl md:text-7xl font-serif font-bold italic text-slate-900 leading-tight">
-            Preserving Eternal <span className="text-orange-600">Wisdom</span>
+          <h1 className={cn("text-5xl md:text-7xl font-serif font-bold italic leading-tight", THEME.foreground)}>
+            Preserving Eternal <span className="text-[#e67e22]">Wisdom</span>
           </h1>
           <p className="text-slate-500 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
             Your support fuels the digitization of sacred texts and the sustenance of scholars in our sovereign institutional universe.
@@ -170,8 +177,8 @@ export default function DanaPortal() {
           {/* Fabulous Impact Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-12 max-w-5xl mx-auto">
              {stats.map((s) => (
-               <div key={s.label} className="p-8 bg-white rounded-3xl border border-slate-100 shadow-sm space-y-3">
-                  <div className="w-10 h-10 bg-orange-50 text-orange-600 rounded-xl flex items-center justify-center mx-auto">
+               <div key={s.label} className="p-8 bg-white rounded-3xl border border-[#e8e4d9] shadow-sm space-y-3">
+                  <div className="w-10 h-10 bg-[#e67e22]/10 text-[#e67e22] rounded-xl flex items-center justify-center mx-auto">
                     <s.icon className="w-5 h-5" />
                   </div>
                   <div className="text-2xl font-black text-slate-900">{s.value}</div>
@@ -190,12 +197,12 @@ export default function DanaPortal() {
           <div className="lg:col-span-7 space-y-12">
             
             {/* Mode Switcher */}
-            <div className="flex p-1 bg-slate-100 rounded-[2rem] max-w-md">
+            <div className="flex p-1 bg-[#e8e4d9]/40 rounded-[2rem] max-w-md">
               <button 
                 onClick={() => setPaymentMode('ONLINE')}
                 className={cn(
                   "flex-1 py-4 flex items-center justify-center gap-2 text-[10px] font-black uppercase tracking-widest rounded-[1.8rem] transition-all",
-                  paymentMode === 'ONLINE' ? "bg-white text-orange-600 shadow-sm" : "text-slate-400"
+                  paymentMode === 'ONLINE' ? "bg-white text-[#e67e22] shadow-sm" : "text-slate-400"
                 )}
               >
                 <CreditCard className="w-4 h-4" /> Pay Online
@@ -204,7 +211,7 @@ export default function DanaPortal() {
                 onClick={() => setPaymentMode('MANUAL')}
                 className={cn(
                   "flex-1 py-4 flex items-center justify-center gap-2 text-[10px] font-black uppercase tracking-widest rounded-[1.8rem] transition-all",
-                  paymentMode === 'MANUAL' ? "bg-white text-orange-600 shadow-sm" : "text-slate-400"
+                  paymentMode === 'MANUAL' ? "bg-white text-[#e67e22] shadow-sm" : "text-slate-400"
                 )}
               >
                 <QrCode className="w-4 h-4" /> Bank / UPI
@@ -213,7 +220,7 @@ export default function DanaPortal() {
 
             {paymentMode === 'MANUAL' ? (
               <div className="space-y-8 animate-in slide-in-from-left duration-500">
-                <div className="bg-slate-900 text-white p-12 rounded-[3.5rem] space-y-8 shadow-2xl">
+                <div className="bg-[#2a2723] text-white p-12 rounded-[3.5rem] space-y-8 shadow-2xl">
                    <div className="space-y-2">
                       <h3 className="text-2xl font-serif font-bold italic">Direct Institutional Transfer</h3>
                       <p className="text-slate-400 text-sm">For large contributions or direct bank transfers.</p>
@@ -242,8 +249,8 @@ export default function DanaPortal() {
                       ))}
                    </div>
 
-                   <div className="p-6 bg-orange-600/10 border border-orange-600/20 rounded-2xl flex gap-4">
-                      <ShieldCheck className="w-6 h-6 text-orange-600 shrink-0" />
+                   <div className="p-6 bg-[#e67e22]/10 border border-[#e67e22]/20 rounded-2xl flex gap-4">
+                      <ShieldCheck className="w-6 h-6 text-[#e67e22] shrink-0" />
                       <p className="text-xs text-orange-100 leading-relaxed">After transfer, please share the transaction screenshot at <strong>wisdom@vedicskills.com</strong> to receive your branded receipt.</p>
                    </div>
                 </div>
@@ -251,8 +258,8 @@ export default function DanaPortal() {
             ) : (
               <div className="space-y-12 animate-in slide-in-from-left duration-500">
                 <div className="space-y-4">
-                  <h2 className="text-xs font-black text-slate-900 uppercase tracking-[0.2em] flex items-center gap-2">
-                    <Heart className="w-4 h-4 text-orange-600" /> 1. Select your Sevā
+                  <h2 className={cn("text-xs font-black uppercase tracking-[0.2em] flex items-center gap-2", THEME.foreground)}>
+                    <Heart className="w-4 h-4 text-[#e67e22]" /> 1. Select your Sevā
                   </h2>
                 </div>
                 <div className="grid gap-6">
@@ -263,8 +270,8 @@ export default function DanaPortal() {
                       className={cn(
                         "p-10 border rounded-[3rem] transition-all cursor-pointer group relative overflow-hidden",
                         selectedSeva === seva.id 
-                          ? "border-orange-600 bg-orange-50/30 shadow-2xl shadow-orange-100" 
-                          : "border-slate-100 hover:border-orange-200 hover:bg-slate-50"
+                          ? "border-[#e67e22] bg-white shadow-2xl shadow-[#e67e22]/10" 
+                          : "border-[#e8e4d9] bg-white hover:border-[#e67e22]/30"
                       )}
                     >
                       <div className="flex flex-col md:flex-row gap-8 items-start relative z-10">
@@ -273,8 +280,8 @@ export default function DanaPortal() {
                         </div>
                         <div className="space-y-4">
                           <div className="flex justify-between items-center">
-                            <h3 className="text-2xl font-serif font-bold italic text-slate-900">{seva.title}</h3>
-                            {selectedSeva === seva.id && <CheckCircle2 className="w-6 h-6 text-orange-600" />}
+                            <h3 className={cn("text-2xl font-serif font-bold italic", THEME.foreground)}>{seva.title}</h3>
+                            {selectedSeva === seva.id && <CheckCircle2 className="w-6 h-6 text-[#e67e22]" />}
                           </div>
                           <p className="text-slate-500 leading-relaxed text-sm">{seva.desc}</p>
                         </div>
@@ -288,9 +295,9 @@ export default function DanaPortal() {
 
           {/* Right: Checkout Logic */}
           <div className="lg:col-span-5 sticky top-40">
-            <div className="p-12 bg-white border border-slate-100 rounded-[3.5rem] shadow-2xl space-y-8">
+            <div className="p-12 bg-white border border-[#e8e4d9] rounded-[3.5rem] shadow-2xl shadow-[#e67e22]/5 space-y-8">
               <div className="space-y-6">
-                <h3 className="text-xs font-black text-center text-slate-900 uppercase tracking-[0.2em]">Donation Details</h3>
+                <h3 className={cn("text-xs font-black text-center uppercase tracking-[0.2em]", THEME.foreground)}>Donation Details</h3>
                 
                 <div className="grid gap-4">
                   <div className="space-y-2">
@@ -300,7 +307,7 @@ export default function DanaPortal() {
                       placeholder="Seer Name"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      className="w-full h-14 px-6 bg-slate-50 border border-slate-100 rounded-2xl outline-none focus:ring-2 focus:ring-orange-500/20 font-bold text-sm"
+                      className="w-full h-14 px-6 bg-[#fdfcf5] border border-[#e8e4d9] rounded-2xl outline-none focus:ring-2 focus:ring-[#e67e22]/20 font-bold text-sm"
                     />
                   </div>
                   <div className="space-y-2">
@@ -311,7 +318,7 @@ export default function DanaPortal() {
                       placeholder="seeker@path.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full h-14 px-6 bg-slate-50 border border-slate-100 rounded-2xl outline-none focus:ring-2 focus:ring-orange-500/20 font-bold text-sm"
+                      className="w-full h-14 px-6 bg-[#fdfcf5] border border-[#e8e4d9] rounded-2xl outline-none focus:ring-2 focus:ring-[#e67e22]/20 font-bold text-sm"
                     />
                   </div>
                 </div>
@@ -323,7 +330,7 @@ export default function DanaPortal() {
                       onClick={() => { setSelectedAmount(amt); setCustomAmount(''); }}
                       className={cn(
                         "h-12 rounded-xl font-black text-[10px] transition-all",
-                        selectedAmount === amt && !customAmount ? "bg-orange-600 text-white shadow-lg" : "bg-slate-50 text-slate-500"
+                        selectedAmount === amt && !customAmount ? "bg-[#e67e22] text-white shadow-lg" : "bg-[#fdfcf5] text-slate-500"
                       )}
                     >
                       ₹{amt.toLocaleString()}
@@ -337,45 +344,45 @@ export default function DanaPortal() {
                     placeholder="Custom Amount"
                     value={customAmount}
                     onChange={(e) => { setCustomAmount(e.target.value); setSelectedAmount(0); }}
-                    className="w-full h-14 pl-12 pr-6 bg-slate-50 border border-slate-100 rounded-2xl outline-none focus:ring-2 focus:ring-orange-500/20 font-bold text-sm"
+                    className="w-full h-14 pl-12 pr-6 bg-[#fdfcf5] border border-[#e8e4d9] rounded-2xl outline-none focus:ring-2 focus:ring-[#e67e22]/20 font-bold text-sm"
                   />
                 </div>
 
                 {/* 80G Logic */}
-                <div className="p-6 bg-blue-50/50 border border-blue-100 rounded-2xl space-y-4">
+                <div className="p-6 bg-[#e67e22]/5 border border-[#e67e22]/10 rounded-2xl space-y-4">
                    <div className="flex items-center gap-3">
                       <input 
                         type="checkbox" 
                         id="needs80g" 
                         checked={needs80G} 
                         onChange={(e) => setNeeds80G(e.target.checked)}
-                        className="w-4 h-4 rounded border-blue-200 text-blue-600"
+                        className="w-4 h-4 rounded border-[#e67e22]/30 text-[#e67e22]"
                       />
-                      <label htmlFor="needs80g" className="text-[10px] font-black text-blue-900 uppercase tracking-widest cursor-pointer">Tax Exemption Receipt (80G)</label>
+                      <label htmlFor="needs80g" className="text-[10px] font-black text-[#e67e22] uppercase tracking-widest cursor-pointer">Tax Exemption Receipt (80G)</label>
                    </div>
                    {needs80G && (
                      <div className="space-y-2 animate-in fade-in slide-in-from-top-2">
-                        <label className="text-[9px] font-black text-blue-400 uppercase tracking-widest ml-1">PAN Number</label>
+                        <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">PAN Number</label>
                         <input 
                           placeholder="ABCDE1234F"
                           value={pan}
                           onChange={(e) => setPan(e.target.value.toUpperCase())}
-                          className="w-full h-12 px-4 bg-white border border-blue-100 rounded-xl outline-none focus:ring-2 focus:ring-blue-500/20 font-mono font-bold text-xs"
+                          className="w-full h-12 px-4 bg-white border border-[#e8e4d9] rounded-xl outline-none focus:ring-2 focus:ring-[#e67e22]/20 font-mono font-bold text-xs"
                         />
                      </div>
                    )}
                 </div>
               </div>
 
-              <div className="p-8 bg-slate-50 rounded-3xl flex justify-between items-end border-t border-slate-200">
+              <div className="p-8 bg-[#fdfcf5] rounded-3xl flex justify-between items-end border-t border-[#e8e4d9]">
                   <span className="text-sm font-bold text-slate-500">Contribution</span>
-                  <span className="text-3xl font-black text-slate-900">₹{(Number(customAmount) || selectedAmount).toLocaleString()}</span>
+                  <span className={cn("text-3xl font-black", THEME.foreground)}>₹{(Number(customAmount) || selectedAmount).toLocaleString()}</span>
               </div>
 
               <Button 
                 onClick={handleCheckout}
                 disabled={isProcessing}
-                className="w-full h-20 bg-orange-600 hover:bg-orange-700 text-white rounded-[2rem] font-black text-xs uppercase tracking-[0.3em] shadow-2xl shadow-orange-200 transition-all group"
+                className="w-full h-20 bg-[#e67e22] hover:bg-[#d35400] text-white rounded-[2rem] font-black text-xs uppercase tracking-[0.3em] shadow-2xl shadow-[#e67e22]/20 transition-all group"
               >
                 {isProcessing ? 'Manifesting Order...' : 'Activate Sacred Dāna'} <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-2 transition-transform" />
               </Button>
@@ -391,30 +398,30 @@ export default function DanaPortal() {
       </section>
 
       {/* Trust & Transparency Section */}
-      <section className="py-32 bg-slate-900 text-white overflow-hidden relative">
+      <section className="py-32 bg-[#2a2723] text-white overflow-hidden relative">
         <div className="container mx-auto px-4 grid lg:grid-cols-2 gap-20 items-center">
            <div className="space-y-8">
-              <Badge className="bg-orange-600 text-white border-none">Institutional Transparency</Badge>
-              <h2 className="text-4xl md:text-5xl font-serif font-bold italic leading-tight">Every Cent is Accounted in our <span className="text-orange-600">Sovereign Registers</span>.</h2>
+              <Badge className="bg-[#e67e22] text-white border-none">Institutional Transparency</Badge>
+              <h2 className="text-4xl md:text-5xl font-serif font-bold italic leading-tight">Every Cent is Accounted in our <span className="text-[#e67e22]">Sovereign Registers</span>.</h2>
               <p className="text-slate-400 text-lg leading-relaxed">We provide quarterly transparency reports to all major donors, detailing exactly how their contributions manifest into digitized shastras and scholar support programs.</p>
               <div className="flex gap-4">
                  <div className="p-6 bg-white/5 rounded-2xl border border-white/10 flex-1">
-                    <Building className="w-6 h-6 text-orange-600 mb-4" />
+                    <Building className="w-6 h-6 text-[#e67e22] mb-4" />
                     <div className="font-bold">Managed Governance</div>
                     <div className="text-xs text-slate-500">Direct Institutional Control</div>
                  </div>
                  <div className="p-6 bg-white/5 rounded-2xl border border-white/10 flex-1">
-                    <ShieldCheck className="w-6 h-6 text-blue-500 mb-4" />
+                    <ShieldCheck className="w-6 h-6 text-[#e67e22] mb-4" />
                     <div className="font-bold">Verified Impact</div>
                     <div className="text-xs text-slate-500">Documented Preservation</div>
                  </div>
               </div>
            </div>
            <div className="relative group">
-              <div className="absolute -inset-4 bg-orange-600/20 rounded-[4rem] blur-2xl group-hover:bg-orange-600/30 transition-all" />
-              <div className="relative aspect-video bg-slate-800 rounded-[3rem] border border-white/10 flex items-center justify-center overflow-hidden">
+              <div className="absolute -inset-4 bg-[#e67e22]/20 rounded-[4rem] blur-2xl group-hover:bg-[#e67e22]/30 transition-all" />
+              <div className="relative aspect-video bg-[#1a1714] rounded-[3rem] border border-white/10 flex items-center justify-center overflow-hidden">
                  <div className="text-center space-y-4 p-12">
-                    <BookOpen className="w-16 h-16 text-orange-600 mx-auto opacity-50" />
+                    <BookOpen className="w-16 h-16 text-[#e67e22] mx-auto opacity-50" />
                     <p className="text-slate-400 italic font-serif">"The preservation of knowledge is the highest sacrifice."</p>
                  </div>
               </div>
@@ -422,10 +429,10 @@ export default function DanaPortal() {
         </div>
       </section>
 
-      <footer className="py-20 border-t border-slate-100 text-center space-y-8">
+      <footer className="py-20 border-t border-[#e8e4d9] text-center space-y-8">
            <div className="flex items-center justify-center gap-2">
-              <div className="w-8 h-8 bg-orange-600 rounded-lg flex items-center justify-center text-white font-bold">V</div>
-              <span className="text-lg font-bold text-slate-900">VedicSkills Institutional</span>
+              <div className="w-8 h-8 bg-[#e67e22] rounded-lg flex items-center justify-center text-white font-bold">V</div>
+              <span className={cn("text-lg font-bold", THEME.foreground)}>VedicSkills Institutional</span>
            </div>
            <p className="text-slate-300 text-[10px] font-bold uppercase tracking-[0.2em]">Pillar VI • Financial Sustainability Protocol</p>
       </footer>
