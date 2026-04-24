@@ -2,7 +2,14 @@ import 'dotenv/config'
 import { PrismaClient } from '@prisma/client'
 
 const prismaClientSingleton = () => {
-  return new PrismaClient()
+  console.log('🏛️ DATABASE ENGINE: Initiating connection to', process.env.DATABASE_URL ? 'Institutional Vault' : '⚠️ MISSING URL')
+  return new PrismaClient({
+    datasources: {
+      db: {
+        url: process.env.DATABASE_URL
+      }
+    }
+  })
 }
 
 declare global {
