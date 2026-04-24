@@ -92,5 +92,17 @@ export const InstitutionalService = {
     })
     if (!res.ok) throw new Error('Failed to create project')
     return res.json()
+  },
+
+  async getAcademyPulse(orgId: string): Promise<any> {
+    const res = await fetch(`${API_URL}/institutional/academy/pulse?orgId=${orgId}`, { cache: 'no-store' })
+    if (!res.ok) throw new Error('Failed to fetch academy pulse')
+    return res.json()
+  },
+
+  async getSeekerProfile(userId: string): Promise<any> {
+    const res = await fetch(`${API_URL}/institutional/academy/seeker/${userId}`, { cache: 'no-store' })
+    if (!res.ok) throw new Error('Failed to fetch seeker profile')
+    return res.json()
   }
 }

@@ -8,6 +8,7 @@ import { IntegrationService } from '../services/integration.service'
 import { WisdomEngineService, WisdomContext } from '../services/wisdom-engine.service'
 import { TaskOrchestrator } from '../services/task-orchestrator.service'
 import { ProjectService } from '../services/project.service'
+import { AcademyService } from '../services/academy.service'
 import { OrgParamsSchema, LedgerQuerySchema, CreateAssetSchema } from '../schemas/institutional.schema'
 
 export default async function institutionalRoutes(fastify: FastifyInstance) {
@@ -125,5 +126,18 @@ export default async function institutionalRoutes(fastify: FastifyInstance) {
     const service = new ProjectService(request.server.prisma)
     const project = await service.createProject(request.body as any)
     return reply.code(201).send(project)
+  })
+
+  // 11. Seeker Academy (Community Progress)
+  typedFastify.get('/academy/pulse', async (request) => {
+    const service = new AcademyService(request.server.prisma)
+    const { orgId } = request.query as { orgId: string }
+    return await service.getCommunityPulse(orgId)
+  })
+
+  typedFastify.get('/academy/seeker/:userId', async (request) => {
+    const service = new AcademyService(request.server.prisma)
+    const { userId } = request.params as { userId: string }
+    return await service.getSeekerProfile(userId)
   })
 }
