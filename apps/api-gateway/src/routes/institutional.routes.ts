@@ -4,6 +4,7 @@ import { InstitutionalService } from '../services/institutional.service'
 import { AssetService } from '../services/asset.service'
 import { ComplianceService } from '../services/compliance.service'
 import { HumanCapitalService } from '../services/human-capital.service'
+import { IntegrationService } from '../services/integration.service'
 import { OrgParamsSchema, LedgerQuerySchema, CreateAssetSchema } from '../schemas/institutional.schema'
 
 export default async function institutionalRoutes(fastify: FastifyInstance) {
@@ -73,5 +74,20 @@ export default async function institutionalRoutes(fastify: FastifyInstance) {
     const service = new HumanCapitalService(request.server.prisma)
     const { orgId } = request.params
     return await service.getHROverview(orgId)
+  })
+
+  // 7. Digital Ecosystem (Pillar VIII)
+  typedFastify.get('/integrations/:orgId', {
+    schema: { params: OrgParamsSchema }
+  }, async (request) => {
+    const service = new IntegrationService(request.server.prisma)
+    const { orgId } = request.params
+    return await service.getIntegrationsOverview(orgId)
+  })
+
+  typedFastify.post('/integrations/webhook', async (request, reply) => {
+    const service = new IntegrationService(request.server.prisma)
+    const webhook = await service.registerWebhook(request.body as any)
+    return reply.code(201).send(webhook)
   })
 }

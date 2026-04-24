@@ -54,5 +54,21 @@ export const InstitutionalService = {
     const res = await fetch(`${API_URL}/institutional/human-capital/${orgId}`, { cache: 'no-store' })
     if (!res.ok) throw new Error('Failed to fetch human capital')
     return res.json()
+  },
+
+  async getIntegrations(orgId: string): Promise<any> {
+    const res = await fetch(`${API_URL}/institutional/integrations/${orgId}`, { cache: 'no-store' })
+    if (!res.ok) throw new Error('Failed to fetch integrations')
+    return res.json()
+  },
+
+  async registerWebhook(data: any): Promise<any> {
+    const res = await fetch(`${API_URL}/institutional/integrations/webhook`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+    if (!res.ok) throw new Error('Failed to register webhook')
+    return res.json()
   }
 }

@@ -16,7 +16,8 @@ import {
   IndianRupee,
   MessageSquare,
   ChevronRight,
-  Package
+  Package,
+  Globe
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
@@ -40,6 +41,7 @@ export function AdminSidebar() {
     { label: 'Payments', icon: CreditCard, href: '/admin/payments' },
     { label: 'Institutional Assets', icon: Package, href: '/admin/assets' },
     { label: 'Human Capital', icon: UsersIcon, href: '/admin/human-capital' },
+    { label: 'Digital Ecosystem', icon: Globe, href: '/admin/integrations' },
     { label: 'Analytics', icon: Activity, href: '/admin/analytics' },
   ]
 
