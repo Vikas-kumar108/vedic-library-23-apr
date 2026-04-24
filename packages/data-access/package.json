@@ -11,7 +11,8 @@
     "build": "pnpm db:generate"
   },
   "dependencies": {
-    "@prisma/client": "^6.4.1"
+    "@prisma/client": "^6.4.1",
+    "dotenv": "^17.4.2"
   },
   "devDependencies": {
     "@types/node": "^22.19.11",
