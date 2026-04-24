@@ -13,11 +13,13 @@ import {
   Database,
   LayoutDashboard,
   Hammer,
-  MessageSquareHeart
+  MessageSquareHeart,
+  Terminal
 } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { TaskMonitor } from '@/components/organisms/task-monitor'
 import { cn } from '@/lib/utils'
 
 export default function AdminDashboardPage() {
@@ -166,6 +168,11 @@ export default function AdminDashboardPage() {
 
       </div>
       
+      {/* Institutional Heartbeat: Booming Backend Monitor */}
+      <div className="max-w-4xl mx-auto w-full">
+         <TaskMonitor />
+      </div>
+
       {/* Platform Activity Feed */}
       <footer className="bg-slate-900/40 border border-slate-800 p-8 rounded-[2.5rem] flex items-center justify-between">
         <div className="flex items-center gap-4">

@@ -6,6 +6,7 @@ import { ComplianceService } from '../services/compliance.service'
 import { HumanCapitalService } from '../services/human-capital.service'
 import { IntegrationService } from '../services/integration.service'
 import { WisdomEngineService, WisdomContext } from '../services/wisdom-engine.service'
+import { TaskOrchestrator } from '../services/task-orchestrator.service'
 import { OrgParamsSchema, LedgerQuerySchema, CreateAssetSchema } from '../schemas/institutional.schema'
 
 export default async function institutionalRoutes(fastify: FastifyInstance) {
@@ -97,5 +98,18 @@ export default async function institutionalRoutes(fastify: FastifyInstance) {
     const service = new WisdomEngineService(request.server.prisma)
     const { context } = request.query as { context: WisdomContext }
     return await service.getWisdomPulse(context || 'GOVERNANCE')
+  })
+
+  // 9. Institutional Task Monitor
+  typedFastify.get('/system/tasks', async (request) => {
+    const service = new TaskOrchestrator(request.server.prisma)
+    return await service.getTaskPulse()
+  })
+
+  typedFastify.post('/system/tasks/trigger', async (request, reply) => {
+    const service = new TaskOrchestrator(request.server.prisma)
+    const { type, payload } = request.body as any
+    await service.enqueue(type, payload)
+    return reply.code(201).send({ status: 'ENQUEUED' })
   })
 }
