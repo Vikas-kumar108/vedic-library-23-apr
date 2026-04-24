@@ -165,6 +165,47 @@ export class LibraryService {
   }
 
   /**
+   * getRelated: Finds sibling or related nodes based on shared tags.
+   */
+  async getRelated(nodeId: string, limit: number = 3) {
+    const node = await this.prisma.node.findUnique({
+      where: { id: nodeId },
+      include: {
+        tags: { select: { tagId: true } }
+      }
+    })
+
+    if (!node || node.tags.length === 0) return []
+
+    const tagIds = node.tags.map(t => t.tagId)
+
+    const related = await this.prisma.node.findMany({
+      where: {
+        id: { not: nodeId },
+        tags: {
+          some: { tagId: { in: tagIds } }
+        }
+      },
+      include: {
+        shastra: true,
+        texts: {
+          where: { contentType: { in: ['sutra', 'title'] } },
+          take: 1
+        }
+      },
+      take: limit
+    })
+
+    return related.map(r => ({
+      id: r.id,
+      slug: r.slug,
+      title: r.canonicalRef || r.slug,
+      shastra: r.shastra.name,
+      snippet: r.texts[0]?.content || ''
+    }))
+  }
+
+  /**
    * Fetches all tags organized by hierarchy.
    */
   async getTags() {

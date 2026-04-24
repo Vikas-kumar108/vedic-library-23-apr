@@ -43,7 +43,7 @@ model Node {
   shastraId     String                @map("shastra_id") @db.Uuid
   parentId      String?               @map("parent_id") @db.Uuid
   level         String
-  slug          String?
+  slug          String?               @unique
   orderIndex    Int?                  @default(0) @map("order_index")
   canonicalRef  String?               @map("canonical_ref")
   path          Unsupported("ltree")?

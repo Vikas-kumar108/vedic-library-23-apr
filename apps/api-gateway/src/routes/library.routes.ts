@@ -38,4 +38,11 @@ export default async function libraryRoutes(fastify: FastifyInstance) {
     const libraryService = new LibraryService(request.server.prisma)
     return await libraryService.getTags()
   })
+
+  // 5. Get Related
+  typedFastify.get('/related/:id', async (request) => {
+    const { id } = request.params as { id: string }
+    const libraryService = new LibraryService(request.server.prisma)
+    return await libraryService.getRelated(id)
+  })
 }
