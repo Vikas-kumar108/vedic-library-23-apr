@@ -5,6 +5,7 @@ import { AssetService } from '../services/asset.service'
 import { ComplianceService } from '../services/compliance.service'
 import { HumanCapitalService } from '../services/human-capital.service'
 import { IntegrationService } from '../services/integration.service'
+import { WisdomEngineService, WisdomContext } from '../services/wisdom-engine.service'
 import { OrgParamsSchema, LedgerQuerySchema, CreateAssetSchema } from '../schemas/institutional.schema'
 
 export default async function institutionalRoutes(fastify: FastifyInstance) {
@@ -89,5 +90,12 @@ export default async function institutionalRoutes(fastify: FastifyInstance) {
     const service = new IntegrationService(request.server.prisma)
     const webhook = await service.registerWebhook(request.body as any)
     return reply.code(201).send(webhook)
+  })
+
+  // 8. Vedic Wisdom Pulse
+  typedFastify.get('/wisdom/pulse', async (request) => {
+    const service = new WisdomEngineService(request.server.prisma)
+    const { context } = request.query as { context: WisdomContext }
+    return await service.getWisdomPulse(context || 'GOVERNANCE')
   })
 }

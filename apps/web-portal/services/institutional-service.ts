@@ -70,5 +70,11 @@ export const InstitutionalService = {
     })
     if (!res.ok) throw new Error('Failed to register webhook')
     return res.json()
+  },
+
+  async getWisdomPulse(context: string): Promise<any> {
+    const res = await fetch(`${API_URL}/institutional/wisdom/pulse?context=${context}`, { cache: 'no-store' })
+    if (!res.ok) throw new Error('Failed to fetch wisdom pulse')
+    return res.json()
   }
 }

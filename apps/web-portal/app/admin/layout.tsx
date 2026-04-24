@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { AdminSidebar } from '@/components/organisms/admin-sidebar'
+import { VedicPulse } from '@/components/organisms/vedic-pulse'
 
 /**
  * Admin Layout
@@ -24,6 +25,9 @@ export default function AdminLayout({
       <main className="flex-1 overflow-y-auto">
         {children}
       </main>
+
+      {/* The Spiritual Pulse */}
+      <VedicPulse />
     </div>
   )
 }
