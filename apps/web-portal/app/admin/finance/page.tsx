@@ -18,7 +18,8 @@ import {
   BarChart3,
   ChevronRight,
   ShieldCheck,
-  Lock
+  Lock,
+  Download
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
