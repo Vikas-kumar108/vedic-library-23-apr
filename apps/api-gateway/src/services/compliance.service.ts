@@ -10,7 +10,7 @@ export class ComplianceService {
         include: { partner: true }
       }),
       this.prisma.utilizationCertificate.findMany({
-        where: { grant: { orgId } },
+        where: { grant: { partnership: { orgId } } },
         include: { grant: true }
       }),
       this.prisma.complianceTask.findMany({
