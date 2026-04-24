@@ -2,203 +2,197 @@
 
 import React from 'react'
 import { 
+  ShieldCheck, 
+  Package, 
   Users, 
-  CreditCard, 
-  UserCheck, 
+  Globe, 
+  FileText, 
   TrendingUp, 
-  PlusCircle, 
-  BookPlus, 
-  Search, 
-  Bell, 
-  Clock, 
+  AlertCircle, 
   ArrowUpRight,
-  MoreVertical,
-  Package
+  Database,
+  LayoutDashboard,
+  Hammer,
+  MessageSquareHeart
 } from 'lucide-react'
 import Link from 'next/link'
-import { Button } from '@/components/atoms/button'
-import { AdminSidebar } from '@/components/organisms/admin-sidebar'
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
 
-/**
- * Admin Dashboard Page
- * Responsibility: Central command for platform growth and management.
- * Purpose: Provides high-level visibility into metrics and quick access to management tools.
- */
 export default function AdminDashboardPage() {
-  const stats = [
-    { label: 'Total Users', value: '12,842', trend: '+12%', icon: Users, color: 'text-blue-600', bg: 'bg-blue-50' },
-    { label: 'Total Revenue', value: '₹8.4L', trend: '+8%', icon: CreditCard, color: 'text-green-600', bg: 'bg-green-50' },
-    { label: 'Active Subs', value: '1,240', trend: '+15%', icon: UserCheck, color: 'text-primary', bg: 'bg-primary/5' },
-  ]
-
-  const recentActivity = [
-    { id: 1, type: 'signup', user: 'Radha K.', detail: 'Joined as Free Member', time: '2 min ago' },
-    { id: 2, type: 'payment', user: 'Shiva M.', detail: 'Upgraded to Premium', time: '15 min ago' },
-    { id: 3, type: 'content', user: 'Admin', detail: 'New Lesson: "The Art of Duty"', time: '1h ago' },
-    { id: 4, type: 'support', user: 'Laxmi P.', detail: 'Requested Mentor Access', time: '3h ago' },
-  ]
-
   return (
-    <>
-      {/* Sidebar is provided by AdminLayout */}
+    <div className="min-h-screen bg-slate-950 p-8 space-y-8 animate-in fade-in duration-1000">
       
-      <main className="flex-1 p-10 space-y-10 max-w-7xl mx-auto">
-        {/* Top Navigation Bar */}
-        <header className="flex items-center justify-between gap-8 mb-4">
-          <div className="flex-1 relative max-w-md group">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-primary transition-colors" />
-            <input 
-              type="text" 
-              placeholder="Search users, payments, or content..." 
-              className="w-full h-12 pl-12 pr-4 rounded-xl border border-slate-200 bg-white focus:ring-4 focus:ring-primary/5 focus:border-primary outline-none transition-all text-sm"
-            />
+      {/* Top Bar: Institutional Status */}
+      <header className="flex justify-between items-center bg-slate-900/40 border border-slate-800 p-6 rounded-[2rem] backdrop-blur-xl">
+        <div className="flex items-center gap-6">
+          <div className="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-500/20">
+            <LayoutDashboard className="w-6 h-6 text-white" />
           </div>
-          
-          <div className="flex items-center gap-4">
-            <div className="w-10 h-10 rounded-xl bg-white border border-slate-100 flex items-center justify-center text-slate-400 relative cursor-pointer hover:bg-slate-50">
-              <Bell className="w-5 h-5" />
-              <div className="absolute top-2.5 right-2.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white" />
-            </div>
-            <div className="flex items-center gap-3 bg-white p-1 rounded-xl border border-slate-100 pr-4">
-              <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-xs">AD</div>
-              <span className="text-sm font-bold text-slate-700">Admin</span>
-            </div>
+          <div>
+            <h1 className="text-2xl font-serif font-bold italic text-slate-100">Institutional <span className="text-indigo-400">Command</span></h1>
+            <p className="text-[10px] text-slate-500 font-black uppercase tracking-[0.3em] mt-1">Vedic Operating System • v2.1.0</p>
           </div>
-        </header>
-
-        {/* Stats Grid */}
-        <section className="grid md:grid-cols-3 gap-8">
-          {stats.map((stat, i) => (
-            <div key={i} className="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm space-y-6">
-              <div className="flex items-center justify-between">
-                <div className={cn("w-14 h-14 rounded-2xl flex items-center justify-center", stat.bg)}>
-                  <stat.icon className={cn("w-6 h-6", stat.color)} />
-                </div>
-                <div className="flex items-center gap-1 text-[10px] font-bold text-green-600 bg-green-50 px-2 py-1 rounded-full uppercase tracking-widest">
-                  <TrendingUp className="w-3 h-3" /> {stat.trend}
-                </div>
-              </div>
-              <div>
-                <div className="text-sm font-bold text-slate-400 uppercase tracking-widest">{stat.label}</div>
-                <div className="text-3xl font-bold text-slate-900 mt-1">{stat.value}</div>
-              </div>
-            </div>
-          ))}
-        </section>
-
-        <div className="grid lg:grid-cols-[1fr_400px] gap-10">
-          {/* Recent Activity Feed */}
-          <section className="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden flex flex-col">
-            <div className="p-8 border-b border-slate-50 flex items-center justify-between">
-              <h2 className="text-xl font-bold text-slate-900 flex items-center gap-3">
-                <Clock className="w-5 h-5 text-primary" /> Recent Activity
-              </h2>
-              <Button variant="ghost" className="text-xs font-bold text-slate-400 uppercase tracking-widest">View History</Button>
-            </div>
-            <div className="divide-y divide-slate-50">
-              {recentActivity.map((act) => (
-                <div key={act.id} className="p-6 flex items-center justify-between hover:bg-slate-50 transition-colors">
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 font-bold text-xs uppercase">
-                      {act.user[0]}
-                    </div>
-                    <div>
-                      <div className="text-sm font-bold text-slate-900">{act.user}</div>
-                      <div className="text-xs text-slate-500 mt-0.5">{act.detail}</div>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{act.time}</div>
-                    <ArrowUpRight className="w-4 h-4 text-slate-200 ml-auto mt-1" />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* Quick Actions */}
-          <section className="space-y-6">
-            <h2 className="text-xl font-bold text-slate-900 px-4">Management Toolset</h2>
-            <div className="grid gap-4">
-              <button className="flex items-center justify-between p-6 bg-primary text-white rounded-[1.5rem] shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all group">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-                    <BookPlus className="w-6 h-6" />
-                  </div>
-                  <div className="text-left">
-                    <div className="font-bold">Add New Course</div>
-                    <div className="text-[10px] text-white/60 font-bold uppercase tracking-widest">Growth Engine</div>
-                  </div>
-                </div>
-                <PlusCircle className="w-6 h-6 text-white/50 group-hover:text-white transition-colors" />
-              </button>
-
-              <button className="flex items-center justify-between p-6 bg-white border border-slate-100 text-slate-700 rounded-[1.5rem] shadow-sm hover:shadow-md hover:border-primary/20 transition-all group">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center">
-                    <PlusCircle className="w-6 h-6 text-slate-400" />
-                  </div>
-                  <div className="text-left">
-                    <div className="font-bold text-slate-900">Create New Lesson</div>
-                    <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Content Update</div>
-                  </div>
-                </div>
-                <ArrowUpRight className="w-6 h-6 text-slate-200 group-hover:text-primary transition-colors" />
-              </button>
-
-              <Link href="/admin/assets" className="flex items-center justify-between p-6 bg-white border border-slate-100 text-slate-700 rounded-[1.5rem] shadow-sm hover:shadow-md hover:border-indigo-200 transition-all group">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-indigo-50 rounded-xl flex items-center justify-center">
-                    <Package className="w-6 h-6 text-indigo-500" />
-                  </div>
-                  <div className="text-left">
-                    <div className="font-bold text-slate-900">Institutional Assets</div>
-                    <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">QR Inventory</div>
-                  </div>
-                </div>
-                <ArrowUpRight className="w-6 h-6 text-slate-200 group-hover:text-indigo-500 transition-colors" />
-              </Link>
-
-              <Link href="/admin/human-capital" className="flex items-center justify-between p-6 bg-white border border-slate-100 text-slate-700 rounded-[1.5rem] shadow-sm hover:shadow-md hover:border-emerald-200 transition-all group">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center">
-                    <Users className="w-6 h-6 text-emerald-500" />
-                  </div>
-                  <div className="text-left">
-                    <div className="font-bold text-slate-900">Human Capital</div>
-                    <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Payroll & Mentors</div>
-                  </div>
-                </div>
-                <ArrowUpRight className="w-6 h-6 text-slate-200 group-hover:text-emerald-500 transition-colors" />
-              </Link>
-
-              <Link href="/admin/integrations" className="flex items-center justify-between p-6 bg-white border border-slate-100 text-slate-700 rounded-[1.5rem] shadow-sm hover:shadow-md hover:border-blue-200 transition-all group">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center">
-                    <Globe className="w-6 h-6 text-blue-500" />
-                  </div>
-                  <div className="text-left">
-                    <div className="font-bold text-slate-900">Digital Ecosystem</div>
-                    <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Webhooks & API</div>
-                  </div>
-                </div>
-                <ArrowUpRight className="w-6 h-6 text-slate-200 group-hover:text-blue-500 transition-colors" />
-              </Link>
-
-              <div className="p-8 bg-slate-900 rounded-[2rem] text-white space-y-6 relative overflow-hidden">
-                <div className="relative z-10 space-y-2">
-                  <div className="text-[10px] font-bold text-primary uppercase tracking-widest">Platform Status</div>
-                  <h4 className="text-lg font-bold">System Integrity: 100%</h4>
-                  <p className="text-xs text-slate-400 leading-relaxed">All services operational. Syncing with Global Shastra Database.</p>
-                </div>
-                <div className="absolute -bottom-8 -right-8 w-32 h-32 bg-primary/20 rounded-full blur-3xl" />
-              </div>
-            </div>
-          </section>
         </div>
+        <div className="flex items-center gap-4">
+          <Badge className="bg-emerald-500/10 text-emerald-500 border-emerald-500/20 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest">
+            System Healthy
+          </Badge>
+          <div className="h-10 w-[1px] bg-slate-800" />
+          <p className="text-xs font-bold text-slate-400 italic">April 24, 2026</p>
+        </div>
+      </header>
 
-      </main>
-    </>
+      {/* The Bento Hub: 8 Pillars in a Small Place */}
+      <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-6">
+        
+        {/* 1. Shastra Gold (Large) */}
+        <Link href="/admin/content" className="md:col-span-2 lg:col-span-3 h-[300px] group relative overflow-hidden rounded-[2.5rem] border border-slate-800 bg-slate-900/40 p-10 flex flex-col justify-between hover:border-indigo-500/50 transition-all">
+          <div className="relative z-10">
+            <Badge variant="outline" className="border-indigo-500/30 text-indigo-400 text-[8px] font-black uppercase tracking-widest mb-4">Pillar I: Content</Badge>
+            <h2 className="text-3xl font-serif font-bold italic text-slate-100 leading-tight">Shastra <br/>Gold Library</h2>
+            <p className="text-xs text-slate-500 mt-4 max-w-[200px] leading-relaxed">2,320 Nodes verified across 12 scriptures. Ingestion engine operational.</p>
+          </div>
+          <div className="flex items-end justify-between relative z-10">
+            <div className="flex -space-x-2">
+              {[1,2,3].map(i => <div key={i} className="w-8 h-8 rounded-full border-2 border-slate-900 bg-slate-800" />)}
+            </div>
+            <ArrowUpRight className="w-8 h-8 text-slate-700 group-hover:text-indigo-400 transition-colors" />
+          </div>
+          <Database className="absolute -right-10 -bottom-10 w-64 h-64 text-indigo-500/5 group-hover:text-indigo-500/10 transition-colors" />
+        </Link>
+
+        {/* 2. Financial Dharma (Medium) */}
+        <Link href="/admin/finance" className="md:col-span-2 lg:col-span-3 h-[300px] group relative overflow-hidden rounded-[2.5rem] border border-slate-800 bg-slate-900/40 p-10 flex flex-col justify-between hover:border-emerald-500/50 transition-all">
+          <div className="relative z-10">
+            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400 text-[8px] font-black uppercase tracking-widest mb-4">Pillar III: Finance</Badge>
+            <h2 className="text-3xl font-serif font-bold italic text-slate-100 leading-tight">Financial <br/>Dharma</h2>
+            <div className="mt-6 flex items-center gap-6">
+              <div>
+                <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Net Capital</p>
+                <p className="text-xl font-black text-emerald-400">₹5.72 Cr</p>
+              </div>
+              <div className="h-8 w-[1px] bg-slate-800" />
+              <div>
+                <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Audit Status</p>
+                <p className="text-xl font-black text-slate-100">Verified</p>
+              </div>
+            </div>
+          </div>
+          <ShieldCheck className="absolute -right-10 -bottom-10 w-64 h-64 text-emerald-500/5 group-hover:text-emerald-500/10 transition-colors" />
+          <div className="flex justify-end relative z-10">
+             <ArrowUpRight className="w-8 h-8 text-slate-700 group-hover:text-emerald-400 transition-colors" />
+          </div>
+        </Link>
+
+        {/* 3. Institutional Assets (Small) */}
+        <Link href="/admin/assets" className="md:col-span-2 lg:col-span-2 h-[240px] group relative overflow-hidden rounded-[2.5rem] border border-slate-800 bg-slate-900/40 p-8 flex flex-col justify-between hover:border-blue-500/50 transition-all">
+           <div>
+              <Package className="w-8 h-8 text-blue-400 mb-4" />
+              <h3 className="text-lg font-serif font-bold italic text-slate-100">Asset Inventory</h3>
+              <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest mt-1">QR Tracking • Pillar V</p>
+           </div>
+           <div className="flex items-center justify-between">
+              <span className="text-xs font-bold text-slate-400">142 Physical Items</span>
+              <ArrowUpRight className="w-5 h-5 text-slate-700 group-hover:text-blue-400 transition-colors" />
+           </div>
+        </Link>
+
+        {/* 4. Human Capital (Small) */}
+        <Link href="/admin/human-capital" className="md:col-span-2 lg:col-span-2 h-[240px] group relative overflow-hidden rounded-[2.5rem] border border-slate-800 bg-slate-900/40 p-8 flex flex-col justify-between hover:border-amber-500/50 transition-all">
+           <div>
+              <Users className="w-8 h-8 text-amber-400 mb-4" />
+              <h3 className="text-lg font-serif font-bold italic text-slate-100">Human Capital</h3>
+              <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest mt-1">Payroll & Mentors • VI</p>
+           </div>
+           <div className="flex items-center justify-between">
+              <span className="text-xs font-bold text-slate-400">12 Staff • 8 Mentors</span>
+              <ArrowUpRight className="w-5 h-5 text-slate-700 group-hover:text-amber-400 transition-colors" />
+           </div>
+        </Link>
+
+        {/* 5. Digital Ecosystem (Small) */}
+        <Link href="/admin/integrations" className="md:col-span-2 lg:col-span-2 h-[240px] group relative overflow-hidden rounded-[2.5rem] border border-slate-800 bg-slate-900/40 p-8 flex flex-col justify-between hover:border-indigo-500/50 transition-all">
+           <div>
+              <Globe className="w-8 h-8 text-indigo-400 mb-4" />
+              <h3 className="text-lg font-serif font-bold italic text-slate-100">Ecosystem</h3>
+              <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest mt-1">Webhooks & API • VIII</p>
+           </div>
+           <div className="flex items-center justify-between">
+              <span className="text-xs font-bold text-emerald-500">3 Nodes Connected</span>
+              <ArrowUpRight className="w-5 h-5 text-slate-700 group-hover:text-indigo-400 transition-colors" />
+           </div>
+        </Link>
+
+        {/* 6. Projects & Infrastructure (New - Small) */}
+        <Link href="/admin/projects" className="md:col-span-2 lg:col-span-2 h-[240px] group relative overflow-hidden rounded-[2.5rem] border border-slate-800 bg-slate-900/40 p-8 flex flex-col justify-between hover:border-rose-500/50 transition-all">
+           <div>
+              <Hammer className="w-8 h-8 text-rose-400 mb-4" />
+              <h3 className="text-lg font-serif font-bold italic text-slate-100">Projects</h3>
+              <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest mt-1">Infrastructure • Pillar VII</p>
+           </div>
+           <div className="flex items-center justify-between">
+              <span className="text-xs font-bold text-slate-400">2 Active Builds</span>
+              <ArrowUpRight className="w-5 h-5 text-slate-700 group-hover:text-rose-400 transition-colors" />
+           </div>
+        </Link>
+
+        {/* 7. Community Pulse (New - Small) */}
+        <Link href="/admin/community" className="md:col-span-2 lg:col-span-2 h-[240px] group relative overflow-hidden rounded-[2.5rem] border border-slate-800 bg-slate-900/40 p-8 flex flex-col justify-between hover:border-violet-500/50 transition-all">
+           <div>
+              <MessageSquareHeart className="w-8 h-8 text-violet-400 mb-4" />
+              <h3 className="text-lg font-serif font-bold italic text-slate-100">Community</h3>
+              <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest mt-1">Circles & Vows • Pillar IV</p>
+           </div>
+           <div className="flex items-center justify-between">
+              <span className="text-xs font-bold text-slate-400">1,240 Seekers</span>
+              <ArrowUpRight className="w-5 h-5 text-slate-700 group-hover:text-violet-400 transition-colors" />
+           </div>
+        </Link>
+
+        {/* 8. Legal & Governance (New - Small) */}
+        <Link href="/admin/legal" className="md:col-span-2 lg:col-span-2 h-[240px] group relative overflow-hidden rounded-[2.5rem] border border-slate-800 bg-slate-900/40 p-8 flex flex-col justify-between hover:border-slate-400/50 transition-all border-dashed">
+           <div>
+              <FileText className="w-8 h-8 text-slate-400 mb-4 opacity-50" />
+              <h3 className="text-lg font-serif font-bold italic text-slate-400">Legal Vault</h3>
+              <p className="text-[10px] text-slate-600 font-black uppercase tracking-widest mt-1">Partnerships • Pillar II</p>
+           </div>
+           <div className="flex items-center justify-between">
+              <span className="text-xs font-bold text-slate-600 italic">Coming Soon</span>
+              <ArrowUpRight className="w-5 h-5 text-slate-800 transition-colors" />
+           </div>
+        </Link>
+
+      </div>
+      
+      {/* Platform Activity Feed */}
+      <footer className="bg-slate-900/40 border border-slate-800 p-8 rounded-[2.5rem] flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <Activity className="w-5 h-5 text-indigo-400" />
+          <p className="text-xs font-bold text-slate-300">Live Audit Trail:</p>
+          <p className="text-xs text-slate-500 italic">"Vidura Dharma" approved a payroll disbursement for April cycle (2 mins ago)</p>
+        </div>
+        <Button variant="ghost" className="text-[10px] font-black uppercase tracking-widest text-indigo-400">View Full Audit <ArrowUpRight className="ml-2 w-4 h-4" /></Button>
+      </footer>
+    </div>
+  )
+}
+
+function Activity({ className }: { className?: string }) {
+  return (
+    <svg 
+      className={className} 
+      xmlns="http://www.w3.org/2000/svg" 
+      width="24" height="24" 
+      viewBox="0 0 24 24" 
+      fill="none" 
+      stroke="currentColor" 
+      strokeWidth="2" 
+      strokeLinecap="round" 
+      strokeLinejoin="round"
+    >
+      <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+    </svg>
   )
 }
