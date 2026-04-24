@@ -17,7 +17,8 @@ import {
   MessageSquare,
   ChevronRight,
   Package,
-  Globe
+  Globe,
+  Map
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
@@ -42,6 +43,7 @@ export function AdminSidebar() {
     { label: 'Institutional Assets', icon: Package, href: '/admin/assets' },
     { label: 'Human Capital', icon: UsersIcon, href: '/admin/human-capital' },
     { label: 'Digital Ecosystem', icon: Globe, href: '/admin/integrations' },
+    { label: 'Infrastructure', icon: Map, href: '/admin/projects' },
     { label: 'Analytics', icon: Activity, href: '/admin/analytics' },
   ]
 

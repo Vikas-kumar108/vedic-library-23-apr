@@ -7,6 +7,7 @@ import { HumanCapitalService } from '../services/human-capital.service'
 import { IntegrationService } from '../services/integration.service'
 import { WisdomEngineService, WisdomContext } from '../services/wisdom-engine.service'
 import { TaskOrchestrator } from '../services/task-orchestrator.service'
+import { ProjectService } from '../services/project.service'
 import { OrgParamsSchema, LedgerQuerySchema, CreateAssetSchema } from '../schemas/institutional.schema'
 
 export default async function institutionalRoutes(fastify: FastifyInstance) {
@@ -111,5 +112,18 @@ export default async function institutionalRoutes(fastify: FastifyInstance) {
     const { type, payload } = request.body as any
     await service.enqueue(type, payload)
     return reply.code(201).send({ status: 'ENQUEUED' })
+  })
+
+  // 10. Institutional Blueprint (Projects)
+  typedFastify.get('/projects', async (request) => {
+    const service = new ProjectService(request.server.prisma)
+    const { orgId } = request.query as { orgId: string }
+    return await service.getInstitutionalBlueprint(orgId)
+  })
+
+  typedFastify.post('/projects', async (request, reply) => {
+    const service = new ProjectService(request.server.prisma)
+    const project = await service.createProject(request.body as any)
+    return reply.code(201).send(project)
   })
 }

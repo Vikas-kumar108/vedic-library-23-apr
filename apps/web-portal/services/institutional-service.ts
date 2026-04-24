@@ -76,5 +76,21 @@ export const InstitutionalService = {
     const res = await fetch(`${API_URL}/institutional/wisdom/pulse?context=${context}`, { cache: 'no-store' })
     if (!res.ok) throw new Error('Failed to fetch wisdom pulse')
     return res.json()
+  },
+
+  async getProjects(orgId: string): Promise<any> {
+    const res = await fetch(`${API_URL}/institutional/projects?orgId=${orgId}`, { cache: 'no-store' })
+    if (!res.ok) throw new Error('Failed to fetch projects')
+    return res.json()
+  },
+
+  async createProject(data: any): Promise<any> {
+    const res = await fetch(`${API_URL}/institutional/projects`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+    if (!res.ok) throw new Error('Failed to create project')
+    return res.json()
   }
 }
