@@ -11,6 +11,8 @@
     "build": "pnpm db:generate"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.1.0",
+    "@prisma/adapter-neon": "^7.8.0",
     "@prisma/client": "^6.4.1",
     "dotenv": "^17.4.2"
   },

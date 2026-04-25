@@ -20,9 +20,9 @@ const SOCIAL_PROOF_MINI = [
 
 export function SignupBrandingPanel() {
   return (
-    <div className="hidden lg:flex lg:w-[45%] bg-slate-900 flex-col justify-between p-14 relative overflow-hidden text-left">
-      <div className="absolute top-0 right-0 w-80 h-80 bg-primary/20 rounded-full blur-[100px]" />
-      <div className="absolute bottom-0 left-0 w-60 h-60 bg-accent/10 rounded-full blur-[80px]" />
+    <div className="hidden lg:flex lg:w-[45%] bg-amber-900 flex-col justify-between p-14 relative overflow-hidden text-left border-r border-amber-800">
+      <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/20 rounded-full blur-[100px]" />
+      <div className="absolute bottom-0 left-0 w-60 h-60 bg-amber-700/10 rounded-full blur-[80px]" />
 
       <div className="relative z-10">
         <Link href="/welcome" className="flex items-center gap-2">
@@ -38,7 +38,7 @@ export function SignupBrandingPanel() {
             <span className="text-[10px] font-bold text-primary uppercase tracking-[0.3em]">Your path awaits</span>
           </div>
           <h2 className="text-4xl font-serif text-white leading-snug italic">
-            "The soul can never be cut by weapons, nor burned by fire, nor moistened by water, nor withered by the wind."
+            Begin your <span className="text-amber-400 font-bold not-italic">INITIATION PATH</span>
           </h2>
           <p className="text-xs text-slate-500 font-mono">— Bhagavad Gītā 2.23</p>
         </div>

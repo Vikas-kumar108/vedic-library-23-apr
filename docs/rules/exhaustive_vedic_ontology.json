@@ -1,0 +1,200 @@
+{
+  "vedic_universe": {
+    "sruti": {
+      "name": "Sruti",
+      "sanskrit": "श्रुति",
+      "rig_veda": {
+        "samhita": {},
+        "brahmana": {},
+        "aranyaka": {},
+        "upanisad": {}
+      },
+      "sama_veda": {
+        "samhita": {},
+        "brahmana": {},
+        "aranyaka": {},
+        "upanisad": {}
+      },
+      "yajur_veda": {
+        "sukla": {
+          "samhita": {},
+          "brahmana": {},
+          "aranyaka": {},
+          "upanisad": {}
+        },
+        "krsna": {
+          "samhita": {},
+          "brahmana": {},
+          "aranyaka": {},
+          "upanisad": {}
+        }
+      },
+      "atharva_veda": {
+        "samhita": {},
+        "brahmana": {},
+        "aranyaka": {},
+        "upanisad": {}
+      }
+    },
+    "smrti": {
+      "name": "Smrti",
+      "sanskrit": "स्मृति",
+      "dharma_sastra": {
+        "dharma_sutras": ["apastamba", "gautama", "baudhayana", "vasista"],
+        "grhya_sutras": ["asvalayana", "khadira", "others"],
+        "dharma_smrtis": ["manu", "yajnavalkya", "narada", "parasara", "visnu", "brhaspati", "minor-smrtis"],
+        "digests_and_nibandhas": ["nirnaya-sindhu", "mitaksara", "other-nibandhas"]
+      },
+      "artha_sastra": ["kautiliya-artha-sastra", "related-texts"],
+      "kama_sastra": ["kama-sutra", "ananga-ranga", "ratirahasya", "other-kama-texts"],
+      "niti_sastra": ["pancatantra", "hitopadesa", "niti-texts", "subhasita-collections"],
+      "supplementary": ["cross-disciplinary-texts"]
+    },
+    "itihasa": {
+      "name": "Itihasa",
+      "sanskrit": "इतिहास",
+      "ramayana": ["balakanda", "ayodhyakanda", "aranyakanda", "kiskindhakanda", "sundarakanda", "yuddhakanda"],
+      "mahabharata": {
+        "parvas": [
+          "adi-parva", "sabha-parva", "vana-parva", "virata-parva", "udyoga-parva", 
+          "bhisma-parva", "drona-parva", "karna-parva", "salya-parva", "stri-parva", 
+          "santi-parva", "anushasana-parva", "asvamedhika-parva", "asramavasika-parva", 
+          "mausala-parva", "mahaprasthanika-parva", "svargarohana-parva"
+        ],
+        "special_cases": {
+          "bhagavad_gita": {
+            "location": "bhisma-parva",
+            "ontology": ["adhyaya", "shloka"]
+          }
+        }
+      }
+    },
+    "purana": {
+      "name": "Purana",
+      "sanskrit": "पुराण",
+      "mahapurana": {
+        "bhagavata": {
+          "structure": "skandha -> adhyaya -> shloka"
+        },
+        "list": [
+          "brahma", "padma", "visnu", "narada", "markandeya", "agni", "bhavisya", 
+          "brahmavaivarta", "linga", "varaha", "skanda", "vamana", "kurma", 
+          "matsya", "garuda", "brahmanda", "vayu"
+        ]
+      },
+      "upapurana": [
+        "narasimha", "brhannaradiya", "sanatkumara", "samba", "hamsa", "nandi", 
+        "parasara", "saura", "kapila", "varuna", "adi", "kalki", "siva-rahasya", 
+        "kalika", "durga", "devi-bhagavata", "other-upapuranas"
+      ]
+    },
+    "agama": {
+      "name": "Agama",
+      "sanskrit": "आगम",
+      "vaisnava": {
+        "pancaratra": [
+          "ahirbudhnya-samhita", "isvara-samhita", "jayakhya-samhita", "padma-samhita", 
+          "paramasamhita", "laksmi-tantra", "visnu-tantra", "purusa-samhita", 
+          "prakasa-samhita", "other-pancaratra-samhitas"
+        ],
+        "vaikhanasa": [
+          "vaikhanasa-samhita", "ananda-samhita", "manava-samhita", "marici-samhita", 
+          "other-vaikhanasa-samhitas"
+        ]
+      },
+      "saiva": {
+        "siddhanta": [
+          "kamika-agama", "karana-agama", "ajita-agama", "suprabheda-agama", 
+          "vatula-agama", "raurava-agama", "makuta-agama", "other-saiva-siddhanta-agamas"
+        ],
+        "others": ["other-saiva-agamas"]
+      },
+      "sakta": {
+        "sri_vidya": ["tantraraja-tantra", "yogini-hrdaya", "other-srividya-tantras"],
+        "kaula": ["kulacudamani", "kulakarnava", "other-kaula-tantras"],
+        "samaya": ["other-samaya-tantras"]
+      }
+    },
+    "vedanga": {
+      "name": "Vedanga",
+      "sanskrit": "वेदाङ्ग",
+      "siksa": ["paniniya-siksa", "naradiya-siksa", "yajnavalkya-siksa", "vasista-siksa", "other-siksa-texts"],
+      "vyakarana": {
+        "astadhyayi": {
+          "structure": "adhyaya -> pada -> sutra"
+        },
+        "others": ["dhatupatha", "ganapatha", "unadi-sutra", "other-vyakarana-texts"]
+      },
+      "chandas": ["pingala-chandas-sutra", "vrtta-ratnakara", "other-chandas-texts"],
+      "nirukta": ["nirukta", "nighantu"],
+      "kalpa": {
+        "srauta_sutras": ["asvalayana", "baudhayana", "apastamba", "other-srauta-sutras"],
+        "grhya_sutras": ["asvalayana", "khadira", "other-grhya-sutras"],
+        "dharma_sutras": ["apastamba", "gautama", "baudhayana", "vasista"],
+        "sulba_sutras": ["baudhayana", "apastamba", "other-sulba-texts"]
+      },
+      "jyotisa": {
+        "vedanga_jyotisa": ["rg-recension", "yajur-recension"],
+        "others": ["surya-siddhanta", "aryabhatiya", "other-jyotisa-texts"]
+      }
+    },
+    "upaveda": {
+      "name": "Upaveda",
+      "sanskrit": "उपवेद",
+      "ayurveda": {
+        "samhitas": ["caraka-samhita", "susruta-samhita", "astanga-hrdaya", "astanga-samgraha"],
+        "foundational": ["bhela-samhita", "kasyapa-samhita"]
+      },
+      "dhanurveda": {
+        "core": ["dhanurveda-samhita", "sarangadhara-dhanurveda"],
+        "applied": ["archery", "weapons", "military-discipline"]
+      },
+      "gandharvaveda": {
+        "core": ["natya-sastra", "dattilam", "brihaddesi"],
+        "musical_structure": ["raga", "tala", "nrtta-nrtya"]
+      },
+      "sthapatyaveda": {
+        "vastu_sastra": ["mayamata", "manasara", "samarangana-sutradhara"],
+        "silpa_sastra": ["silparatna", "aparajitaprccha", "other-silpa-texts"]
+      }
+    },
+    "darsana": {
+      "name": "Darsana",
+      "sanskrit": "दर्शन",
+      "nyaya": ["nyaya-sutra"],
+      "vaisesika": ["vaisesika-sutra"],
+      "sankhya": ["sankhya-karika"],
+      "yoga": ["yoga-sutra"],
+      "mimamsa": ["purva-mimamsa-sutra"],
+      "vedanta": ["brahma-sutra"]
+    },
+    "sampradaya": {
+      "gaudiya": {
+        "foundational_authorities": ["caitanya-caritamrta", "caitanya-bhagavata", "caitanya-mangala", "navadvipa-dhama-mahatmya"],
+        "six_gosvamis": {
+          "rupa_gosvami": ["bhakti-rasamrta-sindhu", "ujvala-nilamani", "upadesamrta"],
+          "sanatana_gosvami": ["brhad-bhagavatamrta", "hari-bhakti-vilasa"],
+          "jiva_gosvami": ["sat-sandarbha", "tattva-sandarbha", "bhagavata-sandarbha"],
+          "raghunatha_dasa_gosvami": ["vilapa-kusumanjali"],
+          "raghunatha_bhatta_gosvami": ["bhagavata-katha"],
+          "gopala_bhatta_gosvami": ["sat-kriya-sara-dipika"]
+        },
+        "later_acharyas": [
+          "narottama-dasa-thakura", "visvanatha-cakravarti-thakura", "baladeva-vidyabhusana", 
+          { "bhaktivinoda_thakura": ["jaiva-dharma", "sri-godruma-kalpatavi", "hari-nama-cintamani"] },
+          "bhaktisiddhanta-sarasvati"
+        ],
+        "theology_and_siddhanta": ["acintya-bhedabheda", "sambandha-abhidheya-prayojana", "bhakti-tattva", "rasa-tattva"],
+        "bhajana_and_stotra": ["stotras", "kirtana", "vandana"],
+        "practice_and_sadhana": ["nama-bhajana", "vaidhi-bhakti", "raganuga-bhakti", "seva-vidhi"],
+        "branches_and_apasampradayas": ["recognized-branches", "apasampradayas"]
+      }
+    },
+    "content_taxonomy": {
+      "mula": ["shloka", "mantra", "sutra", "gadya", "padya"],
+      "commentary": ["bhashya", "tika", "vivarana", "vyakhyana"],
+      "translation": ["anuvada", "bhavartha", "tatparya", "shabdartha"],
+      "meta": ["shirshaka", "upashirshaka", "pushpika"]
+    }
+  }
+}

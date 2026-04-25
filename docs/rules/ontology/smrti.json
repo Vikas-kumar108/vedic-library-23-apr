@@ -1,0 +1,48 @@
+{
+  "category": "Smrti",
+  "sanskrit": "स्मृति",
+  "slug": "smrti",
+  "sub_categories": [
+    {
+      "name": "Dharma Shastra",
+      "slug": "dharma-sastra",
+      "branches": [
+        {
+          "name": "Dharma Sutras",
+          "slug": "dharma-sutras",
+          "texts": ["Apastamba", "Gautama", "Baudhayana", "Vasista"]
+        },
+        {
+          "name": "Grhya Sutras",
+          "slug": "grhya-sutras",
+          "texts": ["Asvalayana", "Khadira", "Others"]
+        },
+        {
+          "name": "Dharma Smrtis",
+          "slug": "dharma-smrtis",
+          "texts": ["Manu", "Yajnavalkya", "Narada", "Parasara", "Visnu", "Brhaspati", "Minor Smrtis"]
+        },
+        {
+          "name": "Digests and Nibandhas",
+          "slug": "digests-and-nibandhas",
+          "texts": ["Nirnaya Sindhu", "Mitaksara", "Other Nibandhas"]
+        }
+      ]
+    },
+    {
+      "name": "Artha Shastra",
+      "slug": "artha-sastra",
+      "texts": ["Kautiliya Artha Shastra", "Related Texts"]
+    },
+    {
+      "name": "Kama Shastra",
+      "slug": "kama-sastra",
+      "texts": ["Kama Sutra", "Ananga Ranga", "Ratirahasya", "Other Kama Texts"]
+    },
+    {
+      "name": "Niti Shastra",
+      "slug": "niti-sastra",
+      "texts": ["Pancatantra", "Hitopadesa", "Niti Texts", "Subhasita Collections"]
+    }
+  ]
+}

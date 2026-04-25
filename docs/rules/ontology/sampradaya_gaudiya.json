@@ -1,0 +1,72 @@
+{
+  "category": "Sampradaya",
+  "sanskrit": "सम्प्रदाय",
+  "slug": "sampradaya",
+  "tradition": "Gaudiya",
+  "sub_categories": [
+    {
+      "name": "Foundational Authorities",
+      "slug": "foundational-authorities",
+      "texts": [
+        "Caitanya Caritamrta",
+        "Caitanya Bhagavata",
+        "Caitanya Mangala",
+        "Navadvipa Dhama Mahatmya"
+      ]
+    },
+    {
+      "name": "Six Gosvamis",
+      "slug": "six-gosvamis",
+      "authors": [
+        {
+          "name": "Rupa Gosvami",
+          "texts": ["Bhakti Rasamrta Sindhu", "Ujvala Nilamani", "Upadesamrta"]
+        },
+        {
+          "name": "Sanatana Gosvami",
+          "texts": ["Brhad Bhagavatamrta", "Hari Bhakti Vilasa"]
+        },
+        {
+          "name": "Jiva Gosvami",
+          "texts": ["Sat Sandarbha", "Tattva Sandarbha", "Bhagavata Sandarbha"]
+        },
+        {
+          "name": "Raghunatha Dasa Gosvami",
+          "texts": ["Vilapa Kusumanjali"]
+        },
+        {
+          "name": "Raghunatha Bhatta Gosvami",
+          "texts": ["Bhagavata Katha"]
+        },
+        {
+          "name": "Gopala Bhatta Gosvami",
+          "texts": ["Sat Kriya Sara Dipika"]
+        }
+      ]
+    },
+    {
+      "name": "Later Acharyas",
+      "slug": "later-acharyas",
+      "authors": [
+        "Narottama Dasa Thakura",
+        "Visvanatha Cakravarti Thakura",
+        "Baladeva Vidyabhusana",
+        {
+          "name": "Bhaktivinoda Thakura",
+          "texts": ["Jaiva Dharma", "Sri Godruma Kalpatavi", "Hari Nama Cintamani"]
+        },
+        "Bhaktisiddhanta Sarasvati"
+      ]
+    },
+    {
+      "name": "Theology and Siddhanta",
+      "slug": "theology-and-siddhanta",
+      "topics": [
+        "Acintya Bhedabheda",
+        "Sambandha Abhidheya Prayojana",
+        "Bhakti Tattva",
+        "Rasa Tattva"
+      ]
+    }
+  ]
+}

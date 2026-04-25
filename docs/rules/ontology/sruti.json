@@ -1,0 +1,58 @@
+{
+  "category": "Sruti",
+  "sanskrit": "श्रुति",
+  "slug": "sruti",
+  "sub_categories": [
+    {
+      "name": "Rig Veda",
+      "slug": "rig-veda",
+      "divisions": ["Samhita", "Brahmana", "Aranyaka", "Upanisad"],
+      "ontology": {
+        "top": "Mandala",
+        "middle": "Sukta",
+        "unit": "Ric"
+      }
+    },
+    {
+      "name": "Sama Veda",
+      "slug": "sama-veda",
+      "divisions": ["Samhita", "Brahmana", "Aranyaka", "Upanisad"],
+      "ontology": {
+        "top": "Arcika",
+        "middle": "Gana",
+        "unit": "Mantra"
+      }
+    },
+    {
+      "name": "Yajur Veda",
+      "slug": "yajur-veda",
+      "branches": [
+        {
+          "name": "Sukla",
+          "slug": "sukla",
+          "divisions": ["Samhita", "Brahmana", "Aranyaka", "Upanisad"]
+        },
+        {
+          "name": "Krsna",
+          "slug": "krsna",
+          "divisions": ["Samhita", "Brahmana", "Aranyaka", "Upanisad"]
+        }
+      ],
+      "ontology": {
+        "top": "Kanda",
+        "middle": "Anuvaka",
+        "unit": "Mantra"
+      }
+    },
+    {
+      "name": "Atharva Veda",
+      "slug": "atharva-veda",
+      "divisions": ["Samhita", "Brahmana", "Aranyaka", "Upanisad"],
+      "ontology": {
+        "top": "Kanda",
+        "middle": "Sukta",
+        "unit": "Mantra"
+      }
+    }
+  ]
+}

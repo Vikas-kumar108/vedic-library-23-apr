@@ -19,6 +19,7 @@ export default async function authRoutes(fastify: FastifyInstance, options: Fast
   })
 
   fastify.post('/register', async (request, reply) => {
+    console.log('🛰️ GATEWAY: RECEIVED REGISTER REQUEST', request.body)
     const data = signupSchema.parse(request.body)
     try {
       const user = await authService.register(data)
@@ -28,6 +29,7 @@ export default async function authRoutes(fastify: FastifyInstance, options: Fast
     }
   })
 
+  // ... (verify-email, forgot-password, reset-password)
   fastify.post('/verify-email', async (request, reply) => {
     const { token } = z.object({ token: z.string() }).parse(request.body)
     try {
@@ -62,11 +64,14 @@ export default async function authRoutes(fastify: FastifyInstance, options: Fast
   })
 
   fastify.post('/login', async (request, reply) => {
+    const body = request.body as any
+    console.log('🛰️ GATEWAY: LOGIN ATTEMPT', { email: body?.email, hasPass: !!body?.password })
     const data = loginSchema.parse(request.body)
     try {
       const user = await authService.login(data)
       return reply.code(200).send(user)
     } catch (error: any) {
+      console.error('❌ GATEWAY LOGIN FAILURE:', error.message)
       return reply.code(401).send({ error: error.message })
     }
   })

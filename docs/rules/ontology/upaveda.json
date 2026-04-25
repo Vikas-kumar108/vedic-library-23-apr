@@ -1,0 +1,32 @@
+{
+  "category": "Upaveda",
+  "sanskrit": "उपवेद",
+  "slug": "upaveda",
+  "sub_categories": [
+    {
+      "name": "Ayurveda",
+      "slug": "ayurveda",
+      "ontology": {
+        "top": "Sthana",
+        "middle": "Adhyaya",
+        "unit": "Shloka/Prose"
+      },
+      "texts": ["Caraka Samhita", "Sushruta Samhita", "Astanga Hrdaya", "Astanga Samgraha"]
+    },
+    {
+      "name": "Dhanurveda",
+      "slug": "dhanurveda",
+      "texts": ["Dhanurveda Samhita", "Sarangadhara Dhanurveda"]
+    },
+    {
+      "name": "Gandharvaveda",
+      "slug": "gandharvaveda",
+      "texts": ["Natya Shastra", "Dattilam", "Brihaddesi"]
+    },
+    {
+      "name": "Sthapatyaveda",
+      "slug": "sthapatyaveda",
+      "texts": ["Mayamata", "Manasara", "Samarangana Sutradhara", "Silparatna"]
+    }
+  ]
+}

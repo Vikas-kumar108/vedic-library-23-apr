@@ -50,6 +50,7 @@ CREATE TYPE partner_type_enum AS ENUM ('CSR', 'NGO', 'GOVERNMENT', 'CORPORATE', 
 CREATE TYPE grant_status_enum AS ENUM ('PROPOSED', 'ACTIVE', 'COMPLETED', 'EXPIRED');
 CREATE TYPE milestone_status_enum AS ENUM ('PENDING', 'IN_PROGRESS', 'COMPLETED', 'VERIFIED');
 CREATE TYPE asset_status_enum AS ENUM ('ACTIVE', 'MAINTENANCE', 'RETIRED', 'LOST', 'SOLD');
+CREATE TYPE tax_type_enum AS ENUM ('GST', 'TDS', 'INCOME_TAX', 'OTHER');
 
 -- Infrastructure
 CREATE TYPE storage_provider_enum AS ENUM ('S3', 'R2', 'GCS', 'LOCAL');
@@ -110,9 +111,6 @@ CREATE TABLE users (
     deleted_at TIMESTAMP(3),
     is_anonymized BOOLEAN DEFAULT false,
     anonymized_at TIMESTAMP(3),
-    verification_token TEXT,
-    reset_token TEXT,
-    reset_token_expires TIMESTAMP(3),
     created_at TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     last_active TIMESTAMP(3)
@@ -253,7 +251,6 @@ CREATE TABLE nodes (
     order_index INTEGER DEFAULT 0,
     canonical_ref TEXT,
     path LTREE,
-    sensitivity INTEGER DEFAULT 1,
     status content_status_enum NOT NULL DEFAULT 'ACTIVE',
     deleted_at TIMESTAMP(3),
     created_at TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -363,6 +360,7 @@ CREATE TABLE financial_accounts (
     type TEXT NOT NULL,
     balance DECIMAL NOT NULL DEFAULT 0,
     currency TEXT DEFAULT 'INR',
+    deleted_at TIMESTAMP(3),
     created_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
@@ -469,6 +467,7 @@ CREATE TABLE utilization_certificates (
     certified_by TEXT,
     certification_date DATE,
     file_id UUID,
+    deleted_at TIMESTAMP(3),
     created_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP
 );
@@ -476,6 +475,8 @@ CREATE TABLE utilization_certificates (
 CREATE TABLE compliance_tasks (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     org_id UUID NOT NULL REFERENCES organizations(id) ON DELETE CASCADE,
+    transaction_id UUID REFERENCES transactions(id),
+    grant_id UUID REFERENCES grants(id),
     title TEXT NOT NULL,
     type TEXT NOT NULL,
     due_date DATE NOT NULL,
@@ -510,6 +511,18 @@ CREATE TABLE transactions (
     deleted_at TIMESTAMP(3),
     created_at TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE tax_records (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    transaction_id UUID NOT NULL REFERENCES transactions(id) ON DELETE CASCADE,
+    type tax_type_enum NOT NULL,
+    amount DECIMAL NOT NULL CHECK (amount >= 0),
+    challan_number TEXT,
+    deducted_at DATE,
+    filing_link TEXT,
+    created_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE journal_entries (
@@ -1093,28 +1106,51 @@ ALTER TABLE payroll_records ENABLE ROW LEVEL SECURITY;
 -- END OF VEDIC INSTITUTIONAL MASTER BLUEPRINT (V18 - THE ABSOLUTE FINAL)
 -- =========================================================================
 
--- =========================================================================
--- MILESTONE DISBURSEMENT AUTOMATION
--- =========================================================================
-CREATE OR REPLACE FUNCTION handle_milestone_completion()
-RETURNS TRIGGER AS $$
-BEGIN
-    IF NEW.status = 'COMPLETED' AND OLD.status != 'COMPLETED' THEN
-        -- Notify institutional admin to record disbursement
-        INSERT INTO audit_logs (org_id, user_id, action, entity_type, entity_id, new_data)
-        VALUES (
-            (SELECT org_id FROM partnerships WHERE id = NEW.partnership_id),
-            NULL, -- System Action
-            'MILESTONE_COMPLETED_DISBURSEMENT_PENDING',
-            'GRANT_MILESTONE',
-            NEW.id,
-            jsonb_build_object('milestone_title', NEW.title, 'amount', NEW.amount)
-        );
-    END IF;
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
 
-CREATE TRIGGER trigger_milestone_disbursal
-AFTER UPDATE ON grant_milestones
-FOR EACH ROW EXECUTE FUNCTION handle_milestone_completion();
+-- Updates for Paletinum level upgraddes 
+
+
+DROP TYPE content_type_enum;
+
+CREATE TYPE content_type_enum AS ENUM (
+
+-- 🌱 ROOT TEXT (Absolute)
+'mula',
+
+-- 🌳 PRIMARY COMMENTARY (Paramparā-level)
+'bhashya',
+
+-- 🌿 SECONDARY COMMENTARY
+'tika',
+'tippani',
+
+-- 🔍 ANALYTICAL LAYERS
+'shabdartha',     -- word-by-word
+'anvaya',         -- grammatical order
+'padaccheda',     -- word splitting (NEW)
+'vigraha',        -- compound breakdown (NEW)
+
+-- 🧠 INTERPRETIVE LAYERS
+'bhavartha',      -- essence meaning
+'tatparya',       -- philosophical intent
+'arthavistara',   -- expanded meaning (NEW)
+
+-- 📖 EXPLANATORY LAYERS
+'vivarana',       -- detailed exposition
+'vyakhyana',      -- general explanation
+'tippani_extended', -- longer notes (NEW, optional nuance)
+
+-- 🌐 TRANSLATION LAYERS
+'anuvada',        -- faithful translation
+'bhasantara',     -- contextual/free translation
+'bhavanuvada',    -- interpretive translation (NEW)
+
+-- 🧩 STRUCTURED STUDY AIDS
+'sutra_summary',  -- summary of section (NEW)
+'key_points',     -- extracted teachings (NEW)
+
+-- 🏷️ META TEXT
+'shirshaka',      -- title
+'upashirshaka',   -- subtitle
+'pushpika'        -- colophon
+);

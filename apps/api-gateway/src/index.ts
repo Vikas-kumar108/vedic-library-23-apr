@@ -50,7 +50,8 @@ fastify.get('/health', async () => {
 // Start Server
 const start = async () => {
   try {
-    await fastify.listen({ port: 4444, host: '0.0.0.0' })
+    const port = Number(process.env.PORT) || 4444
+    await fastify.listen({ port, host: '0.0.0.0' })
   } catch (err) {
     fastify.log.error(err)
     process.exit(1)

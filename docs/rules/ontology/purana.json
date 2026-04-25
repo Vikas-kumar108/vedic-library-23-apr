@@ -1,0 +1,59 @@
+{
+  "category": "Purana",
+  "sanskrit": "पुराण",
+  "slug": "purana",
+  "sub_categories": [
+    {
+      "name": "Mahapurana",
+      "slug": "mahapurana",
+      "ontology": {
+        "top": "Skandha",
+        "middle": "Adhyaya",
+        "unit": "Shloka"
+      },
+      "texts": [
+        "Bhagavata",
+        "Brahma",
+        "Padma",
+        "Visnu",
+        "Narada",
+        "Markandeya",
+        "Agni",
+        "Bhavisya",
+        "Brahmavaivarta",
+        "Linga",
+        "Varaha",
+        "Skanda",
+        "Vamana",
+        "Kurma",
+        "Matsya",
+        "Garuda",
+        "Brahmanda",
+        "Vayu"
+      ]
+    },
+    {
+      "name": "Upapurana",
+      "slug": "upapurana",
+      "texts": [
+        "Narasimha",
+        "Brhannaradiya",
+        "Sanatkumara",
+        "Samba",
+        "Hamsa",
+        "Nandi",
+        "Parasara",
+        "Saura",
+        "Kapila",
+        "Varuna",
+        "Adi",
+        "Kalki",
+        "Siva Rahasya",
+        "Kalika",
+        "Durga",
+        "Devi Bhagavata",
+        "Other Upapuranas"
+      ]
+    }
+  ]
+}

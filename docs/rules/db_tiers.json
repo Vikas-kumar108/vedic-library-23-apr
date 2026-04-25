@@ -1,0 +1,20 @@
+{
+  "tiers": {
+    "raw": {
+      "path": "database/dharma_local_raw.db",
+      "purpose": "Manual ingestion and verification against exhaustive ontology."
+    },
+    "synced": {
+      "path": "database/dharma_local_synced.db",
+      "purpose": "Automated script validation and staging before cloud push."
+    },
+    "cloud": {
+      "name": "Neon Postgres",
+      "purpose": "Production/Canonical repository."
+    }
+  },
+  "initialization": {
+    "source": "sql/v18_golden.sql",
+    "method": "Direct SQL injection to ensure physical structural identity (not generated from schema)."
+  }
+}

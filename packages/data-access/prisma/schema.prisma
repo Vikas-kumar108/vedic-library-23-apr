@@ -1,7 +1,6 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["postgresqlExtensions"]
-  engineType      = "library"
+  previewFeatures = ["driverAdapters", "postgresqlExtensions"]
   binaryTargets   = ["native"]
 }
 
@@ -11,1293 +10,796 @@ datasource db {
   extensions = [ltree, uuid_ossp(map: "uuid-ossp"), vector]
 }
 
-model Shastra {
+model CommunicationCampaignToLibraryItem {
+  A                       String                  @db.Uuid
+  B                       String                  @db.Uuid
+  communication_campaigns communication_campaigns @relation(fields: [A], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  library_items           library_items           @relation(fields: [B], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([A, B])
+  @@map("_CommunicationCampaignToLibraryItem")
+}
+
+model activity_logs {
   id            String        @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  slug          String        @unique
-  name          String
-  structureType String        @map("structure_type")
-  status        ContentStatus @default(ACTIVE)
-  deletedAt     DateTime?     @map("deleted_at")
-  createdAt     DateTime      @default(now()) @map("created_at")
-  updatedAt     DateTime      @default(now()) @updatedAt @map("updated_at")
-  nodes         Node[]
-
-  @@map("shastras")
+  org_id        String        @db.Uuid
+  title         String
+  description   String
+  category      String
+  date          DateTime?     @default(now())
+  images        String[]
+  project_id    String?       @db.Uuid
+  created_at    DateTime?     @default(now())
+  updated_at    DateTime      @default(now())
+  organizations organizations @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  projects      projects?     @relation(fields: [project_id], references: [id], onUpdate: NoAction)
 }
 
-model Source {
-  id          String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  name        String
-  role        String?
-  description String?
-  yearApprox  Int?     @map("year_approx")
-  era         String?
-  createdAt   DateTime @default(now()) @map("created_at")
-  updated_at  DateTime @default(now())
-  texts       Text[]
-
-  @@map("sources")
+model audit_logs {
+  id              String        @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  table_name      String?
+  record_id       String?       @db.Uuid
+  transaction_id  String?       @db.Uuid
+  module          String?
+  action          String
+  performed_by_id String        @db.Uuid
+  old_data        Json?
+  new_data        Json?
+  ip_address      String?
+  device_info     String?
+  timestamp       DateTime      @default(now())
+  users           users         @relation(fields: [performed_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  transactions    transactions? @relation(fields: [transaction_id], references: [id], onUpdate: NoAction)
 }
 
-model Node {
-  id            String                @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  shastraId     String                @map("shastra_id") @db.Uuid
-  parentId      String?               @map("parent_id") @db.Uuid
-  level         String
-  slug          String?               @unique
-  orderIndex    Int?                  @default(0) @map("order_index")
-  canonicalRef  String?               @map("canonical_ref")
-  path          Unsupported("ltree")?
-  status        ContentStatus         @default(ACTIVE)
-  deletedAt     DateTime?             @map("deleted_at")
-  createdAt     DateTime              @default(now()) @map("created_at")
-  updated_at    DateTime              @default(now())
-  sensitivity   Int?                  @default(1)
-  accessRules   ContentAccessRule[]
-  stepInCurves  LearningCurveStep[]
-  nodeProgress  UserNodeProgress[]
-  bookmarks     Bookmark[]
-  fromRelations NodeRelation[]        @relation("FromNode")
-  toRelations   NodeRelation[]        @relation("ToNode")
-  tags          NodeTag[]
-  parent        Node?                 @relation("NodeToNode", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  children      Node[]                @relation("NodeToNode")
-  shastra       Shastra               @relation(fields: [shastraId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  texts         Text[]
+model circle_members {
+  user_id   String            @db.Uuid
+  circle_id String            @db.Uuid
+  role      circle_role_enum? @default(MEMBER)
+  joined_at DateTime?         @default(now())
+  circles   circles           @relation(fields: [circle_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users     users             @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
-  @@index([path], map: "idx_nodes_path", type: Gist)
-  @@map("nodes")
+  @@id([user_id, circle_id])
 }
 
-model Text {
-  id           String         @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  nodeId       String         @map("node_id") @db.Uuid
-  contentType  ContentType    @map("content_type")
-  language     Language
-  script       Script
-  content      String
-  sourceId     String?        @map("source_id") @db.Uuid
-  isPrimary    Boolean?       @default(false) @map("is_primary")
-  anchorWord   String?        @map("anchor_word")
-  segmentOrder Int?           @map("segment_order")
-  status       ContentStatus  @default(ACTIVE)
-  deletedAt    DateTime?      @map("deleted_at")
-  createdAt    DateTime       @default(now()) @map("created_at")
-  updated_at   DateTime       @default(now())
-  synonyms     Synonym[]
-  embedding    TextEmbedding?
-  metadata     TextMetadata?
-  versions     TextVersion[]
-  highlights   Highlight[]
-  node         Node           @relation(fields: [nodeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  source       Source?        @relation(fields: [sourceId], references: [id], onUpdate: NoAction)
-
-  @@map("texts")
+model circle_posts {
+  id         String              @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  circle_id  String              @db.Uuid
+  author_id  String              @db.Uuid
+  content    String
+  category   post_category_enum? @default(REALIZATION)
+  likes      Int?                @default(0)
+  replies    Int?                @default(0)
+  is_pinned  Boolean?            @default(false)
+  created_at DateTime            @default(now())
+  users      users               @relation(fields: [author_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  circles    circles             @relation(fields: [circle_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
-model TextMetadata {
-  textId         String          @id @map("text_id") @db.Uuid
-  lifeStages     LifeStage[]     @map("life_stages")
-  guidanceLevels GuidanceLevel[] @map("guidance_levels")
-  isSensitive    Boolean?        @default(false) @map("is_sensitive")
-  text           Text            @relation(fields: [textId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@map("text_metadata")
+model circles {
+  id             String            @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name           String
+  slug           String            @unique
+  description    String?
+  type           circle_type_enum? @default(REGIONAL)
+  member_count   Int?              @default(0)
+  mentor_id      String?           @db.Uuid
+  created_at     DateTime          @default(now())
+  updated_at     DateTime          @default(now())
+  circle_members circle_members[]
+  circle_posts   circle_posts[]
+  users          users?            @relation(fields: [mentor_id], references: [id], onUpdate: NoAction)
 }
 
-model Synonym {
-  id         String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  textId     String    @map("text_id") @db.Uuid
-  word       String
-  meaning    String?
-  language   Language?
-  orderIndex Int?      @map("order_index")
-  created_at DateTime? @default(now())
-  text       Text      @relation(fields: [textId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-
-  @@map("synonyms")
-}
-
-model Tag {
-  id           String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  slug         String    @unique
-  name         String?
-  description  String?
-  keywords     String[]
-  type         String?
-  parentId     String?   @map("parent_id") @db.Uuid
-  sanskritName String?   @map("sanskrit_name")
-  createdAt    DateTime  @default(now()) @map("created_at")
-  updated_at   DateTime  @default(now())
-  nodes        NodeTag[]
-  parent       Tag?      @relation("TagToTag", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  subtags      Tag[]     @relation("TagToTag")
-
-  @@map("tags")
-}
-
-model NodeTag {
-  nodeId String @map("node_id") @db.Uuid
-  tagId  String @map("tag_id") @db.Uuid
-  node   Node   @relation(fields: [nodeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  tag    Tag    @relation(fields: [tagId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-
-  @@id([nodeId, tagId])
-  @@index([nodeId], map: "idx_node_tags_node")
-  @@index([tagId], map: "idx_node_tags_tag")
-  @@map("node_tags")
-}
-
-model NodeRelation {
-  id           String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  fromNodeId   String   @map("from_node_id") @db.Uuid
-  toNodeId     String   @map("to_node_id") @db.Uuid
-  relationType String?  @map("relation_type")
-  createdAt    DateTime @default(now()) @map("created_at")
-  fromNode     Node     @relation("FromNode", fields: [fromNodeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  toNode       Node     @relation("ToNode", fields: [toNodeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-
-  @@index([fromNodeId], map: "idx_node_rel_from")
-  @@index([toNodeId], map: "idx_node_rel_to")
-  @@map("node_relations")
-}
-
-model SubscriptionTier {
-  id                String                  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  orgId             String                  @map("org_id") @db.Uuid
-  name              String
-  description       String?
-  level             Int                     @default(1)
-  createdAt         DateTime                @default(now()) @map("created_at")
-  updatedAt         DateTime                @default(now()) @updatedAt @map("updated_at")
-  campaigns         CommunicationCampaign[]
-  libraryItems      LibraryItem[]
-  spiritualProfiles SpiritualProfile[]
-  organization      Organization            @relation(fields: [orgId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@map("subscription_tiers")
-}
-
-model CommunicationCampaign {
+model communication_campaigns {
   id                                                                 String                               @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  orgId                                                              String                               @map("org_id") @db.Uuid
+  org_id                                                             String                               @db.Uuid
   target_partner_id                                                  String?                              @db.Uuid
   target_org_id                                                      String?                              @db.Uuid
   title                                                              String
   content                                                            String
   type                                                               String
-  status                                                             CampaignStatus?                      @default(DRAFT)
-  targetTierId                                                       String?                              @map("target_tier_id") @db.Uuid
-  language                                                           Language?
-  scheduledAt                                                        DateTime?                            @map("scheduled_at")
-  sentAt                                                             DateTime?                            @map("sent_at")
-  createdAt                                                          DateTime                             @default(now()) @map("created_at")
-  updatedAt                                                          DateTime                             @default(now()) @updatedAt @map("updated_at")
+  status                                                             campaign_status_enum?                @default(DRAFT)
+  target_tier_id                                                     String?                              @db.Uuid
+  language                                                           language_enum?
+  scheduled_at                                                       DateTime?
+  sent_at                                                            DateTime?
+  created_at                                                         DateTime                             @default(now())
+  updated_at                                                         DateTime                             @default(now())
   CommunicationCampaignToLibraryItem                                 CommunicationCampaignToLibraryItem[]
-  organization                                                       Organization                         @relation(fields: [orgId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  organizations_communication_campaigns_target_org_idToorganizations Organization?                        @relation("communication_campaigns_target_org_idToorganizations", fields: [target_org_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  partner_organizations                                              PartnerOrganization?                 @relation(fields: [target_partner_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  targetTier                                                         SubscriptionTier?                    @relation(fields: [targetTierId], references: [id], onUpdate: NoAction)
-  CommunicationLog                                                   CommunicationLog[]
-
-  @@map("communication_campaigns")
+  organizations_communication_campaigns_org_idToorganizations        organizations                        @relation("communication_campaigns_org_idToorganizations", fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  organizations_communication_campaigns_target_org_idToorganizations organizations?                       @relation("communication_campaigns_target_org_idToorganizations", fields: [target_org_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  partner_organizations                                              partner_organizations?               @relation(fields: [target_partner_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  subscription_tiers                                                 subscription_tiers?                  @relation(fields: [target_tier_id], references: [id], onUpdate: NoAction)
+  communication_logs                                                 communication_logs[]
 }
 
-model Organization {
-  id                                                                           String                  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  parent_id                                                                    String?                 @db.Uuid
-  name                                                                         String
-  type                                                                         String
-  registrationNo                                                               String?                 @map("registration_no")
-  pan                                                                          String?
-  tan                                                                          String?
-  address                                                                      String?
-  createdAt                                                                    DateTime                @default(now()) @map("created_at")
-  updatedAt                                                                    DateTime                @default(now()) @updatedAt @map("updated_at")
-  activityLogs                                                                 ActivityLog[]
-  campaigns                                                                    CommunicationCampaign[]
-  communication_campaigns_communication_campaigns_target_org_idToorganizations CommunicationCampaign[] @relation("communication_campaigns_target_org_idToorganizations")
-  communicationLogs                                                            CommunicationLog[]
-  complianceTasks                                                              ComplianceTask[]
-  contributions                                                                Contribution[]
-  DonationCause                                                                DonationCause[]
-  integrations                                                                 ExternalIntegration[]
-  fileAssets                                                                   FileAsset[]
-  financialAccounts                                                            FinancialAccount[]
-  financialPeriods                                                             FinancialPeriod[]
-  journalEntries                                                               JournalEntry[]
-  legalDocuments                                                               LegalDocument[]
-  library_items                                                                LibraryItem[]
-  members                                                                      OrgMember[]
-  organizations                                                                Organization?           @relation("organizationsToorganizations", fields: [parent_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  other_organizations                                                          Organization[]          @relation("organizationsToorganizations")
-  partnerships                                                                 Partnership[]
-  physicalAssets                                                               PhysicalAsset[]
-  projects                                                                     Project[]
-  secure_share_links                                                           SecureShareLink[]
-  subscriptionTiers                                                            SubscriptionTier[]
-  supportTickets                                                               SupportTicket[]
-  transactions                                                                 Transaction[]
-
-  @@map("organizations")
+model communication_logs {
+  id                      String                     @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  user_id                 String?                    @db.Uuid
+  partner_id              String?                    @db.Uuid
+  org_id                  String?                    @db.Uuid
+  campaign_id             String?                    @db.Uuid
+  library_item_id         String?                    @db.Uuid
+  channel                 communication_channel_enum
+  recipient               String
+  subject                 String?
+  message                 String?
+  status                  communication_status_enum? @default(SENT)
+  external_id             String?
+  provider                String?
+  created_at              DateTime                   @default(now())
+  communication_campaigns communication_campaigns?   @relation(fields: [campaign_id], references: [id], onUpdate: NoAction)
+  library_items           library_items?             @relation(fields: [library_item_id], references: [id], onUpdate: NoAction)
+  organizations           organizations?             @relation(fields: [org_id], references: [id], onUpdate: NoAction)
+  partner_organizations   partner_organizations?     @relation(fields: [partner_id], references: [id], onUpdate: NoAction)
+  users                   users?                     @relation(fields: [user_id], references: [id], onUpdate: NoAction)
 }
 
-model OrgMember {
-  id             String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  orgId          String          @map("org_id") @db.Uuid
-  userId         String          @map("user_id") @db.Uuid
-  role           String
-  baseStipend    Decimal?        @default(0) @map("base_stipend") @db.Decimal
-  startDate      DateTime?       @map("start_date")
-  endDate        DateTime?       @map("end_date")
-  createdAt      DateTime?       @default(now()) @map("created_at")
-  updatedAt      DateTime?       @default(now()) @updatedAt @map("updated_at")
-  organization   Organization    @relation(fields: [orgId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  user           User            @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  payrollRecords PayrollRecord[]
-
-  @@map("org_members")
-}
-
-model PartnerReport {
-  id            String                 @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  partnershipId String                 @map("partnership_id") @db.Uuid
-  reportType    String                 @map("report_type")
-  fileId        String                 @map("file_id") @db.Uuid
-  periodStart   DateTime?              @map("period_start") @db.Date
-  periodEnd     DateTime?              @map("period_end") @db.Date
-  submittedAt   DateTime?              @map("submitted_at")
-  deletedAt     DateTime?              @map("deleted_at")
-  createdAt     DateTime?              @default(now()) @map("created_at")
-  updatedAt     DateTime?              @default(now()) @updatedAt @map("updated_at")
-  versions      PartnerReportVersion[]
-  file          FileAsset              @relation(fields: [fileId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  partnership   Partnership            @relation(fields: [partnershipId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@map("partner_reports")
-}
-
-model PartnerReportVersion {
-  id            String        @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  reportId      String        @map("report_id") @db.Uuid
-  fileId        String        @map("file_id") @db.Uuid
-  versionNumber Int           @map("version_number")
-  createdAt     DateTime?     @default(now()) @map("created_at")
-  file          FileAsset     @relation(fields: [fileId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  report        PartnerReport @relation(fields: [reportId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@map("partner_report_versions")
-}
-
-model PayrollRecord {
-  id            String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  orgMemberId   String          @map("org_member_id") @db.Uuid
-  transactionId String?         @map("transaction_id") @db.Uuid
-  periodId      String          @map("period_id") @db.Uuid
-  amount        Decimal         @db.Decimal
-  type          String?         @default("STIPEND")
-  status        String?         @default("PENDING")
-  paidAt        DateTime?       @map("paid_at")
-  createdAt     DateTime?       @default(now()) @map("created_at")
-  updatedAt     DateTime?       @default(now()) @updatedAt @map("updated_at")
-  orgMember     OrgMember       @relation(fields: [orgMemberId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  period        FinancialPeriod @relation(fields: [periodId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  transaction   Transaction?    @relation(fields: [transactionId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-
-  @@map("payroll_records")
-}
-
-model PartnerOrganization {
-  id                      String                  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  name                    String
-  type                    PartnerType
-  registrationNumber      String?                 @map("registration_number")
-  pan                     String?
-  tan                     String?
-  contactPerson           String?                 @map("contact_person")
-  email                   String?
-  phone                   String?
-  address                 String?
-  website                 String?
-  createdAt               DateTime?               @default(now()) @map("created_at")
-  updatedAt               DateTime?               @default(now()) @updatedAt @map("updated_at")
-  communication_campaigns CommunicationCampaign[]
-  communicationLogs       CommunicationLog[]
-  partnerships            Partnership[]
-
-  @@map("partner_organizations")
-}
-
-model Partnership {
-  id              String              @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  orgId           String              @map("org_id") @db.Uuid
-  partnerId       String              @map("partner_id") @db.Uuid
-  title           String
-  description     String?
-  startDate       DateTime?           @map("start_date") @db.Date
-  endDate         DateTime?           @map("end_date") @db.Date
-  status          GrantStatus?        @default(ACTIVE)
-  agreementFileId String?             @map("agreement_file_id") @db.Uuid
-  createdAt       DateTime?           @default(now()) @map("created_at")
-  updatedAt       DateTime?           @default(now()) @updatedAt @map("updated_at")
-  grants          Grant[]
-  partnerReports  PartnerReport[]
-  agreementFile   FileAsset?          @relation("PartnershipAgreement", fields: [agreementFileId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_agreement_file")
-  organization    Organization        @relation(fields: [orgId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  partner         PartnerOrganization @relation(fields: [partnerId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-
-  @@map("partnerships")
-}
-
-model LegalDocument {
-  id           String                    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  orgId        String                    @map("org_id") @db.Uuid
-  title        String
-  category     String
-  fileUrl      String                    @map("file_url")
-  status       LegalDocumentStatus?      @default(ACTIVE)
-  createdById  String?                   @map("created_by_id") @db.Uuid
-  createdAt    DateTime                  @default(now()) @map("created_at")
-  updatedAt    DateTime                  @default(now()) @updatedAt @map("updated_at")
-  versions     DocumentVersion[]
-  users        User?                     @relation(fields: [createdById], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  organization Organization              @relation(fields: [orgId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  sharedLinks  SecureShareLinkDocument[]
-
-  @@map("legal_documents")
-}
-
-model DocumentVersion {
-  id            String        @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  documentId    String        @map("document_id") @db.Uuid
-  fileUrl       String        @map("file_url")
-  versionNumber Int           @map("version_number")
-  changeNote    String?       @map("change_note")
-  createdById   String        @map("created_by_id") @db.Uuid
-  createdAt     DateTime      @default(now()) @map("created_at")
-  users         User          @relation(fields: [createdById], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  document      LegalDocument @relation(fields: [documentId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@map("document_versions")
-}
-
-model SecureShareLink {
-  id            String                    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  orgId         String                    @map("org_id") @db.Uuid
-  token         String                    @unique
-  purpose       String?
-  expiresAt     DateTime                  @map("expires_at")
-  accessCount   Int?                      @default(0) @map("access_count")
-  createdAt     DateTime                  @default(now()) @map("created_at")
-  documents     SecureShareLinkDocument[]
-  organizations Organization              @relation(fields: [orgId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-
-  @@map("secure_share_links")
-}
-
-model SecureShareLinkDocument {
-  linkId      String              @map("link_id") @db.Uuid
-  documentId  String              @map("document_id") @db.Uuid
-  accessLevel DocumentPermission? @default(READ) @map("access_level")
-  document    LegalDocument       @relation(fields: [documentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  link        SecureShareLink     @relation(fields: [linkId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@id([linkId, documentId])
-  @@map("secure_share_link_documents")
-}
-
-model FinancialAccount {
-  id                   String           @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  orgId                String           @map("org_id") @db.Uuid
-  name                 String
-  type                 String
-  balance              Decimal          @default(0) @db.Decimal
-  currency             String?          @default("INR")
-  createdAt            DateTime?        @default(now()) @map("created_at")
-  updatedAt            DateTime         @default(now()) @updatedAt @map("updated_at")
-  organization         Organization     @relation(fields: [orgId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  journalLines         JournalLine[]
-  ledgerSnapshots      LedgerSnapshot[]
-  incomingTransactions Transaction[]    @relation("DestinationAccount")
-  outgoingTransactions Transaction[]    @relation("SourceAccount")
-
-  @@map("financial_accounts")
-}
-
-model Transaction {
-  id                   String             @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  orgId                String             @map("org_id") @db.Uuid
-  grantId              String?            @map("grant_id") @db.Uuid
-  causeId              String?            @map("cause_id") @db.Uuid
-  projectId            String?            @map("project_id") @db.Uuid
-  amount               Decimal            @db.Decimal
-  type                 TransactionType
-  date                 DateTime?          @default(now())
-  sourceAccountId      String?            @map("source_account_id") @db.Uuid
-  destinationAccountId String?            @map("destination_account_id") @db.Uuid
-  category             String
-  purpose              String
-  paymentmethod        PaymentMethod
-  provider             String?
-  externalPaymentId    String?            @map("external_payment_id")
-  isCorpus             Boolean?           @default(false) @map("is_corpus")
-  gstApplicable        Boolean?           @default(false) @map("gst_applicable")
-  tdsApplicable        Boolean?           @default(false) @map("tds_applicable")
-  recordedById         String             @map("recorded_by_id") @db.Uuid
-  approvedById         String?            @map("approved_by_id") @db.Uuid
-  status               TransactionStatus? @default(PENDING)
-  deletedAt            DateTime?          @map("deleted_at")
-  createdAt            DateTime           @default(now()) @map("created_at")
-  updatedAt            DateTime           @default(now()) @updatedAt @map("updated_at")
-  auditLogs            AuditLog[]
-  contribution         Contribution?
-  donationReceipt      DonationReceipt?
-  journalEntries       JournalEntry[]
-  paymentRecord        PaymentRecord?
-  payrollRecords       PayrollRecord[]
-  approvedBy           User?              @relation("ApprovedBy", fields: [approvedById], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  cause                DonationCause?     @relation(fields: [causeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  destinationAccount   FinancialAccount?  @relation("DestinationAccount", fields: [destinationAccountId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  grant                Grant?             @relation(fields: [grantId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  organization         Organization       @relation(fields: [orgId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  project              Project?           @relation(fields: [projectId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  recordedBy           User               @relation("RecordedBy", fields: [recordedById], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  sourceAccount        FinancialAccount?  @relation("SourceAccount", fields: [sourceAccountId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-
-  @@index([causeId], map: "idx_transactions_cause")
-  @@map("transactions")
-}
-
-model AuditLog {
-  id            String       @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  table_name    String?
-  record_id     String?      @db.Uuid
-  transactionId String?      @map("transaction_id") @db.Uuid
-  module        String?
-  action        String
-  performedById String       @map("performed_by_id") @db.Uuid
-  oldData       Json?        @map("old_data")
-  newData       Json?        @map("new_data")
-  ip_address    String?
-  device_info   String?
-  timestamp     DateTime     @default(now())
-  performedBy   User         @relation(fields: [performedById], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  transaction   Transaction? @relation(fields: [transactionId], references: [id], onUpdate: NoAction)
-
-  @@map("audit_logs")
-}
-
-model FinancialPeriod {
-  id             String           @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  orgId          String           @map("org_id") @db.Uuid
-  yearLabel      String           @map("year_label")
-  startDate      DateTime         @map("start_date") @db.Date
-  endDate        DateTime         @map("end_date") @db.Date
-  isClosed       Boolean?         @default(false) @map("is_closed")
-  closedAt       DateTime?        @map("closed_at")
-  createdAt      DateTime?        @default(now()) @map("created_at")
-  updatedAt      DateTime?        @default(now()) @updatedAt @map("updated_at")
-  organization   Organization     @relation(fields: [orgId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  snapshots      LedgerSnapshot[]
-  payrollRecords PayrollRecord[]
-
-  @@map("financial_periods")
-}
-
-model LedgerSnapshot {
-  id             String            @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  accountId      String?           @map("account_id") @db.Uuid
-  periodId       String?           @map("period_id") @db.Uuid
-  openingBalance Decimal?          @map("opening_balance") @db.Decimal
-  closingBalance Decimal?          @map("closing_balance") @db.Decimal
-  createdAt      DateTime?         @default(now()) @map("created_at")
-  account        FinancialAccount? @relation(fields: [accountId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  period         FinancialPeriod?  @relation(fields: [periodId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-
-  @@unique([accountId, periodId], map: "ledger_snapshot_unique")
-  @@map("ledger_snapshots")
-}
-
-model Grant {
-  id                      String                   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  partnershipId           String                   @map("partnership_id") @db.Uuid
-  amount                  Decimal                  @db.Decimal
-  currency                String?                  @default("INR")
-  purpose                 String?
-  disbursementType        String?                  @map("disbursement_type")
-  status                  GrantStatus?             @default(ACTIVE)
-  isRestricted            Boolean?                 @default(true) @map("is_restricted")
-  startDate               DateTime?                @map("start_date") @db.Date
-  endDate                 DateTime?                @map("end_date") @db.Date
-  deletedAt               DateTime?                @map("deleted_at")
-  createdAt               DateTime?                @default(now()) @map("created_at")
-  updatedAt               DateTime?                @default(now()) @updatedAt @map("updated_at")
-  allocations             GrantAllocation[]
-  milestones              GrantMilestone[]
-  partnership             Partnership              @relation(fields: [partnershipId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  transactions            Transaction[]
-  utilizationCertificates UtilizationCertificate[]
-
-  @@map("grants")
-}
-
-model GrantAllocation {
-  id              String         @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  grantId         String         @map("grant_id") @db.Uuid
-  projectId       String?        @map("project_id") @db.Uuid
-  causeId         String?        @map("cause_id") @db.Uuid
-  allocatedAmount Decimal        @map("allocated_amount") @db.Decimal
-  createdAt       DateTime?      @default(now()) @map("created_at")
-  updatedAt       DateTime?      @default(now()) @updatedAt @map("updated_at")
-  cause           DonationCause? @relation(fields: [causeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  grant           Grant          @relation(fields: [grantId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  project         Project?       @relation(fields: [projectId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-
-  @@map("grant_allocations")
-}
-
-model GrantMilestone {
-  id                 String           @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  grantId            String           @map("grant_id") @db.Uuid
-  title              String
-  dueDate            DateTime?        @map("due_date") @db.Date
-  amount             Decimal          @db.Decimal
-  status             MilestoneStatus? @default(PENDING)
-  completionReportId String?          @map("completion_report_id") @db.Uuid
-  createdAt          DateTime?        @default(now()) @map("created_at")
-  updatedAt          DateTime?        @default(now()) @updatedAt @map("updated_at")
-  completionReport   FileAsset?       @relation(fields: [completionReportId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_report_file")
-  grant              Grant            @relation(fields: [grantId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-
-  @@map("grant_milestones")
-}
-
-model UtilizationCertificate {
-  id                String     @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  grantId           String     @map("grant_id") @db.Uuid
-  totalReceived     Decimal    @map("total_received") @db.Decimal
-  totalUtilized     Decimal    @map("total_utilized") @db.Decimal
-  unspentAmount     Decimal    @map("unspent_amount") @db.Decimal
-  certifiedBy       String?    @map("certified_by")
-  certificationDate DateTime?  @map("certification_date") @db.Date
-  fileId            String?    @map("file_id") @db.Uuid
-  createdAt         DateTime?  @default(now()) @map("created_at")
-  updatedAt         DateTime?  @default(now()) @updatedAt @map("updated_at")
-  file              FileAsset? @relation(fields: [fileId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_uc_file")
-  grant             Grant      @relation(fields: [grantId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@map("utilization_certificates")
-}
-
-model ComplianceTask {
-  id           String            @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  orgId        String            @map("org_id") @db.Uuid
-  title        String
-  type         String
-  dueDate      DateTime          @map("due_date") @db.Date
-  status       ComplianceStatus? @default(UPCOMING)
-  assignedToId String?           @map("assigned_to") @db.Uuid
-  createdAt    DateTime?         @default(now()) @map("created_at")
-  updatedAt    DateTime?         @default(now()) @updatedAt @map("updated_at")
-  assignedTo   User?             @relation(fields: [assignedToId], references: [id], onUpdate: NoAction)
-  organization Organization      @relation(fields: [orgId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@map("compliance_tasks")
-}
-
-model JournalEntry {
-  id            String             @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  orgId         String             @map("org_id") @db.Uuid
-  transactionId String?            @map("transaction_id") @db.Uuid
-  entryDate     DateTime           @default(now()) @map("entry_date")
-  description   String?
-  createdById   String?            @map("created_by_id") @db.Uuid
-  approvedById  String?            @map("approved_by_id") @db.Uuid
-  status        TransactionStatus? @default(PENDING)
-  deletedAt     DateTime?          @map("deleted_at")
-  createdAt     DateTime?          @default(now()) @map("created_at")
-  updatedAt     DateTime?          @default(now()) @updatedAt @map("updated_at")
-  approvedBy    User?              @relation("JournalApprovedBy", fields: [approvedById], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  createdBy     User?              @relation("JournalCreatedBy", fields: [createdById], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  organization  Organization       @relation(fields: [orgId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  transaction   Transaction?       @relation(fields: [transactionId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  lines         JournalLine[]
-
-  @@map("journal_entries")
-}
-
-model JournalLine {
-  id        String           @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  journalId String           @map("journal_id") @db.Uuid
-  accountId String           @map("account_id") @db.Uuid
-  debit     Decimal?         @default(0) @db.Decimal
-  credit    Decimal?         @default(0) @db.Decimal
-  deletedAt DateTime?        @map("deleted_at")
-  createdAt DateTime?        @default(now()) @map("created_at")
-  updatedAt DateTime?        @default(now()) @updatedAt @map("updated_at")
-  account   FinancialAccount @relation(fields: [accountId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  journal   JournalEntry     @relation(fields: [journalId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@map("journal_lines")
-}
-
-model Contribution {
-  id            String           @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  orgId         String           @map("org_id") @db.Uuid
-  userId        String           @map("user_id") @db.Uuid
-  transactionId String?          @unique @map("transaction_id") @db.Uuid
-  amount        Decimal?         @db.Decimal
-  type          ContributionType
-  purpose       String?
-  causeId       String?          @map("cause_id") @db.Uuid
-  createdAt     DateTime         @default(now()) @map("created_at")
-  updatedAt     DateTime         @default(now()) @updatedAt @map("updated_at")
-  cause         DonationCause?   @relation(fields: [causeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  organization  Organization     @relation(fields: [orgId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  transaction   Transaction?     @relation(fields: [transactionId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  user          User             @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-
-  @@map("contributions")
-}
-
-model Project {
-  id                   String                 @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  orgId                String                 @map("org_id") @db.Uuid
-  name                 String
-  description          String?
-  totalBudget          Decimal                @map("total_budget") @db.Decimal
-  status               ProjectStatus?         @default(ACTIVE)
-  causeId              String?                @map("cause_id") @db.Uuid
-  deleted_at           DateTime?
-  createdAt            DateTime               @default(now()) @map("created_at")
-  updatedAt            DateTime               @default(now()) @updatedAt @map("updated_at")
-  activityLogs         ActivityLog[]
-  grantAllocations     GrantAllocation[]
-  project_budget_lines project_budget_lines[]
-  cause                DonationCause?         @relation(fields: [causeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  organization         Organization           @relation(fields: [orgId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  transactions         Transaction[]
-
-  @@map("projects")
-}
-
-model ActivityLog {
-  id           String       @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  orgId        String       @map("org_id") @db.Uuid
-  title        String
-  description  String
-  category     String
-  date         DateTime?    @default(now())
-  images       String[]
-  projectId    String?      @map("project_id") @db.Uuid
-  createdAt    DateTime?    @default(now()) @map("created_at")
-  updatedAt    DateTime     @default(now()) @updatedAt @map("updated_at")
-  organization Organization @relation(fields: [orgId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  project      Project?     @relation(fields: [projectId], references: [id], onUpdate: NoAction)
-
-  @@map("activity_logs")
-}
-
-model TextVersion {
-  id            String       @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  textId        String       @map("text_id") @db.Uuid
-  content       String?
-  contentType   ContentType? @map("content_type")
-  language      Language?
-  script        Script?
-  versionNumber Int?         @map("version_number")
-  updatedBy     String?      @map("updated_by")
-  createdAt     DateTime     @default(now()) @map("created_at")
-  text          Text         @relation(fields: [textId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@map("text_versions")
-}
-
-model TextEmbedding {
-  textId    String                @id @map("text_id") @db.Uuid
-  embedding Unsupported("vector")
-  model     String
-  createdAt DateTime              @default(now()) @map("created_at")
-  text      Text                  @relation(fields: [textId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@map("text_embeddings")
-}
-
-model User {
-  id                     String               @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  email                  String               @unique
-  password               String?
-  isOnline               Boolean?             @default(true) @map("is_online")
-  emailVerified          DateTime?            @map("email_verified")
-  roles                  UserRole[]           @default([student])
-  status                 UserStatus           @default(ACTIVE)
-  failedLoginAttempts    Int?                 @default(0) @map("failed_login_attempts")
-  accountLockedUntil     DateTime?            @map("account_locked_until")
-  deletedAt              DateTime?            @map("deleted_at")
-  isAnonymized           Boolean?             @default(false) @map("is_anonymized")
-  anonymizedAt           DateTime?            @map("anonymized_at")
-  createdAt              DateTime             @default(now()) @map("created_at")
-  updated_at             DateTime             @default(now())
-  lastActive             DateTime?            @map("last_active")
-  verification_token     String?
-  reset_token            String?
-  reset_token_expires    DateTime?
-  auditActions           AuditLog[]
-  circleMemberships      CircleMember[]
-  circlePosts            CirclePost[]
-  mentoredCircles        Circle[]             @relation("CircleMentor")
-  communicationLogs      CommunicationLog[]
-  complianceTasks        ComplianceTask[]
-  contributions          Contribution[]
-  document_versions      DocumentVersion[]
-  issuedReceipts         DonationReceipt[]    @relation("IssuedBy")
-  donations              DonationReceipt[]    @relation("Donations")
-  eventRegistrations     EventRegistration[]
-  relatedTo              FamilyLink[]         @relation("UserRelated")
-  familyLinks            FamilyLink[]         @relation("UserMain")
-  lineageNodes           FamilyNode[]         @relation("UserLineage")
-  uploadedAssets         FileAsset[]
-  assignmentsAsGuide     GuidanceAssignment[] @relation("Guide")
-  assignmentsAsStudent   GuidanceAssignment[] @relation("Student")
-  nodeProgress           UserNodeProgress[]
-  bookmarks              Bookmark[]
-  highlights             Highlight[]
-  journalApprovedEntries JournalEntry[]       @relation("JournalApprovedBy")
-  journalCreatedEntries  JournalEntry[]       @relation("JournalCreatedBy")
-  legal_documents        LegalDocument[]
-  libraryDownloads       LibraryDownload[]
-  libraryItemsCreated    LibraryItem[]        @relation("LibraryCreatedBy")
-  orgMemberships         OrgMember[]
-  spiritual              SpiritualProfile?
-  spiritual_vows         spiritual_vows[]
-  assignedTickets        SupportTicket[]      @relation("TicketAssignedTo")
-  supportTickets         SupportTicket[]      @relation("TicketUser")
-  approvedTransactions   Transaction[]        @relation("ApprovedBy")
-  recordedTransactions   Transaction[]        @relation("RecordedBy")
-  curveProgress          UserCurveProgress[]
-  preferences            UserPreferences?
-  profile                UserProfile?
-  statistics             UserStatistics?
-  hostedEvents           VedicEvent[]         @relation("EventHost")
-
-  @@map("users")
-}
-
-model UserProfile {
-  userId         String    @id @map("user_id") @db.Uuid
-  full_name      String?   @map("full_name")
-  phoneNumber    String?   @map("phone_number")
-  whatsappNumber String?   @map("whatsapp_number")
-  avatarUrl      String?   @map("avatar_url")
-  gender         Gender?
-  dateOfBirth    DateTime? @map("date_of_birth")
-  village        String?
-  city           String?
-  state          String?
-  pinCode        String?   @map("pin_code")
-  createdAt      DateTime  @default(now()) @map("created_at")
-  updatedAt      DateTime  @default(now()) @updatedAt @map("updated_at")
-  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@map("user_profiles")
-}
-
-model SpiritualProfile {
-  userId             String            @id @map("user_id") @db.Uuid
-  ageGroup           AgeGroup?         @map("age_group")
-  lifeStage          LifeStage?        @map("life_stage")
-  eligibilityLevel   Int               @default(1) @map("eligibility_level")
-  primaryFocus       Purushartha?      @map("primary_focus")
-  innerState         InnerState?       @map("inner_state")
-  nature             Svabhava?
-  subscriptionTierId String?           @map("subscription_tier_id") @db.Uuid
-  createdAt          DateTime          @default(now()) @map("created_at")
-  updatedAt          DateTime          @default(now()) @updatedAt @map("updated_at")
-  subscriptionTier   SubscriptionTier? @relation(fields: [subscriptionTierId], references: [id], onUpdate: NoAction)
-  user               User              @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@map("spiritual_profiles")
-}
-
-model UserPreferences {
-  userId             String   @id @map("user_id") @db.Uuid
-  notification_prefs Json?    @default("{\"sms\": false, \"email\": true, \"whatsapp\": false}")
-  metadata           Json?    @default("{}")
-  notes              String?
-  createdAt          DateTime @default(now()) @map("created_at")
-  updatedAt          DateTime @default(now()) @updatedAt @map("updated_at")
-  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@map("user_preferences")
-}
-
-model FamilyLink {
-  id         String           @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  userId     String           @map("user_id") @db.Uuid
-  relatedId  String           @map("related_id") @db.Uuid
-  type       RelationshipType
-  notes      String?
-  createdAt  DateTime         @default(now()) @map("created_at")
-  updated_at DateTime         @default(now())
-  related    User             @relation("UserRelated", fields: [relatedId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  user       User             @relation("UserMain", fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@unique([userId, relatedId, type], map: "family_links_unique")
-  @@map("family_links")
-}
-
-model UserStatistics {
-  userId             String    @id @map("user_id") @db.Uuid
-  nodesReadCount     Int?      @default(0) @map("nodes_read_count")
-  coursesCompleted   Int?      @default(0) @map("courses_completed")
-  contributionPoints Int?      @default(0) @map("contribution_points")
-  updatedAt          DateTime? @default(now()) @map("updated_at")
-  user               User      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@map("user_statistics")
-}
-
-model FamilyGroup {
-  id          String       @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  name        String?
-  originPlace String?      @map("origin_place")
-  description String?
-  createdAt   DateTime?    @default(now()) @map("created_at") @db.Timestamp(6)
-  updatedAt   DateTime?    @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
-  nodes       FamilyNode[]
-
-  @@map("family_groups")
-}
-
-model GuidanceAssignment {
-  id             String            @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  guideId        String            @map("guide_id") @db.Uuid
-  studentId      String            @map("student_id") @db.Uuid
-  assignmentType AssignmentType    @map("assignment_type")
-  subject        String?
-  status         GuidanceStatus?   @default(ACTIVE)
-  createdAt      DateTime?         @default(now()) @map("created_at")
-  updated_at     DateTime?         @default(now())
-  guide          User              @relation("Guide", fields: [guideId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  student        User              @relation("Student", fields: [studentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  sessions       GuidanceSession[]
-
-  @@unique([guideId, studentId, assignmentType], map: "guidance_unique")
-  @@map("guidance_assignments")
-}
-
-model GuidanceSession {
-  id           String             @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  assignmentId String             @map("assignment_id") @db.Uuid
-  topic        String?
-  summaryNotes String?            @map("summary_notes")
-  sessionDate  DateTime?          @default(now()) @map("session_date")
-  assignment   GuidanceAssignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@map("guidance_sessions")
-}
-
-model LearningCurve {
-  id               String              @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  title            String
-  description      String?
-  targetLifeStages LifeStage[]         @map("target_life_stages")
-  isPublished      Boolean?            @default(false) @map("is_published")
-  createdAt        DateTime            @default(now()) @map("created_at")
-  updated_at       DateTime            @default(now())
-  steps            LearningCurveStep[]
-  userProgress     UserCurveProgress[]
-
-  @@map("learning_curves")
-}
-
-model LearningCurveStep {
-  id                String              @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  curveId           String              @map("curve_id") @db.Uuid
-  stepOrder         Int                 @map("step_order")
-  title             String
-  nodeId            String?             @map("node_id") @db.Uuid
-  unlockRequirement Json?               @map("unlock_requirement")
-  createdAt         DateTime?           @default(now()) @map("created_at")
-  updated_at        DateTime?           @default(now())
-  curve             LearningCurve       @relation(fields: [curveId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  node              Node?               @relation(fields: [nodeId], references: [id], onUpdate: NoAction)
-  userProgress      UserCurveProgress[]
-
-  @@unique([curveId, stepOrder], map: "step_order_unique")
-  @@map("learning_curve_steps")
-}
-
-model UserCurveProgress {
-  id            String             @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  userId        String             @map("user_id") @db.Uuid
-  curveId       String             @map("curve_id") @db.Uuid
-  currentStepId String?            @map("current_step_id") @db.Uuid
-  isCompleted   Boolean?           @default(false) @map("is_completed")
-  startedAt     DateTime           @default(now()) @map("started_at")
-  completedAt   DateTime?          @map("completed_at")
-  currentStep   LearningCurveStep? @relation(fields: [currentStepId], references: [id], onUpdate: NoAction)
-  curve         LearningCurve      @relation(fields: [curveId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  user          User               @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@unique([userId, curveId], map: "user_curve_unique")
-  @@map("user_curve_progress")
-}
-
-model Circle {
-  id          String         @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  name        String
-  slug        String         @unique
-  description String?
-  type        CircleType?    @default(REGIONAL)
-  memberCount Int?           @default(0) @map("member_count")
-  mentorId    String?        @map("mentor_id") @db.Uuid
-  createdAt   DateTime       @default(now()) @map("created_at")
-  updated_at  DateTime       @default(now())
-  members     CircleMember[]
-  posts       CirclePost[]
-  mentor      User?          @relation("CircleMentor", fields: [mentorId], references: [id], onUpdate: NoAction)
-
-  @@map("circles")
-}
-
-model CircleMember {
-  userId   String      @map("user_id") @db.Uuid
-  circleId String      @map("circle_id") @db.Uuid
-  role     CircleRole? @default(MEMBER)
-  joinedAt DateTime?   @default(now()) @map("joined_at")
-  circle   Circle      @relation(fields: [circleId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  user     User        @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-
-  @@id([userId, circleId])
-  @@map("circle_members")
-}
-
-model CirclePost {
-  id        String        @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  circleId  String        @map("circle_id") @db.Uuid
-  authorId  String        @map("author_id") @db.Uuid
-  content   String
-  category  PostCategory? @default(REALIZATION)
-  likes     Int?          @default(0)
-  replies   Int?          @default(0)
-  isPinned  Boolean?      @default(false) @map("is_pinned")
-  createdAt DateTime      @default(now()) @map("created_at")
-  author    User          @relation(fields: [authorId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  circle    Circle        @relation(fields: [circleId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@map("circle_posts")
-}
-
-model VedicEvent {
-  id            String              @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+model compliance_tasks {
+  id            String                  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_id        String                  @db.Uuid
   title         String
-  description   String?
-  hostId        String              @map("host_id") @db.Uuid
-  startTime     DateTime            @map("start_time")
-  endTime       DateTime            @map("end_time")
-  type          EventType?          @default(LIVE_SATSANG)
-  createdAt     DateTime            @default(now()) @map("created_at")
-  updated_at    DateTime            @default(now())
-  registrations EventRegistration[]
-  host          User                @relation("EventHost", fields: [hostId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-
-  @@map("vedic_events")
+  type          String
+  due_date      DateTime                @db.Date
+  status        compliance_status_enum? @default(UPCOMING)
+  assigned_to   String?                 @db.Uuid
+  created_at    DateTime?               @default(now())
+  updated_at    DateTime?               @default(now())
+  users         users?                  @relation(fields: [assigned_to], references: [id], onUpdate: NoAction)
+  organizations organizations           @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
-model EventRegistration {
-  userId        String     @map("user_id") @db.Uuid
-  eventId       String     @map("event_id") @db.Uuid
-  registered_at DateTime?  @default(now())
-  event         VedicEvent @relation(fields: [eventId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  user          User       @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-
-  @@id([userId, eventId])
-  @@map("event_registrations")
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model contributions {
+  id              String                 @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_id          String                 @db.Uuid
+  user_id         String                 @db.Uuid
+  transaction_id  String?                @unique @db.Uuid
+  amount          Decimal?               @db.Decimal
+  type            contribution_type_enum
+  purpose         String?
+  cause_id        String?                @db.Uuid
+  created_at      DateTime               @default(now())
+  updated_at      DateTime               @default(now())
+  donation_causes donation_causes?       @relation(fields: [cause_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  organizations   organizations          @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  transactions    transactions?          @relation(fields: [transaction_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users           users                  @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
-model PhysicalAsset {
-  id           String       @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  orgId        String       @map("org_id") @db.Uuid
-  name         String
-  description  String?
-  category     String
-  purchaseDate DateTime?    @map("purchase_date") @db.Date
-  purchaseCost Decimal?     @map("purchase_cost") @db.Decimal
-  currentValue Decimal?     @map("current_value") @db.Decimal
-  status       AssetStatus? @default(ACTIVE)
-  location     String?
-  qrCode       String?      @unique @map("qr_code")
-  createdAt    DateTime?    @default(now()) @map("created_at")
-  updatedAt    DateTime?    @default(now()) @updatedAt @map("updated_at")
-  organization Organization @relation(fields: [orgId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@index([qrCode], map: "idx_asset_qr")
-  @@map("physical_assets")
+model document_versions {
+  id              String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  document_id     String          @db.Uuid
+  file_url        String
+  version_number  Int
+  change_note     String?
+  created_by_id   String          @db.Uuid
+  created_at      DateTime        @default(now())
+  users           users           @relation(fields: [created_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  legal_documents legal_documents @relation(fields: [document_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
-model SupportTicket {
-  id           String              @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  orgId        String              @map("org_id") @db.Uuid
-  userId       String?             @map("user_id") @db.Uuid
-  subject      String
-  description  String
-  status       ticket_status_enum? @default(OPEN)
-  priority     String?             @default("MEDIUM")
-  assignedToId String?             @map("assigned_to_id") @db.Uuid
-  createdAt    DateTime?           @default(now()) @map("created_at")
-  updatedAt    DateTime?           @default(now()) @updatedAt @map("updated_at")
-  assignedTo   User?               @relation("TicketAssignedTo", fields: [assignedToId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  organization Organization        @relation(fields: [orgId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  user         User?               @relation("TicketUser", fields: [userId], references: [id], onUpdate: NoAction)
-
-  @@map("support_tickets")
-}
-
-model FileAsset {
-  id                      String                   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  orgId                   String                   @map("org_id") @db.Uuid
-  uploadedById            String?                  @map("uploaded_by_id") @db.Uuid
-  fileName                String                   @map("file_name")
-  fileType                String?                  @map("file_type")
-  mimeType                String?                  @map("mime_type")
-  storageProvider         StorageProvider          @map("storage_provider")
-  objectKey               String                   @map("object_key")
-  fileUrl                 String                   @map("file_url")
-  access_url              String?
-  fileSize                BigInt?                  @map("file_size")
-  checksum                String?
-  category                FileCategory
-  securityLevel           String?                  @default("PRIVATE") @map("security_level")
-  createdAt               DateTime                 @default(now()) @map("created_at")
-  updatedAt               DateTime                 @default(now()) @updatedAt @map("updated_at")
-  donation_receipts       DonationReceipt?
-  organization            Organization             @relation(fields: [orgId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  uploadedBy              User?                    @relation(fields: [uploadedById], references: [id], onUpdate: NoAction)
-  grantMilestones         GrantMilestone[]
-  libraryItem             LibraryItem?
-  LibraryVersion          LibraryVersion[]
-  partnerReportVersions   PartnerReportVersion[]
-  partnerReports          PartnerReport[]
-  partnerships            Partnership[]            @relation("PartnershipAgreement")
-  utilizationCertificates UtilizationCertificate[]
-
-  @@map("file_assets")
-}
-
-model DonationReceipt {
-  id              String       @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  transactionId   String       @unique @map("transaction_id") @db.Uuid
-  userId          String       @map("user_id") @db.Uuid
-  receiptNumber   String       @unique @map("receipt_number")
-  amount          Decimal      @db.Decimal
-  panNumber       String?      @map("pan_number")
-  donorName       String?      @map("donor_name")
-  is80gApplicable Boolean?     @default(true) @map("is_80g_applicable")
-  fileId          String?      @unique @map("file_id") @db.Uuid
-  status          String?      @default("GENERATED")
-  issuedById      String?      @map("issued_by_id") @db.Uuid
-  libraryItemId   String?      @map("library_item_id") @db.Uuid
-  createdAt       DateTime?    @default(now()) @map("created_at")
-  updatedAt       DateTime     @default(now()) @updatedAt @map("updated_at")
-  file_assets     FileAsset?   @relation(fields: [fileId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  issuedBy        User?        @relation("IssuedBy", fields: [issuedById], references: [id], onUpdate: NoAction)
-  libraryItem     LibraryItem? @relation(fields: [libraryItemId], references: [id], onUpdate: NoAction)
-  transaction     Transaction  @relation(fields: [transactionId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  user            User         @relation("Donations", fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-
-  @@map("donation_receipts")
-}
-
-model CommunicationLog {
-  id            String                 @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  userId        String?                @map("user_id") @db.Uuid
-  partnerId     String?                @map("partner_id") @db.Uuid
-  orgId         String?                @map("org_id") @db.Uuid
-  campaignId    String?                @map("campaign_id") @db.Uuid
-  libraryItemId String?                @map("library_item_id") @db.Uuid
-  channel       CommunicationChannel
-  recipient     String
-  subject       String?
-  message       String?
-  status        CommunicationStatus?   @default(SENT)
-  externalId    String?                @map("external_id")
-  provider      String?
-  createdAt     DateTime               @default(now()) @map("created_at")
-  campaign      CommunicationCampaign? @relation(fields: [campaignId], references: [id], onUpdate: NoAction)
-  libraryItem   LibraryItem?           @relation(fields: [libraryItemId], references: [id], onUpdate: NoAction)
-  organization  Organization?          @relation(fields: [orgId], references: [id], onUpdate: NoAction)
-  partner       PartnerOrganization?   @relation(fields: [partnerId], references: [id], onUpdate: NoAction)
-  user          User?                  @relation(fields: [userId], references: [id], onUpdate: NoAction)
-
-  @@map("communication_logs")
-}
-
-model ExternalIntegration {
-  id           String             @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  orgId        String?            @map("org_id") @db.Uuid
-  service      IntegrationService
-  config       Json?              @default("{}")
-  is_active    Boolean?           @default(true)
-  last_used_at DateTime?          @db.Timestamp(6)
-  last_error   String?
-  createdAt    DateTime           @default(now()) @map("created_at")
-  updatedAt    DateTime           @default(now()) @updatedAt @map("updated_at")
-  organization Organization?      @relation(fields: [orgId], references: [id], onUpdate: NoAction)
-
-  @@map("external_integrations")
-}
-
-model PaymentRecord {
-  id            String       @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  transactionId String?      @unique @map("transaction_id") @db.Uuid
-  provider      String
-  external_id   String
-  amount        Decimal      @db.Decimal
-  currency      String?      @default("INR")
-  status        String
-  raw_data      Json?
-  createdAt     DateTime     @default(now()) @map("created_at")
-  transaction   Transaction? @relation(fields: [transactionId], references: [id], onUpdate: NoAction)
-
-  @@map("payment_records")
-}
-
-model WebhookEvent {
-  id          String               @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  provider    String
-  eventType   String               @map("event_type")
-  externalId  String               @map("external_id")
-  payload     Json
-  status      webhook_status_enum? @default(PENDING)
-  processedAt DateTime?            @map("processed_at")
-  createdAt   DateTime             @default(now()) @map("created_at")
-
-  @@map("webhook_events")
-}
-
-model DonationCause {
-  id               String                @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  orgId            String                @map("org_id") @db.Uuid
-  parentId         String?               @map("parent_id") @db.Uuid
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model donation_cause_options {
+  id               String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  cause_id         String          @db.Uuid
   name             String
-  slug             String                @unique
-  description      String?
-  level            Int?                  @default(0)
-  path             Unsupported("ltree")?
-  isActive         Boolean?              @default(true) @map("is_active")
-  display_order    Int?                  @default(0)
-  createdAt        DateTime?             @default(now()) @map("created_at")
-  updated_at       DateTime?             @default(now())
-  contributions    Contribution[]
-  options          DonationCauseOption[]
-  organization     Organization          @relation(fields: [orgId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  parent           DonationCause?        @relation("SubCauses", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  subCauses        DonationCause[]       @relation("SubCauses")
-  grantAllocations GrantAllocation[]
-  projects         Project[]
-  transactions     Transaction[]
+  suggested_amount Decimal?        @db.Decimal
+  created_at       DateTime?       @default(now())
+  donation_causes  donation_causes @relation(fields: [cause_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model donation_causes {
+  id                     String                   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_id                 String                   @db.Uuid
+  parent_id              String?                  @db.Uuid
+  name                   String
+  slug                   String                   @unique
+  description            String?
+  level                  Int?                     @default(0)
+  path                   Unsupported("ltree")?
+  is_active              Boolean?                 @default(true)
+  display_order          Int?                     @default(0)
+  created_at             DateTime?                @default(now())
+  updated_at             DateTime?                @default(now())
+  contributions          contributions[]
+  donation_cause_options donation_cause_options[]
+  organizations          organizations            @relation(fields: [org_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  donation_causes        donation_causes?         @relation("donation_causesTodonation_causes", fields: [parent_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  other_donation_causes  donation_causes[]        @relation("donation_causesTodonation_causes")
+  grant_allocations      grant_allocations[]
+  projects               projects[]
+  transactions           transactions[]
 
   @@index([path], map: "idx_causes_path", type: Gist)
-  @@map("donation_causes")
 }
 
-model DonationCauseOption {
-  id              String        @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  causeId         String        @map("cause_id") @db.Uuid
-  name            String
-  suggestedAmount Decimal?      @map("suggested_amount") @db.Decimal
-  createdAt       DateTime?     @default(now()) @map("created_at")
-  cause           DonationCause @relation(fields: [causeId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@map("donation_cause_options")
+model donation_receipts {
+  id                                          String         @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  transaction_id                              String         @unique @db.Uuid
+  user_id                                     String         @db.Uuid
+  receipt_number                              String         @unique
+  amount                                      Decimal        @db.Decimal
+  pan_number                                  String?
+  donor_name                                  String?
+  is_80g_applicable                           Boolean?       @default(true)
+  file_id                                     String?        @unique @db.Uuid
+  status                                      String?        @default("GENERATED")
+  issued_by_id                                String?        @db.Uuid
+  library_item_id                             String?        @db.Uuid
+  created_at                                  DateTime?      @default(now())
+  updated_at                                  DateTime       @default(now())
+  file_assets                                 file_assets?   @relation(fields: [file_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users_donation_receipts_issued_by_idTousers users?         @relation("donation_receipts_issued_by_idTousers", fields: [issued_by_id], references: [id], onUpdate: NoAction)
+  library_items                               library_items? @relation(fields: [library_item_id], references: [id], onUpdate: NoAction)
+  transactions                                transactions   @relation(fields: [transaction_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users_donation_receipts_user_idTousers      users          @relation("donation_receipts_user_idTousers", fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
-model FamilyNode {
-  id            String                @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  userId        String?               @map("user_id") @db.Uuid
-  parentId      String?               @map("parent_id") @db.Uuid
-  familyGroupId String?               @map("family_group_id") @db.Uuid
-  path          Unsupported("ltree")?
-  level         Int?
-  createdAt     DateTime              @default(now()) @map("created_at")
-  updated_at    DateTime              @default(now())
-  familyGroup   FamilyGroup?          @relation(fields: [familyGroupId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  parent        FamilyNode?           @relation("Lineage", fields: [parentId], references: [id], onUpdate: NoAction)
-  children      FamilyNode[]          @relation("Lineage")
-  user          User?                 @relation("UserLineage", fields: [userId], references: [id], onUpdate: NoAction)
+model event_registrations {
+  user_id       String       @db.Uuid
+  event_id      String       @db.Uuid
+  registered_at DateTime?    @default(now())
+  vedic_events  vedic_events @relation(fields: [event_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users         users        @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([user_id, event_id])
+}
+
+model external_integrations {
+  id            String                   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_id        String?                  @db.Uuid
+  service       integration_service_enum
+  config        Json?                    @default("{}")
+  is_active     Boolean?                 @default(true)
+  last_used_at  DateTime?                @db.Timestamp(6)
+  last_error    String?
+  created_at    DateTime                 @default(now())
+  updated_at    DateTime                 @default(now())
+  organizations organizations?           @relation(fields: [org_id], references: [id], onUpdate: NoAction)
+}
+
+model family_groups {
+  id           String         @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name         String?
+  origin_place String?
+  description  String?
+  created_at   DateTime?      @default(now()) @db.Timestamp(6)
+  updated_at   DateTime?      @default(now()) @db.Timestamp(6)
+  family_nodes family_nodes[]
+}
+
+model family_links {
+  id                                   String                 @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  user_id                              String                 @db.Uuid
+  related_id                           String                 @db.Uuid
+  type                                 relationship_type_enum
+  notes                                String?
+  created_at                           DateTime               @default(now())
+  updated_at                           DateTime               @default(now())
+  users_family_links_related_idTousers users                  @relation("family_links_related_idTousers", fields: [related_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users_family_links_user_idTousers    users                  @relation("family_links_user_idTousers", fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([user_id, related_id, type], map: "family_links_unique")
+}
+
+model family_nodes {
+  id                 String                @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  user_id            String?               @db.Uuid
+  parent_id          String?               @db.Uuid
+  family_group_id    String?               @db.Uuid
+  path               Unsupported("ltree")?
+  level              Int?
+  created_at         DateTime              @default(now())
+  updated_at         DateTime              @default(now())
+  family_groups      family_groups?        @relation(fields: [family_group_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  family_nodes       family_nodes?         @relation("family_nodesTofamily_nodes", fields: [parent_id], references: [id], onUpdate: NoAction)
+  other_family_nodes family_nodes[]        @relation("family_nodesTofamily_nodes")
+  users              users?                @relation(fields: [user_id], references: [id], onUpdate: NoAction)
 
   @@index([path], map: "idx_family_path", type: Gist)
-  @@map("family_nodes")
 }
 
-model LibraryItem {
+model file_assets {
+  id                       String                     @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_id                   String                     @db.Uuid
+  uploaded_by_id           String?                    @db.Uuid
+  file_name                String
+  file_type                String?
+  mime_type                String?
+  storage_provider         storage_provider_enum
+  object_key               String
+  file_url                 String
+  access_url               String?
+  file_size                BigInt?
+  checksum                 String?
+  category                 file_category_enum
+  security_level           String?                    @default("PRIVATE")
+  created_at               DateTime                   @default(now())
+  updated_at               DateTime                   @default(now())
+  donation_receipts        donation_receipts?
+  organizations            organizations              @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users                    users?                     @relation(fields: [uploaded_by_id], references: [id], onUpdate: NoAction)
+  grant_milestones         grant_milestones[]
+  library_items            library_items?
+  library_versions         library_versions[]
+  partner_report_versions  partner_report_versions[]
+  partner_reports          partner_reports[]
+  partnerships             partnerships[]
+  utilization_certificates utilization_certificates[]
+}
+
+model financial_accounts {
+  id                                                                   String             @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_id                                                               String             @db.Uuid
+  name                                                                 String
+  type                                                                 String
+  balance                                                              Decimal            @default(0) @db.Decimal
+  currency                                                             String?            @default("INR")
+  created_at                                                           DateTime?          @default(now())
+  updated_at                                                           DateTime           @default(now())
+  organizations                                                        organizations      @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  journal_lines                                                        journal_lines[]
+  ledger_snapshots                                                     ledger_snapshots[]
+  transactions_transactions_destination_account_idTofinancial_accounts transactions[]     @relation("transactions_destination_account_idTofinancial_accounts")
+  transactions_transactions_source_account_idTofinancial_accounts      transactions[]     @relation("transactions_source_account_idTofinancial_accounts")
+}
+
+model financial_periods {
+  id               String             @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_id           String             @db.Uuid
+  year_label       String
+  start_date       DateTime           @db.Date
+  end_date         DateTime           @db.Date
+  is_closed        Boolean?           @default(false)
+  closed_at        DateTime?
+  created_at       DateTime?          @default(now())
+  updated_at       DateTime?          @default(now())
+  organizations    organizations      @relation(fields: [org_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  ledger_snapshots ledger_snapshots[]
+  payroll_records  payroll_records[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model grant_allocations {
+  id               String           @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  grant_id         String           @db.Uuid
+  project_id       String?          @db.Uuid
+  cause_id         String?          @db.Uuid
+  allocated_amount Decimal          @db.Decimal
+  created_at       DateTime?        @default(now())
+  updated_at       DateTime?        @default(now())
+  donation_causes  donation_causes? @relation(fields: [cause_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  grants           grants           @relation(fields: [grant_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  projects         projects?        @relation(fields: [project_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model grant_milestones {
+  id                   String                 @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  grant_id             String                 @db.Uuid
+  title                String
+  due_date             DateTime?              @db.Date
+  amount               Decimal                @db.Decimal
+  status               milestone_status_enum? @default(PENDING)
+  completion_report_id String?                @db.Uuid
+  created_at           DateTime?              @default(now())
+  updated_at           DateTime?              @default(now())
+  file_assets          file_assets?           @relation(fields: [completion_report_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_report_file")
+  grants               grants                 @relation(fields: [grant_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model grants {
+  id                       String                     @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  partnership_id           String                     @db.Uuid
+  amount                   Decimal                    @db.Decimal
+  currency                 String?                    @default("INR")
+  purpose                  String?
+  disbursement_type        String?
+  status                   grant_status_enum?         @default(ACTIVE)
+  is_restricted            Boolean?                   @default(true)
+  start_date               DateTime?                  @db.Date
+  end_date                 DateTime?                  @db.Date
+  deleted_at               DateTime?
+  created_at               DateTime?                  @default(now())
+  updated_at               DateTime?                  @default(now())
+  grant_allocations        grant_allocations[]
+  grant_milestones         grant_milestones[]
+  partnerships             partnerships               @relation(fields: [partnership_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  transactions             transactions[]
+  utilization_certificates utilization_certificates[]
+}
+
+model guidance_assignments {
+  id                                           String                @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  guide_id                                     String                @db.Uuid
+  student_id                                   String                @db.Uuid
+  assignment_type                              assignment_type_enum
+  subject                                      String?
+  status                                       guidance_status_enum? @default(ACTIVE)
+  created_at                                   DateTime?             @default(now())
+  updated_at                                   DateTime?             @default(now())
+  users_guidance_assignments_guide_idTousers   users                 @relation("guidance_assignments_guide_idTousers", fields: [guide_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users_guidance_assignments_student_idTousers users                 @relation("guidance_assignments_student_idTousers", fields: [student_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  guidance_sessions                            guidance_sessions[]
+
+  @@unique([guide_id, student_id, assignment_type], map: "guidance_unique")
+}
+
+model guidance_sessions {
+  id                   String               @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  assignment_id        String               @db.Uuid
+  topic                String?
+  summary_notes        String?
+  session_date         DateTime?            @default(now())
+  guidance_assignments guidance_assignments @relation(fields: [assignment_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model journal_entries {
+  id                                          String                   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_id                                      String                   @db.Uuid
+  transaction_id                              String?                  @db.Uuid
+  entry_date                                  DateTime                 @default(now())
+  description                                 String?
+  created_by_id                               String?                  @db.Uuid
+  approved_by_id                              String?                  @db.Uuid
+  status                                      transaction_status_enum? @default(PENDING)
+  deleted_at                                  DateTime?
+  created_at                                  DateTime?                @default(now())
+  updated_at                                  DateTime?                @default(now())
+  users_journal_entries_approved_by_idTousers users?                   @relation("journal_entries_approved_by_idTousers", fields: [approved_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users_journal_entries_created_by_idTousers  users?                   @relation("journal_entries_created_by_idTousers", fields: [created_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  organizations                               organizations            @relation(fields: [org_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  transactions                                transactions?            @relation(fields: [transaction_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  journal_lines                               journal_lines[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model journal_lines {
+  id                 String             @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  journal_id         String             @db.Uuid
+  account_id         String             @db.Uuid
+  debit              Decimal?           @default(0) @db.Decimal
+  credit             Decimal?           @default(0) @db.Decimal
+  deleted_at         DateTime?
+  created_at         DateTime?          @default(now())
+  updated_at         DateTime?          @default(now())
+  financial_accounts financial_accounts @relation(fields: [account_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  journal_entries    journal_entries    @relation(fields: [journal_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model learning_curve_steps {
+  id                  String                @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  curve_id            String                @db.Uuid
+  step_order          Int
+  title               String
+  node_id             String?               @db.Uuid
+  unlock_requirement  Json?
+  created_at          DateTime?             @default(now())
+  updated_at          DateTime?             @default(now())
+  learning_curves     learning_curves       @relation(fields: [curve_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  nodes               nodes?                @relation(fields: [node_id], references: [id], onUpdate: NoAction)
+  user_curve_progress user_curve_progress[]
+
+  @@unique([curve_id, step_order], map: "step_order_unique")
+}
+
+model learning_curves {
+  id                   String                 @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  title                String
+  description          String?
+  target_life_stages   life_stage_enum[]
+  is_published         Boolean?               @default(false)
+  created_at           DateTime               @default(now())
+  updated_at           DateTime               @default(now())
+  learning_curve_steps learning_curve_steps[]
+  user_curve_progress  user_curve_progress[]
+}
+
+model ledger_snapshots {
+  id                 String              @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  account_id         String?             @db.Uuid
+  period_id          String?             @db.Uuid
+  opening_balance    Decimal?            @db.Decimal
+  closing_balance    Decimal?            @db.Decimal
+  created_at         DateTime?           @default(now())
+  financial_accounts financial_accounts? @relation(fields: [account_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  financial_periods  financial_periods?  @relation(fields: [period_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([account_id, period_id], map: "ledger_snapshot_unique")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model legal_documents {
+  id                          String                        @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_id                      String                        @db.Uuid
+  title                       String
+  category                    String
+  file_url                    String
+  status                      legal_document_status_enum?   @default(ACTIVE)
+  created_by_id               String?                       @db.Uuid
+  created_at                  DateTime                      @default(now())
+  updated_at                  DateTime                      @default(now())
+  document_versions           document_versions[]
+  users                       users?                        @relation(fields: [created_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  organizations               organizations                 @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  secure_share_link_documents secure_share_link_documents[]
+}
+
+model library_downloads {
+  id              String        @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  user_id         String?       @db.Uuid
+  library_item_id String        @db.Uuid
+  downloaded_at   DateTime      @default(now())
+  library_items   library_items @relation(fields: [library_item_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users           users?        @relation(fields: [user_id], references: [id], onUpdate: NoAction)
+}
+
+model library_items {
   id                                 String                               @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  orgId                              String                               @map("org_id") @db.Uuid
+  org_id                             String                               @db.Uuid
   title                              String
   slug                               String                               @unique
   description                        String?
   type                               librarytype
-  language                           Language?
+  language                           language_enum?
   author                             String?
-  publishedAt                        DateTime?                            @map("published_at")
-  fileId                             String                               @unique @map("file_id") @db.Uuid
-  thumbnailUrl                       String?                              @map("thumbnail_url")
+  published_at                       DateTime?
+  file_id                            String                               @unique @db.Uuid
+  thumbnail_url                      String?
   tags                               String[]
   keywords                           String[]
-  requiredRoles                      UserRole[]                           @map("required_role")
-  requiredTierId                     String?                              @map("required_tier") @db.Uuid
-  isPublic                           Boolean?                             @default(true) @map("is_public")
-  isDownloadable                     Boolean?                             @default(true) @map("is_downloadable")
+  required_role                      user_role_enum[]
+  required_tier                      String?                              @db.Uuid
+  is_public                          Boolean?                             @default(true)
+  is_downloadable                    Boolean?                             @default(true)
   deleted_at                         DateTime?
-  createdById                        String?                              @map("created_by_id") @db.Uuid
-  createdAt                          DateTime                             @default(now()) @map("created_at")
-  updatedAt                          DateTime                             @default(now()) @updatedAt @map("updated_at")
+  created_by_id                      String?                              @db.Uuid
+  created_at                         DateTime                             @default(now())
+  updated_at                         DateTime                             @default(now())
   CommunicationCampaignToLibraryItem CommunicationCampaignToLibraryItem[]
-  communications                     CommunicationLog[]
-  DonationReceipt                    DonationReceipt[]
-  downloads                          LibraryDownload[]
-  createdBy                          User?                                @relation("LibraryCreatedBy", fields: [createdById], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  file                               FileAsset                            @relation(fields: [fileId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  organizations                      Organization                         @relation(fields: [orgId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  requiredTier                       SubscriptionTier?                    @relation(fields: [requiredTierId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  versions                           LibraryVersion[]
-
-  @@map("library_items")
+  communication_logs                 communication_logs[]
+  donation_receipts                  donation_receipts[]
+  library_downloads                  library_downloads[]
+  users                              users?                               @relation(fields: [created_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  file_assets                        file_assets                          @relation(fields: [file_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  organizations                      organizations                        @relation(fields: [org_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  subscription_tiers                 subscription_tiers?                  @relation(fields: [required_tier], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  library_versions                   library_versions[]
 }
 
-model LibraryVersion {
-  id            String      @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  libraryItemId String      @map("library_item_id") @db.Uuid
-  fileId        String      @map("file_id") @db.Uuid
-  versionNumber Int         @map("version_number")
-  notes         String?
-  createdAt     DateTime    @default(now()) @map("created_at")
-  file          FileAsset   @relation(fields: [fileId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  libraryItem   LibraryItem @relation(fields: [libraryItemId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@map("library_versions")
+model library_versions {
+  id              String        @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  library_item_id String        @db.Uuid
+  file_id         String        @db.Uuid
+  version_number  Int
+  notes           String?
+  created_at      DateTime      @default(now())
+  file_assets     file_assets   @relation(fields: [file_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  library_items   library_items @relation(fields: [library_item_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
-model LibraryDownload {
-  id            String      @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  userId        String?     @map("user_id") @db.Uuid
-  libraryItemId String      @map("library_item_id") @db.Uuid
-  downloadedAt  DateTime    @default(now()) @map("downloaded_at")
-  libraryItem   LibraryItem @relation(fields: [libraryItemId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  user          User?       @relation(fields: [userId], references: [id], onUpdate: NoAction)
+model node_relations {
+  id                                       String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  from_node_id                             String   @db.Uuid
+  to_node_id                               String   @db.Uuid
+  relation_type                            String?
+  created_at                               DateTime @default(now())
+  nodes_node_relations_from_node_idTonodes nodes    @relation("node_relations_from_node_idTonodes", fields: [from_node_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  nodes_node_relations_to_node_idTonodes   nodes    @relation("node_relations_to_node_idTonodes", fields: [to_node_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
-  @@map("library_downloads")
+  @@index([from_node_id], map: "idx_node_rel_from")
+  @@index([to_node_id], map: "idx_node_rel_to")
 }
 
-model CommunicationCampaignToLibraryItem {
-  A                       String                @db.Uuid
-  B                       String                @db.Uuid
-  communication_campaigns CommunicationCampaign @relation(fields: [A], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  library_items           LibraryItem           @relation(fields: [B], references: [id], onDelete: Cascade, onUpdate: NoAction)
+model node_tags {
+  node_id String @db.Uuid
+  tag_id  String @db.Uuid
+  nodes   nodes  @relation(fields: [node_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  tags    tags   @relation(fields: [tag_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
-  @@id([A, B])
-  @@map("_CommunicationCampaignToLibraryItem")
+  @@id([node_id, tag_id])
+  @@index([node_id], map: "idx_node_tags_node")
+  @@index([tag_id], map: "idx_node_tags_tag")
+}
+
+model nodes {
+  id                                                String                 @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  shastra_id                                        String                 @db.Uuid
+  parent_id                                         String?                @db.Uuid
+  level                                             String
+  slug                                              String?
+  order_index                                       Int?                   @default(0)
+  canonical_ref                                     String?
+  path                                              Unsupported("ltree")?
+  sensitivity                                       Int?                   @default(1)
+  status                                            content_status_enum    @default(ACTIVE)
+  deleted_at                                        DateTime?
+  created_at                                        DateTime               @default(now())
+  updated_at                                        DateTime               @default(now())
+  learning_curve_steps                              learning_curve_steps[]
+  node_relations_node_relations_from_node_idTonodes node_relations[]       @relation("node_relations_from_node_idTonodes")
+  node_relations_node_relations_to_node_idTonodes   node_relations[]       @relation("node_relations_to_node_idTonodes")
+  node_tags                                         node_tags[]
+  nodes                                             nodes?                 @relation("nodesTonodes", fields: [parent_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  other_nodes                                       nodes[]                @relation("nodesTonodes")
+  shastras                                          shastras               @relation(fields: [shastra_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  texts                                             texts[]
+
+  @@index([path], map: "idx_nodes_path", type: Gist)
+}
+
+model org_members {
+  id              String            @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_id          String            @db.Uuid
+  user_id         String            @db.Uuid
+  role            String
+  base_stipend    Decimal?          @default(0) @db.Decimal
+  start_date      DateTime?
+  end_date        DateTime?
+  created_at      DateTime?         @default(now())
+  updated_at      DateTime?         @default(now())
+  organizations   organizations     @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users           users             @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  payroll_records payroll_records[]
+}
+
+model organizations {
+  id                                                                           String                    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  parent_id                                                                    String?                   @db.Uuid
+  name                                                                         String
+  type                                                                         String
+  registration_no                                                              String?
+  pan                                                                          String?
+  tan                                                                          String?
+  address                                                                      String?
+  created_at                                                                   DateTime                  @default(now())
+  updated_at                                                                   DateTime                  @default(now())
+  activity_logs                                                                activity_logs[]
+  communication_campaigns_communication_campaigns_org_idToorganizations        communication_campaigns[] @relation("communication_campaigns_org_idToorganizations")
+  communication_campaigns_communication_campaigns_target_org_idToorganizations communication_campaigns[] @relation("communication_campaigns_target_org_idToorganizations")
+  communication_logs                                                           communication_logs[]
+  compliance_tasks                                                             compliance_tasks[]
+  contributions                                                                contributions[]
+  donation_causes                                                              donation_causes[]
+  external_integrations                                                        external_integrations[]
+  file_assets                                                                  file_assets[]
+  financial_accounts                                                           financial_accounts[]
+  financial_periods                                                            financial_periods[]
+  journal_entries                                                              journal_entries[]
+  legal_documents                                                              legal_documents[]
+  library_items                                                                library_items[]
+  org_members                                                                  org_members[]
+  organizations                                                                organizations?            @relation("organizationsToorganizations", fields: [parent_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  other_organizations                                                          organizations[]           @relation("organizationsToorganizations")
+  partnerships                                                                 partnerships[]
+  physical_assets                                                              physical_assets[]
+  projects                                                                     projects[]
+  secure_share_links                                                           secure_share_links[]
+  subscription_tiers                                                           subscription_tiers[]
+  support_tickets                                                              support_tickets[]
+  transactions                                                                 transactions[]
+}
+
+model partner_organizations {
+  id                      String                    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name                    String
+  type                    partner_type_enum
+  registration_number     String?
+  pan                     String?
+  tan                     String?
+  contact_person          String?
+  email                   String?
+  phone                   String?
+  address                 String?
+  website                 String?
+  created_at              DateTime?                 @default(now())
+  updated_at              DateTime?                 @default(now())
+  communication_campaigns communication_campaigns[]
+  communication_logs      communication_logs[]
+  partnerships            partnerships[]
+}
+
+model partner_report_versions {
+  id              String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  report_id       String          @db.Uuid
+  file_id         String          @db.Uuid
+  version_number  Int
+  created_at      DateTime?       @default(now())
+  file_assets     file_assets     @relation(fields: [file_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  partner_reports partner_reports @relation(fields: [report_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model partner_reports {
+  id                      String                    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  partnership_id          String                    @db.Uuid
+  report_type             String
+  file_id                 String                    @db.Uuid
+  period_start            DateTime?                 @db.Date
+  period_end              DateTime?                 @db.Date
+  submitted_at            DateTime?
+  deleted_at              DateTime?
+  created_at              DateTime?                 @default(now())
+  updated_at              DateTime?                 @default(now())
+  partner_report_versions partner_report_versions[]
+  file_assets             file_assets               @relation(fields: [file_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  partnerships            partnerships              @relation(fields: [partnership_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model partnerships {
+  id                    String                @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_id                String                @db.Uuid
+  partner_id            String                @db.Uuid
+  title                 String
+  description           String?
+  start_date            DateTime?             @db.Date
+  end_date              DateTime?             @db.Date
+  status                grant_status_enum?    @default(ACTIVE)
+  agreement_file_id     String?               @db.Uuid
+  created_at            DateTime?             @default(now())
+  updated_at            DateTime?             @default(now())
+  grants                grants[]
+  partner_reports       partner_reports[]
+  file_assets           file_assets?          @relation(fields: [agreement_file_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_agreement_file")
+  organizations         organizations         @relation(fields: [org_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  partner_organizations partner_organizations @relation(fields: [partner_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model payment_records {
+  id             String        @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  transaction_id String?       @unique @db.Uuid
+  provider       String
+  external_id    String
+  amount         Decimal       @db.Decimal
+  currency       String?       @default("INR")
+  status         String
+  raw_data       Json?
+  created_at     DateTime      @default(now())
+  transactions   transactions? @relation(fields: [transaction_id], references: [id], onUpdate: NoAction)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model payroll_records {
+  id                String            @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_member_id     String            @db.Uuid
+  transaction_id    String?           @db.Uuid
+  period_id         String            @db.Uuid
+  amount            Decimal           @db.Decimal
+  type              String?           @default("STIPEND")
+  status            String?           @default("PENDING")
+  paid_at           DateTime?
+  created_at        DateTime?         @default(now())
+  updated_at        DateTime?         @default(now())
+  org_members       org_members       @relation(fields: [org_member_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  financial_periods financial_periods @relation(fields: [period_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  transactions      transactions?     @relation(fields: [transaction_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model physical_assets {
+  id            String             @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_id        String             @db.Uuid
+  name          String
+  description   String?
+  category      String
+  purchase_date DateTime?          @db.Date
+  purchase_cost Decimal?           @db.Decimal
+  current_value Decimal?           @db.Decimal
+  status        asset_status_enum? @default(ACTIVE)
+  location      String?
+  qr_code       String?            @unique
+  created_at    DateTime?          @default(now())
+  updated_at    DateTime?          @default(now())
+  organizations organizations      @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([qr_code], map: "idx_asset_qr")
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
@@ -1308,9 +810,89 @@ model project_budget_lines {
   budget_amount Decimal   @db.Decimal
   created_at    DateTime? @default(now())
   updated_at    DateTime? @default(now())
-  projects      Project   @relation(fields: [project_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  projects      projects  @relation(fields: [project_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@index([project_id], map: "idx_budget_project")
+}
+
+model projects {
+  id                   String                 @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_id               String                 @db.Uuid
+  name                 String
+  description          String?
+  total_budget         Decimal                @db.Decimal
+  status               project_status_enum?   @default(ACTIVE)
+  cause_id             String?                @db.Uuid
+  deleted_at           DateTime?
+  created_at           DateTime               @default(now())
+  updated_at           DateTime               @default(now())
+  activity_logs        activity_logs[]
+  grant_allocations    grant_allocations[]
+  project_budget_lines project_budget_lines[]
+  donation_causes      donation_causes?       @relation(fields: [cause_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  organizations        organizations          @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  transactions         transactions[]
+}
+
+model secure_share_link_documents {
+  link_id            String                    @db.Uuid
+  document_id        String                    @db.Uuid
+  access_level       document_permission_enum? @default(READ)
+  legal_documents    legal_documents           @relation(fields: [document_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  secure_share_links secure_share_links        @relation(fields: [link_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([link_id, document_id])
+}
+
+model secure_share_links {
+  id                          String                        @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_id                      String                        @db.Uuid
+  token                       String                        @unique
+  purpose                     String?
+  expires_at                  DateTime
+  access_count                Int?                          @default(0)
+  created_at                  DateTime                      @default(now())
+  secure_share_link_documents secure_share_link_documents[]
+  organizations               organizations                 @relation(fields: [org_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model shastras {
+  id             String              @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  slug           String              @unique
+  name           String
+  structure_type String
+  status         content_status_enum @default(ACTIVE)
+  deleted_at     DateTime?
+  created_at     DateTime            @default(now())
+  updated_at     DateTime            @default(now())
+  nodes          nodes[]
+}
+
+model sources {
+  id          String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name        String
+  role        String?
+  description String?
+  year_approx Int?
+  era         String?
+  created_at  DateTime @default(now())
+  updated_at  DateTime @default(now())
+  texts       texts[]
+}
+
+model spiritual_profiles {
+  user_id              String              @id @db.Uuid
+  age_group            age_group_enum?
+  life_stage           life_stage_enum?
+  eligibility_level    Int                 @default(1)
+  primary_focus        purushartha_enum?
+  inner_state          inner_state_enum?
+  nature               svabhava_enum?
+  subscription_tier_id String?             @db.Uuid
+  created_at           DateTime            @default(now())
+  updated_at           DateTime            @default(now())
+  subscription_tiers   subscription_tiers? @relation(fields: [subscription_tier_id], references: [id], onUpdate: NoAction)
+  users                users               @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model spiritual_vows {
@@ -1323,61 +905,396 @@ model spiritual_vows {
   end_date    DateTime?        @db.Date
   created_at  DateTime?        @default(now())
   updated_at  DateTime?        @default(now())
-  users       User             @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users       users            @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
-model UserNodeProgress {
-  userId        String    @map("user_id") @db.Uuid
-  nodeId        String    @map("node_id") @db.Uuid
-  isRead        Boolean?  @default(false) @map("is_read")
-  lastAccessed  DateTime? @default(now()) @map("last_accessed")
-  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  node          Node      @relation(fields: [nodeId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@id([userId, nodeId])
-  @@map("user_node_progress")
+model subscription_tiers {
+  id                      String                    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_id                  String                    @db.Uuid
+  name                    String
+  description             String?
+  level                   Int                       @default(1)
+  created_at              DateTime                  @default(now())
+  updated_at              DateTime                  @default(now())
+  communication_campaigns communication_campaigns[]
+  library_items           library_items[]
+  spiritual_profiles      spiritual_profiles[]
+  organizations           organizations             @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
-model Bookmark {
-  id         String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  userId     String    @map("user_id") @db.Uuid
-  nodeId     String    @map("node_id") @db.Uuid
-  folderName String?   @default("Main") @map("folder_name")
-  createdAt  DateTime? @default(now()) @map("created_at")
-  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  node       Node      @relation(fields: [nodeId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@map("bookmarks")
+model support_tickets {
+  id                                          String              @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_id                                      String              @db.Uuid
+  user_id                                     String?             @db.Uuid
+  subject                                     String
+  description                                 String
+  status                                      ticket_status_enum? @default(OPEN)
+  priority                                    String?             @default("MEDIUM")
+  assigned_to_id                              String?             @db.Uuid
+  created_at                                  DateTime?           @default(now())
+  updated_at                                  DateTime?           @default(now())
+  users_support_tickets_assigned_to_idTousers users?              @relation("support_tickets_assigned_to_idTousers", fields: [assigned_to_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  organizations                               organizations       @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users_support_tickets_user_idTousers        users?              @relation("support_tickets_user_idTousers", fields: [user_id], references: [id], onUpdate: NoAction)
 }
 
-model Highlight {
-  id            String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  userId        String    @map("user_id") @db.Uuid
-  textId        String    @map("text_id") @db.Uuid
-  selectionRange String?   @map("selection_range") // Prisma doesn't natively support int4range easily without Raw SQL, using String/Json for metadata
-  note          String?
-  colorCode     String?   @map("color_code")
-  createdAt     DateTime? @default(now()) @map("created_at")
-  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  text          Text      @relation(fields: [textId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@map("highlights")
+model synonyms {
+  id          String         @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  text_id     String         @db.Uuid
+  word        String
+  meaning     String?
+  language    language_enum?
+  order_index Int?
+  created_at  DateTime?      @default(now())
+  texts       texts          @relation(fields: [text_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
-model ContentAccessRule {
-  id                  String           @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  nodeId              String           @map("node_id") @db.Uuid
-  allowedRoles        UserRole[]       @map("allowed_roles")
-  allowedLifeStages   LifeStage[]      @map("allowed_life_stages")
-  allowedGuidanceLevels GuidanceLevel[] @map("allowed_guidance_levels")
-  isRestricted        Boolean?         @default(true) @map("is_restricted")
-  messageIfLocked     String?          @map("message_if_locked")
-  node                Node             @relation(fields: [nodeId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@map("content_access_rules")
+model tags {
+  id            String      @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  slug          String      @unique
+  name          String?
+  description   String?
+  keywords      String[]
+  type          String?
+  parent_id     String?     @db.Uuid
+  sanskrit_name String?
+  created_at    DateTime    @default(now())
+  updated_at    DateTime    @default(now())
+  node_tags     node_tags[]
+  tags          tags?       @relation("tagsTotags", fields: [parent_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  other_tags    tags[]      @relation("tagsTotags")
 }
 
-enum ContentType {
+model text_embeddings {
+  text_id    String                @id @db.Uuid
+  embedding  Unsupported("vector")
+  model      String
+  created_at DateTime              @default(now())
+  texts      texts                 @relation(fields: [text_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model text_metadata {
+  text_id         String                @id @db.Uuid
+  life_stages     life_stage_enum[]
+  guidance_levels guidance_level_enum[]
+  is_sensitive    Boolean?              @default(false)
+  texts           texts                 @relation(fields: [text_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model text_versions {
+  id             String             @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  text_id        String             @db.Uuid
+  content        String?
+  content_type   content_type_enum?
+  language       language_enum?
+  script         script_enum?
+  version_number Int?
+  updated_by     String?
+  created_at     DateTime           @default(now())
+  texts          texts              @relation(fields: [text_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model texts {
+  id              String              @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  node_id         String              @db.Uuid
+  content_type    content_type_enum
+  language        language_enum
+  script          script_enum
+  content         String
+  source_id       String?             @db.Uuid
+  is_primary      Boolean?            @default(false)
+  anchor_word     String?
+  segment_order   Int?
+  status          content_status_enum @default(ACTIVE)
+  deleted_at      DateTime?
+  created_at      DateTime            @default(now())
+  updated_at      DateTime            @default(now())
+  synonyms        synonyms[]
+  text_embeddings text_embeddings?
+  text_metadata   text_metadata?
+  text_versions   text_versions[]
+  nodes           nodes               @relation(fields: [node_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  sources         sources?            @relation(fields: [source_id], references: [id], onUpdate: NoAction)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model transactions {
+  id                                                                         String                   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_id                                                                     String                   @db.Uuid
+  grant_id                                                                   String?                  @db.Uuid
+  cause_id                                                                   String?                  @db.Uuid
+  project_id                                                                 String?                  @db.Uuid
+  amount                                                                     Decimal                  @db.Decimal
+  type                                                                       transaction_type_enum
+  date                                                                       DateTime?                @default(now())
+  source_account_id                                                          String?                  @db.Uuid
+  destination_account_id                                                     String?                  @db.Uuid
+  category                                                                   String
+  purpose                                                                    String
+  paymentmethod                                                              payment_method_enum
+  provider                                                                   String?
+  external_payment_id                                                        String?
+  is_corpus                                                                  Boolean?                 @default(false)
+  gst_applicable                                                             Boolean?                 @default(false)
+  tds_applicable                                                             Boolean?                 @default(false)
+  recorded_by_id                                                             String                   @db.Uuid
+  approved_by_id                                                             String?                  @db.Uuid
+  status                                                                     transaction_status_enum? @default(PENDING)
+  deleted_at                                                                 DateTime?
+  created_at                                                                 DateTime                 @default(now())
+  updated_at                                                                 DateTime                 @default(now())
+  audit_logs                                                                 audit_logs[]
+  contributions                                                              contributions?
+  donation_receipts                                                          donation_receipts?
+  journal_entries                                                            journal_entries[]
+  payment_records                                                            payment_records?
+  payroll_records                                                            payroll_records[]
+  users_transactions_approved_by_idTousers                                   users?                   @relation("transactions_approved_by_idTousers", fields: [approved_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  donation_causes                                                            donation_causes?         @relation(fields: [cause_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  financial_accounts_transactions_destination_account_idTofinancial_accounts financial_accounts?      @relation("transactions_destination_account_idTofinancial_accounts", fields: [destination_account_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  grants                                                                     grants?                  @relation(fields: [grant_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  organizations                                                              organizations            @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  projects                                                                   projects?                @relation(fields: [project_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users_transactions_recorded_by_idTousers                                   users                    @relation("transactions_recorded_by_idTousers", fields: [recorded_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  financial_accounts_transactions_source_account_idTofinancial_accounts      financial_accounts?      @relation("transactions_source_account_idTofinancial_accounts", fields: [source_account_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([cause_id], map: "idx_transactions_cause")
+}
+
+model user_curve_progress {
+  id                   String                @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  user_id              String                @db.Uuid
+  curve_id             String                @db.Uuid
+  current_step_id      String?               @db.Uuid
+  is_completed         Boolean?              @default(false)
+  started_at           DateTime              @default(now())
+  completed_at         DateTime?
+  learning_curve_steps learning_curve_steps? @relation(fields: [current_step_id], references: [id], onUpdate: NoAction)
+  learning_curves      learning_curves       @relation(fields: [curve_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users                users                 @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([user_id, curve_id], map: "user_curve_unique")
+}
+
+model user_preferences {
+  user_id            String   @id @db.Uuid
+  notification_prefs Json?    @default("{\"sms\": false, \"email\": true, \"whatsapp\": false}")
+  metadata           Json?    @default("{}")
+  notes              String?
+  created_at         DateTime @default(now())
+  updated_at         DateTime @default(now())
+  users              users    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model user_profiles {
+  user_id         String       @id @db.Uuid
+  full_name       String?
+  phone_number    String?
+  whatsapp_number String?
+  avatar_url      String?
+  gender          gender_enum?
+  date_of_birth   DateTime?
+  village         String?
+  city            String?
+  state           String?
+  pin_code        String?
+  created_at      DateTime     @default(now())
+  updated_at      DateTime     @default(now())
+  users           users        @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model user_statistics {
+  user_id             String    @id @db.Uuid
+  nodes_read_count    Int?      @default(0)
+  courses_completed   Int?      @default(0)
+  contribution_points Int?      @default(0)
+  updated_at          DateTime? @default(now())
+  users               users     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model users {
+  id                                                          String                 @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  email                                                       String                 @unique
+  password                                                    String?
+  is_online                                                   Boolean?               @default(true)
+  email_verified                                              DateTime?
+  roles                                                       user_role_enum[]       @default([student])
+  status                                                      user_status_enum       @default(ACTIVE)
+  failed_login_attempts                                       Int?                   @default(0)
+  account_locked_until                                        DateTime?
+  deleted_at                                                  DateTime?
+  is_anonymized                                               Boolean?               @default(false)
+  anonymized_at                                               DateTime?
+  verification_token                                          String?
+  reset_token                                                 String?
+  reset_token_expires                                         DateTime?
+  created_at                                                  DateTime               @default(now())
+  updated_at                                                  DateTime               @default(now())
+  last_active                                                 DateTime?
+  audit_logs                                                  audit_logs[]
+  circle_members                                              circle_members[]
+  circle_posts                                                circle_posts[]
+  circles                                                     circles[]
+  communication_logs                                          communication_logs[]
+  compliance_tasks                                            compliance_tasks[]
+  contributions                                               contributions[]
+  document_versions                                           document_versions[]
+  donation_receipts_donation_receipts_issued_by_idTousers     donation_receipts[]    @relation("donation_receipts_issued_by_idTousers")
+  donation_receipts_donation_receipts_user_idTousers          donation_receipts[]    @relation("donation_receipts_user_idTousers")
+  event_registrations                                         event_registrations[]
+  family_links_family_links_related_idTousers                 family_links[]         @relation("family_links_related_idTousers")
+  family_links_family_links_user_idTousers                    family_links[]         @relation("family_links_user_idTousers")
+  family_nodes                                                family_nodes[]
+  file_assets                                                 file_assets[]
+  guidance_assignments_guidance_assignments_guide_idTousers   guidance_assignments[] @relation("guidance_assignments_guide_idTousers")
+  guidance_assignments_guidance_assignments_student_idTousers guidance_assignments[] @relation("guidance_assignments_student_idTousers")
+  journal_entries_journal_entries_approved_by_idTousers       journal_entries[]      @relation("journal_entries_approved_by_idTousers")
+  journal_entries_journal_entries_created_by_idTousers        journal_entries[]      @relation("journal_entries_created_by_idTousers")
+  legal_documents                                             legal_documents[]
+  library_downloads                                           library_downloads[]
+  library_items                                               library_items[]
+  org_members                                                 org_members[]
+  spiritual_profiles                                          spiritual_profiles?
+  spiritual_vows                                              spiritual_vows[]
+  support_tickets_support_tickets_assigned_to_idTousers       support_tickets[]      @relation("support_tickets_assigned_to_idTousers")
+  support_tickets_support_tickets_user_idTousers              support_tickets[]      @relation("support_tickets_user_idTousers")
+  transactions_transactions_approved_by_idTousers             transactions[]         @relation("transactions_approved_by_idTousers")
+  transactions_transactions_recorded_by_idTousers             transactions[]         @relation("transactions_recorded_by_idTousers")
+  user_curve_progress                                         user_curve_progress[]
+  user_preferences                                            user_preferences?
+  user_profiles                                               user_profiles?
+  user_statistics                                             user_statistics?
+  vedic_events                                                vedic_events[]
+}
+
+
+model utilization_certificates {
+  id                 String       @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  grant_id           String       @db.Uuid
+  total_received     Decimal      @db.Decimal
+  total_utilized     Decimal      @db.Decimal
+  unspent_amount     Decimal      @db.Decimal
+  certified_by       String?
+  certification_date DateTime?    @db.Date
+  file_id            String?      @db.Uuid
+  created_at         DateTime?    @default(now())
+  updated_at         DateTime?    @default(now())
+  file_assets        file_assets? @relation(fields: [file_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_uc_file")
+  grants             grants       @relation(fields: [grant_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model vedic_events {
+  id                  String                @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  title               String
+  description         String?
+  host_id             String                @db.Uuid
+  start_time          DateTime
+  end_time            DateTime
+  type                event_type_enum?      @default(LIVE_SATSANG)
+  created_at          DateTime              @default(now())
+  updated_at          DateTime              @default(now())
+  event_registrations event_registrations[]
+  users               users                 @relation(fields: [host_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model webhook_events {
+  id           String               @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  provider     String
+  event_type   String
+  external_id  String
+  payload      Json
+  status       webhook_status_enum? @default(PENDING)
+  processed_at DateTime?
+  created_at   DateTime             @default(now())
+}
+
+enum age_group_enum {
+  child_0_5
+  child_5_10
+  teen_10_18
+  youth_18_25
+  adult_25_40
+  mid_40_60
+  senior_60_plus
+}
+
+enum asset_status_enum {
+  ACTIVE
+  MAINTENANCE
+  RETIRED
+  LOST
+  SOLD
+}
+
+enum assignment_type_enum {
+  mentor
+  teacher
+  coordinator
+}
+
+enum authority_status_enum {
+  guardian
+  dependant
+  karta
+  shakha_head
+}
+
+enum campaign_status_enum {
+  DRAFT
+  SCHEDULED
+  SENT
+  FAILED
+  CANCELLED
+}
+
+enum circle_role_enum {
+  MEMBER
+  MODERATOR
+  MENTOR
+}
+
+enum circle_type_enum {
+  REGIONAL
+  STUDY_GROUP
+  MENTOR_CIRCLE
+}
+
+enum communication_channel_enum {
+  EMAIL
+  SMS
+  WHATSAPP
+  PUSH
+  IN_APP
+}
+
+enum communication_status_enum {
+  DRAFT
+  QUEUED
+  SENT
+  DELIVERED
+  FAILED
+  OPENED
+  CLICKED
+}
+
+enum compliance_status_enum {
+  UPCOMING
+  IN_PROGRESS
+  COMPLETED
+  OVERDUE
+  DELAYED
+}
+
+enum content_status_enum {
+  DRAFT
+  ACTIVE
+  ARCHIVED
+  DELETED
+}
+
+enum content_type_enum {
   sutra
   translation
   commentary
@@ -1385,11 +1302,87 @@ enum ContentType {
   title
   subtitle
   colophon
-
-  @@map("content_type_enum")
 }
 
-enum Language {
+enum contribution_type_enum {
+  FINANCIAL
+  IN_KIND
+  SERVICE
+}
+
+enum document_permission_enum {
+  READ
+  WRITE
+  DELETE
+  SHARE
+}
+
+enum event_type_enum {
+  LIVE_SATSANG
+  WORKSHOP
+  GROUP_MEDITATION
+}
+
+enum file_category_enum {
+  RECEIPT
+  INVOICE
+  MEDIA
+  DOCUMENT
+  AVATAR
+  SHASTRA_SCAN
+  AGREEMENT
+  COMPLIANCE_REPORT
+  UC_CERTIFICATE
+  GALLERY_ITEM
+  TAX_CHALLAN
+}
+
+enum gender_enum {
+  male
+  female
+}
+
+enum grant_status_enum {
+  PROPOSED
+  ACTIVE
+  COMPLETED
+  EXPIRED
+}
+
+enum guidance_level_enum {
+  beginner
+  intermediate
+  advanced
+  teacher
+}
+
+enum guidance_status_enum {
+  ACTIVE
+  COMPLETED
+  ON_HOLD
+  TERMINATED
+}
+
+enum inner_state_enum {
+  confused
+  seeking
+  stable
+  disturbed
+  detached
+}
+
+enum integration_service_enum {
+  S3
+  R2
+  TWILIO
+  SENDGRID
+  RAZORPAY
+  STRIPE
+  GITA_API
+  TRANSLATION_ENGINE
+}
+
+enum language_enum {
   sa
   en
   hi
@@ -1398,88 +1391,132 @@ enum Language {
   or
   mr
   gu
-
-  @@map("language_enum")
 }
 
-enum Script {
-  devanagari
-  latin
-  bengali
-  tamil
-  oriya
-
-  @@map("script_enum")
+enum legal_document_status_enum {
+  DRAFT
+  ACTIVE
+  ARCHIVED
+  EXPIRED
+  REVOKED
 }
 
-enum Gender {
-  male
-  female
-
-  @@map("gender_enum")
+enum librarytype {
+  BOOK
+  BOOKLET
+  ARTICLE
+  NEWSLETTER
 }
 
-enum AgeGroup {
-  child_0_5
-  child_5_10
-  teen_10_18
-  youth_18_25
-  adult_25_40
-  mid_40_60
-  senior_60_plus
-
-  @@map("age_group_enum")
-}
-
-enum Purushartha {
-  dharma
-  artha
-  kama
-  moksha
-
-  @@map("purushartha_enum")
-}
-
-enum InnerState {
-  confused
-  seeking
-  stable
-  disturbed
-  detached
-
-  @@map("inner_state_enum")
-}
-
-enum Svabhava {
-  intellectual
-  administrative
-  creative
-  practical
-
-  @@map("svabhava_enum")
-}
-
-enum LifeStage {
+enum life_stage_enum {
   student
   unmarried
   married
   parent
   vanaprastha
   renunciate
-
-  @@map("life_stage_enum")
 }
 
-enum GuidanceLevel {
-  beginner
-  intermediate
-  advanced
-  teacher
-
-  @@map("guidance_level_enum")
+enum milestone_status_enum {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  VERIFIED
 }
 
-enum UserRole {
+enum partner_type_enum {
+  CSR
+  NGO
+  GOVERNMENT
+  CORPORATE
+  VENDOR
+}
+
+enum payment_method_enum {
+  UPI
+  CASH
+  BANK_TRANSFER
+  CHEQUE
+}
+
+enum post_category_enum {
+  REALIZATION
+  QUESTION
+  ANNOUNCEMENT
+}
+
+enum project_status_enum {
+  PROPOSED
+  ACTIVE
+  COMPLETED
+  ON_HOLD
+  CANCELLED
+}
+
+enum purushartha_enum {
+  dharma
+  artha
+  kama
+  moksha
+}
+
+enum relationship_type_enum {
+  pitara
+  matara
+  sapinda
+  vaivahika
+  shishya
+  guru
+  prapautra
+  pautra
+  sahodara
+}
+
+enum script_enum {
+  devanagari
+  latin
+  bengali
+  tamil
+  oriya
+}
+
+enum storage_provider_enum {
+  S3
+  R2
+  GCS
+  LOCAL
+}
+
+enum svabhava_enum {
+  intellectual
+  administrative
+  creative
+  practical
+}
+
+enum ticket_status_enum {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+}
+
+enum transaction_status_enum {
+  PENDING
+  APPROVED
+  REJECTED
+  FAILED
+}
+
+enum transaction_type_enum {
+  INCOME
+  EXPENSE
+  TRANSFER
+  ADJUSTMENT
+  PAYROLL
+}
+
+enum user_role_enum {
   student
   mentor
   teacher
@@ -1492,298 +1529,14 @@ enum UserRole {
   outreach_lead
   volunteer
   staff
-
-  @@map("user_role_enum")
 }
 
-enum AssignmentType {
-  mentor
-  teacher
-  coordinator
-
-  @@map("assignment_type_enum")
-}
-
-enum RelationshipType {
-  pitara
-  matara
-  sapinda
-  vaivahika
-  shishya
-  guru
-  prapautra
-  pautra
-  sahodara
-
-  @@map("relationship_type_enum")
-}
-
-enum AuthorityStatus {
-  guardian
-  dependant
-  karta
-  shakha_head
-
-  @@map("authority_status_enum")
-}
-
-enum TransactionType {
-  INCOME
-  EXPENSE
-  TRANSFER
-  ADJUSTMENT
-  PAYROLL
-
-  @@map("transaction_type_enum")
-}
-
-enum TransactionStatus {
-  PENDING
-  APPROVED
-  REJECTED
-  FAILED
-
-  @@map("transaction_status_enum")
-}
-
-enum PaymentMethod {
-  UPI
-  CASH
-  BANK_TRANSFER
-  CHEQUE
-
-  @@map("payment_method_enum")
-}
-
-enum ComplianceStatus {
-  UPCOMING
-  IN_PROGRESS
-  COMPLETED
-  OVERDUE
-  DELAYED
-
-  @@map("compliance_status_enum")
-}
-
-enum CampaignStatus {
-  DRAFT
-  SCHEDULED
-  SENT
-  FAILED
-  CANCELLED
-
-  @@map("campaign_status_enum")
-}
-
-enum ContributionType {
-  FINANCIAL
-  IN_KIND
-  SERVICE
-
-  @@map("contribution_type_enum")
-}
-
-enum TaxType {
-  GST
-  TDS
-  INCOME_TAX
-  OTHER
-
-  @@map("tax_type_enum")
-}
-
-enum PartnerType {
-  CSR
-  NGO
-  GOVERNMENT
-  CORPORATE
-  VENDOR
-
-  @@map("partner_type_enum")
-}
-
-enum GrantStatus {
-  PROPOSED
-  ACTIVE
-  COMPLETED
-  EXPIRED
-
-  @@map("grant_status_enum")
-}
-
-enum MilestoneStatus {
-  PENDING
-  IN_PROGRESS
-  COMPLETED
-  VERIFIED
-
-  @@map("milestone_status_enum")
-}
-
-enum ContentStatus {
-  DRAFT
-  ACTIVE
-  ARCHIVED
-  DELETED
-
-  @@map("content_status_enum")
-}
-
-enum UserStatus {
+enum user_status_enum {
   ACTIVE
   INACTIVE
   SUSPENDED
   DELETED
   ANONYMIZED
-
-  @@map("user_status_enum")
-}
-
-enum StorageProvider {
-  S3
-  R2
-  GCS
-  LOCAL
-
-  @@map("storage_provider_enum")
-}
-
-enum FileCategory {
-  RECEIPT
-  INVOICE
-  MEDIA
-  DOCUMENT
-  AVATAR
-  SHASTRA_SCAN
-  AGREEMENT
-  COMPLIANCE_REPORT
-  UC_CERTIFICATE
-  GALLERY_ITEM
-  TAX_CHALLAN
-
-  @@map("file_category_enum")
-}
-
-enum AssetStatus {
-  ACTIVE
-  MAINTENANCE
-  RETIRED
-  LOST
-  SOLD
-
-  @@map("asset_status_enum")
-}
-
-enum CommunicationChannel {
-  EMAIL
-  SMS
-  WHATSAPP
-  PUSH
-  IN_APP
-
-  @@map("communication_channel_enum")
-}
-
-enum CommunicationStatus {
-  DRAFT
-  QUEUED
-  SENT
-  DELIVERED
-  FAILED
-  OPENED
-  CLICKED
-
-  @@map("communication_status_enum")
-}
-
-enum IntegrationService {
-  S3
-  R2
-  TWILIO
-  SENDGRID
-  RAZORPAY
-  STRIPE
-  GITA_API
-  TRANSLATION_ENGINE
-
-  @@map("integration_service_enum")
-}
-
-enum LegalDocumentStatus {
-  DRAFT
-  ACTIVE
-  ARCHIVED
-  EXPIRED
-  REVOKED
-
-  @@map("legal_document_status_enum")
-}
-
-enum DocumentPermission {
-  READ
-  WRITE
-  DELETE
-  SHARE
-
-  @@map("document_permission_enum")
-}
-
-enum ProjectStatus {
-  PROPOSED
-  ACTIVE
-  COMPLETED
-  ON_HOLD
-  CANCELLED
-
-  @@map("project_status_enum")
-}
-
-enum GuidanceStatus {
-  ACTIVE
-  COMPLETED
-  ON_HOLD
-  TERMINATED
-
-  @@map("guidance_status_enum")
-}
-
-enum CircleType {
-  REGIONAL
-  STUDY_GROUP
-  MENTOR_CIRCLE
-
-  @@map("circle_type_enum")
-}
-
-enum CircleRole {
-  MEMBER
-  MODERATOR
-  MENTOR
-
-  @@map("circle_role_enum")
-}
-
-enum PostCategory {
-  REALIZATION
-  QUESTION
-  ANNOUNCEMENT
-
-  @@map("post_category_enum")
-}
-
-enum EventType {
-  LIVE_SATSANG
-  WORKSHOP
-  GROUP_MEDITATION
-
-  @@map("event_type_enum")
-}
-
-enum ticket_status_enum {
-  OPEN
-  IN_PROGRESS
-  RESOLVED
-  CLOSED
 }
 
 enum vow_status_enum {
@@ -1798,18 +1551,4 @@ enum webhook_status_enum {
   PENDING
   PROCESSED
   FAILED
-}
-
-enum LibraryType {
-  BOOK
-  BOOKLET
-  ARTICLE
-  NEWSLETTER
-}
-
-enum librarytype {
-  BOOK
-  BOOKLET
-  ARTICLE
-  NEWSLETTER
 }

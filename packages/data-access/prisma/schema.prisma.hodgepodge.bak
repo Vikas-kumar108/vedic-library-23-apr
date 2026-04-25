@@ -1,0 +1,428 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters", "postgresqlExtensions"]
+  binaryTargets   = ["native"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [ltree, uuid_ossp(map: "uuid-ossp"), vector]
+}
+
+// =========================================================================
+// PILLAR I: IDENTITY & SPIRIT (PURIST SNAKE_CASE)
+// =========================================================================
+
+model users {
+  id                     String               @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  email                  String               @unique
+  password               String?
+  is_online              Boolean?             @default(true)
+  email_verified         DateTime?
+  roles                  user_role_enum[]     @default([student])
+  status                 user_status_enum     @default(ACTIVE)
+  failed_login_attempts  Int?                 @default(0)
+  account_locked_until   DateTime?
+  deleted_at             DateTime?
+  is_anonymized          Boolean?             @default(false)
+  anonymized_at          DateTime?
+  verification_token     String?
+  reset_token            String?
+  reset_token_expires    DateTime?
+  created_at             DateTime             @default(now())
+  updated_at             DateTime             @default(now())
+  last_active            DateTime?
+
+  // Relations
+  user_profiles          user_profiles?
+  spiritual_profiles     spiritual_profiles?
+  user_preferences       user_preferences?
+  user_statistics        user_statistics?
+  audit_logs             audit_logs[]
+  bookmarks              bookmarks[]
+  org_members            org_members[]
+  spiritual_vows         spiritual_vows[]
+  communication_logs     communication_logs[]
+  compliance_tasks       compliance_tasks[]
+  contributions          contributions[]
+  legal_documents        legal_documents[]
+  document_versions      document_versions[]
+  donation_receipts_issued donation_receipts[] @relation("IssuedBy")
+  donation_receipts_user   donation_receipts[] @relation("Donor")
+  event_registrations    event_registrations[]
+  family_links_related   family_links[]      @relation("Related")
+  family_links_user      family_links[]      @relation("User")
+  family_nodes           family_nodes[]
+  file_assets            file_assets[]
+  guidance_as_guide      guidance_assignments[] @relation("Guide")
+  guidance_as_student    guidance_assignments[] @relation("Student")
+  highlights             highlights[]
+  journal_approved       journal_entries[]    @relation("ApprovedBy")
+  journal_created        journal_entries[]    @relation("CreatedBy")
+  library_downloads      library_downloads[]
+  library_items_created  library_items[]      @relation("CreatedBy")
+  support_tickets_assigned support_tickets[]  @relation("AssignedTo")
+  support_tickets_user     support_tickets[]  @relation("TicketUser")
+  transactions_approved    transactions[]     @relation("ApprovedBy")
+  transactions_recorded    transactions[]     @relation("RecordedBy")
+  circle_memberships     circle_members[]
+  circle_posts           circle_posts[]
+  mentored_circles       circles[]
+  hosted_events          vedic_events[]
+}
+
+model user_profiles {
+  user_id         String    @id @db.Uuid
+  full_name       String?
+  phone_number    String?
+  whatsapp_number String?
+  avatar_url      String?
+  gender          gender_enum?
+  date_of_birth   DateTime?
+  village         String?
+  city            String?
+  state           String?
+  pin_code        String?
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @default(now())
+  users           users     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+model spiritual_profiles {
+  user_id            String    @id @db.Uuid
+  age_group          age_group_enum?
+  life_stage         life_stage_enum?
+  eligibility_level  Int       @default(1)
+  primary_focus      purushartha_enum?
+  inner_state        inner_state_enum?
+  nature             svabhava_enum?
+  subscription_tier_id String? @db.Uuid
+  created_at         DateTime  @default(now())
+  updated_at         DateTime  @default(now())
+  users              users     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+model audit_logs {
+  id              String        @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  table_name      String?
+  record_id       String?       @db.Uuid
+  transaction_id  String?       @db.Uuid
+  module          String?
+  action          String
+  performed_by_id String        @db.Uuid
+  old_data        Json?
+  new_data        Json?
+  ip_address      String?
+  device_info     String?
+  timestamp       DateTime      @default(now())
+  
+  users           users         @relation(fields: [performed_by_id], references: [id])
+  transactions    transactions? @relation(fields: [transaction_id], references: [id])
+}
+
+// ... (Enums and remaining models follow same snake_case pattern)
+// =========================================================================
+// ENUMS (FROM THE ABSOLUTE TRUTH)
+// =========================================================================
+
+enum content_status_enum {
+  DRAFT
+  ACTIVE
+  ARCHIVED
+  DELETED
+}
+
+enum content_type_enum {
+  sutra
+  translation
+  commentary
+  purport
+  title
+  subtitle
+  colophon
+}
+
+enum language_enum {
+  sa
+  en
+  hi
+  bn
+  ta
+  or
+  mr
+  gu
+}
+
+enum script_enum {
+  devanagari
+  latin
+  bengali
+  tamil
+  oriya
+}
+
+enum user_role_enum {
+  student
+  mentor
+  teacher
+  coordinator
+  admin
+  donor
+  director
+  village_member
+  city_member
+  outreach_lead
+  volunteer
+  staff
+}
+
+enum user_status_enum {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+  DELETED
+  ANONYMIZED
+}
+
+enum gender_enum {
+  male
+  female
+}
+
+enum age_group_enum {
+  child_0_5
+  child_5_10
+  teen_10_18
+  youth_18_25
+  adult_25_40
+  mid_40_60
+  senior_60_plus
+}
+
+enum life_stage_enum {
+  student
+  unmarried
+  married
+  parent
+  vanaprastha
+  renunciate
+}
+
+enum purushartha_enum {
+  dharma
+  artha
+  kama
+  moksha
+}
+
+enum inner_state_enum {
+  confused
+  seeking
+  stable
+  disturbed
+  detached
+}
+
+enum svabhava_enum {
+  intellectual
+  administrative
+  creative
+  practical
+}
+
+enum transaction_type_enum {
+  INCOME
+  EXPENSE
+  TRANSFER
+  ADJUSTMENT
+  PAYROLL
+}
+
+enum transaction_status_enum {
+  PENDING
+  APPROVED
+  REJECTED
+  FAILED
+}
+
+enum payment_method_enum {
+  UPI
+  CASH
+  BANK_TRANSFER
+  CHEQUE
+}
+
+model transactions {
+  id            String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_id        String   @db.Uuid
+  amount        Decimal
+  type          transaction_type_enum
+  category      String
+  purpose       String
+  paymentmethod payment_method_enum
+  status        transaction_status_enum @default(PENDING)
+  recorded_by_id String  @db.Uuid
+  approved_by_id String? @db.Uuid
+  created_at    DateTime @default(now())
+  updated_at    DateTime @default(now())
+  
+  recorded_by   users     @relation("RecordedBy", fields: [recorded_by_id], references: [id])
+  approved_by   users?    @relation("ApprovedBy", fields: [approved_by_id], references: [id])
+  audit_logs    audit_logs[]
+
+  @@map("transactions")
+}
+
+// Placeholder tables for relations (Mirroring Database Names)
+model bookmarks {
+  id String @id @db.Uuid
+  user_id String @db.Uuid
+  users users @relation(fields: [user_id], references: [id])
+}
+
+model org_members {
+  id String @id @db.Uuid
+  user_id String @db.Uuid
+  users users @relation(fields: [user_id], references: [id])
+}
+
+model spiritual_vows {
+  id String @id @db.Uuid
+  user_id String @db.Uuid
+  users users @relation(fields: [user_id], references: [id])
+}
+
+model user_preferences {
+  user_id String @id @db.Uuid
+  users users @relation(fields: [user_id], references: [id])
+}
+
+model user_statistics {
+  user_id String @id @db.Uuid
+  users users @relation(fields: [user_id], references: [id])
+}
+
+model communication_logs {
+  id String @id @db.Uuid
+  user_id String? @db.Uuid
+  users users? @relation(fields: [user_id], references: [id])
+}
+
+model compliance_tasks {
+  id String @id @db.Uuid
+  assigned_to String? @db.Uuid
+  users users? @relation(fields: [assigned_to], references: [id])
+}
+
+model contributions {
+  id String @id @db.Uuid
+  user_id String @db.Uuid
+  users users @relation(fields: [user_id], references: [id])
+}
+
+model legal_documents {
+  id String @id @db.Uuid
+  created_by_id String? @db.Uuid
+  users users? @relation(fields: [created_by_id], references: [id])
+}
+
+model document_versions {
+  id String @id @db.Uuid
+  created_by_id String @db.Uuid
+  users users @relation(fields: [created_by_id], references: [id])
+}
+
+model donation_receipts {
+  id String @id @db.Uuid
+  user_id String @db.Uuid
+  issued_by_id String? @db.Uuid
+  donor users @relation("Donor", fields: [user_id], references: [id])
+  issued_by users? @relation("IssuedBy", fields: [issued_by_id], references: [id])
+}
+
+model event_registrations {
+  user_id String @db.Uuid
+  users users @relation(fields: [user_id], references: [id])
+  event_id String @db.Uuid
+  @@id([user_id, event_id])
+}
+
+model family_links {
+  id String @id @db.Uuid
+  user_id String @db.Uuid
+  related_id String @db.Uuid
+  user users @relation("User", fields: [user_id], references: [id])
+  related users @relation("Related", fields: [related_id], references: [id])
+}
+
+model family_nodes {
+  id String @id @db.Uuid
+  user_id String? @db.Uuid
+  users users? @relation(fields: [user_id], references: [id])
+}
+
+model file_assets {
+  id String @id @db.Uuid
+  uploaded_by_id String? @db.Uuid
+  users users? @relation(fields: [uploaded_by_id], references: [id])
+}
+
+model guidance_assignments {
+  id String @id @db.Uuid
+  guide_id String @db.Uuid
+  student_id String @db.Uuid
+  guide users @relation("Guide", fields: [guide_id], references: [id])
+  student users @relation("Student", fields: [student_id], references: [id])
+}
+
+model highlights {
+  id String @id @db.Uuid
+  user_id String @db.Uuid
+  users users @relation(fields: [user_id], references: [id])
+}
+
+model library_downloads {
+  id String @id @db.Uuid
+  user_id String? @db.Uuid
+  users users? @relation(fields: [user_id], references: [id])
+}
+
+model library_items {
+  id String @id @db.Uuid
+  created_by_id String? @db.Uuid
+  created_by users? @relation("CreatedBy", fields: [created_by_id], references: [id])
+}
+
+model support_tickets {
+  id String @id @db.Uuid
+  user_id String? @db.Uuid
+  assigned_to_id String? @db.Uuid
+  user users? @relation("TicketUser", fields: [user_id], references: [id])
+  assigned_to users? @relation("AssignedTo", fields: [assigned_to_id], references: [id])
+}
+
+model circle_members {
+  user_id String @db.Uuid
+  circle_id String @db.Uuid
+  users users @relation(fields: [user_id], references: [id])
+  @@id([user_id, circle_id])
+}
+
+model circle_posts {
+  id String @id @db.Uuid
+  author_id String @db.Uuid
+  author users @relation(fields: [author_id], references: [id])
+}
+
+model circles {
+  id String @id @db.Uuid
+  mentor_id String? @db.Uuid
+  mentor users? @relation(fields: [mentor_id], references: [id])
+}
+
+model vedic_events {
+  id String @id @db.Uuid
+  host_id String @db.Uuid
+  host users @relation(fields: [host_id], references: [id])
+}

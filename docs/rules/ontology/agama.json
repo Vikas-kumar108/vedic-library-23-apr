@@ -1,0 +1,86 @@
+{
+  "category": "Agama",
+  "sanskrit": "आगम",
+  "slug": "agama",
+  "sub_categories": [
+    {
+      "name": "Vaisnava",
+      "slug": "vaisnava",
+      "branches": [
+        {
+          "name": "Pancaratra",
+          "slug": "pancaratra",
+          "ontology": {
+            "top": "Samhita",
+            "middle": "Adhyaya",
+            "unit": "Shloka"
+          },
+          "texts": [
+            "Ahirbudhnya Samhita",
+            "Isvara Samhita",
+            "Jayakhya Samhita",
+            "Padma Samhita",
+            "Paramasamhita",
+            "Laksmi Tantra",
+            "Visnu Tantra",
+            "Purusa Samhita",
+            "Prakasa Samhita",
+            "Other Pancaratra Samhitas"
+          ]
+        },
+        {
+          "name": "Vaikhanasa",
+          "slug": "vaikhanasa",
+          "texts": [
+            "Vaikhanasa Samhita",
+            "Ananda Samhita",
+            "Manava Samhita",
+            "Marici Samhita",
+            "Other Vaikhanasa Samhitas"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Saiva",
+      "slug": "saiva",
+      "branches": [
+        {
+          "name": "Siddhanta",
+          "slug": "siddhanta",
+          "ontology": {
+            "top": "Agama",
+            "middle": "Patala",
+            "unit": "Shloka/Mantra"
+          },
+          "texts": [
+            "Kamika Agama",
+            "Karana Agama",
+            "Ajita Agama",
+            "Suprabheda Agama",
+            "Vatula Agama",
+            "Raurava Agama",
+            "Makuta Agama",
+            "Other Saiva Siddhanta Agamas"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Sakta",
+      "slug": "sakta",
+      "branches": [
+        {
+          "name": "Sri Vidya",
+          "slug": "sri-vidya",
+          "texts": ["Tantraraja Tantra", "Yogini Hrdaya"]
+        },
+        {
+          "name": "Kaula",
+          "slug": "kaula",
+          "texts": ["Kulacudamani", "Kulakarnava"]
+        }
+      ]
+    }
+  ]
+}

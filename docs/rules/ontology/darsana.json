@@ -1,0 +1,61 @@
+{
+  "category": "Darsana",
+  "sanskrit": "दर्शन",
+  "slug": "darsana",
+  "sub_categories": [
+    {
+      "name": "Nyaya",
+      "slug": "nyaya",
+      "ontology": {
+        "top": "Adhyaya",
+        "middle": "Ahnika",
+        "unit": "Sutra"
+      },
+      "texts": ["Nyaya Sutra"]
+    },
+    {
+      "name": "Vaisesika",
+      "slug": "vaisesika",
+      "ontology": {
+        "top": "Adhyaya",
+        "middle": "Pada",
+        "unit": "Sutra"
+      },
+      "texts": ["Vaisesika Sutra"]
+    },
+    {
+      "name": "Sankhya",
+      "slug": "sankhya",
+      "texts": ["Sankhya Karika"]
+    },
+    {
+      "name": "Yoga",
+      "slug": "yoga",
+      "ontology": {
+        "top": "Pada",
+        "unit": "Sutra"
+      },
+      "texts": ["Yoga Sutra"]
+    },
+    {
+      "name": "Mimamsa",
+      "slug": "mimamsa",
+      "ontology": {
+        "top": "Adhyaya",
+        "middle": "Pada",
+        "unit": "Sutra"
+      },
+      "texts": ["Purva Mimamsa Sutra"]
+    },
+    {
+      "name": "Vedanta",
+      "slug": "vedanta",
+      "ontology": {
+        "top": "Adhyaya",
+        "middle": "Pada",
+        "unit": "Sutra"
+      },
+      "texts": ["Brahma Sutra"]
+    }
+  ]
+}

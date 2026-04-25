@@ -1,0 +1,59 @@
+{
+  "category": "Itihasa",
+  "sanskrit": "इतिहास",
+  "slug": "itihasa",
+  "sub_categories": [
+    {
+      "name": "Ramayana",
+      "slug": "ramayana",
+      "ontology": {
+        "top": "Kanda",
+        "middle": "Sarga",
+        "unit": "Shloka"
+      },
+      "divisions": [
+        "Balakanda",
+        "Ayodhyakanda",
+        "Aranyakanda",
+        "Kiskindhakanda",
+        "Sundarakanda",
+        "Yuddhakanda"
+      ]
+    },
+    {
+      "name": "Mahabharata",
+      "slug": "mahabharata",
+      "ontology": {
+        "top": "Parva",
+        "middle": "Adhyaya",
+        "unit": "Shloka"
+      },
+      "divisions": [
+        "Adi Parva",
+        "Sabha Parva",
+        "Vana Parva",
+        "Virata Parva",
+        "Udyoga Parva",
+        "Bhisma Parva",
+        "Drona Parva",
+        "Karna Parva",
+        "Salya Parva",
+        "Stri Parva",
+        "Santi Parva",
+        "Anushasana Parva",
+        "Asvamedhika Parva",
+        "Asramavasika Parva",
+        "Mausala Parva",
+        "Mahaprasthanika Parva",
+        "Svargarohana Parva"
+      ],
+      "special_cases": [
+        {
+          "name": "Bhagavad Gita",
+          "slug": "bhagavad-gita",
+          "parent_slug": "bhisma-parva"
+        }
+      ]
+    }
+  ]
+}

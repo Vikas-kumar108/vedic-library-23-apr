@@ -1,0 +1,64 @@
+{
+  "content_types": {
+    "shloka": {
+      "sanskrit": "श्लोक",
+      "definition": "A poetic form of two or four lines with a specific meter, used for narration and teaching.",
+      "category": "mula"
+    },
+    "mantra": {
+      "sanskrit": "मन्त्र",
+      "definition": "A sacred sound, syllable, word, or group of words considered to have psychological and spiritual power.",
+      "category": "mula"
+    },
+    "sutra": {
+      "sanskrit": "सूत्र",
+      "definition": "A rule or aphorism in Sanskrit literature, extremely condensed and designed for memorization.",
+      "category": "mula"
+    },
+    "gadya": {
+      "sanskrit": "गद्य",
+      "definition": "Prose composition, following grammatical rules but not restricted by poetic meter.",
+      "category": "mula"
+    },
+    "padya": {
+      "sanskrit": "पद्य",
+      "definition": "Rhythmic, metered verse, often used for emotional or aesthetic expression.",
+      "category": "mula"
+    },
+    "bhashya": {
+      "sanskrit": "भाष्य",
+      "definition": "The primary, authoritative commentary on a root text (Mula).",
+      "category": "commentary"
+    },
+    "tika": {
+      "sanskrit": "टीका",
+      "definition": "A sub-commentary or secondary commentary that further explains a Bhashya or the Mula.",
+      "category": "commentary"
+    },
+    "anuvada": {
+      "sanskrit": "अनुवाद",
+      "definition": "A literal, faithful translation of the original Sanskrit text into another language.",
+      "category": "translation"
+    },
+    "bhavartha": {
+      "sanskrit": "भावार्थ",
+      "definition": "The emotional essence or intended 'mood' of a verse, focusing on spiritual intent over literal wording.",
+      "category": "translation"
+    },
+    "tatparya": {
+      "sanskrit": "तात्पर्य",
+      "definition": "The essential meaning or practical application of a text for the student's life.",
+      "category": "translation"
+    },
+    "shabdartha": {
+      "sanskrit": "शब्दार्थ",
+      "definition": "Word-for-word synonyms and grammatical breakdown of the Sanskrit terms.",
+      "category": "translation"
+    },
+    "pushpika": {
+      "sanskrit": "पुष्पिका",
+      "definition": "The colophon or concluding text that provides context about the author, chapter, and scripture.",
+      "category": "meta"
+    }
+  }
+}

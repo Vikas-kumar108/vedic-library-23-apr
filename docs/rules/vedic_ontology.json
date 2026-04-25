@@ -1,0 +1,115 @@
+{
+  "ontology": {
+    "levels": {
+      "adhyaya": {
+        "sanskrit": "अध्याय",
+        "english_equivalent": "Chapter",
+        "definition": "Thematic division of teaching, often with a specific yoga or philosophical focus.",
+        "usage": ["Mahabharata", "Gita", "Purana", "Sutra Texts", "Upanishad"]
+      },
+      "shloka": {
+        "sanskrit": "श्लोक",
+        "english_equivalent": "Verse",
+        "definition": "Metrical unit of Sanskrit poetry, carrying rhythm, structure, and tradition.",
+        "usage": ["Itihasa", "Purana", "Smriti", "Kavya"]
+      },
+      "parva": {
+        "sanskrit": "पर्व",
+        "english_equivalent": "Book/Major Section",
+        "definition": "Major division used primarily in the Mahabharata.",
+        "usage": ["Mahabharata"]
+      },
+      "kanda": {
+        "sanskrit": "काण्ड",
+        "english_equivalent": "Book/Section",
+        "definition": "Major book-level division.",
+        "usage": ["Ramayana", "Yajurveda", "Atharvaveda"]
+      },
+      "sarga": {
+        "sanskrit": "सर्ग",
+        "english_equivalent": "Canto/Chapter",
+        "definition": "Chapter-level division in Kavya and Ramayana.",
+        "usage": ["Ramayana", "Mahakavya"]
+      },
+      "skandha": {
+        "sanskrit": "स्कन्ध",
+        "english_equivalent": "Canto/Volume",
+        "definition": "Major division used in Puranas, especially Srimad Bhagavatam.",
+        "usage": ["Purana"]
+      },
+      "mantra": {
+        "sanskrit": "मन्त्र",
+        "english_equivalent": "Revealed Verse",
+        "definition": "A sacred utterance, revealed sound, or prayer.",
+        "usage": ["Veda Samhita", "Upanishad", "Tantra"]
+      },
+      "sutra": {
+        "sanskrit": "सूत्र",
+        "english_equivalent": "Aphorism",
+        "definition": "A concise, compressed rule or thread of knowledge.",
+        "usage": ["Darshana", "Vyakarana", "Shastra"]
+      },
+      "pada": {
+        "sanskrit": "पाद",
+        "english_equivalent": "Quarter/Section",
+        "definition": "A quarter section of an Adhyaya in technical sciences.",
+        "usage": ["Vyakarana", "Yoga Sutras"]
+      },
+      "adhikarana": {
+        "sanskrit": "अधिकरण",
+        "english_equivalent": "Topic/Logical Unit",
+        "definition": "A complete logical argument unit (Vishaya, Samshaya, Purvapaksha, Siddhanta).",
+        "usage": ["Arthashastra", "Mimamsa", "Nyaya"]
+      }
+    },
+    "content_types": {
+      "shloka": {
+        "sanskrit": "श्लोक",
+        "definition": "Original metrical verse text."
+      },
+      "mantra": {
+        "sanskrit": "मन्त्र",
+        "definition": "Original revealed Vedic sound."
+      },
+      "sutra": {
+        "sanskrit": "सूत्र",
+        "definition": "Original aphoristic text."
+      },
+      "anuvada": {
+        "sanskrit": "अनुवाद",
+        "english_equivalent": "Translation",
+        "definition": "Direct rendering of the text into another language."
+      },
+      "bhashya": {
+        "sanskrit": "भाष्य",
+        "english_equivalent": "Primary Commentary",
+        "definition": "The most authoritative, word-by-word unpacking of a root text."
+      },
+      "tika": {
+        "sanskrit": "टीका",
+        "english_equivalent": "Sub-commentary",
+        "definition": "Commentary on a Bhashya, clarifying its depth."
+      },
+      "vyakhyana": {
+        "sanskrit": "व्याख्यान",
+        "english_equivalent": "Explanation",
+        "definition": "Extended flowing elaboration making the text accessible."
+      },
+      "tatparya": {
+        "sanskrit": "तात्पर्य",
+        "english_equivalent": "Purport",
+        "definition": "The inner essence and practical application of the text."
+      },
+      "bhavartha": {
+        "sanskrit": "भावार्थ",
+        "english_equivalent": "Inner Meaning",
+        "definition": "Interpretive extraction of the spiritual sentiment."
+      },
+      "anvaya": {
+        "sanskrit": "अन्वय",
+        "english_equivalent": "Syntax Order",
+        "definition": "Grammatical reordering of Sanskrit words into prose order."
+      }
+    }
+  }
+}

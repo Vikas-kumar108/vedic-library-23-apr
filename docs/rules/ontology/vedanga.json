@@ -1,0 +1,47 @@
+{
+  "category": "Vedanga",
+  "sanskrit": "वेदाङ्ग",
+  "slug": "vedanga",
+  "sub_categories": [
+    {
+      "name": "Siksa",
+      "slug": "siksa",
+      "texts": ["Paniniya Siksa", "Naradiya Siksa", "Yajnavalkya Siksa", "Vasista Siksa"]
+    },
+    {
+      "name": "Vyakarana",
+      "slug": "vyakarana",
+      "ontology": {
+        "top": "Adhyaya",
+        "middle": "Pada",
+        "unit": "Sutra"
+      },
+      "texts": ["Astadhyayi", "Dhatupatha", "Ganapatha", "Unadi Sutra"]
+    },
+    {
+      "name": "Chandas",
+      "slug": "chandas",
+      "texts": ["Pingala Chandas Sutra", "Vrtta Ratnakara"]
+    },
+    {
+      "name": "Nirukta",
+      "slug": "nirukta",
+      "texts": ["Nirukta", "Nighantu"]
+    },
+    {
+      "name": "Kalpa",
+      "slug": "kalpa",
+      "branches": [
+        { "name": "Srauta Sutras", "slug": "srauta-sutras" },
+        { "name": "Grhya Sutras", "slug": "grhya-sutras" },
+        { "name": "Dharma Sutras", "slug": "dharma-sutras" },
+        { "name": "Sulba Sutras", "slug": "sulba-sutras" }
+      ]
+    },
+    {
+      "name": "Jyotisa",
+      "slug": "jyotisa",
+      "texts": ["Vedanga Jyotisa", "Surya Siddhanta", "Aryabhatiya"]
+    }
+  ]
+}

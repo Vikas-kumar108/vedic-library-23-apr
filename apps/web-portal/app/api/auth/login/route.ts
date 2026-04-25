@@ -4,13 +4,15 @@ import { cookies } from 'next/headers'
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    const response = await fetch(`${process.env.API_GATEWAY_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4444'}/auth/login`, {
+    console.log('🌉 BRIDGE: ATTEMPTING GATEWAY LOGIN', { url: 'http://localhost:4444/auth/login', bodySize: JSON.stringify(body).length })
+    const response = await fetch(`http://localhost:4444/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     })
 
     const data = await response.json()
+    console.log('🌉 BRIDGE: GATEWAY RESPONSE', { status: response.status, data: JSON.stringify(data).substring(0, 50) })
 
     if (response.ok && data.accessToken) {
       const cookieStore = await cookies()

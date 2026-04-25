@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { ArrowRight, Eye, EyeOff, Chrome, Loader2, AlertCircle, CheckCircle2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useAuth } from '../hooks/useAuth'
@@ -14,6 +15,7 @@ export function SignupForm() {
   const [showPassword, setShowPassword] = useState(false)
   const [form, setForm] = useState({ name: '', email: '', password: '' })
 
+  const router = useRouter()
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setError(null)
     setForm(p => ({ ...p, [e.target.name]: e.target.value }))
@@ -25,9 +27,9 @@ export function SignupForm() {
     setError(null)
     
     try {
-      const success = await register(form)
-      if (success) {
-        router.push(`/auth/verify-email?email=${encodeURIComponent(form.email)}`)
+      const isOk = await register(form)
+      if (isOk) {
+        setSuccess(true)
       }
     } catch (err: any) {
       setError(err.message || "An error occurred during registration.")
