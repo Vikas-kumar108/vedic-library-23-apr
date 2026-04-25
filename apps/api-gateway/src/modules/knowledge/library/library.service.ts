@@ -1,23 +1,16 @@
-import { PrismaClient } from '@dharma/data-access'
-import { transliterate, formatReference } from '@dharma/text-engine'
+import { LibraryRepository } from './library.repository'
+import { resolveReference } from '../shared/utils/reference.util'
+import { getPrimaryText } from '../shared/utils/text.util'
+import { toTagList } from '../shared/mappers/tag.mapper'
 
 export class LibraryService {
-  constructor(private prisma: PrismaClient) {}
+  constructor(private repository: LibraryRepository) {}
 
   /**
    * Fetches the entire hierarchical tree for navigation.
    */
   async getTree() {
-    const nodes = await this.prisma.node.findMany({
-      orderBy: { orderIndex: 'asc' },
-      select: {
-        id: true,
-        parentId: true,
-        slug: true,
-        level: true,
-        canonicalRef: true,
-      }
-    })
+    const nodes = await this.repository.getLibraryNavigationTree()
 
     const nodesMap: Record<string, any> = {}
     nodes.forEach((n: any) => {
@@ -54,30 +47,7 @@ export class LibraryService {
    */
   async getVerse(id: string) {
     const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(id)
-    const node = await this.prisma.node.findFirst({
-      where: {
-        OR: [
-          ...(isUuid ? [{ id }] : []),
-          { slug: id }
-        ]
-      },
-      include: {
-        shastra: true,
-        texts: {
-          include: { source: true }
-        },
-        fromRelations: {
-          include: { toNode: true }
-        },
-        tags: {
-          include: {
-            tag: {
-              include: { parent: true }
-            }
-          }
-        }
-      }
-    })
+    const node = await this.repository.getVerseWithCommentary(id, isUuid)
 
     if (!node) return null
 
@@ -101,27 +71,17 @@ export class LibraryService {
       translationsByAuthor: [],
       commentary: [],
       meta: {
-        canonicalRef: node.canonicalRef || undefined,
+        canonicalRef: resolveReference(node),
       },
       relations: {
         related_verses: node.fromRelations.map((r: any) => ({
           id: r.toNodeId,
-          name: r.toNode.canonicalRef || r.toNode.slug || 'Related'
+          name: resolveReference(r.toNode)
         })),
         courses: [],
         guidance: [],
         seva_domains: [],
-        tags: node.tags.map((nt: any) => ({
-          id: nt.tag.id,
-          slug: nt.tag.slug,
-          name: nt.tag.name,
-          sanskrit: nt.tag.sanskritName,
-          parent: nt.tag.parent ? {
-            id: nt.tag.parent.id,
-            slug: nt.tag.parent.slug,
-            name: nt.tag.parent.name
-          } : null
-        })),
+        tags: toTagList(node.tags),
       },
     }
 
@@ -156,11 +116,6 @@ export class LibraryService {
       }
     }
 
-    // DYNAMIC REFERENCE: Use formatReference if canonicalRef is missing
-    if (!verse.meta.canonicalRef) {
-      verse.meta.canonicalRef = formatReference(node.shastra.slug, 0, node.orderIndex || 0)
-    }
-
     return verse
   }
 
@@ -168,40 +123,19 @@ export class LibraryService {
    * getRelated: Finds sibling or related nodes based on shared tags.
    */
   async getRelated(nodeId: string, limit: number = 3) {
-    const node = await this.prisma.node.findUnique({
-      where: { id: nodeId },
-      include: {
-        tags: { select: { tagId: true } }
-      }
-    })
+    const node = await this.repository.getVerseTags(nodeId)
 
     if (!node || node.tags.length === 0) return []
 
     const tagIds = node.tags.map(t => t.tagId)
-
-    const related = await this.prisma.node.findMany({
-      where: {
-        id: { not: nodeId },
-        tags: {
-          some: { tagId: { in: tagIds } }
-        }
-      },
-      include: {
-        shastra: true,
-        texts: {
-          where: { contentType: { in: ['sutra', 'title'] } },
-          take: 1
-        }
-      },
-      take: limit
-    })
+    const related = await this.repository.getRelatedVerses(nodeId, tagIds, limit)
 
     return related.map(r => ({
       id: r.id,
       slug: r.slug,
-      title: r.canonicalRef || r.slug,
+      title: resolveReference(r),
       shastra: r.shastra.name,
-      snippet: r.texts[0]?.content || ''
+      snippet: getPrimaryText(r.texts)
     }))
   }
 
@@ -209,13 +143,9 @@ export class LibraryService {
    * Fetches all tags organized by hierarchy.
    */
   async getTags() {
-    const tags = await this.prisma.tag.findMany({
-      where: { parentId: null },
-      include: {
-        subtags: true
-      },
-      orderBy: { name: 'asc' }
-    })
-    return tags
+    return await this.repository.getLibraryTaxonomy()
   }
 }
+
+
+

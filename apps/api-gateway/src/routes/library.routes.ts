@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify'
 import { ZodTypeProvider } from 'fastify-type-provider-zod'
-import { LibraryService } from '../services/library.service'
+import { libraryModule } from '../modules/knowledge/library'
 import { searchByKeyword } from '@dharma/search-domain'
 import { VerseParamsSchema, SearchQuerySchema } from '../schemas/library.schema'
 
@@ -9,7 +9,7 @@ export default async function libraryRoutes(fastify: FastifyInstance) {
 
   // 1. Get Tree
   typedFastify.get('/tree', async (request) => {
-    const libraryService = new LibraryService(request.server.prisma)
+    const { service: libraryService } = libraryModule(request.server.prisma)
     return await libraryService.getTree()
   })
 
@@ -17,7 +17,7 @@ export default async function libraryRoutes(fastify: FastifyInstance) {
   typedFastify.get('/verse/:id', {
     schema: { params: VerseParamsSchema }
   }, async (request, reply) => {
-    const libraryService = new LibraryService(request.server.prisma)
+    const { service: libraryService } = libraryModule(request.server.prisma)
     const { id } = request.params
     const verse = await libraryService.getVerse(id)
     if (!verse) return reply.status(404).send({ error: 'Verse not found' })
@@ -35,7 +35,7 @@ export default async function libraryRoutes(fastify: FastifyInstance) {
   
   // 4. Get Tags
   typedFastify.get('/tags', async (request) => {
-    const libraryService = new LibraryService(request.server.prisma)
+    const { service: libraryService } = libraryModule(request.server.prisma)
     return await libraryService.getTags()
   })
 

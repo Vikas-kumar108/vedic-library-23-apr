@@ -1,0 +1,274 @@
+[
+  {
+    "id": "ATMA_VIJÑANA",
+    "title": "The Science of the Self",
+    "description": "Focuses on the ontological nature of the soul, consciousness, and the distinction between matter and spirit.",
+    "keywords": ["soul", "consciousness", "atma", "spirit", "immortality", "existence"],
+    "subtags": [
+      {
+        "id": "soul_immortality",
+        "sanskrit": "Akṣara",
+        "description": "The indestructible, eternal nature of the Self that survives the destruction of the physical body.",
+        "keywords": ["immortality", "eternal", "indestructible", "deathless"],
+        "examples": [
+          "Understanding the soul cannot be cut, burned, or withered",
+          "Recognizing the Self as unborn and primeval",
+          "Distinguishing the changing body from the changeless inhabitant"
+        ],
+        "related_tags": ["beyond_duality", "identification_error", "liberation_states"]
+      },
+      {
+        "id": "reincarnation_cycles",
+        "sanskrit": "Dehāntara-prāpti",
+        "description": "The technical mechanics of the soul transferring from one body to another, similar to changing clothes.",
+        "keywords": ["reincarnation", "rebirth", "cycle", "transition"],
+        "examples": [
+          "The soul passing from childhood to youth to old age",
+          "Attaining a new body based on past mental states",
+          "Understanding the travel of the individual jiva"
+        ],
+        "related_tags": ["final_consciousness", "karma_yoga", "death_and_modes"]
+      },
+      {
+        "id": "individual_vs_universal",
+        "sanskrit": "Jīva vs. Īśvara",
+        "description": "The relationship between the individual spark of consciousness and the Supreme Source.",
+        "keywords": ["god", "soul", "oneness", "relationship", "difference"],
+        "examples": [
+          "Understanding the jiva as a fragment of the Divine",
+          "The relationship between the part and the whole",
+          "Realizing the shared quality of spirit between man and God"
+        ],
+        "related_tags": ["super_soul_presence", "oneness_vision", "bhakti_yoga"]
+      },
+      {
+        "id": "witness_consciousness",
+        "sanskrit": "Sākṣī",
+        "description": "The state of the Self acting as a detached observer of the mind and body's activities.",
+        "keywords": ["observer", "witness", "detachment", "awareness"],
+        "examples": [
+          "Observing thoughts without getting entangled",
+          "Recognizing the gunas are acting, not the Self",
+          "Achieving the state of the non-doer"
+        ],
+        "related_tags": ["agency_analysis", "stability_of_mind", "detached_action"]
+      },
+      {
+        "id": "identification_error",
+        "sanskrit": "Adhyāsa",
+        "description": "The fundamental delusion of misidentifying the eternal Self with the temporary material body and its labels.",
+        "keywords": ["ego", "delusion", "misidentification", "false identity"],
+        "examples": [
+          "Thinking 'I am this body' or 'I am this name'",
+          "Entanglement in bodily designations like race or status",
+          "Overcoming the ahankara (false ego)"
+        ],
+        "related_tags": ["atma_vijnana", "illusion_and_maya", "beyond_duality"]
+      }
+    ]
+  },
+  {
+    "id": "KARMA_YOGA",
+    "title": "The Art of Action",
+    "description": "Focuses on the performance of duty and professional work without psychological bondage or selfish attachment.",
+    "keywords": ["action", "duty", "work", "karma", "detachment", "ethics"],
+    "subtags": [
+      {
+        "id": "detached_action",
+        "sanskrit": "Niṣkāma-karma",
+        "description": "Acting with excellence and commitment but remaining unattached to the personal fruit or result.",
+        "keywords": ["detachment", "results", "work ethic", "freedom"],
+        "examples": [
+          "Focusing on the process rather than the profit",
+          "Working for the sake of duty alone",
+          "Remaining neutral toward success or failure"
+        ],
+        "related_tags": ["result_equanimity", "renunciation_of_fruit", "skilled_performance"]
+      },
+      {
+        "id": "prescribed_duty",
+        "sanskrit": "Svadharma",
+        "description": "Identifying and executing one's unique social, moral, and professional role in the world.",
+        "keywords": ["vocation", "duty", "calling", "responsibility"],
+        "examples": [
+          "Performing one's own work, even if imperfectly",
+          "Aligning work with one's natural psychophysical nature",
+          "Rejecting another's duty despite its apparent ease"
+        ],
+        "related_tags": ["varna_system", "dharma_and_krti", "social_leadership"]
+      },
+      {
+        "id": "agency_analysis",
+        "sanskrit": "Kartṛtva",
+        "description": "Analyzing who the actual 'doer' is—the soul, the senses, or the material modes (Gunas).",
+        "keywords": ["doer", "agency", "control", "responsibility"],
+        "examples": [
+          "Understanding how nature performs all actions",
+          "Recognizing the five factors of action",
+          "Freeing oneself from the conceit of being the sole doer"
+        ],
+        "related_tags": ["witness_consciousness", "guna_interaction", "action_in_inaction"]
+      },
+      {
+        "id": "sacrifice_logic",
+        "sanskrit": "Yajña",
+        "description": "Transforming daily labor and sensory inputs into a sacred offering for the universal good.",
+        "keywords": ["sacrifice", "offering", "sacred work", "devotion"],
+        "examples": [
+          "Working for the satisfaction of the Divine",
+          "Sharing the fruits of labor with the community",
+          "Turning daily routine into a spiritual ritual"
+        ],
+        "related_tags": ["bhakti_yoga", "loka_sangraha", "divine_sustenance"]
+      },
+      {
+        "id": "skilled_performance",
+        "sanskrit": "Yogaḥ karmasu kauśalam",
+        "description": "The definition of Yoga as 'excellence in action'—performing work with precision and focus.",
+        "keywords": ["skill", "excellence", "focus", "mastery"],
+        "examples": [
+          "Achieving flow-state in professional work",
+          "Eliminating mental distractions during tasks",
+          "Using work as a tool for meditative focus"
+        ],
+        "related_tags": ["resolute_intelligence", "karma_yoga", "mental_focus"]
+      }
+    ]
+  },
+  {
+    "id": "JÑANA_YOGA",
+    "title": "The Path of Knowledge",
+    "description": "Focuses on intellectual discrimination, philosophical insight, and the destruction of ignorance.",
+    "keywords": ["knowledge", "wisdom", "intellect", "truth", "philosophy"],
+    "subtags": [
+      {
+        "id": "analytical_discrimination",
+        "sanskrit": "Sāṅkhya",
+        "description": "The systematic categorization of the elements of reality to differentiate the Self from the material world.",
+        "keywords": ["analysis", "logic", "categorization", "elements"],
+        "examples": [
+          "Distinguishing the 24 elements of material nature",
+          "Separating the observer from the observed",
+          "Analyzing the interaction of the gunas"
+        ],
+        "related_tags": ["ksetra_vs_ksetrajna", "jñana_yoga", "primordial_nature"]
+      },
+      {
+        "id": "burning_of_karma",
+        "sanskrit": "Jñānāgni",
+        "description": "The concept of knowledge acting as a fire that burns away the reactions of past actions and mental bondage.",
+        "keywords": ["purification", "karma", "fire", "liberation"],
+        "examples": [
+          "Dissolving the seeds of desire through wisdom",
+          "Ending the cycle of reactions through insight",
+          "Cleansing the intellect through truth"
+        ],
+        "related_tags": ["transcendental_knowledge", "phala_and_mukti", "freedom_from_doubt"]
+      },
+      {
+        "id": "guru_parampara",
+        "sanskrit": "Paramparā",
+        "description": "The science of receiving knowledge through an unbroken disciplic succession and a living teacher.",
+        "keywords": ["teacher", "lineage", "succession", "authority"],
+        "examples": [
+          "Understanding the history of the Gītā's transmission",
+          "The necessity of a realized guide",
+          "Maintaining the purity of traditional wisdom"
+        ],
+        "related_tags": ["intellectual_surrender", "standard_of_authority", "truth_realization"]
+      },
+      {
+        "id": "illusion_and_maya",
+        "sanskrit": "Māyā",
+        "description": "The study of the Divine energy that covers the true nature of reality with temporary appearances.",
+        "keywords": ["illusion", "veil", "mirage", "material energy"],
+        "examples": [
+          "Seeing the world as a temporary reflection",
+          "Overcoming the difficulty of the 'divine energy'",
+          "Understanding the covering and throwing powers of Maya"
+        ],
+        "related_tags": ["identification_error", "guna_interaction", "skepticism_and_proof"]
+      },
+      {
+        "id": "oneness_vision",
+        "sanskrit": "Ekatvam",
+        "description": "The realization of the shared spiritual spark in all living beings, from the sage to the humble animal.",
+        "keywords": ["equality", "unity", "vision", "compassion"],
+        "examples": [
+          "Seeing a brahmin, a dog, and an elephant with equal vision",
+          "Recognizing the Divine in every heart",
+          "Breaking through social and physical barriers via spirit"
+        ],
+        "related_tags": ["universal_friendship", "bhakti_yoga", "freedom_from_malice"]
+      }
+    ]
+  },
+  {
+    "id": "BHAKTI_YOGA",
+    "title": "The Path of Devotion",
+    "description": "Focuses on the emotional, personal, and loving relationship between the individual and the Supreme Person.",
+    "keywords": ["devotion", "love", "surrender", "relationship", "theism"],
+    "subtags": [
+      {
+        "id": "unalloyed_devotion",
+        "sanskrit": "Ananya-bhakti",
+        "description": "One-pointed, exclusive focus on the Divine without mixing in material desires or secondary goals.",
+        "keywords": ["focus", "purity", "exclusivity", "dedication"],
+        "examples": [
+          "Engaging the mind constantly in the Divine",
+          "Eliminating distractions in worship",
+          "Achieving the state of total absorption"
+        ],
+        "related_tags": ["mental_focus", "constant_remembrance", "top_most_yogi"]
+      },
+      {
+        "id": "surrender_mechanics",
+        "sanskrit": "Śaraṇāgati",
+        "description": "The internal process of total surrender, involving faith, acceptance, and the abandonment of false independence.",
+        "keywords": ["surrender", "faith", "refuge", "protection"],
+        "examples": [
+          "Accepting what is favorable for devotion",
+          "Rejecting what is unfavorable",
+          "Depending entirely on Divine protection"
+        ],
+        "related_tags": ["divine_protection", "intellectual_surrender", "sarva_dharman_parityajya"]
+      },
+      {
+        "id": "grace_and_mercy",
+        "sanskrit": "Prasāda",
+        "description": "The descent of Divine favor that allows a seeker to cross over the ocean of material struggle.",
+        "keywords": ["grace", "mercy", "favor", "blessing"],
+        "examples": [
+          "Attaining peace through Divine kindness",
+          "The clearing of mental fog via grace",
+          "Receiving what cannot be earned by effort alone"
+        ],
+        "related_tags": ["peace_pre_requisites", "divine_reciprocity", "the_safety_net_of_grace"]
+      },
+      {
+        "id": "constant_remembrance",
+        "sanskrit": "Smaraṇam",
+        "description": "Cultivating a 24/7 awareness of the Divine presence in all activities and environments.",
+        "keywords": ["memory", "awareness", "meditation", "remembrance"],
+        "examples": [
+          "Remembering God while working",
+          "Thinking of the Divine at the moment of death",
+          "Cultivating a steady stream of spiritual thought"
+        ],
+        "related_tags": ["final_consciousness", "vibrant_remembrance", "inner_sanctuary"]
+      },
+      {
+        "id": "types_of_devotees",
+        "sanskrit": "Catur-vidhā-bhakta",
+        "description": "The four categories of people who approach God: the distressed, the seeker of wealth, the inquisitive, and the wise.",
+        "keywords": ["seekers", "types", "motivation", "intent"],
+        "examples": [
+          "Approaching God during personal crisis",
+          "Seeking God to understand the truth",
+          "The superiority of the wise devotee"
+        ],
+        "related_tags": ["spiritual_thirst", "the_impure_motive", "jijnasu"]
+      }
+    ]
+  }
+]

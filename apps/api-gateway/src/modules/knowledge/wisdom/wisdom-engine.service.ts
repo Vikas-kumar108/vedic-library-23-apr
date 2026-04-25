@@ -1,9 +1,10 @@
 import { PrismaClient } from '@dharma/data-access'
+import { WisdomRepository } from './wisdom.repository'
 
 export type WisdomContext = 'FINANCE' | 'ASSETS' | 'HUMAN_CAPITAL' | 'ECOSYSTEM' | 'CONTENT' | 'GOVERNANCE'
 
 export class WisdomEngineService {
-  constructor(private prisma: PrismaClient) {}
+  constructor(private repository: WisdomRepository) {}
 
   // A mapping of institutional actions to Shastric philosophical roots
   private contextMap: Record<WisdomContext, string[]> = {
@@ -19,12 +20,7 @@ export class WisdomEngineService {
     const slugs = this.contextMap[context]
     const randomSlug = slugs[Math.floor(Math.random() * slugs.length)]
 
-    const node = await this.prisma.node.findUnique({
-      where: { slug: randomSlug },
-      include: {
-        shastra: true
-      }
-    })
+    const node = await this.repository.findVerseBySlug(randomSlug)
 
     if (!node) return null
 
@@ -49,3 +45,4 @@ export class WisdomEngineService {
     return commentaries[slug] || 'Perform your duty with detachment and devotion.'
   }
 }
+

@@ -1,0 +1,282 @@
+[
+  {
+    "id": "THEODICY_AND_EVIL",
+    "title": "The Problem of Suffering",
+    "description": "Explores the metaphysical reasons for pain, evil, and the role of a neutral Divine presence in a world of suffering.",
+    "keywords": ["suffering", "evil", "karma", "theodicy", "pain", "free will"],
+    "subtags": [
+      {
+        "id": "temporary_nature_of_pain",
+        "sanskrit": "Anitya",
+        "description": "The understanding that all material suffering is transient, appearing and disappearing like winter and summer seasons.",
+        "keywords": ["temporary", "transient", "seasons", "endurance"],
+        "examples": [
+          "Enduring the 'heat and cold' of life's fluctuations",
+          "Recognizing that 'this too shall pass'",
+          "Detaching the soul's joy from physical circumstances"
+        ],
+        "related_tags": ["beyond_duality", "result_equanimity", "stability_of_mind"]
+      },
+      {
+        "id": "god_s_neutrality",
+        "sanskrit": "Samo’haṃ sarva-bhūteṣu",
+        "description": "The concept that the Divine is equal to all, having neither friend nor enemy, and providing the results of individual choices impartially.",
+        "keywords": ["neutrality", "impartiality", "equality", "divine law"],
+        "examples": [
+          "Understanding God as the sun that shines on all",
+          "Seeing suffering as a result of choice, not Divine malice",
+          "The impartial administration of Karmic law"
+        ],
+        "related_tags": ["karmic_causality", "human_free_will", "universal_friendship"]
+      },
+      {
+        "id": "destruction_as_renewal",
+        "sanskrit": "Kālo’smi",
+        "description": "Seeing destruction and death not as 'evil,' but as the necessary clearing of the old to make way for the new.",
+        "keywords": ["destruction", "time", "renewal", "transformation"],
+        "examples": [
+          "The Universal Form consuming the warriors at Kurukshetra",
+          "Death as a transition in the soul's journey",
+          "The inevitable decay of the unrighteous social order"
+        ],
+        "related_tags": ["time_as_destruction", "universal_form", "physical_mortality"]
+      },
+      {
+        "id": "the_ultimate_recourse",
+        "sanskrit": "Śaraṇam",
+        "description": "Finding in the Divine the final shelter and healer for all emotional and existential wounds.",
+        "keywords": ["healer", "refuge", "shelter", "solace"],
+        "examples": [
+          "Turning to the Divine in the moment of greatest grief",
+          "Finding internal peace despite external chaos",
+          "The Lord as the supreme father, mother, and friend"
+        ],
+        "related_tags": ["grace_and_mercy", "divine_friend", "peace_of_the_soul"]
+      }
+    ]
+  },
+  {
+    "id": "SKEPTICISM_AND_PROOF",
+    "title": "Skepticism and Proof",
+    "description": "Addresses the intellectual need for evidence of the Divine and the limitations of human logic in grasping the Infinite.",
+    "keywords": ["proof", "evidence", "logic", "skepticism", "revelation"],
+    "subtags": [
+      {
+        "id": "consciousness_as_evidence",
+        "sanskrit": "Kṣetrajña",
+        "description": "Using the fact of subjective awareness (the 'Knower') as primary evidence for a non-material reality.",
+        "keywords": ["consciousness", "awareness", "subjective", "proof"],
+        "examples": [
+          "Observing the 'observer' within the body",
+          "Distinguishing the field (matter) from its knower (spirit)",
+          "Realizing that dead matter cannot produce self-awareness"
+        ],
+        "related_tags": ["atma_vijnana", "material_vs_spiritual", "witness_consciousness"]
+      },
+      {
+        "id": "limitations_of_logic",
+        "sanskrit": "Atarkya",
+        "description": "Recognizing that human reasoning is a limited tool that cannot fully encapsulate the inconceivable nature of the Absolute.",
+        "keywords": ["reason", "logic", "inconceivable", "intellectual limits"],
+        "examples": [
+          "Understanding why logic often leads to paradoxes in theology",
+          "Moving from speculation to experiential realization",
+          "The humility of the intellect before the Infinite"
+        ],
+        "related_tags": ["scriptural_authority", "intellectual_surrender", "the_hidden_god"]
+      },
+      {
+        "id": "subjective_revelation",
+        "sanskrit": "Anasūyā",
+        "description": "The principle that God reveals Himself only to those whose hearts are free from envy and open to Truth.",
+        "keywords": ["revelation", "openness", "envy", "perception"],
+        "examples": [
+          "Why the 'hidden' nature of God is a filter of intent",
+          "The requirement of a non-envious heart for realization",
+          "Truth appearing through the window of humility"
+        ],
+        "related_tags": ["the_curtain_of_maya", "sincerity_check", "humility"]
+      },
+      {
+        "id": "the_lamp_of_knowledge",
+        "sanskrit": "Jñāna-dīpena",
+        "description": "The Divine promise to personally destroy the darkness of doubt from within the heart of the sincere seeker.",
+        "keywords": ["enlightenment", "inner light", "clarity", "divine aid"],
+        "examples": [
+          "The internal 'Aha!' moment of spiritual clarity",
+          "God acting as the catalyst for intellectual breakthroughs",
+          "Doubt being burnt away by the fire of realization"
+        ],
+        "related_tags": ["grace_and_mercy", "intellectual_surrender", "freedom_from_doubt"]
+      }
+    ]
+  },
+  {
+    "id": "THE_NATURE_OF_FAITH",
+    "title": "The Anatomy of Faith",
+    "description": "Analyzes the internal mechanics of conviction and how faith acts as the foundation of all human action.",
+    "keywords": ["faith", "conviction", "belief", "doubt", "willpower"],
+    "subtags": [
+      {
+        "id": "faith_is_inevitable",
+        "sanskrit": "Śraddhā-mayo'yam",
+        "description": "The observation that every human acts on some form of faith—whether in science, society, or the Divine.",
+        "keywords": ["belief", "character", "inevitable", "worldview"],
+        "examples": [
+          "Analyzing the 'unconscious faith' of the materialist",
+          "Understanding that a person is defined by their belief",
+          "Faith as the hidden driver behind all goals"
+        ],
+        "related_tags": ["faith_as_identity", "faith_and_modes", "the_nature_of_faith"]
+      },
+      {
+        "id": "doubt_as_suicide",
+        "sanskrit": "Saṁśayātmā vinaśyati",
+        "description": "The warning that a soul perpetually paralyzed by doubt finds peace and success in neither the material nor spiritual worlds.",
+        "keywords": ["paralysis", "doubt", "misery", "stagnation"],
+        "examples": [
+          "The psychological toll of perpetual indecision",
+          "How skepticism blocks the ability to experience joy",
+          "Doubt as a barrier to professional and spiritual growth"
+        ],
+        "related_tags": ["the_doubt_virus", "paralysis_of_will", "the_hell_of_anxiety"]
+      },
+      {
+        "id": "one_pointed_focus",
+        "sanskrit": "Vyavasāyātmikā-buddhi",
+        "description": "The state of faith where the intelligence is laser-focused and resolute on a single higher goal.",
+        "keywords": ["focus", "resolution", "willpower", "determination"],
+        "examples": [
+          "Eliminating the 'many-branched' distractions of the mind",
+          "Fixed determination in the face of obstacles",
+          "Concentrating all energies on the path of Dharma"
+        ],
+        "related_tags": ["resolute_intelligence", "mental_focus", "determination_modes"]
+      },
+      {
+        "id": "spiritual_intuition",
+        "sanskrit": "Smṛti",
+        "description": "The deep, internal recognition of Truth that feels like 'remembering' something the soul always knew.",
+        "keywords": ["intuition", "memory", "recognition", "internal truth"],
+        "examples": [
+          "The sense of familiarity upon hearing the Gītā",
+          "Trusting the 'still small voice' of the soul",
+          "Recognizing the Divine footprint in nature"
+        ],
+        "related_tags": ["restored_is_my_memory", "constant_remembrance", "inner_sanctuary"]
+      }
+    ]
+  },
+  {
+    "id": "DIVINE_RECIPROCITY",
+    "title": "Divine Reciprocity",
+    "description": "Focuses on the feedback loop between human effort and Divine response, showing that God is not a static concept but a reciprocal Person.",
+    "keywords": ["response", "reciprocity", "relationship", "grace", "care"],
+    "subtags": [
+      {
+        "id": "as_you_approach",
+        "sanskrit": "Ye yathā māṃ prapadyante",
+        "description": "The law of spiritual symmetry: God responds to each individual in exact proportion to how they approach Him.",
+        "keywords": ["symmetry", "response", "approach", "mirror"],
+        "examples": [
+          "God as a friend to the friendly",
+          "God as the 'Deliverer' to the surrendered",
+          "Experiencing the Divine according to one's own intent"
+        ],
+        "related_tags": ["reciprocity_of_god", "grace_and_mercy", "surrender_mechanics"]
+      },
+      {
+        "id": "carrying_what_is_lacked",
+        "sanskrit": "Yoga-kṣema",
+        "description": "The specific promise that for the one-pointed seeker, the Divine provides what is lacking and preserves what is gained.",
+        "keywords": ["maintenance", "provision", "protection", "logistics"],
+        "examples": [
+          "Unexpected help in a moment of crisis",
+          "The 'invisible hand' managing the seeker's needs",
+          "Peace of mind regarding material survival"
+        ],
+        "related_tags": ["divine_protection", "the_ultimate_refuge", "trust_and_confidence"]
+      },
+      {
+        "id": "the_divine_friend",
+        "sanskrit": "Suhṛdam",
+        "description": "God not as a distant judge, but as the intimate companion and well-wisher residing within the heart.",
+        "keywords": ["friend", "companion", "intimacy", "well-wisher"],
+        "examples": [
+          "Kṛṣṇa acting as Arjuna's driver",
+          "Confiding internal struggles in the Divine within",
+          "Recognizing God's hand in life's small mercies"
+        ],
+        "related_tags": ["super_soul_presence", "universal_friendship", "internal_worship"]
+      },
+      {
+        "id": "protection_from_fall",
+        "sanskrit": "Na me bhaktaḥ praṇaśyati",
+        "description": "The absolute assurance that a sincere seeker will never be permanently lost or destroyed, even if they fail temporarily.",
+        "keywords": ["assurance", "safety net", "failure", "success"],
+        "examples": [
+          "The soul continuing its progress in the next life",
+          "Encouragement for those who struggle with discipline",
+          "The 'safety net' of spiritual effort"
+        ],
+        "related_tags": ["dealing_with_failure", "yoga_bhrashta", "the_safety_net_of_grace"]
+      }
+    ]
+  },
+  {
+    "id": "COGNITIVE_DISSONANCE",
+    "title": "Cognitive Dissonance",
+    "description": "Focuses on the internal and external conflicts that arise when spiritual truth clashes with worldly logic or social pressure.",
+    "keywords": ["conflict", "dissonance", "pressure", "confusion", "logic"],
+    "subtags": [
+      {
+        "id": "social_pressure",
+        "sanskrit": "Loka-vikruṣṭa",
+        "description": "The challenge of maintaining spiritual integrity when faced with the mockery or misunderstanding of a materialistic society.",
+        "keywords": ["mockery", "society", "judgment", "integrity"],
+        "examples": [
+          "Standing by one's values despite peer pressure",
+          "Maintaining practice in a cynical environment",
+          "Prioritizing 'The Voice within' over 'The Noise without'"
+        ],
+        "related_tags": ["public_reputation", "civilizational_values", "mockery_of_the_pious"]
+      },
+      {
+        "id": "the_fear_of_failure",
+        "sanskrit": "Kula-kṣaya",
+        "description": "The anxiety that following the spiritual path will lead to the loss of material security, family ties, or social standing.",
+        "keywords": ["fear", "loss", "risk", "failure"],
+        "examples": [
+          "The 'what if' regarding worldly success",
+          "Arjuna's fear of destroying family traditions",
+          "Balancing spiritual ambition with social responsibility"
+        ],
+        "related_tags": ["dealing_with_failure", "fear_of_loss", "paralysis_of_will"]
+      },
+      {
+        "id": "the_trap_of_labels",
+        "sanskrit": "Nāma-rūpa",
+        "description": "The confusion caused by focusing on religious or social labels rather than actual internal realization and character.",
+        "keywords": ["labels", "sectarianism", "surface", "truth"],
+        "examples": [
+          "Thinking ritual alone equals spirituality",
+          "Being blinded by 'us vs them' religious identity",
+          "Seeking the spirit beyond the letter of the law"
+        ],
+        "related_tags": ["identification_error", "hypocritical_worship", "truth_realization"]
+      },
+      {
+        "id": "overthinking_paralysis",
+        "sanskrit": "Vimūḍha",
+        "description": "The state where excessive intellectual analysis becomes an obstacle to taking the necessary first steps on the path of action.",
+        "keywords": ["analysis", "paralysis", "overthinking", "hesitation"],
+        "examples": [
+          "Seeking absolute certainty before acting",
+          "Losing the goal in endless philosophical debate",
+          "The need to 'jump' into practice"
+        ],
+        "related_tags": ["paralysis_of_will", "the_doubt_virus", "skilled_performance"]
+      }
+    ]
+  }
+]

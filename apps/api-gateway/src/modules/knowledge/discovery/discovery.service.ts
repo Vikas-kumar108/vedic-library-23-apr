@@ -1,39 +1,27 @@
 import { PrismaClient } from '@dharma/data-access'
 import { searchByIntent } from '@dharma/search-domain'
+import { DiscoveryRepository } from './discovery.repository'
+import { resolveReference } from '../shared/utils/reference.util'
+import { getPrimaryText } from '../shared/utils/text.util'
+import { toLightVerse } from '../shared/mappers/verse.mapper'
 
 export class DiscoveryService {
-  constructor(private prisma: PrismaClient) {}
+  constructor(private repository: DiscoveryRepository) {}
 
   /**
    * getRecommended: Suggests wisdom based on user stage and tags.
    */
   async getRecommended(eligibilityLevel: number, tags: string[] = []) {
     // 1. Try to find nodes by tags first
-    // Note: If node_tags doesn't exist yet in the Golden V18, this will return empty
     try {
-      const results = await (this.prisma as any).node_tags.findMany({
-        where: {
-          node: { sensitivity: { lte: eligibilityLevel } },
-          tag: { slug: { in: tags.length > 0 ? tags : ['daily-wisdom', 'grihastha-dharma'] } }
-        },
-        include: {
-          node: {
-            include: {
-              texts: { take: 1 },
-              shastra: true
-            }
-          }
-        },
-        take: 3
-      })
+      const searchTags = tags.length > 0 ? tags : ['daily-wisdom', 'grihastha-dharma']
+      const results = await this.repository.findRecommendedByTags(eligibilityLevel, searchTags)
 
       if (results.length > 0) {
         return results.map((r: any) => ({
-          id: r.node.id,
+          ...toLightVerse(r.node),
           slug: r.node.slug,
-          title: r.node.canonical_ref || r.node.slug,
           shastra: r.node.shastra.name,
-          text: r.node.texts[0]?.content || '',
           type: 'recommendation'
         }))
       }
@@ -43,21 +31,12 @@ export class DiscoveryService {
 
     // 2. Fallback to generic high-level wisdom
     try {
-      const fallback = await this.prisma.nodes.findMany({
-        where: { sensitivity: { lte: eligibilityLevel } },
-        include: {
-          texts: { take: 1 },
-          shastra: true
-        },
-        take: 3
-      })
+      const fallback = await this.repository.findGenericWisdom(eligibilityLevel)
 
-      return fallback.map(n => ({
-        id: n.id,
+      return fallback.map((n: any) => ({
+        ...toLightVerse(n),
         slug: n.slug,
-        title: n.canonical_ref || n.slug,
         shastra: n.shastra.name,
-        text: n.texts[0]?.content || '',
         type: 'fallback'
       }))
     } catch (e) {
@@ -89,55 +68,23 @@ export class DiscoveryService {
 
     // Fallback to legacy tag search if no intent found
     try {
-      const tags = await this.prisma.tags.findMany({
-        where: {
-          OR: [
-            { name: { contains: query, mode: 'insensitive' } },
-            { description: { contains: query, mode: 'insensitive' } },
-          ],
-        },
-        include: {
-          nodes: {
-            where: {
-              node: {
-                sensitivity: { lte: eligibilityLevel }
-              }
-            },
-            include: {
-              node: {
-                include: {
-                  texts: { take: 1 }
-                }
-              }
-            },
-            take: 5
-          }
-        }
-      })
+      const tags = await this.repository.findTagsByKeyword(query, eligibilityLevel)
 
-      let nodeResults = tags.flatMap(tag => 
+      let nodeResults = tags.flatMap((tag: any) => 
         (tag as any).nodes.map((tn: any) => ({
           tagId: tag.id,
           tagName: tag.name,
           nodeId: tn.node.id,
           slug: tn.node.slug,
           level: tn.node.level,
-          text: tn.node.texts[0]?.content || '',
+          text: getPrimaryText(tn.node.texts),
           language: tn.node.texts[0]?.language || '',
         }))
       )
 
       if (nodeResults.length === 0) {
-        const texts = await this.prisma.texts.findMany({
-          where: {
-            content: { contains: query, mode: 'insensitive' },
-          },
-          include: {
-            node: true,
-          },
-          take: 10,
-        })
-        nodeResults = texts.map(t => ({
+        const texts = await this.repository.findTextsByKeyword(query)
+        nodeResults = texts.map((t: any) => ({
           tagId: 'general',
           tagName: 'General Wisdom',
           nodeId: t.node.id,
@@ -157,31 +104,13 @@ export class DiscoveryService {
 
   async getNodesByTag(tagIdOrSlug: string, eligibilityLevel: number = 1) {
     try {
-      const nodes = await (this.prisma as any).node_tags.findMany({
-        where: {
-          node: {
-            sensitivity: { lte: eligibilityLevel }
-          },
-          OR: [
-            { tag_id: tagIdOrSlug },
-            { tag: { slug: tagIdOrSlug } },
-          ],
-        },
-        include: {
-          node: {
-            include: {
-              texts: { take: 1 }
-            }
-          }
-        },
-        take: 20
-      })
+      const nodes = await this.repository.findNodesByTagReference(tagIdOrSlug, eligibilityLevel)
 
       return nodes.map((n: any) => ({
         id: n.node.id,
         slug: n.node.slug,
         level: n.node.level,
-        text: n.node.texts[0]?.content || '',
+        text: getPrimaryText(n.node.texts),
         language: n.node.texts[0]?.language || '',
       }))
     } catch (e) {
@@ -189,3 +118,6 @@ export class DiscoveryService {
     }
   }
 }
+
+
+
