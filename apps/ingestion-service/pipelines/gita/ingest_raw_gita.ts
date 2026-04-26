@@ -6,7 +6,7 @@ import process from 'process'
 
 const base = path.join(
     process.cwd(),
-    'apps/ingestion-service/data/gita-data'
+    'apps/ingestion-service/datasets/gita'
 )
 
 const verses = JSON.parse(
