@@ -1308,6 +1308,16 @@ enum content_type_enum {
   pushpika
   title
   translation
+  transliteration
+  bhasantara
+  bhavanuvada
+  padaccheda
+  vigraha
+  arthavistara
+  tippani_extended
+  sutra_summary
+  key_points
+  mula
 }
 
 enum contribution_type_enum {

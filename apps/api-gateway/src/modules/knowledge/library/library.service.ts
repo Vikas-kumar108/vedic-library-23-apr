@@ -52,7 +52,7 @@ export class LibraryService {
 
     const verse: any = {
       id: node.id,
-      unitType: node.level === 'shloka' ? 'sloka' : 'category',
+      unitType: node.level, // ✅ FIXED
       reference: {
         text: node.shastras?.slug,
         chapter: 0,
@@ -86,26 +86,61 @@ export class LibraryService {
 
     for (const t of node.texts || []) {
       const lang = t.language
+      const scriptKey = t.script === 'devanagari' ? 'devanagari' : 'iast'
 
-      if (t.content_type === 'sutra' || t.content_type === 'title') {
-        const scriptKey = t.script === 'devanagari' ? 'devanagari' : 'iast'
+      // 🌱 MULA (original text)
+      if (t.content_type === 'mula') {
         verse.text[scriptKey] = t.content
-        if (t.content_type === 'sutra') verse.unitType = 'sutra'
-      } else if (t.content_type === 'translation') {
+      }
+
+      // 🔤 TRANSLITERATION
+      else if (t.content_type === 'transliteration') {
+        verse.text['iast'] = t.content
+      }
+
+      // 🌐 TRANSLATIONS
+      else if (
+        t.content_type === 'anuvada' ||
+        t.content_type === 'bhasantara' ||
+        t.content_type === 'bhavanuvada'
+      ) {
         verse.meanings.translations[lang] = t.content
 
         verse.translationsByAuthor.push({
           author: t.sources?.name ?? 'Anonymous',
           lang,
-          text: t.content
+          text: t.content,
+          type: t.content_type
         })
-      } else if (t.content_type === 'commentary') {
+      }
+
+      // 🧠 COMMENTARY LAYERS
+      else if (
+        t.content_type === 'tika' ||
+        t.content_type === 'bhashya' ||
+        t.content_type === 'vyakhyana' ||
+        t.content_type === 'vivarana'
+      ) {
         verse.commentary.push({
           author: t.sources?.name ?? 'Anonymous',
           sampradaya: t.sources?.role ?? 'general',
+          type: t.content_type,
           content: { [lang]: t.content },
           subCommentaries: []
         })
+      }
+
+      // 🔍 ANALYTICAL
+      else if (t.content_type === 'shabdartha') {
+        verse.meanings.synonyms[lang] = t.content
+      }
+
+      else if (t.content_type === 'anvaya') {
+        verse.meanings.anvaya[lang] = t.content
+      }
+
+      else if (t.content_type === 'padaccheda') {
+        verse.meanings.segmentation[lang] = t.content
       }
     }
 
