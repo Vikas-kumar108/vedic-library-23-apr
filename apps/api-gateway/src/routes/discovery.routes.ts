@@ -1,8 +1,8 @@
-import { discoveryModule } from '../modules/knowledge/discovery'
+import { createDiscoveryModule } from '../modules/knowledge/discovery'
 import { z } from 'zod'
 
 export default async function discoveryRoutes(fastify: FastifyInstance, options: FastifyPluginOptions) {
-  const { service: discoveryService } = discoveryModule(fastify.prisma)
+  const { service: discoveryService } = createDiscoveryModule(fastify.prisma)
 
   fastify.get('/search', async (request, reply) => {
     const { q, stage } = z.object({

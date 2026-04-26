@@ -1,6 +1,10 @@
 import 'dotenv/config'
 import Fastify from 'fastify'
-import { serializerCompiler, validatorCompiler, ZodTypeProvider } from 'fastify-type-provider-zod'
+import {
+  serializerCompiler,
+  validatorCompiler,
+  ZodTypeProvider
+} from 'fastify-type-provider-zod'
 import cors from '@fastify/cors'
 import rateLimit from '@fastify/rate-limit'
 import prismaPlugin from './plugins/prisma'
@@ -17,19 +21,21 @@ import broadcastRoutes from './routes/broadcast'
 import { paymentRoutes } from './routes/payment'
 
 const fastify = Fastify({
-  logger: true,
+  logger: true
 }).withTypeProvider<ZodTypeProvider>()
 
 fastify.setValidatorCompiler(validatorCompiler)
 fastify.setSerializerCompiler(serializerCompiler)
 
-// Register Plugins
 await fastify.register(cors)
+
 await fastify.register(rateLimit, {
   max: 100,
   timeWindow: '1 minute'
 })
+
 await fastify.register(prismaPlugin)
+
 await fastify.register(libraryRoutes, { prefix: '/library' })
 await fastify.register(authRoutes, { prefix: '/auth' })
 await fastify.register(discoveryRoutes, { prefix: '/discovery' })
@@ -42,12 +48,10 @@ await fastify.register(membershipRoutes, { prefix: '/institutional/membership' }
 await fastify.register(broadcastRoutes, { prefix: '/institutional/broadcast' })
 await fastify.register(paymentRoutes, { prefix: '/institutional/dana' })
 
-// Health Check
 fastify.get('/health', async () => {
   return { status: 'ok', timestamp: new Date().toISOString() }
 })
 
-// Start Server
 const start = async () => {
   try {
     const port = Number(process.env.PORT) || 4444

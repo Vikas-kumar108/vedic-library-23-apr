@@ -4,36 +4,38 @@ import { getPrimaryText } from '../shared/utils/text.util'
 import { toTagList } from '../shared/mappers/tag.mapper'
 
 export class LibraryService {
-  constructor(private repository: LibraryRepository) {}
+  constructor(private repository: LibraryRepository) { }
 
-  /**
-   * Fetches the entire hierarchical tree for navigation.
-   */
   async getTree() {
     const nodes = await this.repository.getLibraryNavigationTree()
 
     const nodesMap: Record<string, any> = {}
+
     nodes.forEach((n: any) => {
       const slug = n.slug || 'node'
-      const name = n.canonicalRef || slug
-        .split('-')
-        .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ')
+
+      const name =
+        n.canonical_ref ||
+        slug
+          .split('-')
+          .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(' ')
 
       nodesMap[n.id] = {
         id: n.id,
-        parentId: n.parentId,
+        parent_id: n.parent_id,
         slug: n.slug,
-        name: name,
+        name,
         type: n.level,
         children: []
       }
     })
 
     const tree: any[] = []
-    nodes.forEach(n => {
-      if (n.parentId && nodesMap[n.parentId]) {
-        nodesMap[n.parentId].children.push(nodesMap[n.id])
+
+    nodes.forEach((n: any) => {
+      if (n.parent_id && nodesMap[n.parent_id]) {
+        nodesMap[n.parent_id].children.push(nodesMap[n.id])
       } else {
         tree.push(nodesMap[n.id])
       }
@@ -42,23 +44,19 @@ export class LibraryService {
     return tree
   }
 
-  /**
-   * Fetches a specific verse and its content segments.
-   */
   async getVerse(id: string) {
-    const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(id)
+    const isUuid = /^[0-9a-f-]{36}$/i.test(id)
     const node = await this.repository.getVerseWithCommentary(id, isUuid)
 
     if (!node) return null
 
-    // Assemble the Verse object (Standard format used by the platform)
     const verse: any = {
       id: node.id,
-      unitType: node.level === 'verse' ? 'sloka' : 'category',
+      unitType: node.level === 'shloka' ? 'sloka' : 'category',
       reference: {
-        text: node.shastra.slug,
+        text: node.shastras?.slug,
         chapter: 0,
-        verse: node.orderIndex,
+        verse: node.order_index
       },
       text: {},
       meanings: {
@@ -66,50 +64,45 @@ export class LibraryService {
         translations: {},
         segmentation: {},
         anvaya: {},
-        anvayaTranslation: {},
+        anvayaTranslation: {}
       },
       translationsByAuthor: [],
       commentary: [],
       meta: {
-        canonicalRef: resolveReference(node),
+        canonicalRef: resolveReference(node)
       },
       relations: {
-        related_verses: node.fromRelations.map((r: any) => ({
-          id: r.toNodeId,
-          name: resolveReference(r.toNode)
-        })),
+        related_verses:
+          node.node_relations_node_relations_from_node_idTonodes?.map((r: any) => ({
+            id: r.to_node_id,
+            name: resolveReference(r.nodes_node_relations_to_node_idTonodes)
+          })) || [],
         courses: [],
         guidance: [],
         seva_domains: [],
-        tags: toTagList(node.tags),
-      },
+        tags: toTagList(node.node_tags || [])
+      }
     }
 
-    // Process Texts
-    for (const t of node.texts) {
+    for (const t of node.texts || []) {
       const lang = t.language
-      if (t.contentType === 'sutra' || t.contentType === 'title') {
+
+      if (t.content_type === 'sutra' || t.content_type === 'title') {
         const scriptKey = t.script === 'devanagari' ? 'devanagari' : 'iast'
         verse.text[scriptKey] = t.content
-        if (t.contentType === 'sutra') verse.unitType = 'sutra'
-        
-        // DYNAMIC TRANSLITERATION: If we have Devanagari but no IAST, or vice versa
-        if (scriptKey === 'devanagari' && !verse.text['iast']) {
-          verse.text['iast'] = transliterate(t.content, 'devanagari', 'iast')
-        } else if (scriptKey === 'iast' && !verse.text['devanagari']) {
-          verse.text['devanagari'] = transliterate(t.content, 'iast', 'devanagari')
-        }
-      } else if (t.contentType === 'translation') {
+        if (t.content_type === 'sutra') verse.unitType = 'sutra'
+      } else if (t.content_type === 'translation') {
         verse.meanings.translations[lang] = t.content
+
         verse.translationsByAuthor.push({
-          author: t.source?.name || 'Anonymous',
+          author: t.sources?.name ?? 'Anonymous',
           lang,
           text: t.content
         })
-      } else if (t.contentType === 'commentary') {
+      } else if (t.content_type === 'commentary') {
         verse.commentary.push({
-          author: t.source?.name || 'Anonymous',
-          sampradaya: t.source?.role || 'general',
+          author: t.sources?.name ?? 'Anonymous',
+          sampradaya: t.sources?.role ?? 'general',
           content: { [lang]: t.content },
           subCommentaries: []
         })
@@ -119,33 +112,25 @@ export class LibraryService {
     return verse
   }
 
-  /**
-   * getRelated: Finds sibling or related nodes based on shared tags.
-   */
   async getRelated(nodeId: string, limit: number = 3) {
     const node = await this.repository.getVerseTags(nodeId)
 
-    if (!node || node.tags.length === 0) return []
+    if (!node || !node.node_tags || node.node_tags.length === 0) return []
 
-    const tagIds = node.tags.map(t => t.tagId)
+    const tagIds = node.node_tags.map((t: any) => t.tag_id)
+
     const related = await this.repository.getRelatedVerses(nodeId, tagIds, limit)
 
-    return related.map(r => ({
+    return related.map((r: any) => ({
       id: r.id,
       slug: r.slug,
       title: resolveReference(r),
-      shastra: r.shastra.name,
+      shastra: r.shastras?.name,
       snippet: getPrimaryText(r.texts)
     }))
   }
 
-  /**
-   * Fetches all tags organized by hierarchy.
-   */
   async getTags() {
     return await this.repository.getLibraryTaxonomy()
   }
 }
-
-
-

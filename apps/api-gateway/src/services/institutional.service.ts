@@ -1,7 +1,7 @@
 import { PrismaClient } from '@dharma/data-access'
 
 export class InstitutionalService {
-  constructor(private prisma: PrismaClient) {}
+  constructor(private prisma: PrismaClient) { }
 
   /**
    * Fetches an overview of institutional health.
@@ -88,7 +88,7 @@ export class InstitutionalService {
       }
     })
 
-    const textStats = await this.prisma.text.groupBy({
+    const textStats = await this.prisma.texts.groupBy({
       by: ['language'],
       _count: { _all: true }
     })

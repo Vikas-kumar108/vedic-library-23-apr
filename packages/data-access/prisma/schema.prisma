@@ -1169,7 +1169,6 @@ model users {
   vedic_events                                                vedic_events[]
 }
 
-
 model utilization_certificates {
   id                 String       @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   grant_id           String       @db.Uuid
@@ -1296,12 +1295,19 @@ enum content_status_enum {
 
 enum content_type_enum {
   sutra
-  translation
-  commentary
-  purport
+  shloka
+  mantra
+  vachana
+  anuvada
+  vyakhyana
+  bhashya
+  tatparya
+  tika
+  shirshaka
+  upashirshaka
+  pushpika
   title
-  subtitle
-  colophon
+  translation
 }
 
 enum contribution_type_enum {

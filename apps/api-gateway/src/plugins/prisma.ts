@@ -1,14 +1,15 @@
 import fp from 'fastify-plugin'
-import prismaInstance, { PrismaClient } from '@dharma/data-access'
+import { PrismaClient } from '@dharma/data-access'
 
 export default fp(async (fastify) => {
-  // Handle ESM interop if needed
-  const actualPrisma = (prismaInstance as any).default || prismaInstance
-  console.log('REGISTERING PRISMA PLUGIN, PRISMA CLIENT:', !!actualPrisma)
-  fastify.decorate('prisma', actualPrisma)
-  
+  const prisma = new PrismaClient()
+
+  await prisma.$connect()
+
+  fastify.decorate('prisma', prisma)
+
   fastify.addHook('onClose', async (instance) => {
-    await (instance.prisma as PrismaClient).$disconnect()
+    await instance.prisma.$disconnect()
   })
 })
 

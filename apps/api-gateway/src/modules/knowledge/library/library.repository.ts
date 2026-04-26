@@ -1,48 +1,46 @@
-import { PrismaClient } from '@dharma/data-access'
+import { PrismaClient } from '@prisma/client'
 
 export class LibraryRepository {
-  constructor(private prisma: PrismaClient) {}
+  constructor(private prisma: PrismaClient) { }
 
-  /**
-   * Fetches the hierarchical structure of the library, including chapters and verses.
-   */
   async getLibraryNavigationTree() {
-    return this.prisma.node.findMany({
-      orderBy: { orderIndex: 'asc' },
-      select: {
-        id: true,
-        parentId: true,
-        slug: true,
-        level: true,
-        canonicalRef: true,
+    return this.prisma.nodes.findMany({
+      where: {
+        status: 'ACTIVE'
+      },
+      orderBy: {
+        order_index: 'asc'
       }
     })
   }
 
-  /**
-   * Fetches a specific Scripture node (Verse or Sutra) with its associated
-   * Shastra metadata, translations, and multi-author commentaries.
-   */
   async getVerseWithCommentary(id: string, isUuid: boolean) {
-    return this.prisma.node.findFirst({
-      where: {
-        OR: [
-          ...(isUuid ? [{ id }] : []),
-          { slug: id }
-        ]
-      },
+    return this.prisma.nodes.findFirst({
+      where: isUuid
+        ? { id }
+        : { slug: id },
+
       include: {
-        shastra: true,
+        shastras: true,
+
         texts: {
-          include: { source: true }
-        },
-        fromRelations: {
-          include: { toNode: true }
-        },
-        tags: {
           include: {
-            tag: {
-              include: { parent: true }
+            sources: true
+          }
+        },
+
+        node_relations_node_relations_from_node_idTonodes: {
+          include: {
+            nodes_node_relations_to_node_idTonodes: true
+          }
+        },
+
+        node_tags: {
+          include: {
+            tags: {
+              include: {
+                tags: true
+              }
             }
           }
         }
@@ -50,50 +48,45 @@ export class LibraryRepository {
     })
   }
 
-  /**
-   * Fetches semantic tags assigned to a specific verse for relation mapping.
-   */
   async getVerseTags(nodeId: string) {
-    return this.prisma.node.findUnique({
+    return this.prisma.nodes.findUnique({
       where: { id: nodeId },
       include: {
-        tags: { select: { tagId: true } }
+        node_tags: true
       }
     })
   }
 
-  /**
-   * Finds related verses across different shastras based on shared philosophical tags.
-   */
   async getRelatedVerses(nodeId: string, tagIds: string[], limit: number) {
-    return this.prisma.node.findMany({
+    return this.prisma.nodes.findMany({
       where: {
         id: { not: nodeId },
-        tags: {
-          some: { tagId: { in: tagIds } }
+        node_tags: {
+          some: {
+            tag_id: { in: tagIds }
+          }
         }
       },
+      take: limit,
       include: {
-        shastra: true,
-        texts: {
-          where: { contentType: { in: ['sutra', 'title'] } },
-          take: 1
-        }
-      },
-      take: limit
+        shastras: true,
+        texts: true
+      }
     })
   }
 
-  /**
-   * Fetches the top-level categories and sub-categories of the library taxonomy.
-   */
   async getLibraryTaxonomy() {
-    return this.prisma.tag.findMany({
-      where: { parentId: null },
-      include: {
-        subtags: true
+    return this.prisma.tags.findMany({
+      where: {
+        parent_id: null
       },
-      orderBy: { name: 'asc' }
+      include: {
+        other_tags: {
+          include: {
+            other_tags: true
+          }
+        }
+      }
     })
   }
 }
