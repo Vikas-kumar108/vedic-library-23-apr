@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useAuth } from '@/features/auth/hooks/useAuth'
 import { SeekerHeader } from '@/components/seeker/SeekerHeader'
 import { Sparkles, ArrowRight, BookOpen, Search } from 'lucide-react'
-import { GuidanceWidget } from '@/features/dashboard/components/GuidanceWidget'
+import { GuruWidget } from '@/features/dashboard/components/GuruWidget'
 import { PurusharthaDashboard } from '@/features/dashboard/components/PurusharthaDashboard'
 import { FamilyDashboard } from '@/features/dashboard/components/FamilyDashboard'
 import { HarmonyDashboard } from '@/features/dashboard/components/HarmonyDashboard'
@@ -29,16 +29,16 @@ export default function DashboardPage() {
       {/* 1. Minimal Shastric Header */}
       <SeekerHeader user={user} />
 
+      {/* 2. Institutional Guidance Orchestrator */}
+      <GuruWidget />
+
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 text-left">
-        {/* 2. Left Column: Spiritual Directive & Practice */}
+        {/* 3. Left Column: Mentorship & Reflection */}
         <div className="lg:col-span-7 space-y-12">
           <MentorWidget />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <GuidanceWidget />
-            <div className="space-y-8">
-              <JyotishWidget />
-              <KarmaInsightsWidget />
-            </div>
+            <JyotishWidget />
+            <KarmaInsightsWidget />
           </div>
         </div>
 

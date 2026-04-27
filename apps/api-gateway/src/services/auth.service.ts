@@ -11,6 +11,7 @@ import {
   UserStatisticSchema 
 } from '@dharma/contracts'
 import { SeekerStateService } from '../intelligence/seeker-state.service'
+import { DharmaEventService } from '../intelligence/dharma-event.service'
 
 const JWT_SECRET = process.env.JWT_SECRET || 'vedic-secret-key-108'
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000'
@@ -19,7 +20,10 @@ export class AuthService {
   constructor(
     private prisma: PrismaClient,
     private emailService?: InstitutionalEmailService
-  ) { }
+  ) { 
+    this.eventService = new DharmaEventService(prisma);
+  }
+  private eventService: DharmaEventService;
 
   private get userStore() {
     return this.prisma.users;
@@ -99,6 +103,9 @@ export class AuthService {
         update: {},
         create: { user_id: user.id }
       })
+
+      // ⏳ Record Dharma Event: Beginning of Journey
+      await this.eventService.trackRegistration(user.id);
 
       // 🛰️ Send Institutional Verification Email
       if (this.emailService) {

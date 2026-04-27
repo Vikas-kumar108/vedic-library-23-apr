@@ -121,6 +121,9 @@ model users {
 
   community_members   community_members[]
   karma_events        karma_events[]
+  guidance_feedback   guidance_feedback[]
+  dharma_events       dharma_events[]
+  dharma_violations   dharma_violations[]
 
   family_lineage_as_parent family_lineage[] @relation("family_parent")
   family_lineage_as_child  family_lineage[] @relation("family_child")

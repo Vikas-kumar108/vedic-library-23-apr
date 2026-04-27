@@ -278,3 +278,46 @@ model document_versions {
 
   @@schema("public")
 }
+
+model dharma_rules {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title       String
+  description String
+  category    String   // personal, family, community, institutional
+  severity    Int      // 1–5
+  created_at  DateTime @default(now())
+
+  violations dharma_violations[]
+
+  @@map("dharma_rules")
+  @@schema("public")
+}
+
+model dharma_violations {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  user_id     String   @db.Uuid
+  rule_id     String   @db.Uuid
+  severity    Int
+  resolved    Boolean  @default(false)
+  created_at  DateTime @default(now())
+
+  user         users        @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  dharma_rule  dharma_rules @relation(fields: [rule_id], references: [id], onDelete: Cascade)
+  actions      dharma_actions[]
+
+  @@map("dharma_violations")
+  @@schema("public")
+}
+
+model dharma_actions {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  violation_id String   @db.Uuid
+  action_type  String   // warning, guidance, restriction
+  message      String
+  created_at   DateTime @default(now())
+
+  violation dharma_violations @relation(fields: [violation_id], references: [id], onDelete: Cascade)
+
+  @@map("dharma_actions")
+  @@schema("public")
+}

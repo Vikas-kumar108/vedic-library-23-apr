@@ -141,3 +141,33 @@ model spiritual_vows {
 
   @@schema("public")
 }
+
+model guidance_feedback {
+  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  user_id       String   @db.Uuid
+  guidance_type String   // sadhana, karma, mentor, etc.
+  rating        Int      // 1–5
+  outcome       String?  // optional user note
+  created_at    DateTime @default(now())
+
+  user users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@map("guidance_feedback")
+  @@schema("public")
+}
+
+model dharma_events {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  user_id     String   @db.Uuid
+  type        String   // samskara, milestone, shift, insight
+  title       String
+  description String?
+  event_date  DateTime
+  impact      Int      // -100 to +100
+  created_at  DateTime @default(now())
+
+  user users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@map("dharma_events")
+  @@schema("public")
+}

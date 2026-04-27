@@ -1,38 +1,34 @@
 import { FastifyInstance } from 'fastify';
-import { GuidanceService } from '../intelligence/guidance.service';
+import { GuruService } from '../intelligence/guru.service';
 import { FamilyService } from '../intelligence/family.service';
 import { HarmonyService } from '../intelligence/harmony.service';
-import { MentorService } from '../intelligence/mentor.service';
-import { SamskaraService } from '../intelligence/samskara.service';
-import { LineageService } from '../intelligence/lineage.service';
 import { CommunityService } from '../intelligence/community.service';
-import { JyotishService } from '../intelligence/jyotish.service';
-import { KarmaService } from '../intelligence/karma.service';
+import { AdaptiveService } from '../intelligence/adaptive.service';
+import { DharmaTimelineService } from '../intelligence/dharma-timeline.service';
+import { GovernanceService } from '../intelligence/governance.service';
 import { AuthService } from '../services/auth.service';
 import { IntegrationRegistry } from '../integrations/registry';
 
 /**
  * 🧠 Intelligence & Guidance Routes
- * Responsibility: Expose spiritual guidance, family analytics, harmony detection, mentorship, samskaras, lineage, community, jyotish, and karma endpoints.
+ * Responsibility: Expose unified Guru guidance, specialized analytics, adaptive state, longitudinal timelines, and ethical governance.
  */
 export default async function intelligenceRoutes(fastify: FastifyInstance) {
   const emailService = IntegrationRegistry.getEmailService();
   const authService = new AuthService(fastify.prisma, emailService);
-  const guidanceService = new GuidanceService(fastify.prisma);
+  const guruService = new GuruService(fastify.prisma);
   const familyService = new FamilyService(fastify.prisma);
   const harmonyService = new HarmonyService(fastify.prisma);
-  const mentorService = new MentorService(fastify.prisma);
-  const samskaraService = new SamskaraService(fastify.prisma);
-  const lineageService = new LineageService(fastify.prisma);
   const communityService = new CommunityService(fastify.prisma);
-  const jyotishService = new JyotishService(fastify.prisma);
-  const karmaService = new KarmaService(fastify.prisma);
+  const adaptiveService = new AdaptiveService(fastify.prisma);
+  const timelineService = new DharmaTimelineService(fastify.prisma);
+  const governanceService = new GovernanceService(fastify.prisma);
 
   /**
-   * GET /guidance
-   * Orchestrate personalized spiritual direction.
+   * GET /guru
+   * Orchestrate unified institutional guidance (Guru Engine).
    */
-  fastify.get('/guidance', async (request, reply) => {
+  fastify.get('/guru', async (request, reply) => {
     const authHeader = request.headers.authorization;
     if (!authHeader?.startsWith('Bearer ')) {
       return reply.code(401).send({ error: 'Unauthorized' });
@@ -41,10 +37,99 @@ export default async function intelligenceRoutes(fastify: FastifyInstance) {
     const token = authHeader.split(' ')[1];
     try {
       const seeker = await authService.validateToken(token);
-      const guidance = await guidanceService.getGuidance(seeker.id);
+      const guidance = await guruService.getUnifiedGuidance(seeker.id);
       return reply.send(guidance);
     } catch (error: any) {
       return reply.code(401).send({ error: 'Invalid session' });
+    }
+  });
+
+  /**
+   * GET /timeline
+   * Retrieve the longitudinal Dharma Timeline (Past, Present, Future) for the seeker.
+   */
+  fastify.get('/timeline', async (request, reply) => {
+    const authHeader = request.headers.authorization;
+    if (!authHeader?.startsWith('Bearer ')) {
+      return reply.code(401).send({ error: 'Unauthorized' });
+    }
+
+    const token = authHeader.split(' ')[1];
+    try {
+      const seeker = await authService.validateToken(token);
+      const timeline = await timelineService.getTimeline(seeker.id);
+      return reply.send(timeline);
+    } catch (error: any) {
+      return reply.code(401).send({ error: 'Invalid session' });
+    }
+  });
+
+  /**
+   * GET /governance
+   * Retrieve the current ethical governance status, active violations, and restorative actions.
+   */
+  fastify.get('/governance', async (request, reply) => {
+    const authHeader = request.headers.authorization;
+    if (!authHeader?.startsWith('Bearer ')) {
+      return reply.code(401).send({ error: 'Unauthorized' });
+    }
+
+    const token = authHeader.split(' ')[1];
+    try {
+      const seeker = await authService.validateToken(token);
+      const status = await governanceService.getGovernanceStatus(seeker.id);
+      return reply.send(status);
+    } catch (error: any) {
+      return reply.code(401).send({ error: 'Invalid session' });
+    }
+  });
+
+  /**
+   * GET /adaptive
+   * Retrieve the current adaptive state and guidance weights for the seeker.
+   */
+  fastify.get('/adaptive', async (request, reply) => {
+    const authHeader = request.headers.authorization;
+    if (!authHeader?.startsWith('Bearer ')) {
+      return reply.code(401).send({ error: 'Unauthorized' });
+    }
+
+    const token = authHeader.split(' ')[1];
+    try {
+      const seeker = await authService.validateToken(token);
+      const adaptiveState = await adaptiveService.computeAdjustments(seeker.id);
+      return reply.send(adaptiveState);
+    } catch (error: any) {
+      return reply.code(401).send({ error: 'Invalid session' });
+    }
+  });
+
+  /**
+   * POST /feedback
+   * Record seeker feedback on a specific guidance type.
+   */
+  fastify.post('/feedback', async (request, reply) => {
+    const authHeader = request.headers.authorization;
+    if (!authHeader?.startsWith('Bearer ')) {
+      return reply.code(401).send({ error: 'Unauthorized' });
+    }
+
+    const token = authHeader.split(' ')[1];
+    const { guidance_type, rating, outcome } = request.body as { guidance_type: string, rating: number, outcome?: string };
+
+    try {
+      const seeker = await authService.validateToken(token);
+      const feedback = await fastify.prisma.guidance_feedback.create({
+        data: {
+          user_id: seeker.id,
+          guidance_type,
+          rating,
+          outcome
+        }
+      });
+      return reply.send(feedback);
+    } catch (error: any) {
+      return reply.code(401).send({ error: 'Invalid session or data' });
     }
   });
 
@@ -89,66 +174,6 @@ export default async function intelligenceRoutes(fastify: FastifyInstance) {
   });
 
   /**
-   * GET /mentor
-   * Orchestrate personalized mentorship analysis for the current user.
-   */
-  fastify.get('/mentor', async (request, reply) => {
-    const authHeader = request.headers.authorization;
-    if (!authHeader?.startsWith('Bearer ')) {
-      return reply.code(401).send({ error: 'Unauthorized' });
-    }
-
-    const token = authHeader.split(' ')[1];
-    try {
-      const seeker = await authService.validateToken(token);
-      const mentorship = await mentorService.determineMentorshipNeeds(seeker.id);
-      return reply.send(mentorship);
-    } catch (error: any) {
-      return reply.code(401).send({ error: 'Invalid session' });
-    }
-  });
-
-  /**
-   * GET /samskara
-   * Orchestrate life-stage milestone analysis for the current user.
-   */
-  fastify.get('/samskara', async (request, reply) => {
-    const authHeader = request.headers.authorization;
-    if (!authHeader?.startsWith('Bearer ')) {
-      return reply.code(401).send({ error: 'Unauthorized' });
-    }
-
-    const token = authHeader.split(' ')[1];
-    try {
-      const seeker = await authService.validateToken(token);
-      const timeline = await samskaraService.getSamskaraTimeline(seeker.id);
-      return reply.send(timeline);
-    } catch (error: any) {
-      return reply.code(401).send({ error: 'Invalid session' });
-    }
-  });
-
-  /**
-   * GET /lineage
-   * Orchestrate biological and spiritual lineage analysis for the current user.
-   */
-  fastify.get('/lineage', async (request, reply) => {
-    const authHeader = request.headers.authorization;
-    if (!authHeader?.startsWith('Bearer ')) {
-      return reply.code(401).send({ error: 'Unauthorized' });
-    }
-
-    const token = authHeader.split(' ')[1];
-    try {
-      const seeker = await authService.validateToken(token);
-      const lineage = await lineageService.getLineageView(seeker.id);
-      return reply.send(lineage);
-    } catch (error: any) {
-      return reply.code(401).send({ error: 'Invalid session' });
-    }
-  });
-
-  /**
    * GET /community/:communityId
    * Orchestrate collective Dharmic health analysis for a specific community.
    */
@@ -165,46 +190,6 @@ export default async function intelligenceRoutes(fastify: FastifyInstance) {
       return reply.send(health);
     } catch (error: any) {
       return reply.code(400).send({ error: error.message });
-    }
-  });
-
-  /**
-   * GET /jyotish
-   * Orchestrate life-phase analysis for the current user.
-   */
-  fastify.get('/jyotish', async (request, reply) => {
-    const authHeader = request.headers.authorization;
-    if (!authHeader?.startsWith('Bearer ')) {
-      return reply.code(401).send({ error: 'Unauthorized' });
-    }
-
-    const token = authHeader.split(' ')[1];
-    try {
-      const seeker = await authService.validateToken(token);
-      const phase = await jyotishService.getCurrentLifePhase(seeker.id);
-      return reply.send(phase);
-    } catch (error: any) {
-      return reply.code(401).send({ error: 'Invalid session' });
-    }
-  });
-
-  /**
-   * GET /karma
-   * Orchestrate behavioral pattern analysis for the current user.
-   */
-  fastify.get('/karma', async (request, reply) => {
-    const authHeader = request.headers.authorization;
-    if (!authHeader?.startsWith('Bearer ')) {
-      return reply.code(401).send({ error: 'Unauthorized' });
-    }
-
-    const token = authHeader.split(' ')[1];
-    try {
-      const seeker = await authService.validateToken(token);
-      const analysis = await karmaService.analyzeKarma(seeker.id);
-      return reply.send(analysis);
-    } catch (error: any) {
-      return reply.code(401).send({ error: 'Invalid session' });
     }
   });
 }
