@@ -1,0 +1,361 @@
+
+enum asset_status_enum {
+  ACTIVE
+  MAINTENANCE
+  RETIRED
+  LOST
+  SOLD
+
+  @@schema("public")
+}
+
+enum assignment_type_enum {
+  mentor
+  teacher
+  coordinator
+
+  @@schema("public")
+}
+
+enum authority_status_enum {
+  guardian
+  dependant
+  karta
+  shakha_head
+
+  @@schema("public")
+}
+
+enum campaign_status_enum {
+  DRAFT
+  SCHEDULED
+  SENT
+  FAILED
+  CANCELLED
+
+  @@schema("public")
+}
+
+enum circle_role_enum {
+  MEMBER
+  MODERATOR
+  MENTOR
+
+  @@schema("public")
+}
+
+enum circle_type_enum {
+  REGIONAL
+  STUDY_GROUP
+  MENTOR_CIRCLE
+
+  @@schema("public")
+}
+
+enum communication_channel_enum {
+  EMAIL
+  SMS
+  WHATSAPP
+  PUSH
+  IN_APP
+
+  @@schema("public")
+}
+
+enum communication_status_enum {
+  DRAFT
+  QUEUED
+  SENT
+  DELIVERED
+  FAILED
+  OPENED
+  CLICKED
+
+  @@schema("public")
+}
+
+enum compliance_status_enum {
+  UPCOMING
+  IN_PROGRESS
+  COMPLETED
+  OVERDUE
+  DELAYED
+
+  @@schema("public")
+}
+
+enum content_status_enum {
+  DRAFT
+  ACTIVE
+  ARCHIVED
+  DELETED
+
+  @@schema("public")
+}
+
+enum content_type_enum {
+  sutra
+  shloka
+  mantra
+  vachana
+  anuvada
+  vyakhyana
+  bhashya
+  tatparya
+  tika
+  shirshaka
+  upashirshaka
+  pushpika
+  title
+  translation
+  transliteration
+  bhasantara
+  bhavanuvada
+  padaccheda
+  vigraha
+  arthavistara
+  tippani_extended
+  sutra_summary
+  key_points
+  mula
+
+  @@schema("public")
+}
+
+enum contribution_type_enum {
+  FINANCIAL
+  IN_KIND
+  SERVICE
+
+  @@schema("public")
+}
+
+enum document_permission_enum {
+  READ
+  WRITE
+  DELETE
+  SHARE
+
+  @@schema("public")
+}
+
+enum event_type_enum {
+  LIVE_SATSANG
+  WORKSHOP
+  GROUP_MEDITATION
+
+  @@schema("public")
+}
+
+enum file_category_enum {
+  RECEIPT
+  INVOICE
+  MEDIA
+  DOCUMENT
+  AVATAR
+  SHASTRA_SCAN
+  AGREEMENT
+  COMPLIANCE_REPORT
+  UC_CERTIFICATE
+  GALLERY_ITEM
+  TAX_CHALLAN
+
+  @@schema("public")
+}
+
+enum grant_status_enum {
+  PROPOSED
+  ACTIVE
+  COMPLETED
+  EXPIRED
+
+  @@schema("public")
+}
+
+enum guidance_level_enum {
+  beginner
+  intermediate
+  advanced
+  teacher
+
+  @@schema("public")
+}
+
+enum guidance_status_enum {
+  ACTIVE
+  COMPLETED
+  ON_HOLD
+  TERMINATED
+
+  @@schema("public")
+}
+
+enum integration_service_enum {
+  S3
+  R2
+  TWILIO
+  SENDGRID
+  RAZORPAY
+  STRIPE
+  GITA_API
+  TRANSLATION_ENGINE
+
+  @@schema("public")
+}
+
+enum language_enum {
+  sa
+  en
+  hi
+  bn
+  ta
+  or
+  mr
+  gu
+
+  @@schema("public")
+}
+
+enum legal_document_status_enum {
+  DRAFT
+  ACTIVE
+  ARCHIVED
+  EXPIRED
+  REVOKED
+
+  @@schema("public")
+}
+
+enum librarytype {
+  BOOK
+  BOOKLET
+  ARTICLE
+  NEWSLETTER
+
+  @@schema("public")
+}
+
+enum milestone_status_enum {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  VERIFIED
+
+  @@schema("public")
+}
+
+enum partner_type_enum {
+  CSR
+  NGO
+  GOVERNMENT
+  CORPORATE
+  VENDOR
+
+  @@schema("public")
+}
+
+enum payment_method_enum {
+  UPI
+  CASH
+  BANK_TRANSFER
+  CHEQUE
+
+  @@schema("public")
+}
+
+enum post_category_enum {
+  REALIZATION
+  QUESTION
+  ANNOUNCEMENT
+
+  @@schema("public")
+}
+
+enum project_status_enum {
+  PROPOSED
+  ACTIVE
+  COMPLETED
+  ON_HOLD
+  CANCELLED
+
+  @@schema("public")
+}
+
+enum relationship_type_enum {
+  pitara
+  matara
+  sapinda
+  vaivahika
+  shishya
+  guru
+  prapautra
+  pautra
+  sahodara
+
+  @@schema("public")
+}
+
+enum script_enum {
+  devanagari
+  latin
+  bengali
+  tamil
+  oriya
+
+  @@schema("public")
+}
+
+enum storage_provider_enum {
+  S3
+  R2
+  GCS
+  LOCAL
+
+  @@schema("public")
+}
+
+enum ticket_status_enum {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+
+  @@schema("public")
+}
+
+enum transaction_status_enum {
+  PENDING
+  APPROVED
+  REJECTED
+  FAILED
+
+  @@schema("public")
+}
+
+enum transaction_type_enum {
+  INCOME
+  EXPENSE
+  TRANSFER
+  ADJUSTMENT
+  PAYROLL
+
+  @@schema("public")
+}
+
+enum vow_status_enum {
+  PENDING
+  ACTIVE
+  COMPLETED
+  BROKEN
+  REVOKED
+
+  @@schema("public")
+}
+
+enum webhook_status_enum {
+  PENDING
+  PROCESSED
+  FAILED
+
+  @@schema("public")
+}

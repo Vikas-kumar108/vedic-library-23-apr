@@ -1,0 +1,143 @@
+model guidance_assignments {
+  id                                           String                @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  guide_id                                     String                @db.Uuid
+  student_id                                   String                @db.Uuid
+  assignment_type                              assignment_type_enum
+  subject                                      String?
+  status                                       guidance_status_enum? @default(ACTIVE)
+  created_at                                   DateTime?             @default(now())
+  updated_at                                   DateTime?             @default(now())
+  guide                                      users                 @relation("guidance_assignments_guide", fields: [guide_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  student                                    users                 @relation("guidance_assignments_student", fields: [student_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  guidance_sessions                            guidance_sessions[]
+
+  @@unique([guide_id, student_id, assignment_type], map: "guidance_unique")
+  @@schema("public")
+}
+
+model guidance_sessions {
+  id                   String               @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  assignment_id        String               @db.Uuid
+  topic                String?
+  summary_notes        String?
+  session_date         DateTime?            @default(now())
+  guidance_assignments guidance_assignments @relation(fields: [assignment_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@schema("public")
+}
+
+model journal_entries {
+  id                                          String                   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_id                                      String                   @db.Uuid
+  transaction_id                              String?                  @db.Uuid
+  entry_date                                  DateTime                 @default(now())
+  description                                 String?
+  created_by_id                               String?                  @db.Uuid
+  approved_by_id                              String?                  @db.Uuid
+  status                                      transaction_status_enum? @default(PENDING)
+  deleted_at                                  DateTime?
+  created_at                                  DateTime?                @default(now())
+  updated_at                                  DateTime?                @default(now())
+  approver                                    users?                   @relation("journal_entries_approved", fields: [approved_by_id], references: [id], onUpdate: NoAction)
+  creator                                     users?                   @relation("journal_entries_created", fields: [created_by_id], references: [id], onUpdate: NoAction)
+  organizations                               organizations            @relation(fields: [org_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  transactions                                transactions?            @relation(fields: [transaction_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  journal_lines                               journal_lines[]
+
+  @@schema("public")
+}
+
+model journal_lines {
+  id                 String             @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  journal_id         String             @db.Uuid
+  account_id         String             @db.Uuid
+  debit              Decimal?           @default(0) @db.Decimal
+  credit             Decimal?           @default(0) @db.Decimal
+  deleted_at         DateTime?
+  created_at         DateTime?          @default(now())
+  updated_at         DateTime?          @default(now())
+  financial_accounts financial_accounts @relation(fields: [account_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  journal_entries    journal_entries    @relation(fields: [journal_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@schema("public")
+}
+
+model support_tickets {
+  id                                          String              @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_id                                      String              @db.Uuid
+  user_id                                     String?             @db.Uuid
+  subject                                     String
+  description                                 String
+  status                                      ticket_status_enum? @default(OPEN)
+  priority                                    String?             @default("MEDIUM")
+  assigned_to_id                              String?             @db.Uuid
+  created_at                                  DateTime?           @default(now())
+  updated_at                                  DateTime?           @default(now())
+  assignee                                    users?              @relation("support_tickets_assigned", fields: [assigned_to_id], references: [id], onUpdate: NoAction)
+  organizations                               organizations       @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  user                                        users?              @relation("support_tickets_user", fields: [user_id], references: [id], onUpdate: NoAction)
+
+  @@schema("public")
+}
+
+model user_curve_progress {
+  id                   String                @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  user_id              String                @db.Uuid
+  curve_id             String                @db.Uuid
+  current_step_id      String?               @db.Uuid
+  is_completed         Boolean?              @default(false)
+  started_at           DateTime              @default(now())
+  completed_at         DateTime?
+  learning_curve_steps learning_curve_steps? @relation(fields: [current_step_id], references: [id], onUpdate: NoAction)
+  learning_curves      learning_curves       @relation(fields: [curve_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users                users                 @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([user_id, curve_id], map: "user_curve_unique")
+  @@schema("public")
+}
+
+model learning_curves {
+  id                   String                 @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  title                String
+  description          String?
+  is_published         Boolean?               @default(false)
+  created_at           DateTime               @default(now())
+  updated_at           DateTime               @default(now())
+  target_life_stages   life_stage_enum[]
+  learning_curve_steps learning_curve_steps[]
+  user_curve_progress  user_curve_progress[]
+
+  @@schema("public")
+}
+
+model learning_curve_steps {
+  id                  String                @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  curve_id            String                @db.Uuid
+  step_order          Int
+  title               String
+  node_id             String?               @db.Uuid
+  unlock_requirement  Json?
+  created_at          DateTime?             @default(now())
+  updated_at          DateTime?             @default(now())
+  learning_curves     learning_curves       @relation(fields: [curve_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  nodes               nodes?                @relation(fields: [node_id], references: [id], onUpdate: NoAction)
+  user_curve_progress user_curve_progress[]
+
+  @@unique([curve_id, step_order], map: "step_order_unique")
+  @@schema("public")
+}
+
+model spiritual_vows {
+  id          String           @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  user_id     String           @db.Uuid
+  title       String
+  description String?
+  status      vow_status_enum? @default(ACTIVE)
+  start_date  DateTime?        @db.Date
+  end_date    DateTime?        @db.Date
+  created_at  DateTime?        @default(now())
+  updated_at  DateTime?        @default(now())
+  user        users            @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@schema("public")
+}

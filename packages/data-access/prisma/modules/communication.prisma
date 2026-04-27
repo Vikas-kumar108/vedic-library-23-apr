@@ -1,0 +1,77 @@
+model communication_campaigns {
+  id                                                                 String                               @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_id                                                             String                               @db.Uuid
+  target_partner_id                                                  String?                              @db.Uuid
+  target_org_id                                                      String?                              @db.Uuid
+  title                                                              String
+  content                                                            String
+  type                                                               String
+  status                                                             campaign_status_enum?                @default(DRAFT)
+  target_tier_id                                                     String?                              @db.Uuid
+  language                                                           language_enum?
+  scheduled_at                                                       DateTime?
+  sent_at                                                            DateTime?
+  created_at                                                         DateTime                             @default(now())
+  updated_at                                                         DateTime                             @default(now())
+  CommunicationCampaignToLibraryItem                                 CommunicationCampaignToLibraryItem[]
+  organizations_communication_campaigns_org_idToorganizations        organizations                        @relation("communication_campaigns_org_idToorganizations", fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  organizations_communication_campaigns_target_org_idToorganizations organizations?                       @relation("communication_campaigns_target_org_idToorganizations", fields: [target_org_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  partner_organizations                                              partner_organizations?               @relation(fields: [target_partner_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  subscription_tiers                                                 subscription_tiers?                  @relation(fields: [target_tier_id], references: [id], onUpdate: NoAction)
+  communication_logs                                                 communication_logs[]
+
+  @@schema("public")
+}
+
+model communication_logs {
+  id                      String                     @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  user_id                 String?                    @db.Uuid
+  partner_id              String?                    @db.Uuid
+  org_id                  String?                    @db.Uuid
+  campaign_id             String?                    @db.Uuid
+  library_item_id         String?                    @db.Uuid
+  channel                 communication_channel_enum
+  recipient               String
+  subject                 String?
+  message                 String?
+  status                  communication_status_enum? @default(SENT)
+  external_id             String?
+  provider                String?
+  created_at              DateTime                   @default(now())
+  communication_campaigns communication_campaigns?   @relation(fields: [campaign_id], references: [id], onUpdate: NoAction)
+  library_items           library_items?             @relation(fields: [library_item_id], references: [id], onUpdate: NoAction)
+  organizations           organizations?             @relation(fields: [org_id], references: [id], onUpdate: NoAction)
+  partner_organizations   partner_organizations?     @relation(fields: [partner_id], references: [id], onUpdate: NoAction)
+  user                    users?                     @relation(fields: [user_id], references: [id], onUpdate: NoAction)
+
+  @@schema("public")
+}
+
+model webhook_events {
+  id           String               @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  provider     String
+  event_type   String
+  external_id  String
+  payload      Json
+  status       webhook_status_enum? @default(PENDING)
+  processed_at DateTime?
+  created_at   DateTime             @default(now())
+
+  @@schema("public")
+}
+
+model compliance_tasks {
+  id            String                  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_id        String                  @db.Uuid
+  title         String
+  type          String
+  due_date      DateTime                @db.Date
+  status        compliance_status_enum? @default(UPCOMING)
+  assigned_to   String?                 @db.Uuid
+  created_at    DateTime?               @default(now())
+  updated_at    DateTime?               @default(now())
+  assignee      users?                  @relation(fields: [assigned_to], references: [id], onUpdate: NoAction)
+  organizations organizations           @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@schema("public")
+}

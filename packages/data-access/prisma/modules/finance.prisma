@@ -1,0 +1,276 @@
+model contributions {
+  id              String                 @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_id          String                 @db.Uuid
+  user_id         String                 @db.Uuid
+  transaction_id  String?                @unique @db.Uuid
+  amount          Decimal?               @db.Decimal
+  type            contribution_type_enum
+  purpose         String?
+  cause_id        String?                @db.Uuid
+  created_at      DateTime               @default(now())
+  updated_at      DateTime               @default(now())
+  donation_causes donation_causes?       @relation(fields: [cause_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  organizations   organizations          @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  transactions    transactions?          @relation(fields: [transaction_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users           users                  @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@schema("public")
+}
+
+model donation_cause_options {
+  id               String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  cause_id         String          @db.Uuid
+  name             String
+  suggested_amount Decimal?        @db.Decimal
+  created_at       DateTime?       @default(now())
+  donation_causes  donation_causes @relation(fields: [cause_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@schema("public")
+}
+
+model donation_causes {
+  id                     String                   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_id                 String                   @db.Uuid
+  parent_id              String?                  @db.Uuid
+  name                   String
+  slug                   String                   @unique
+  description            String?
+  level                  Int?                     @default(0)
+  path                   Unsupported("ltree")?
+  is_active              Boolean?                 @default(true)
+  display_order          Int?                     @default(0)
+  created_at             DateTime?                @default(now())
+  updated_at             DateTime?                @default(now())
+  contributions          contributions[]
+  donation_cause_options donation_cause_options[]
+  organizations          organizations            @relation(fields: [org_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  donation_causes        donation_causes?         @relation("donation_causesTodonation_causes", fields: [parent_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  other_donation_causes  donation_causes[]        @relation("donation_causesTodonation_causes")
+  grant_allocations      grant_allocations[]
+  projects               projects[]
+  transactions           transactions[]
+
+  @@index([path], map: "idx_causes_path", type: Gist)
+  @@schema("public")
+}
+
+model donation_receipts {
+  id                                          String         @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  transaction_id                              String         @unique @db.Uuid
+  user_id                                     String         @db.Uuid
+  receipt_number                              String         @unique
+  amount                                      Decimal        @db.Decimal
+  pan_number                                  String?
+  donor_name                                  String?
+  is_80g_applicable                           Boolean?       @default(true)
+  file_id                                     String?        @unique @db.Uuid
+  status                                      String?        @default("GENERATED")
+  issued_by_id                                String?        @db.Uuid
+  library_item_id                             String?        @db.Uuid
+  created_at                                  DateTime?      @default(now())
+  updated_at                                  DateTime       @default(now())
+  file_assets      file_assets?   @relation(fields: [file_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  issued_by        users?         @relation("receipts_issued_by", fields: [issued_by_id], references: [id], onUpdate: NoAction)
+  library_items    library_items? @relation(fields: [library_item_id], references: [id], onUpdate: NoAction)
+  transactions     transactions   @relation(fields: [transaction_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  user             users          @relation("receipts_user", fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@schema("public")
+}
+
+model financial_accounts {
+  id                                                                   String             @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_id                                                               String             @db.Uuid
+  name                                                                 String
+  type                                                                 String
+  balance                                                              Decimal            @default(0) @db.Decimal
+  currency                                                             String?            @default("INR")
+  created_at                                                           DateTime?          @default(now())
+  updated_at                                                           DateTime           @default(now())
+  organizations                                                        organizations      @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  journal_lines                                                        journal_lines[]
+  ledger_snapshots                                                     ledger_snapshots[]
+  transactions_transactions_destination_account_idTofinancial_accounts transactions[]     @relation("transactions_destination_account_idTofinancial_accounts")
+  transactions_transactions_source_account_idTofinancial_accounts      transactions[]     @relation("transactions_source_account_idTofinancial_accounts")
+
+  @@schema("public")
+}
+
+model financial_periods {
+  id               String             @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_id           String             @db.Uuid
+  year_label       String
+  start_date       DateTime           @db.Date
+  end_date         DateTime           @db.Date
+  is_closed        Boolean?           @default(false)
+  closed_at        DateTime?
+  created_at       DateTime?          @default(now())
+  updated_at       DateTime?          @default(now())
+  organizations    organizations      @relation(fields: [org_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  ledger_snapshots ledger_snapshots[]
+  payroll_records  payroll_records[]
+
+  @@schema("public")
+}
+
+model grant_allocations {
+  id               String           @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  grant_id         String           @db.Uuid
+  project_id       String?          @db.Uuid
+  cause_id         String?          @db.Uuid
+  allocated_amount Decimal          @db.Decimal
+  created_at       DateTime?        @default(now())
+  updated_at       DateTime?        @default(now())
+  donation_causes  donation_causes? @relation(fields: [cause_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  grants           grants           @relation(fields: [grant_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  projects         projects?        @relation(fields: [project_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@schema("public")
+}
+
+model grant_milestones {
+  id                   String                 @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  grant_id             String                 @db.Uuid
+  title                String
+  due_date             DateTime?              @db.Date
+  amount               Decimal                @db.Decimal
+  status               milestone_status_enum? @default(PENDING)
+  completion_report_id String?                @db.Uuid
+  created_at           DateTime?              @default(now())
+  updated_at           DateTime?              @default(now())
+  file_assets          file_assets?           @relation(fields: [completion_report_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_report_file")
+  grants               grants                 @relation(fields: [grant_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@schema("public")
+}
+
+model grants {
+  id                       String                     @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  partnership_id           String                     @db.Uuid
+  amount                   Decimal                    @db.Decimal
+  currency                 String?                    @default("INR")
+  purpose                  String?
+  disbursement_type        String?
+  status                   grant_status_enum?         @default(ACTIVE)
+  is_restricted            Boolean?                   @default(true)
+  start_date               DateTime?                  @db.Date
+  end_date                 DateTime?                  @db.Date
+  deleted_at               DateTime?
+  created_at               DateTime?                  @default(now())
+  updated_at               DateTime?                  @default(now())
+  grant_allocations        grant_allocations[]
+  grant_milestones         grant_milestones[]
+  partnerships             partnerships               @relation(fields: [partnership_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  transactions             transactions[]
+  utilization_certificates utilization_certificates[]
+
+  @@schema("public")
+}
+
+model ledger_snapshots {
+  id                 String              @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  account_id         String?             @db.Uuid
+  period_id          String?             @db.Uuid
+  opening_balance    Decimal?            @db.Decimal
+  closing_balance    Decimal?            @db.Decimal
+  created_at         DateTime?           @default(now())
+  financial_accounts financial_accounts? @relation(fields: [account_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  financial_periods  financial_periods?  @relation(fields: [period_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([account_id, period_id], map: "ledger_snapshot_unique")
+  @@schema("public")
+}
+
+model transactions {
+  id                                                                         String                   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_id                                                                     String                   @db.Uuid
+  grant_id                                                                   String?                  @db.Uuid
+  cause_id                                                                   String?                  @db.Uuid
+  project_id                                                                 String?                  @db.Uuid
+  amount                                                                     Decimal                  @db.Decimal
+  type                                                                       transaction_type_enum
+  date                                                                       DateTime?                @default(now())
+  source_account_id                                                          String?                  @db.Uuid
+  destination_account_id                                                     String?                  @db.Uuid
+  category                                                                   String
+  purpose                                                                    String
+  paymentmethod                                                              payment_method_enum
+  provider                                                                   String?
+  external_payment_id                                                        String?
+  is_corpus                                                                  Boolean?                 @default(false)
+  gst_applicable                                                             Boolean?                 @default(false)
+  tds_applicable                                                             Boolean?                 @default(false)
+  recorded_by_id                                                             String                   @db.Uuid
+  approved_by_id                                                             String?                  @db.Uuid
+  status                                                                     transaction_status_enum? @default(PENDING)
+  deleted_at                                                                 DateTime?
+  created_at                                                                 DateTime                 @default(now())
+  updated_at                                                                 DateTime                 @default(now())
+  audit_logs                                                                 audit_logs[]
+  contributions                                                              contributions?
+  donation_receipts                                                          donation_receipts?
+  journal_entries                                                            journal_entries[]
+  payment_records      payment_records?
+  payroll_records      payroll_records[]
+  approver             users?                   @relation("transactions_approved", fields: [approved_by_id], references: [id], onUpdate: NoAction)
+  donation_causes                                                            donation_causes?         @relation(fields: [cause_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  financial_accounts_transactions_destination_account_idTofinancial_accounts financial_accounts?      @relation("transactions_destination_account_idTofinancial_accounts", fields: [destination_account_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  grants               grants?                @relation(fields: [grant_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  organizations        organizations          @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  projects             projects?              @relation(fields: [project_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  recorder             users                  @relation("transactions_recorded", fields: [recorded_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  source_account       financial_accounts?    @relation("transactions_source_account_idTofinancial_accounts", fields: [source_account_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([cause_id], map: "idx_transactions_cause")
+  @@schema("public")
+}
+
+model utilization_certificates {
+  id                 String       @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  grant_id           String       @db.Uuid
+  total_received     Decimal      @db.Decimal
+  total_utilized     Decimal      @db.Decimal
+  unspent_amount     Decimal      @db.Decimal
+  certified_by       String?
+  certification_date DateTime?    @db.Date
+  file_id            String?      @db.Uuid
+  created_at         DateTime?    @default(now())
+  updated_at         DateTime?    @default(now())
+  file_assets        file_assets? @relation(fields: [file_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_uc_file")
+  grants             grants       @relation(fields: [grant_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@schema("public")
+}
+
+model payment_records {
+  id             String        @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  transaction_id String?       @unique @db.Uuid
+  provider       String
+  external_id    String
+  amount         Decimal       @db.Decimal
+  currency       String?       @default("INR")
+  status         String
+  raw_data       Json?
+  created_at     DateTime      @default(now())
+  transactions   transactions? @relation(fields: [transaction_id], references: [id], onUpdate: NoAction)
+
+  @@schema("public")
+}
+
+model payroll_records {
+  id                String            @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_member_id     String            @db.Uuid
+  transaction_id    String?           @db.Uuid
+  period_id         String            @db.Uuid
+  amount            Decimal           @db.Decimal
+  type              String?           @default("STIPEND")
+  status            String?           @default("PENDING")
+  paid_at           DateTime?
+  created_at        DateTime?         @default(now())
+  updated_at        DateTime?         @default(now())
+  org_members       org_members       @relation(fields: [org_member_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  financial_periods financial_periods @relation(fields: [period_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  transactions      transactions?     @relation(fields: [transaction_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@schema("public")
+}

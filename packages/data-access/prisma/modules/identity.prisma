@@ -1,0 +1,137 @@
+model spiritual_profiles {
+  user_id                 String            @id @db.Uuid
+  age_group               age_group_enum?
+  life_stage              life_stage_enum?
+  eligibility_level       Int               @default(1)
+  primary_focus           purushartha_enum?
+  inner_state             inner_state_enum?
+  nature                  svabhava_enum?
+  current_focus           String?
+  current_primary_node_id String?           @db.Uuid
+  last_guided_at          DateTime?
+  created_at              DateTime          @default(now())
+  updated_at              DateTime          @default(now())
+
+  user users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@map("spiritual_profiles")
+  @@schema("identity")
+}
+
+model user_preferences {
+  user_id            String   @id @db.Uuid
+  notification_prefs Json?    @default("{\"sms\": false, \"email\": true, \"whatsapp\": false}")
+  metadata           Json?    @default("{}")
+  notes              String?
+  created_at         DateTime @default(now())
+  updated_at         DateTime @default(now())
+
+  user users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@map("user_preferences")
+  @@schema("identity")
+}
+
+model user_profiles {
+  user_id         String       @id @db.Uuid
+  full_name       String?
+  phone_number    String?
+  whatsapp_number String?
+  avatar_url      String?
+  gender          gender_enum?
+  date_of_birth   DateTime?
+  village         String?
+  city            String?
+  state           String?
+  pin_code        String?
+  created_at      DateTime     @default(now())
+  updated_at      DateTime     @default(now())
+
+  user users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@map("user_profiles")
+  @@schema("identity")
+}
+
+model user_statistics {
+  user_id             String    @id @db.Uuid
+  nodes_read_count    Int?      @default(0)
+  courses_completed   Int?      @default(0)
+  contribution_points Int?      @default(0)
+  updated_at          DateTime? @default(now())
+
+  user users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@map("user_statistics")
+  @@schema("identity")
+}
+
+model users {
+  id                    String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email                 String            @unique
+  password              String?
+  is_online             Boolean?          @default(true)
+  email_verified        DateTime?
+  roles                 user_role_enum[]  @default([student])
+  status                user_status_enum  @default(ACTIVE)
+  failed_login_attempts Int?              @default(0)
+  account_locked_until  DateTime?
+  verification_token    String?
+  reset_token           String?
+  reset_token_expires   DateTime?
+  deleted_at            DateTime?
+  is_anonymized         Boolean?          @default(false)
+  anonymized_at         DateTime?
+  created_at            DateTime          @default(now())
+  updated_at            DateTime          @default(now())
+  last_active           DateTime?
+
+  // Identity relations (1:1)
+  spiritual_profile  spiritual_profiles?
+  preferences        user_preferences?
+  profile            user_profiles?
+  statistics         user_statistics?
+
+  // Institutional relations (clean naming)
+  audit_logs             audit_logs[]
+  circle_members         circle_members[]
+  circle_posts           circle_posts[]
+  circles                circles[]
+  communication_logs     communication_logs[]
+  compliance_tasks       compliance_tasks[]
+  contributions          contributions[]
+  document_versions      document_versions[]
+  event_registrations    event_registrations[]
+  file_assets            file_assets[]
+  legal_documents        legal_documents[]
+  library_downloads      library_downloads[]
+  library_items          library_items[]
+  spiritual_vows         spiritual_vows[]
+
+  issued_donation_receipts   donation_receipts[] @relation("receipts_issued_by")
+  received_donation_receipts donation_receipts[] @relation("receipts_user")
+
+  family_links_as_related family_links[] @relation("family_links_related")
+  family_links_as_user    family_links[] @relation("family_links_user")
+
+  guidance_as_guide   guidance_assignments[] @relation("guidance_assignments_guide")
+  guidance_as_student guidance_assignments[] @relation("guidance_assignments_student")
+
+  journal_entries_approved journal_entries[] @relation("journal_entries_approved")
+  journal_entries_created  journal_entries[] @relation("journal_entries_created")
+
+  organization_members org_members[]
+
+  assigned_tickets support_tickets[] @relation("support_tickets_assigned")
+  raised_tickets   support_tickets[] @relation("support_tickets_user")
+
+  transactions_approved transactions[] @relation("transactions_approved")
+  transactions_recorded transactions[] @relation("transactions_recorded")
+
+  user_curve_progress user_curve_progress[]
+
+  @@index([email], map: "idx_users_email")
+  @@index([status], map: "idx_users_status")
+  @@map("users")
+  @@schema("identity")
+}

@@ -1,0 +1,90 @@
+enum age_group_enum {
+  child
+  teen
+  young_adult
+  adult
+  senior
+
+  @@map("age_group_enum")
+  @@schema("identity")
+}
+
+enum gender_enum {
+  male
+  female
+
+  @@map("gender_enum")
+  @@schema("identity")
+}
+
+enum inner_state_enum {
+  confused
+  seeking
+  stable
+  disturbed
+  detached
+
+  @@map("inner_state_enum")
+  @@schema("identity")
+}
+
+enum life_stage_enum {
+  student
+  unmarried
+  married
+  parent
+  vanaprastha
+  renunciate
+
+  @@map("life_stage_enum")
+  @@schema("identity")
+}
+
+enum purushartha_enum {
+  dharma
+  artha
+  kama
+  moksha
+
+  @@map("purushartha_enum")
+  @@schema("identity")
+}
+
+enum svabhava_enum {
+  intellectual
+  administrative
+  creative
+  practical
+
+  @@map("svabhava_enum")
+  @@schema("identity")
+}
+
+enum user_role_enum {
+  student
+  mentor
+  teacher
+  coordinator
+  admin
+  donor
+  director
+  village_member
+  city_member
+  outreach_lead
+  volunteer
+  staff
+
+  @@map("user_role_enum")
+  @@schema("identity")
+}
+
+enum user_status_enum {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+  DELETED
+  ANONYMIZED
+
+  @@map("user_status_enum")
+  @@schema("identity")
+}

@@ -1,0 +1,170 @@
+model circle_members {
+  user_id   String            @db.Uuid
+  circle_id String            @db.Uuid
+  role      circle_role_enum? @default(MEMBER)
+  joined_at DateTime?         @default(now())
+  circles   circles           @relation(fields: [circle_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users     users             @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([user_id, circle_id])
+  @@schema("public")
+}
+
+model circle_posts {
+  id         String              @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  circle_id  String              @db.Uuid
+  author_id  String              @db.Uuid
+  content    String
+  category   post_category_enum? @default(REALIZATION)
+  likes      Int?                @default(0)
+  replies    Int?                @default(0)
+  is_pinned  Boolean?            @default(false)
+  created_at DateTime            @default(now())
+  users      users               @relation(fields: [author_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  circles    circles             @relation(fields: [circle_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@schema("public")
+}
+
+model circles {
+  id             String            @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name           String
+  slug           String            @unique
+  description    String?
+  type           circle_type_enum? @default(REGIONAL)
+  member_count   Int?              @default(0)
+  mentor_id      String?           @db.Uuid
+  created_at     DateTime          @default(now())
+  updated_at     DateTime          @default(now())
+  circle_members circle_members[]
+  circle_posts   circle_posts[]
+  users          users?            @relation(fields: [mentor_id], references: [id], onUpdate: NoAction)
+
+  @@schema("public")
+}
+
+model event_registrations {
+  user_id       String       @db.Uuid
+  event_id      String       @db.Uuid
+  registered_at DateTime?    @default(now())
+  vedic_events  vedic_events @relation(fields: [event_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  user          users        @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([user_id, event_id])
+  @@schema("public")
+}
+
+model family_groups {
+  id           String         @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name         String?
+  origin_place String?
+  description  String?
+  created_at   DateTime?      @default(now()) @db.Timestamp(6)
+  updated_at   DateTime?      @default(now()) @db.Timestamp(6)
+  family_nodes family_nodes[]
+
+  @@schema("public")
+}
+
+model family_links {
+  id                                   String                 @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  user_id                              String                 @db.Uuid
+  related_id                           String                 @db.Uuid
+  type                                 relationship_type_enum
+  notes                                String?
+  created_at                           DateTime               @default(now())
+  updated_at                           DateTime               @default(now())
+  related                              users                  @relation("family_links_related", fields: [related_id], references: [id], onDelete: Cascade)
+  user                                 users                  @relation("family_links_user", fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@unique([user_id, related_id, type], map: "family_links_unique")
+  @@schema("public")
+}
+
+model family_nodes {
+  id                 String                @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  user_id            String?               @db.Uuid
+  parent_id          String?               @db.Uuid
+  family_group_id    String?               @db.Uuid
+  path               Unsupported("ltree")?
+  level              Int?
+  created_at         DateTime              @default(now())
+  updated_at         DateTime              @default(now())
+  family_groups      family_groups?        @relation(fields: [family_group_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  family_nodes       family_nodes?         @relation("family_nodesTofamily_nodes", fields: [parent_id], references: [id], onUpdate: NoAction)
+  other_family_nodes family_nodes[]        @relation("family_nodesTofamily_nodes")
+
+  @@index([path], map: "idx_family_path", type: Gist)
+  @@schema("public")
+}
+
+model org_members {
+  id              String            @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_id          String            @db.Uuid
+  user_id         String            @db.Uuid
+  role            String
+  base_stipend    Decimal?          @default(0) @db.Decimal
+  start_date      DateTime?
+  end_date        DateTime?
+  created_at      DateTime?         @default(now())
+  updated_at      DateTime?         @default(now())
+  organizations   organizations     @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users           users             @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  payroll_records payroll_records[]
+
+  @@schema("public")
+}
+
+model organizations {
+  id                                                                           String                    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  parent_id                                                                    String?                   @db.Uuid
+  name                                                                         String
+  type                                                                         String
+  registration_no                                                              String?
+  pan                                                                          String?
+  tan                                                                          String?
+  address                                                                      String?
+  created_at                                                                   DateTime                  @default(now())
+  updated_at                                                                   DateTime                  @default(now())
+  activity_logs                                                                activity_logs[]
+  communication_campaigns_communication_campaigns_org_idToorganizations        communication_campaigns[] @relation("communication_campaigns_org_idToorganizations")
+  communication_campaigns_communication_campaigns_target_org_idToorganizations communication_campaigns[] @relation("communication_campaigns_target_org_idToorganizations")
+  communication_logs                                                           communication_logs[]
+  compliance_tasks                                                             compliance_tasks[]
+  contributions                                                                contributions[]
+  donation_causes                                                              donation_causes[]
+  external_integrations                                                        external_integrations[]
+  file_assets                                                                  file_assets[]
+  financial_accounts                                                           financial_accounts[]
+  financial_periods                                                            financial_periods[]
+  journal_entries                                                              journal_entries[]
+  legal_documents                                                              legal_documents[]
+  library_items                                                                library_items[]
+  org_members                                                                  org_members[]
+  organizations                                                                organizations?            @relation("organizationsToorganizations", fields: [parent_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  other_organizations                                                          organizations[]           @relation("organizationsToorganizations")
+  partnerships                                                                 partnerships[]
+  physical_assets                                                              physical_assets[]
+  projects                                                                     projects[]
+  secure_share_links                                                           secure_share_links[]
+  subscription_tiers                                                           subscription_tiers[]
+  support_tickets                                                              support_tickets[]
+  transactions                                                                 transactions[]
+
+  @@schema("public")
+}
+
+model vedic_events {
+  id                  String                @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  title               String
+  description         String?
+  host_id             String                @db.Uuid
+  start_time          DateTime
+  end_time            DateTime
+  type                event_type_enum?      @default(LIVE_SATSANG)
+  created_at          DateTime              @default(now())
+  updated_at          DateTime              @default(now())
+  event_registrations event_registrations[]
+
+  @@schema("public")
+}

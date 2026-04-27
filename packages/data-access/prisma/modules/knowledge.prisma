@@ -1,0 +1,241 @@
+model CommunicationCampaignToLibraryItem {
+  A                       String                  @db.Uuid
+  B                       String                  @db.Uuid
+  communication_campaigns communication_campaigns @relation(fields: [A], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  library_items           library_items           @relation(fields: [B], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([A, B])
+  @@map("_CommunicationCampaignToLibraryItem")
+  @@schema("public")
+}
+
+model library_downloads {
+  id              String        @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  user_id         String?       @db.Uuid
+  library_item_id String        @db.Uuid
+  downloaded_at   DateTime      @default(now())
+  library_items   library_items @relation(fields: [library_item_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  user            users?        @relation(fields: [user_id], references: [id])
+
+  @@schema("public")
+}
+
+model library_items {
+  id                                 String                               @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_id                             String                               @db.Uuid
+  title                              String
+  slug                               String                               @unique
+  description                        String?
+  type                               librarytype
+  language                           language_enum?
+  author                             String?
+  published_at                       DateTime?
+  file_id                            String                               @unique @db.Uuid
+  thumbnail_url                      String?
+  tags                               String[]
+  keywords                           String[]
+  required_tier                      String?                              @db.Uuid
+  is_public                          Boolean?                             @default(true)
+  is_downloadable                    Boolean?                             @default(true)
+  deleted_at                         DateTime?
+  created_by_id                      String?                              @db.Uuid
+  created_at                         DateTime                             @default(now())
+  updated_at                         DateTime                             @default(now())
+  required_role                      user_role_enum[]
+  CommunicationCampaignToLibraryItem CommunicationCampaignToLibraryItem[]
+  communication_logs                 communication_logs[]
+  donation_receipts                  donation_receipts[]
+  library_downloads                  library_downloads[]
+  file_assets                        file_assets                          @relation(fields: [file_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  organizations                      organizations                        @relation(fields: [org_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  subscription_tiers                 subscription_tiers?                  @relation(fields: [required_tier], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  creator                            users?                               @relation(fields: [created_by_id], references: [id])
+  library_versions                   library_versions[]
+
+  @@schema("public")
+}
+
+model library_versions {
+  id              String        @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  library_item_id String        @db.Uuid
+  file_id         String        @db.Uuid
+  version_number  Int
+  notes           String?
+  created_at      DateTime      @default(now())
+  file_assets     file_assets   @relation(fields: [file_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  library_items   library_items @relation(fields: [library_item_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@schema("public")
+}
+
+model node_relations {
+  id                                       String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  from_node_id                             String   @db.Uuid
+  to_node_id                               String   @db.Uuid
+  relation_type                            String?
+  created_at                               DateTime @default(now())
+  nodes_node_relations_from_node_idTonodes nodes    @relation("node_relations_from_node_idTonodes", fields: [from_node_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  nodes_node_relations_to_node_idTonodes   nodes    @relation("node_relations_to_node_idTonodes", fields: [to_node_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([from_node_id], map: "idx_node_rel_from")
+  @@index([to_node_id], map: "idx_node_rel_to")
+  @@schema("public")
+}
+
+model node_tags {
+  node_id String @db.Uuid
+  tag_id  String @db.Uuid
+  nodes   nodes  @relation(fields: [node_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  tags    tags   @relation(fields: [tag_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([node_id, tag_id])
+  @@index([node_id], map: "idx_node_tags_node")
+  @@index([tag_id], map: "idx_node_tags_tag")
+  @@schema("public")
+}
+
+model nodes {
+  id                                                String                 @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  shastra_id                                        String                 @db.Uuid
+  parent_id                                         String?                @db.Uuid
+  level                                             String
+  slug                                              String?
+  order_index                                       Int?                   @default(0)
+  canonical_ref                                     String?
+  path                                              Unsupported("ltree")?
+  sensitivity                                       Int?                   @default(1)
+  status                                            content_status_enum    @default(ACTIVE)
+  deleted_at                                        DateTime?
+  created_at                                        DateTime               @default(now())
+  updated_at                                        DateTime               @default(now())
+  learning_curve_steps                              learning_curve_steps[]
+  node_relations_node_relations_from_node_idTonodes node_relations[]       @relation("node_relations_from_node_idTonodes")
+  node_relations_node_relations_to_node_idTonodes   node_relations[]       @relation("node_relations_to_node_idTonodes")
+  node_tags                                         node_tags[]
+  nodes                                             nodes?                 @relation("nodesTonodes", fields: [parent_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  other_nodes                                       nodes[]                @relation("nodesTonodes")
+  shastras                                          shastras               @relation(fields: [shastra_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  texts                                             texts[]
+
+  @@index([path], map: "idx_nodes_path", type: Gist)
+  @@schema("public")
+}
+
+model shastras {
+  id             String              @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  slug           String              @unique
+  name           String
+  structure_type String
+  status         content_status_enum @default(ACTIVE)
+  deleted_at     DateTime?
+  created_at     DateTime            @default(now())
+  updated_at     DateTime            @default(now())
+  nodes          nodes[]
+
+  @@schema("public")
+}
+
+model sources {
+  id          String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name        String
+  role        String?
+  description String?
+  year_approx Int?
+  era         String?
+  created_at  DateTime @default(now())
+  updated_at  DateTime @default(now())
+  texts       texts[]
+
+  @@schema("public")
+}
+
+model texts {
+  id              String              @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  node_id         String              @db.Uuid
+  content_type    content_type_enum
+  language        language_enum
+  script          script_enum
+  content         String
+  source_id       String?             @db.Uuid
+  is_primary      Boolean?            @default(false)
+  anchor_word     String?
+  segment_order   Int?
+  status          content_status_enum @default(ACTIVE)
+  deleted_at      DateTime?
+  created_at      DateTime            @default(now())
+  updated_at      DateTime            @default(now())
+  synonyms        synonyms[]
+  text_embeddings text_embeddings?
+  text_metadata   text_metadata?
+  text_versions   text_versions[]
+  nodes           nodes               @relation(fields: [node_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  sources         sources?            @relation(fields: [source_id], references: [id], onUpdate: NoAction)
+
+  @@schema("public")
+}
+
+model text_versions {
+  id             String             @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  text_id        String             @db.Uuid
+  content        String?
+  content_type   content_type_enum?
+  language       language_enum?
+  script         script_enum?
+  version_number Int?
+  updated_by     String?
+  created_at     DateTime           @default(now())
+  texts          texts              @relation(fields: [text_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@schema("public")
+}
+
+model text_metadata {
+  text_id         String                @id @db.Uuid
+  guidance_levels guidance_level_enum[]
+  is_sensitive    Boolean?              @default(false)
+  life_stages     life_stage_enum[]
+  texts           texts                 @relation(fields: [text_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@schema("public")
+}
+
+model text_embeddings {
+  text_id    String                @id @db.Uuid
+  embedding  Unsupported("vector")
+  model      String
+  created_at DateTime              @default(now())
+  texts      texts                 @relation(fields: [text_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@schema("public")
+}
+
+model synonyms {
+  id          String         @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  text_id     String         @db.Uuid
+  word        String
+  meaning     String?
+  language    language_enum?
+  order_index Int?
+  created_at  DateTime?      @default(now())
+  texts       texts          @relation(fields: [text_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@schema("public")
+}
+
+model tags {
+  id            String      @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  slug          String      @unique
+  name          String?
+  description   String?
+  keywords      String[]
+  type          String?
+  parent_id     String?     @db.Uuid
+  sanskrit_name String?
+  created_at    DateTime    @default(now())
+  updated_at    DateTime    @default(now())
+  node_tags     node_tags[]
+  tags          tags?       @relation("tagsTotags", fields: [parent_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  other_tags    tags[]      @relation("tagsTotags")
+
+  @@schema("public")
+}

@@ -1,0 +1,280 @@
+model activity_logs {
+  id            String        @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_id        String        @db.Uuid
+  title         String
+  description   String
+  category      String
+  date          DateTime?     @default(now())
+  images        String[]
+  project_id    String?       @db.Uuid
+  created_at    DateTime?     @default(now())
+  updated_at    DateTime      @default(now())
+  organizations organizations @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  projects      projects?     @relation(fields: [project_id], references: [id], onUpdate: NoAction)
+
+  @@schema("public")
+}
+
+model audit_logs {
+  id              String        @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  table_name      String?
+  record_id       String?       @db.Uuid
+  transaction_id  String?       @db.Uuid
+  module          String?
+  action          String
+  performed_by_id String        @db.Uuid
+  old_data        Json?
+  new_data        Json?
+  ip_address      String?
+  device_info     String?
+  timestamp       DateTime      @default(now())
+  performer       users         @relation(fields: [performed_by_id], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  transactions    transactions? @relation(fields: [transaction_id], references: [id], onUpdate: NoAction)
+
+  @@unique([performed_by_id, record_id, action])
+  @@schema("public")
+}
+
+model external_integrations {
+  id            String                   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_id        String?                  @db.Uuid
+  service       integration_service_enum
+  config        Json?                    @default("{}")
+  is_active     Boolean?                 @default(true)
+  last_used_at  DateTime?                @db.Timestamp(6)
+  last_error    String?
+  created_at    DateTime                 @default(now())
+  updated_at    DateTime                 @default(now())
+  organizations organizations?           @relation(fields: [org_id], references: [id], onUpdate: NoAction)
+
+  @@schema("public")
+}
+
+model file_assets {
+  id                       String                     @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_id                   String                     @db.Uuid
+  uploaded_by_id           String?                    @db.Uuid
+  file_name                String
+  file_type                String?
+  mime_type                String?
+  storage_provider         storage_provider_enum
+  object_key               String
+  file_url                 String
+  access_url               String?
+  file_size                BigInt?
+  checksum                 String?
+  category                 file_category_enum
+  security_level           String?                    @default("PRIVATE")
+  created_at               DateTime                   @default(now())
+  updated_at               DateTime                   @default(now())
+  donation_receipts        donation_receipts?
+  organizations            organizations              @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  uploader                 users?                     @relation(fields: [uploaded_by_id], references: [id])
+  grant_milestones         grant_milestones[]
+  library_items            library_items?
+  library_versions         library_versions[]
+  partner_report_versions  partner_report_versions[]
+  partner_reports          partner_reports[]
+  partnerships             partnerships[]
+  utilization_certificates utilization_certificates[]
+
+  @@schema("public")
+}
+
+model legal_documents {
+  id                          String                        @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_id                      String                        @db.Uuid
+  title                       String
+  category                    String
+  file_url                    String
+  status                      legal_document_status_enum?   @default(ACTIVE)
+  created_by_id               String?                       @db.Uuid
+  created_at                  DateTime                      @default(now())
+  updated_at                  DateTime                      @default(now())
+  document_versions           document_versions[]
+  organizations               organizations                 @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  creator                     users?                        @relation(fields: [created_by_id], references: [id])
+  secure_share_link_documents secure_share_link_documents[]
+
+  @@schema("public")
+}
+
+model partner_organizations {
+  id                      String                    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name                    String
+  type                    partner_type_enum
+  registration_number     String?
+  pan                     String?
+  tan                     String?
+  contact_person          String?
+  email                   String?
+  phone                   String?
+  address                 String?
+  website                 String?
+  created_at              DateTime?                 @default(now())
+  updated_at              DateTime?                 @default(now())
+  communication_campaigns communication_campaigns[]
+  communication_logs      communication_logs[]
+  partnerships            partnerships[]
+
+  @@schema("public")
+}
+
+model partner_reports {
+  id                      String                    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  partnership_id          String                    @db.Uuid
+  report_type             String
+  file_id                 String                    @db.Uuid
+  period_start            DateTime?                 @db.Date
+  period_end              DateTime?                 @db.Date
+  submitted_at            DateTime?
+  deleted_at              DateTime?
+  created_at              DateTime?                 @default(now())
+  updated_at              DateTime?                 @default(now())
+  partner_report_versions partner_report_versions[]
+  file_assets             file_assets               @relation(fields: [file_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  partnerships            partnerships              @relation(fields: [partnership_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@schema("public")
+}
+
+model partner_report_versions {
+  id              String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  report_id       String          @db.Uuid
+  file_id         String          @db.Uuid
+  version_number  Int
+  created_at      DateTime?       @default(now())
+  file_assets     file_assets     @relation(fields: [file_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  partner_reports partner_reports @relation(fields: [report_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@schema("public")
+}
+
+model partnerships {
+  id                    String                @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_id                String                @db.Uuid
+  partner_id            String                @db.Uuid
+  title                 String
+  description           String?
+  start_date            DateTime?             @db.Date
+  end_date              DateTime?             @db.Date
+  status                grant_status_enum?    @default(ACTIVE)
+  agreement_file_id     String?               @db.Uuid
+  created_at            DateTime?             @default(now())
+  updated_at            DateTime?             @default(now())
+  grants                grants[]
+  partner_reports       partner_reports[]
+  file_assets           file_assets?          @relation(fields: [agreement_file_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_agreement_file")
+  organizations         organizations         @relation(fields: [org_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  partner_organizations partner_organizations @relation(fields: [partner_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@schema("public")
+}
+
+model subscription_tiers {
+  id                      String                    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_id                  String                    @db.Uuid
+  name                    String
+  description             String?
+  level                   Int                       @default(1)
+  created_at              DateTime                  @default(now())
+  updated_at              DateTime                  @default(now())
+  communication_campaigns communication_campaigns[]
+  library_items           library_items[]
+  organizations           organizations             @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@schema("public")
+}
+
+model projects {
+  id                   String                 @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_id               String                 @db.Uuid
+  name                 String
+  description          String?
+  total_budget         Decimal                @db.Decimal
+  status               project_status_enum?   @default(ACTIVE)
+  cause_id             String?                @db.Uuid
+  deleted_at           DateTime?
+  created_at           DateTime               @default(now())
+  updated_at           DateTime               @default(now())
+  activity_logs        activity_logs[]
+  grant_allocations    grant_allocations[]
+  project_budget_lines project_budget_lines[]
+  donation_causes      donation_causes?       @relation(fields: [cause_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  organizations        organizations          @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  transactions         transactions[]
+
+  @@schema("public")
+}
+
+model project_budget_lines {
+  id            String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  project_id    String    @db.Uuid
+  category      String
+  budget_amount Decimal   @db.Decimal
+  created_at    DateTime? @default(now())
+  updated_at    DateTime? @default(now())
+  projects      projects  @relation(fields: [project_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([project_id], map: "idx_budget_project")
+  @@schema("public")
+}
+
+model physical_assets {
+  id            String             @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_id        String             @db.Uuid
+  name          String
+  description   String?
+  category      String
+  purchase_date DateTime?          @db.Date
+  purchase_cost Decimal?           @db.Decimal
+  current_value Decimal?           @db.Decimal
+  status        asset_status_enum? @default(ACTIVE)
+  location      String?
+  qr_code       String?            @unique
+  created_at    DateTime?          @default(now())
+  updated_at    DateTime?          @default(now())
+  organizations organizations      @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([qr_code], map: "idx_asset_qr")
+  @@schema("public")
+}
+
+model secure_share_links {
+  id                          String                        @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_id                      String                        @db.Uuid
+  token                       String                        @unique
+  purpose                     String?
+  expires_at                  DateTime
+  access_count                Int?                          @default(0)
+  created_at                  DateTime                      @default(now())
+  secure_share_link_documents secure_share_link_documents[]
+  organizations               organizations                 @relation(fields: [org_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@schema("public")
+}
+
+model secure_share_link_documents {
+  link_id            String                    @db.Uuid
+  document_id        String                    @db.Uuid
+  access_level       document_permission_enum? @default(READ)
+  legal_documents    legal_documents           @relation(fields: [document_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  secure_share_links secure_share_links        @relation(fields: [link_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([link_id, document_id])
+  @@schema("public")
+}
+
+model document_versions {
+  id              String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  document_id     String          @db.Uuid
+  file_url        String
+  version_number  Int
+  change_note     String?
+  created_by_id   String          @db.Uuid
+  created_at      DateTime        @default(now())
+  creator         users           @relation(fields: [created_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  legal_documents legal_documents @relation(fields: [document_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@schema("public")
+}
