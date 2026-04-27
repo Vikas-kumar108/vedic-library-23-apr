@@ -115,7 +115,9 @@ export class LibraryRepository {
         await statsStore.update({
           where: { user_id: userId },
           data: { nodes_read_count: { increment: 1 } }
-        }).catch(() => {}); // Non-blocking/Safe
+        }).catch((e: any) => {
+          console.error(`[GUIDED_PATH_FAILURE] Stats Increment Failure | User: ${userId} | Node: ${nodeId} | Error: ${e.message}`);
+        }); 
       }
 
       // 3. Create Audit Log: Final guard against duplicate views
@@ -126,6 +128,8 @@ export class LibraryRepository {
           performed_by_id: userId,
           module: 'KNOWLEDGE'
         }
+      }).catch((e: any) => {
+         console.error(`[GUIDED_PATH_FAILURE] READ_NODE Log Failure | User: ${userId} | Node: ${nodeId} | Error: ${e.message}`);
       });
 
       // 4. Guided Path Completion: Atomic clear if reading the assigned primary guide
@@ -152,9 +156,11 @@ export class LibraryRepository {
               current_primary_node_id: nodeId
             },
             data: { current_primary_node_id: null }
+          }).catch((e: any) => {
+            console.error(`[GUIDED_PATH_FAILURE] Atomic Clear Persistence Failure | User: ${userId} | Node: ${nodeId} | Error: ${e.message}`);
           });
 
-          if (result.count > 0) {
+          if (result && result.count > 0) {
             // 🛰️ Observability: Record completion milestone
             (this.prisma as any).audit_logs.create({
               data: {
@@ -168,12 +174,14 @@ export class LibraryRepository {
                   completed_at: new Date()
                 }
               }
-            }).catch(() => {});
+            }).catch((e: any) => {
+               console.error(`[GUIDED_PATH_FAILURE] PRIMARY_COMPLETED Log Failure | User: ${userId} | Node: ${nodeId} | Error: ${e.message}`);
+            });
           }
         }
       }
-    } catch (e) {
-      // Ignore errors for audit logging to ensure main flow never breaks
+    } catch (e: any) {
+      console.error(`[GUIDED_PATH_FAILURE] recordNodeView Main Flow Failure | User: ${userId} | Node: ${nodeId} | Error: ${e.message}`);
     }
   }
 }

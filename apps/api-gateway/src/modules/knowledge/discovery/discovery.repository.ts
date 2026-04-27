@@ -128,7 +128,7 @@ export class DiscoveryRepository {
       });
       return true;
     } catch (e: any) {
-      console.error(`[GUIDED_PATH] Persistence Failure for user ${userId}:`, e.message);
+      console.error(`[GUIDED_PATH_FAILURE] State Persistence Failure | User: ${userId} | Node: ${nodeId} | Error: ${e.message}`);
       return false;
     }
   }
@@ -146,7 +146,7 @@ export class DiscoveryRepository {
         }
       });
     } catch (e: any) {
-      console.error(`[GUIDED_PATH] Atomic Clear Failure for user ${userId}:`, e.message);
+      console.error(`[GUIDED_PATH_FAILURE] Atomic Clear Failure | User: ${userId} | Node: ${nodeId} | Error: ${e.message}`);
     }
   }
 
@@ -161,9 +161,11 @@ export class DiscoveryRepository {
           module: 'KNOWLEDGE',
           new_data: metadata
         }
-      }).catch(() => {});
-    } catch (e) {
-      // Never break the main shastric flow
+      }).catch((e: any) => {
+        console.error(`[GUIDED_PATH_FAILURE] Audit Log Creation Failure | User: ${userId} | Node: ${nodeId} | Action: ${action} | Error: ${e.message}`);
+      });
+    } catch (e: any) {
+       console.error(`[GUIDED_PATH_FAILURE] Async Event Logging Failure | User: ${userId} | Action: ${action} | Error: ${e.message}`);
     }
   }
 
