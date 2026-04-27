@@ -72,7 +72,20 @@ export default function DashboardPage() {
                <BookOpen className="size-80" />
             </div>
           </div>
-        ) : null}
+        ) : (
+          <div className="max-w-3xl mx-auto bg-slate-50 border border-slate-100 rounded-[4rem] p-16 flex flex-col items-center justify-center space-y-8">
+            <div className="size-20 bg-primary/10 rounded-full flex items-center justify-center text-primary animate-pulse">
+               <Sparkles className="size-10" />
+            </div>
+            <div className="space-y-2">
+              <h3 className="text-2xl font-serif font-bold text-slate-900 italic">Your next step is being prepared.</h3>
+              <p className="text-slate-500 max-w-sm mx-auto">The Gurukulam is aligning your path with the eternal wisdom. Return momentarily for your next realization.</p>
+            </div>
+            <Button asChild variant="outline" className="rounded-2xl h-14 px-10 font-bold border-slate-200">
+              <Link href="/library/research">Explore Foundational Shastra</Link>
+            </Button>
+          </div>
+        )}
       </section>
 
       {/* 3. SUPPORTING INSIGHTS: Subtle alternatives */}
