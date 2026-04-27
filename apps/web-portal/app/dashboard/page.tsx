@@ -1,114 +1,107 @@
 "use client"
-
 import React from 'react'
+import Link from 'next/link'
 import { useAuth } from '@/features/auth/hooks/useAuth'
-import { useCourses } from '@/features/courses/hooks/useCourses'
 import { useSadhana } from '@/features/practice/hooks/useSadhana'
-import { FinancialTransparency } from '@/components/organisms/crm/financial-transparency'
-import { MemberJourney } from '@/components/organisms/crm/member-journey'
-import { ActivityFeed } from '@/components/organisms/crm/activity-feed'
 import { useRecommendations } from '@/hooks/use-recommendations'
 import { SeekerHeader } from '@/components/seeker/SeekerHeader'
-import { WisdomRecommendation } from '@/components/seeker/WisdomRecommendation'
-import { SanghaSessions } from '@/components/seeker/SanghaSessions'
-
-// The new Fabulous Components
-import { ContinueLearningCard } from '@/components/seeker/ContinueLearningCard'
-import { ProgressSummary } from '@/components/seeker/ProgressSummary'
-import { DailyReflection } from '@/components/seeker/DailyReflection'
+import { Button } from '@/components/atoms/button'
+import { Sparkles, ArrowRight, BookOpen } from 'lucide-react'
 
 export default function DashboardPage() {
   const { user, isLoading: authLoading } = useAuth()
-  const { courses, isLoading: coursesLoading } = useCourses()
   const { stats, isLoading: sadhanaLoading } = useSadhana()
-  const { recommendations, isLoading: recsLoading } = useRecommendations(3)
+  
+  // Fetch more to ensure we have enough supporting ones
+  const { recommendations, isLoading: recsLoading } = useRecommendations(user?.spiritual_profile?.eligibility_level || 1)
 
-  if (authLoading) return <div className="p-12 animate-pulse text-[#e67e22] font-serif italic text-2xl font-bold">Entering the Gurukulam...</div>
+  const primaryGuide = recommendations.find(r => r.category === 'PRIMARY_GUIDE') || recommendations[0];
+  const supportingRecs = recommendations
+    .filter(r => r.node?.id !== primaryGuide?.node?.id)
+    .slice(0, 3);
+
+  if (authLoading) return <div className="p-12 animate-pulse text-primary font-serif italic text-2xl font-bold text-center">Entering the Sanctuary...</div>
 
   return (
-    <div className="max-w-7xl mx-auto space-y-12 pb-20 animate-in fade-in duration-700">
+    <div className="max-w-5xl mx-auto space-y-20 pb-24 animate-in fade-in duration-1000 text-center">
       
-      {/* 1. Modular Seeker Header */}
+      {/* 1. Minimal Shastric Header */}
       <SeekerHeader user={user} stats={stats} />
 
-      {/* 2. Sovereign Progress Summary */}
-      <section>
-        <ProgressSummary 
-          lessonsCompleted={stats?.lessonsCompleted || 12}
-          notesWritten={stats?.notesWritten || 28}
-          currentStreak={stats?.currentStreak || 7}
-        />
-      </section>
-
-      <div className="grid xl:grid-cols-[1fr_400px] gap-12">
-        
-        {/* LEFT: THE JOURNEY (Learning + Discovery) */}
-        <div className="space-y-12">
-          
-          {/* 3. Continue Learning Corridor */}
-          <section>
-             <h2 className="text-2xl font-serif font-bold italic text-slate-900 mb-6 flex items-center gap-4">
-                Your Ascent
-                <div className="h-px flex-1 bg-slate-100" />
-             </h2>
-             <ContinueLearningCard 
-               courseTitle="The Path of Dharma: Living with Purpose"
-               lessonTitle="Understanding Right Action"
-               progress={45}
-             />
-          </section>
-
-          {/* 4. Contemplation Corridor */}
-          <section>
-             <h2 className="text-2xl font-serif font-bold italic text-slate-900 mb-6 flex items-center gap-4">
-                Realizations
-                <div className="h-px flex-1 bg-slate-100" />
-             </h2>
-             <DailyReflection />
-          </section>
-
-          {/* 5. Institutional Transparency (Dynamic based on role) */}
-          <section className="space-y-6 pt-10">
-             <h2 className="text-2xl font-serif font-bold italic text-slate-900 mb-6 flex items-center gap-4">
-                Institutional Transparency
-                <div className="h-px flex-1 bg-slate-100" />
-             </h2>
-            {user?.roles?.includes('donor') ? (
-               <FinancialTransparency contributions={user.contributions || []} />
-            ) : (
-               <MemberJourney member={user} />
-            )}
-          </section>
-
-          {/* 6. Modular Wisdom Recommendation */}
-          <section className="pt-10">
-            <h2 className="text-2xl font-serif font-bold italic text-slate-900 mb-6 flex items-center gap-4">
-               Wisdom Prescriptions
-               <div className="h-px flex-1 bg-slate-100" />
-            </h2>
-            <WisdomRecommendation 
-              recommendations={recommendations} 
-              loading={recsLoading} 
-              userStage={user?.stage || 'Sadhaka'} 
-            />
-          </section>
+      {/* 2. THE PRIMARY PATH: Your Next Step */}
+      <section className="space-y-10">
+        <div className="space-y-2">
+          <div className="text-[10px] font-black text-primary uppercase tracking-[0.3em] animate-pulse">✨ Your Next Step</div>
+          <h2 className="text-3xl font-serif font-bold text-slate-900 italic">Continue the Journey</h2>
         </div>
 
-        {/* RIGHT: THE PRACTICE (Sangha + Activity) */}
-        <aside className="space-y-12">
-          {/* 7. Live From The Field (Social Transparency) */}
-          <section>
-             <h2 className="text-2xl font-serif font-bold italic text-slate-900 mb-6">Activity Feed</h2>
-             <ActivityFeed />
-          </section>
+        {recsLoading ? (
+          <div className="h-96 bg-slate-50 rounded-[4rem] border border-dashed border-slate-200 animate-pulse flex items-center justify-center text-slate-300 font-serif italic text-xl">
+             Consulting the Shastras...
+          </div>
+        ) : primaryGuide ? (
+          <div className="max-w-3xl mx-auto group bg-white border border-slate-100 rounded-[4rem] p-16 shadow-2xl shadow-slate-200/50 hover:shadow-primary/5 transition-all duration-1000 relative overflow-hidden text-left">
+            <div className="relative z-10 space-y-8">
+               <div className="space-y-4">
+                 <div className="text-[10px] font-black text-primary/40 uppercase tracking-widest">{primaryGuide.node?.shastra || 'Ancient Wisdom'}</div>
+                 <h3 className="text-5xl font-serif font-bold text-slate-900 leading-tight italic">
+                   {primaryGuide.node?.title}
+                 </h3>
+                 <p className="text-lg text-slate-500 leading-relaxed max-w-xl italic">
+                   "{primaryGuide.node?.snippet}"
+                 </p>
+                 <div className="pt-4 flex items-center gap-3 text-xs text-primary font-bold italic">
+                   <Sparkles className="size-4" /> {primaryGuide.reason}
+                 </div>
+               </div>
+               
+               <Button asChild size="lg" className="h-16 px-12 rounded-2xl bg-slate-900 text-white font-bold shadow-xl shadow-slate-900/20 hover:bg-primary transition-all group/btn">
+                 <Link href={`/library/guide/${primaryGuide.node?.slug || primaryGuide.node?.id}`} className="flex items-center gap-3">
+                   Enter Text <ArrowRight className="size-5 group-hover:translate-x-2 transition-transform" />
+                 </Link>
+               </Button>
+            </div>
+            
+            <div className="absolute -bottom-10 -right-10 opacity-[0.03] group-hover:opacity-[0.06] transition-opacity duration-1000">
+               <BookOpen className="size-80" />
+            </div>
+          </div>
+        ) : null}
+      </section>
 
-          {/* 8. Modular Sangha Sessions */}
-          <section>
-             <h2 className="text-2xl font-serif font-bold italic text-slate-900 mb-6">Live Sangha</h2>
-             <SanghaSessions />
-          </section>
-        </aside>
-      </div>
+      {/* 3. SUPPORTING INSIGHTS: Subtle alternatives */}
+      {supportingRecs.length > 0 && (
+        <section className="space-y-12 pt-10 border-t border-slate-50">
+           <div className="text-[10px] font-black text-slate-300 uppercase tracking-[0.2em]">Supporting Insights</div>
+           
+           <div className="grid md:grid-cols-3 gap-8">
+             {supportingRecs.map((rec, i) => (
+               <Link 
+                 key={i} 
+                 href={`/library/guide/${rec.node?.slug || rec.node?.id}`}
+                 className="group p-8 bg-white border border-slate-100 rounded-[2.5rem] text-left hover:shadow-xl transition-all duration-500 flex flex-col justify-between h-full"
+               >
+                 <div className="space-y-4">
+                   <div className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">{rec.node?.shastra}</div>
+                   <h4 className="text-xl font-serif font-bold text-slate-900 group-hover:text-primary transition-colors leading-tight">
+                     {rec.node?.title}
+                   </h4>
+                 </div>
+                 <div className="pt-6 flex items-center justify-between text-slate-200 group-hover:text-primary transition-colors">
+                    <span className="text-[10px] font-bold uppercase tracking-widest">{rec.category}</span>
+                    <ArrowRight className="size-4" />
+                 </div>
+               </Link>
+             ))}
+           </div>
+        </section>
+      )}
+
+      {/* 4. MEDITATIVE FOOTER */}
+      <footer className="pt-20 opacity-30 italic text-slate-400 font-serif text-sm">
+        "One step at a time, the seeker reaches the infinite."
+      </footer>
+
     </div>
   )
 }
