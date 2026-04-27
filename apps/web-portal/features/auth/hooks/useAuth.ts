@@ -8,9 +8,21 @@ export interface User {
   id: string
   name: string
   email: string
+  avatar?: string
   roles: string[]
-  stage?: string
   emailVerified?: Date
+  spiritual_profile?: {
+    life_stage: string
+    inner_state: string
+    eligibility_level: number
+    current_focus: string
+    current_primary_node_id: string
+    last_guided_at: string
+  }
+  statistics?: {
+    nodes_read_count: number
+    courses_completed: number
+  }
 }
 
 /**

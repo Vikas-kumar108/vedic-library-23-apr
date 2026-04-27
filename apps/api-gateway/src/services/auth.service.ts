@@ -354,36 +354,49 @@ export class AuthService {
       const decoded = jwt.verify(token, JWT_SECRET) as any
       const user = await this.userStore.findUnique({
         where: { id: decoded.userId },
-        include: { user_profiles: true }
+        include: { 
+          user_profiles: true,
+          spiritual_profiles: true,
+          user_statistics: true
+        }
       })
-
-      // [SHADOW READ]: Verify data consistency between schemas
-      const identityUser = await (this.prisma as any).identity_users?.findUnique({
-        where: { id: user?.id }
-      })
-      if (user && !identityUser) console.warn("SHADOW MISMATCH: missing in identity")
-
-      const identityProfile = await (this.prisma as any).identity_user_profiles.findUnique({
-        where: { user_id: user?.id }
-      })
-
-      if (user && !identityProfile) {
-        console.warn("SHADOW PROFILE MISMATCH:", {
-          userId: user.id,
-          email: user.email
-        })
-      }
 
       if (!user) {
         throw new Error('User not found')
+      }
+
+      // [SHADOW READ]: Consistency check for identity migration
+      if (process.env.IDENTITY_SCHEMA_ENABLED !== 'true') {
+        const identityUser = await (this.prisma as any).identity_users?.findUnique({
+          where: { id: user.id },
+          include: { spiritual_profiles: true }
+        }).catch(() => null)
+        if (!identityUser) console.warn(`[IDENTITY] Shadow mismatch for ${user.id}`)
       }
 
       return {
         id: user.id,
         email: user.email,
         name: user.user_profiles?.full_name,
+        avatar: user.user_profiles?.avatar_url,
         roles: user.roles,
         email_verified: user.email_verified,
+        
+        // ✨ Seeker Context: Spiritual Profile
+        spiritual_profile: user.spiritual_profiles ? {
+          life_stage: user.spiritual_profiles.life_stage,
+          inner_state: user.spiritual_profiles.inner_state,
+          eligibility_level: user.spiritual_profiles.eligibility_level,
+          current_focus: user.spiritual_profiles.current_focus,
+          current_primary_node_id: user.spiritual_profiles.current_primary_node_id,
+          last_guided_at: user.spiritual_profiles.last_guided_at
+        } : null,
+
+        // 📈 Seeker Context: Statistics
+        statistics: {
+          nodes_read_count: user.user_statistics?.nodes_read_count || 0,
+          courses_completed: user.user_statistics?.courses_completed || 0
+        }
       }
     } catch (error) {
       throw new Error('Invalid or expired token')
