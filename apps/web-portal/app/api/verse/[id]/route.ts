@@ -13,8 +13,13 @@ export async function GET(
   }
 
   try {
+    const authHeader = request.headers.get('authorization')
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4444'
-    const res = await fetch(`${apiUrl}/library/verse/${id}`, { cache: 'no-store' })
+    
+    const res = await fetch(`${apiUrl}/library/verse/${id}`, { 
+      cache: 'no-store',
+      headers: authHeader ? { 'Authorization': authHeader } : {}
+    })
     const data = await res.json()
 
     if (!res.ok) {

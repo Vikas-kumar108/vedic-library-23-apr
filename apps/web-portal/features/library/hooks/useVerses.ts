@@ -17,27 +17,33 @@ export interface Verse {
  * Responsibility: Fetch and manage state for a single specific verse.
  */
 export function useVerse(verseId: string) {
-  const [verse, setVerse] = useState<Verse | null>(null)
+  const [verse, setVerse] = useState<any | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     if (!verseId) return
 
-    setIsLoading(true)
-    // Mock: Fetch from API
-    setTimeout(() => {
-      setVerse({
-        id: verseId,
-        book: "Bhagavad Gita",
-        chapter: 2,
-        verse: 47,
-        sanskrit: "कर्मण्येवाधिकारस्ते मा फलेषु कदाचन ।\nमा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि ॥ ४७ ॥",
-        translation: "You have a right to perform your prescribed duty, but you are not entitled to the fruits of action...",
-        purport: "There are three considerations here: prescribed duties, capricious work, and inaction..."
-      })
-      setIsLoading(false)
-    }, 500)
+    const fetchVerse = async () => {
+      try {
+        setIsLoading(true)
+        // Get token from cookie (simplest for this architecture)
+        const res = await fetch(`/api/verse/${verseId}`)
+        const data = await res.json()
+        
+        if (res.ok) {
+          setVerse(data)
+        } else {
+          setError(data.error || 'Failed to fetch verse')
+        }
+      } catch (err) {
+        setError('Network error')
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchVerse()
   }, [verseId])
 
   return { verse, isLoading, error }
