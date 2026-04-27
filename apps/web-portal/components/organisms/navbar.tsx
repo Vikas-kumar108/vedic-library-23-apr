@@ -23,6 +23,7 @@ export function Navbar() {
           <NavLink href="/explore">Explore</NavLink>
           <NavLink href="/courses">Courses</NavLink>
           <NavLink href="/library">Library</NavLink>
+          <NavLink href="/library/research">Research</NavLink>
           {user && <NavLink href="/dashboard">Dashboard</NavLink>}
           <Link 
             href="/dana" 
