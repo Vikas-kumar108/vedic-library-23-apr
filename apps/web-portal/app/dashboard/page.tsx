@@ -6,14 +6,20 @@ import { useSadhana } from '@/features/practice/hooks/useSadhana'
 import { useRecommendations } from '@/hooks/use-recommendations'
 import { SeekerHeader } from '@/components/seeker/SeekerHeader'
 import { Button } from '@/components/atoms/button'
-import { Sparkles, ArrowRight, BookOpen } from 'lucide-react'
+import { Sparkles, ArrowRight, BookOpen, Search } from 'lucide-react'
 
 export default function DashboardPage() {
-  const { user, isLoading: authLoading } = useAuth()
+  const { user, isLoading: authLoading, checkAuth } = useAuth()
   const { stats, isLoading: sadhanaLoading } = useSadhana()
   
   // Fetch more to ensure we have enough supporting ones
-  const { recommendations, isLoading: recsLoading } = useRecommendations(user?.spiritual_profile?.eligibility_level || 1)
+  const { recommendations, isLoading: recsLoading, refresh } = useRecommendations(user?.spiritual_profile?.eligibility_level || 1)
+
+  // 🚀 PATH CONTINUITY: Refresh state on mount to ensure progress is reflected immediately
+  React.useEffect(() => {
+    checkAuth()
+    refresh()
+  }, [])
 
   const primaryGuide = recommendations.find(r => r.category === 'PRIMARY_GUIDE') || recommendations[0];
   const supportingRecs = recommendations
@@ -97,8 +103,27 @@ export default function DashboardPage() {
         </section>
       )}
 
-      {/* 4. MEDITATIVE FOOTER */}
-      <footer className="pt-20 opacity-30 italic text-slate-400 font-serif text-sm">
+      {/* 4. ADVANCED ACCESS: For Scholars & Researchers */}
+      <section className="pt-20 border-t border-slate-50 flex flex-col items-center gap-6">
+        <div className="text-[10px] font-black text-slate-300 uppercase tracking-[0.2em]">Advanced Study</div>
+        <div className="flex flex-wrap justify-center gap-4">
+          <Button asChild variant="ghost" className="rounded-2xl h-14 px-8 text-slate-400 hover:text-primary hover:bg-primary/5 group">
+            <Link href="/library/research" className="flex items-center gap-3">
+              <Search className="size-4 group-hover:scale-110 transition-transform" />
+              <span className="text-xs font-bold uppercase tracking-widest">Research Workbench</span>
+            </Link>
+          </Button>
+          <Button asChild variant="ghost" className="rounded-2xl h-14 px-8 text-slate-400 hover:text-orange-500 hover:bg-orange-50 group">
+            <Link href="/library" className="flex items-center gap-3">
+              <BookOpen className="size-4 group-hover:scale-110 transition-transform" />
+              <span className="text-xs font-bold uppercase tracking-widest">Full Library</span>
+            </Link>
+          </Button>
+        </div>
+      </section>
+
+      {/* 5. MEDITATIVE FOOTER */}
+      <footer className="pt-10 opacity-30 italic text-slate-400 font-serif text-sm">
         "One step at a time, the seeker reaches the infinite."
       </footer>
 

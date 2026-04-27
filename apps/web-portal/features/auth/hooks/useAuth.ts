@@ -121,6 +121,7 @@ export function useAuth() {
     isTeacher: user?.roles?.includes('teacher'),
     login,
     register,
-    logout
+    logout,
+    checkAuth
   }
 }
