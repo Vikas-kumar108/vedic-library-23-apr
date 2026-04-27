@@ -1,10 +1,9 @@
 import { NextResponse } from 'next/server'
+import { apiFetch } from '@/lib/api'
 
 export async function GET() {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4444'
-
-    const res = await fetch(`${apiUrl}/library/tree`, {
+    const res = await apiFetch('/library/tree', {
       cache: 'no-store',
     })
 

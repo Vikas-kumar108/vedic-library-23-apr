@@ -34,7 +34,6 @@ export class SeekerRecommendationService {
     const focus = this.deriveFocus(profile, eligibilityLevel);
 
     // 4. Stable Progression Logic: Check for active persisted guide
-    let primaryGuide: any = null;
     // 4. Stable Progression Logic: Check for active persisted guide
     let primaryGuide: any = null;
     const isExpired = !profile.last_guided_at || 

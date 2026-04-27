@@ -1,6 +1,6 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["driverAdapters", "postgresqlExtensions"]
+  previewFeatures = ["driverAdapters", "postgresqlExtensions", "multiSchema"]
   binaryTargets   = ["native"]
 }
 
@@ -11,7 +11,7 @@ datasource db {
   schemas    = ["identity", "public"]
 }
 
-model identity_spiritual_profiles {
+model spiritual_profiles {
   user_id           String                     @id @db.Uuid
   age_group         identity_age_group_enum?
   life_stage        identity_life_stage_enum?
@@ -24,26 +24,26 @@ model identity_spiritual_profiles {
   last_guided_at          DateTime?
   created_at              DateTime                   @default(now())
   updated_at              DateTime                   @default(now())
-  users             identity_users             @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users             users             @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@map("spiritual_profiles")
   @@schema("identity")
 }
 
-model identity_user_preferences {
+model user_preferences {
   user_id            String         @id @db.Uuid
   notification_prefs Json?          @default("{\"sms\": false, \"email\": true, \"whatsapp\": false}")
   metadata           Json?          @default("{}")
   notes              String?
   created_at         DateTime       @default(now())
   updated_at         DateTime       @default(now())
-  users              identity_users @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users              users @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@map("user_preferences")
   @@schema("identity")
 }
 
-model identity_user_profiles {
+model user_profiles {
   user_id         String                @id @db.Uuid
   full_name       String?
   phone_number    String?
@@ -57,25 +57,25 @@ model identity_user_profiles {
   pin_code        String?
   created_at      DateTime              @default(now())
   updated_at      DateTime              @default(now())
-  users           identity_users        @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users           users        @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@map("user_profiles")
   @@schema("identity")
 }
 
-model identity_user_statistics {
+model user_statistics {
   user_id             String         @id @db.Uuid
   nodes_read_count    Int?           @default(0)
   courses_completed   Int?           @default(0)
   contribution_points Int?           @default(0)
   updated_at          DateTime?      @default(now())
-  users               identity_users @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users               users @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@map("user_statistics")
   @@schema("identity")
 }
 
-model identity_users {
+model users {
   id                    String                       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   email                 String                       @unique
   password              String?
@@ -94,10 +94,10 @@ model identity_users {
   created_at            DateTime                     @default(now())
   updated_at            DateTime                     @default(now())
   last_active           DateTime?
-  spiritual_profiles    identity_spiritual_profiles?
-  user_preferences      identity_user_preferences?
-  user_profiles         identity_user_profiles?
-  user_statistics       identity_user_statistics?
+  spiritual_profiles    spiritual_profiles?
+  user_preferences      user_preferences?
+  user_profiles         user_profiles?
+  user_statistics       user_statistics?
 
   @@index([email], map: "idx_users_email")
   @@index([status], map: "idx_users_status")
@@ -158,7 +158,7 @@ model circle_members {
   role      circle_role_enum? @default(MEMBER)
   joined_at DateTime?         @default(now())
   circles   circles           @relation(fields: [circle_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  users     users      @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  legacy_users     legacy_users      @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@id([user_id, circle_id])
   @@schema("public")
@@ -174,7 +174,7 @@ model circle_posts {
   replies    Int?                @default(0)
   is_pinned  Boolean?            @default(false)
   created_at DateTime            @default(now())
-  users      users        @relation(fields: [author_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  legacy_users      legacy_users        @relation(fields: [author_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   circles    circles             @relation(fields: [circle_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@schema("public")
@@ -192,7 +192,7 @@ model circles {
   updated_at     DateTime          @default(now())
   circle_members circle_members[]
   circle_posts   circle_posts[]
-  users          users?     @relation(fields: [mentor_id], references: [id], onUpdate: NoAction)
+  legacy_users          legacy_users?     @relation(fields: [mentor_id], references: [id], onUpdate: NoAction)
 
   @@schema("public")
 }
@@ -241,7 +241,7 @@ model communication_logs {
   library_items           library_items?             @relation(fields: [library_item_id], references: [id], onUpdate: NoAction)
   organizations           organizations?             @relation(fields: [org_id], references: [id], onUpdate: NoAction)
   partner_organizations   partner_organizations?     @relation(fields: [partner_id], references: [id], onUpdate: NoAction)
-  users                   users?              @relation(fields: [user_id], references: [id], onUpdate: NoAction)
+  legacy_users                   legacy_users?              @relation(fields: [user_id], references: [id], onUpdate: NoAction)
 
   @@schema("public")
 }
@@ -256,7 +256,7 @@ model compliance_tasks {
   assigned_to   String?                 @db.Uuid
   created_at    DateTime?               @default(now())
   updated_at    DateTime?               @default(now())
-  users         users?           @relation(fields: [assigned_to], references: [id], onUpdate: NoAction)
+  legacy_users         legacy_users?           @relation(fields: [assigned_to], references: [id], onUpdate: NoAction)
   organizations organizations           @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@schema("public")
@@ -278,7 +278,7 @@ model contributions {
   donation_causes donation_causes?       @relation(fields: [cause_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   organizations   organizations          @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
   transactions    transactions?          @relation(fields: [transaction_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  users           users           @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  legacy_users           legacy_users           @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@schema("public")
 }
@@ -291,7 +291,7 @@ model document_versions {
   change_note     String?
   created_by_id   String          @db.Uuid
   created_at      DateTime        @default(now())
-  users           users    @relation(fields: [created_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  legacy_users           legacy_users    @relation(fields: [created_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   legal_documents legal_documents @relation(fields: [document_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@schema("public")
@@ -351,10 +351,10 @@ model donation_receipts {
   created_at                                  DateTime?      @default(now())
   updated_at                                  DateTime       @default(now())
   file_assets                                 file_assets?   @relation(fields: [file_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  users_donation_receipts_issued_by_idTousers users?         @relation("donation_receipts_issued_by_idTousers", fields: [issued_by_id], references: [id], onUpdate: NoAction)
+  users_donation_receipts_issued_by_idTolegacy_users legacy_users?         @relation("donation_receipts_issued_by_idTolegacy_users", fields: [issued_by_id], references: [id], onUpdate: NoAction)
   library_items                               library_items? @relation(fields: [library_item_id], references: [id], onUpdate: NoAction)
   transactions                                transactions   @relation(fields: [transaction_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  users_donation_receipts_user_idTousers      users          @relation("donation_receipts_user_idTousers", fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users_donation_receipts_user_idTolegacy_users      legacy_users          @relation("donation_receipts_user_idTolegacy_users", fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@schema("public")
 }
@@ -364,7 +364,7 @@ model event_registrations {
   event_id      String       @db.Uuid
   registered_at DateTime?    @default(now())
   vedic_events  vedic_events @relation(fields: [event_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  users         users        @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  legacy_users         legacy_users        @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@id([user_id, event_id])
   @@schema("public")
@@ -405,8 +405,8 @@ model family_links {
   notes                                String?
   created_at                           DateTime               @default(now())
   updated_at                           DateTime               @default(now())
-  users_family_links_related_idTousers users           @relation("family_links_related_idTousers", fields: [related_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  users_family_links_user_idTousers    users           @relation("family_links_user_idTousers", fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users_family_links_related_idTolegacy_users legacy_users           @relation("family_links_related_idTolegacy_users", fields: [related_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users_family_links_user_idTolegacy_users    legacy_users           @relation("family_links_user_idTolegacy_users", fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@unique([user_id, related_id, type], map: "family_links_unique")
   @@schema("public")
@@ -424,7 +424,7 @@ model family_nodes {
   family_groups      family_groups?        @relation(fields: [family_group_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
   family_nodes       family_nodes?         @relation("family_nodesTofamily_nodes", fields: [parent_id], references: [id], onUpdate: NoAction)
   other_family_nodes family_nodes[]        @relation("family_nodesTofamily_nodes")
-  users              users?         @relation(fields: [user_id], references: [id], onUpdate: NoAction)
+  legacy_users              legacy_users?         @relation(fields: [user_id], references: [id], onUpdate: NoAction)
 
   @@index([path], map: "idx_family_path", type: Gist)
   @@schema("public")
@@ -449,7 +449,7 @@ model file_assets {
   updated_at               DateTime                   @default(now())
   donation_receipts        donation_receipts?
   organizations            organizations              @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  users                    users?              @relation(fields: [uploaded_by_id], references: [id], onUpdate: NoAction)
+  legacy_users                    legacy_users?              @relation(fields: [uploaded_by_id], references: [id], onUpdate: NoAction)
   grant_milestones         grant_milestones[]
   library_items            library_items?
   library_versions         library_versions[]
@@ -563,8 +563,8 @@ model guidance_assignments {
   status                                       guidance_status_enum? @default(ACTIVE)
   created_at                                   DateTime?             @default(now())
   updated_at                                   DateTime?             @default(now())
-  users_guidance_assignments_guide_idTousers   users          @relation("guidance_assignments_guide_idTousers", fields: [guide_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  users_guidance_assignments_student_idTousers users          @relation("guidance_assignments_student_idTousers", fields: [student_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users_guidance_assignments_guide_idTolegacy_users   legacy_users          @relation("guidance_assignments_guide_idTolegacy_users", fields: [guide_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users_guidance_assignments_student_idTolegacy_users legacy_users          @relation("guidance_assignments_student_idTolegacy_users", fields: [student_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   guidance_sessions                            guidance_sessions[]
 
   @@unique([guide_id, student_id, assignment_type], map: "guidance_unique")
@@ -594,8 +594,8 @@ model journal_entries {
   deleted_at                                  DateTime?
   created_at                                  DateTime?                @default(now())
   updated_at                                  DateTime?                @default(now())
-  users_journal_entries_approved_by_idTousers users?            @relation("journal_entries_approved_by_idTousers", fields: [approved_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  users_journal_entries_created_by_idTousers  users?            @relation("journal_entries_created_by_idTousers", fields: [created_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users_journal_entries_approved_by_idTolegacy_users legacy_users?            @relation("journal_entries_approved_by_idTolegacy_users", fields: [approved_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users_journal_entries_created_by_idTolegacy_users  legacy_users?            @relation("journal_entries_created_by_idTolegacy_users", fields: [created_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   organizations                               organizations            @relation(fields: [org_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   transactions                                transactions?            @relation(fields: [transaction_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   journal_lines                               journal_lines[]
@@ -676,7 +676,7 @@ model legal_documents {
   created_at                  DateTime                      @default(now())
   updated_at                  DateTime                      @default(now())
   document_versions           document_versions[]
-  users                       users?                 @relation(fields: [created_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  legacy_users                       legacy_users?                 @relation(fields: [created_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   organizations               organizations                 @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
   secure_share_link_documents secure_share_link_documents[]
 
@@ -689,7 +689,7 @@ model library_downloads {
   library_item_id String        @db.Uuid
   downloaded_at   DateTime      @default(now())
   library_items   library_items @relation(fields: [library_item_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  users           users? @relation(fields: [user_id], references: [id], onUpdate: NoAction)
+  legacy_users           legacy_users? @relation(fields: [user_id], references: [id], onUpdate: NoAction)
 
   @@schema("public")
 }
@@ -720,7 +720,7 @@ model library_items {
   communication_logs                 communication_logs[]
   donation_receipts                  donation_receipts[]
   library_downloads                  library_downloads[]
-  users                              users?                        @relation(fields: [created_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  legacy_users                              legacy_users?                        @relation(fields: [created_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   file_assets                        file_assets                          @relation(fields: [file_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   organizations                      organizations                        @relation(fields: [org_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   subscription_tiers                 subscription_tiers?                  @relation(fields: [required_tier], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -806,7 +806,7 @@ model org_members {
   created_at      DateTime?         @default(now())
   updated_at      DateTime?         @default(now())
   organizations   organizations     @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  users           users      @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  legacy_users           legacy_users      @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   payroll_records payroll_records[]
 
   @@schema("public")
@@ -1068,7 +1068,7 @@ model sources {
   @@schema("public")
 }
 
-model spiritual_profiles {
+model legacy_spiritual_profiles {
   user_id              String              @id @db.Uuid
   age_group            age_group_enum?
   life_stage           life_stage_enum?
@@ -1083,7 +1083,7 @@ model spiritual_profiles {
   created_at           DateTime            @default(now())
   updated_at           DateTime            @default(now())
   subscription_tiers   subscription_tiers? @relation(fields: [subscription_tier_id], references: [id], onUpdate: NoAction)
-  users                users               @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  legacy_users                legacy_users               @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@map("spiritual_profiles")
   @@schema("public")
@@ -1099,7 +1099,7 @@ model spiritual_vows {
   end_date    DateTime?        @db.Date
   created_at  DateTime?        @default(now())
   updated_at  DateTime?        @default(now())
-  users       users     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  legacy_users       legacy_users     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@schema("public")
 }
@@ -1114,7 +1114,7 @@ model subscription_tiers {
   updated_at              DateTime                    @default(now())
   communication_campaigns communication_campaigns[]
   library_items           library_items[]
-  spiritual_profiles      spiritual_profiles[]
+  legacy_spiritual_profiles      legacy_spiritual_profiles[]
   organizations           organizations               @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@schema("public")
@@ -1131,9 +1131,9 @@ model support_tickets {
   assigned_to_id                              String?             @db.Uuid
   created_at                                  DateTime?           @default(now())
   updated_at                                  DateTime?           @default(now())
-  users_support_tickets_assigned_to_idTousers users?              @relation("support_tickets_assigned_to_idTousers", fields: [assigned_to_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users_support_tickets_assigned_to_idTolegacy_users legacy_users?              @relation("support_tickets_assigned_to_idTolegacy_users", fields: [assigned_to_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   organizations                               organizations       @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  users_support_tickets_user_idTousers        users?              @relation("support_tickets_user_idTousers", fields: [user_id], references: [id], onUpdate: NoAction)
+  users_support_tickets_user_idTolegacy_users        legacy_users?              @relation("support_tickets_user_idTolegacy_users", fields: [user_id], references: [id], onUpdate: NoAction)
 
   @@schema("public")
 }
@@ -1262,13 +1262,13 @@ model transactions {
   journal_entries                                                            journal_entries[]
   payment_records                                                            payment_records?
   payroll_records                                                            payroll_records[]
-  users_transactions_approved_by_idTousers                                   users?            @relation("transactions_approved_by_idTousers", fields: [approved_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users_transactions_approved_by_idTolegacy_users                                   legacy_users?            @relation("transactions_approved_by_idTolegacy_users", fields: [approved_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   donation_causes                                                            donation_causes?         @relation(fields: [cause_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   financial_accounts_transactions_destination_account_idTofinancial_accounts financial_accounts?      @relation("transactions_destination_account_idTofinancial_accounts", fields: [destination_account_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   grants                                                                     grants?                  @relation(fields: [grant_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   organizations                                                              organizations            @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
   projects                                                                   projects?                @relation(fields: [project_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  users_transactions_recorded_by_idTousers                                   users                    @relation("transactions_recorded_by_idTousers", fields: [recorded_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users_transactions_recorded_by_idTolegacy_users                                   legacy_users                    @relation("transactions_recorded_by_idTolegacy_users", fields: [recorded_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   financial_accounts_transactions_source_account_idTofinancial_accounts      financial_accounts?      @relation("transactions_source_account_idTofinancial_accounts", fields: [source_account_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@index([cause_id], map: "idx_transactions_cause")
@@ -1285,27 +1285,27 @@ model user_curve_progress {
   completed_at         DateTime?
   learning_curve_steps learning_curve_steps? @relation(fields: [current_step_id], references: [id], onUpdate: NoAction)
   learning_curves      learning_curves       @relation(fields: [curve_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  users                users          @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  legacy_users                legacy_users          @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@unique([user_id, curve_id], map: "user_curve_unique")
   @@schema("public")
 }
 
-model user_preferences {
+model legacy_user_preferences {
   user_id            String   @id @db.Uuid
   notification_prefs Json?    @default("{\"sms\": false, \"email\": true, \"whatsapp\": false}")
   metadata           Json?    @default("{}")
   notes              String?
   created_at         DateTime @default(now())
   updated_at         DateTime @default(now())
-  users              users    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  legacy_users              legacy_users    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@map("user_preferences")
   @@schema("public")
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-model user_profiles {
+model legacy_user_profiles {
   user_id         String          @id @db.Uuid
   full_name       String?
   phone_number    String?
@@ -1319,26 +1319,26 @@ model user_profiles {
   pin_code        String?
   created_at      DateTime        @default(now())
   updated_at      DateTime        @default(now())
-  users           users           @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  legacy_users           legacy_users           @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@map("user_profiles")
   @@schema("public")
 }
 
-model user_statistics {
+model legacy_user_statistics {
   user_id             String    @id @db.Uuid
   nodes_read_count    Int?      @default(0)
   courses_completed   Int?      @default(0)
   contribution_points Int?      @default(0)
   updated_at          DateTime? @default(now())
-  users               users     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  legacy_users               legacy_users     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@map("user_statistics")
   @@schema("public")
 }
 
-model users {
-  id                                                          String                     @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+model legacy_users {
+  id                                                                 String                     @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   email                                                       String                     @unique
   password                                                    String?
   is_online                                                   Boolean?                   @default(true)
@@ -1363,31 +1363,31 @@ model users {
   compliance_tasks                                            compliance_tasks[]
   contributions                                               contributions[]
   document_versions                                           document_versions[]
-  donation_receipts_donation_receipts_issued_by_idTousers     donation_receipts[]        @relation("donation_receipts_issued_by_idTousers")
-  donation_receipts_donation_receipts_user_idTousers          donation_receipts[]        @relation("donation_receipts_user_idTousers")
+  donation_receipts_donation_receipts_issued_by_idTolegacy_users     donation_receipts[]        @relation("donation_receipts_issued_by_idTolegacy_users")
+  donation_receipts_donation_receipts_user_idTolegacy_users          donation_receipts[]        @relation("donation_receipts_user_idTolegacy_users")
   event_registrations                                         event_registrations[]
-  family_links_family_links_related_idTousers                 family_links[]             @relation("family_links_related_idTousers")
-  family_links_family_links_user_idTousers                    family_links[]             @relation("family_links_user_idTousers")
+  family_links_family_links_related_idTolegacy_users                 family_links[]             @relation("family_links_related_idTolegacy_users")
+  family_links_family_links_user_idTolegacy_users                    family_links[]             @relation("family_links_user_idTolegacy_users")
   family_nodes                                                family_nodes[]
   file_assets                                                 file_assets[]
-  guidance_assignments_guidance_assignments_guide_idTousers   guidance_assignments[]     @relation("guidance_assignments_guide_idTousers")
-  guidance_assignments_guidance_assignments_student_idTousers guidance_assignments[]     @relation("guidance_assignments_student_idTousers")
-  journal_entries_journal_entries_approved_by_idTousers       journal_entries[]          @relation("journal_entries_approved_by_idTousers")
-  journal_entries_journal_entries_created_by_idTousers        journal_entries[]          @relation("journal_entries_created_by_idTousers")
+  guidance_assignments_guidance_assignments_guide_idTolegacy_users   guidance_assignments[]     @relation("guidance_assignments_guide_idTolegacy_users")
+  guidance_assignments_guidance_assignments_student_idTolegacy_users guidance_assignments[]     @relation("guidance_assignments_student_idTolegacy_users")
+  journal_entries_journal_entries_approved_by_idTolegacy_users       journal_entries[]          @relation("journal_entries_approved_by_idTolegacy_users")
+  journal_entries_journal_entries_created_by_idTolegacy_users        journal_entries[]          @relation("journal_entries_created_by_idTolegacy_users")
   legal_documents                                             legal_documents[]
   library_downloads                                           library_downloads[]
   library_items                                               library_items[]
   org_members                                                 org_members[]
-  spiritual_profiles                                          spiritual_profiles?
+  legacy_spiritual_profiles                                          legacy_spiritual_profiles?
   spiritual_vows                                              spiritual_vows[]
-  support_tickets_support_tickets_assigned_to_idTousers       support_tickets[]          @relation("support_tickets_assigned_to_idTousers")
-  support_tickets_support_tickets_user_idTousers              support_tickets[]          @relation("support_tickets_user_idTousers")
-  transactions_transactions_approved_by_idTousers             transactions[]             @relation("transactions_approved_by_idTousers")
-  transactions_transactions_recorded_by_idTousers             transactions[]             @relation("transactions_recorded_by_idTousers")
+  support_tickets_support_tickets_assigned_to_idTolegacy_users       support_tickets[]          @relation("support_tickets_assigned_to_idTolegacy_users")
+  support_tickets_support_tickets_user_idTolegacy_users              support_tickets[]          @relation("support_tickets_user_idTolegacy_users")
+  transactions_transactions_approved_by_idTolegacy_users             transactions[]             @relation("transactions_approved_by_idTolegacy_users")
+  transactions_transactions_recorded_by_idTolegacy_users             transactions[]             @relation("transactions_recorded_by_idTolegacy_users")
   user_curve_progress                                         user_curve_progress[]
-  user_preferences                                            user_preferences?
-  user_profiles                                               user_profiles?
-  user_statistics                                             user_statistics?
+  legacy_user_preferences                                            legacy_user_preferences?
+  legacy_user_profiles                                               legacy_user_profiles?
+  legacy_user_statistics                                             legacy_user_statistics?
   vedic_events                                                vedic_events[]
 
   @@map("users")
@@ -1422,7 +1422,7 @@ model vedic_events {
   created_at          DateTime              @default(now())
   updated_at          DateTime              @default(now())
   event_registrations event_registrations[]
-  users               users                 @relation(fields: [host_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  legacy_users               legacy_users                 @relation(fields: [host_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@schema("public")
 }

@@ -1,13 +1,16 @@
 import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
+import { apiFetch } from '@/lib/api'
 
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    console.log('🌉 BRIDGE: ATTEMPTING GATEWAY LOGIN', { url: 'http://localhost:4444/auth/login', bodySize: JSON.stringify(body).length })
-    const response = await fetch(`http://localhost:4444/auth/login`, {
+    console.log('🌉 BRIDGE: ATTEMPTING GATEWAY LOGIN', { 
+      baseUrl: process.env.API_GATEWAY_URL || 'http://localhost:4444',
+      bodySize: JSON.stringify(body).length 
+    })
+    const response = await apiFetch('/auth/login', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     })
 

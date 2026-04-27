@@ -4,6 +4,7 @@ import React, { useEffect, useState, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { Loader2, CheckCircle2, AlertCircle, Sparkles } from 'lucide-react'
 import Link from 'next/link'
+import { apiFetch } from '@/lib/api'
 
 function VerifyContent() {
   const searchParams = useSearchParams()
@@ -21,9 +22,8 @@ function VerifyContent() {
 
     const verify = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4444'}/auth/verify-email`, {
+        const res = await apiFetch('/auth/verify-email', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ token })
         })
 

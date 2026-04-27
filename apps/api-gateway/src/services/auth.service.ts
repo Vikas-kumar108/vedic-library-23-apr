@@ -12,7 +12,9 @@ export class AuthService {
   constructor(
     private prisma: PrismaClient,
     private emailService?: InstitutionalEmailService
-  ) { }
+  ) { 
+    console.log("DB URL:", process.env.DATABASE_URL)
+  }
 
   /**
    * [IDENTITY MIGRATION GATEWAY]
@@ -22,12 +24,10 @@ export class AuthService {
     const isIdentityEnabled = process.env.IDENTITY_SCHEMA_ENABLED === 'true';
 
     if (isIdentityEnabled) {
-      return (this.prisma as unknown as {
-        identity_users: typeof this.prisma.users;
-      }).identity_users;
+      return this.prisma.users;
     }
 
-    return this.prisma.users;
+    return (this.prisma as any).legacy_users;
   }
 
   /**
@@ -38,42 +38,34 @@ export class AuthService {
     const isIdentityEnabled = process.env.IDENTITY_SCHEMA_ENABLED === 'true';
 
     if (isIdentityEnabled) {
-      return (this.prisma as unknown as {
-        identity_user_profiles: typeof this.prisma.user_profiles;
-      }).identity_user_profiles;
+      return this.prisma.user_profiles;
     }
 
-    return this.prisma.user_profiles;
+    return (this.prisma as any).legacy_user_profiles;
   }
 
   private get preferenceStore() {
     const isIdentityEnabled = process.env.IDENTITY_SCHEMA_ENABLED === 'true';
     if (isIdentityEnabled) {
-      return (this.prisma as unknown as {
-        identity_user_preferences: typeof this.prisma.user_preferences;
-      }).identity_user_preferences;
+      return this.prisma.user_preferences;
     }
-    return this.prisma.user_preferences;
+    return (this.prisma as any).legacy_user_preferences;
   }
 
   private get spiritualProfileStore() {
     const isIdentityEnabled = process.env.IDENTITY_SCHEMA_ENABLED === 'true';
     if (isIdentityEnabled) {
-      return (this.prisma as unknown as {
-        identity_spiritual_profiles: typeof this.prisma.spiritual_profiles;
-      }).identity_spiritual_profiles;
+      return this.prisma.spiritual_profiles;
     }
-    return this.prisma.spiritual_profiles;
+    return (this.prisma as any).legacy_spiritual_profiles;
   }
 
   private get statisticsStore() {
     const isIdentityEnabled = process.env.IDENTITY_SCHEMA_ENABLED === 'true';
     if (isIdentityEnabled) {
-      return (this.prisma as unknown as {
-        identity_user_statistics: typeof this.prisma.user_statistics;
-      }).identity_user_statistics;
+      return this.prisma.user_statistics;
     }
-    return this.prisma.user_statistics;
+    return (this.prisma as any).legacy_user_statistics;
   }
 
   async register(data: any) {
@@ -367,7 +359,7 @@ export class AuthService {
 
       // [SHADOW READ]: Consistency check for identity migration
       if (process.env.IDENTITY_SCHEMA_ENABLED !== 'true') {
-        const identityUser = await (this.prisma as any).identity_users?.findUnique({
+        const identityUser = await (this.prisma as any).users?.findUnique({
           where: { id: user.id },
           include: { spiritual_profiles: true }
         }).catch(() => null)

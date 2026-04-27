@@ -9,17 +9,17 @@ export class AcademyService {
   private get userStore() {
     const isIdentityEnabled = process.env.IDENTITY_SCHEMA_ENABLED === 'true';
     if (isIdentityEnabled) {
-      return (this.prisma as any).identity_users;
+      return this.prisma.users;
     }
-    return (this.prisma as any).users;
+    return (this.prisma as any).legacy_users;
   }
 
   private get profileStore() {
     const isIdentityEnabled = process.env.IDENTITY_SCHEMA_ENABLED === 'true';
     if (isIdentityEnabled) {
-      return (this.prisma as any).identity_user_profiles;
+      return this.prisma.user_profiles;
     }
-    return (this.prisma as any).user_profiles;
+    return (this.prisma as any).legacy_user_profiles;
   }
 
   /**

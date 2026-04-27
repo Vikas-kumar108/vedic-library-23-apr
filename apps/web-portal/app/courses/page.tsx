@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { BookOpen, GraduationCap, Clock, ArrowRight, Star, Loader2 } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import { apiFetch } from "@/lib/api"
 
 const FALLBACK_COURSES = [
   {
@@ -37,7 +38,7 @@ export default function CoursesPage() {
   useEffect(() => {
     async function fetchCourses() {
       try {
-        const res = await fetch('http://localhost:4444/academy/courses')
+        const res = await apiFetch('/academy/courses')
         const data = await res.json()
         
         if (data && data.length > 0) {

@@ -8,20 +8,20 @@ export class DiscoveryRepository {
    */
   private get userStore() {
     const isIdentityEnabled = process.env.IDENTITY_SCHEMA_ENABLED === 'true';
-    if (isIdentityEnabled) return (this.prisma as any).identity_users;
-    return (this.prisma as any).users;
+    if (isIdentityEnabled) return this.prisma.users;
+    return (this.prisma as any).legacy_users;
   }
 
   private get spiritualProfileStore() {
     const isIdentityEnabled = process.env.IDENTITY_SCHEMA_ENABLED === 'true';
-    if (isIdentityEnabled) return (this.prisma as any).identity_spiritual_profiles;
-    return (this.prisma as any).spiritual_profiles;
+    if (isIdentityEnabled) return this.prisma.spiritual_profiles;
+    return (this.prisma as any).legacy_spiritual_profiles;
   }
 
   private get statisticsStore() {
     const isIdentityEnabled = process.env.IDENTITY_SCHEMA_ENABLED === 'true';
-    if (isIdentityEnabled) return (this.prisma as any).identity_user_statistics;
-    return (this.prisma as any).user_statistics;
+    if (isIdentityEnabled) return this.prisma.user_statistics;
+    return (this.prisma as any).legacy_user_statistics;
   }
 
   async getUserContext(userId: string) {

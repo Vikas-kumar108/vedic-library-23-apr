@@ -24,9 +24,9 @@ export class BroadcastService {
   private get userStore() {
     const isIdentityEnabled = process.env.IDENTITY_SCHEMA_ENABLED === 'true';
     if (isIdentityEnabled) {
-      return (this.prisma as any).identity_users;
+      return this.prisma.users;
     }
-    return (this.prisma as any).users;
+    return (this.prisma as any).legacy_users;
   }
 
   async broadcastWisdom(contentId: string, criteria: BroadcastCriteria) {

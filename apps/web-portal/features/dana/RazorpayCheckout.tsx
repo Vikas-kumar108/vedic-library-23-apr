@@ -19,6 +19,8 @@ import {
 import { CheckCircle, IndianRupee, CreditCard, Shield, Loader2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
+import { apiFetch } from "@/lib/api"
+
 declare global {
   interface Window {
     Razorpay: any
@@ -102,9 +104,8 @@ export function RazorpayCheckout() {
     setIsProcessing(true)
     try {
       // 1. Create real order on our gateway
-      const orderResponse = await fetch("http://localhost:4444/institutional/dana/orders", {
+      const orderResponse = await apiFetch("/institutional/dana/orders", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       })
 
@@ -122,9 +123,8 @@ export function RazorpayCheckout() {
         description: "Contribution to Sacred Mission",
         order_id: order.id,
         handler: async (response: any) => {
-          const verifyResponse = await fetch("http://localhost:4444/institutional/dana/verify", {
+          const verifyResponse = await apiFetch("/institutional/dana/verify", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(response),
           })
           if (verifyResponse.ok) setIsSuccess(true)

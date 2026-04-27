@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
+import { apiFetch } from '@/lib/api'
 
 export async function GET() {
   try {
@@ -10,7 +11,7 @@ export async function GET() {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const response = await fetch(`${process.env.API_GATEWAY_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4444'}/auth/me`, {
+    const response = await apiFetch('/auth/me', {
       headers: {
         'Authorization': `Bearer ${token}`
       }

@@ -19,6 +19,8 @@ import {
 import { CheckCircle, IndianRupee, Loader2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
+import { apiFetch } from "@/lib/api"
+
 const donationSchema = z.object({
   donorName: z.string().min(2, "Name must be at least 2 characters"),
   donorEmail: z.string().email("Please enter a valid email"),
@@ -87,9 +89,8 @@ export function DonationForm({ selectedMethod }: DonationFormProps) {
   const onSubmit = async (data: DonationFormData) => {
     try {
       // --- CONNECTING TO REAL INSTITUTIONAL GATEWAY ---
-      const response = await fetch("http://localhost:4444/institutional/dana/verify", {
+      const response = await apiFetch("/institutional/dana/verify", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...data,
           paymentMode: 'MANUAL',

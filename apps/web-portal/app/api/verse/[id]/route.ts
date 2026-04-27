@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import prisma from '@/lib/prisma'
 import { Verse, Commentary, LanguageKey } from '@/lib/types'
+import { apiFetch } from '@/lib/api'
 
 export async function GET(
   request: NextRequest,
@@ -14,9 +15,8 @@ export async function GET(
 
   try {
     const authHeader = request.headers.get('authorization')
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4444'
     
-    const res = await fetch(`${apiUrl}/library/verse/${id}`, { 
+    const res = await apiFetch(`/library/verse/${id}`, { 
       cache: 'no-store',
       headers: authHeader ? { 'Authorization': authHeader } : {}
     })

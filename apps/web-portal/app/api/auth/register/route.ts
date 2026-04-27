@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server'
+import { apiFetch } from '@/lib/api'
 
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    const response = await fetch(`http://localhost:4444/auth/register`, {
+    const response = await apiFetch('/auth/register', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     })
 

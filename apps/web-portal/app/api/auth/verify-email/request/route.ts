@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server'
+import { apiFetch } from '@/lib/api'
 
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    const response = await fetch(`${process.env.API_GATEWAY_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4444'}/auth/resend-verification`, {
+    const response = await apiFetch('/auth/resend-verification', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     })
 

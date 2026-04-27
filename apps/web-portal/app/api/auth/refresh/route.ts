@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
+import { apiFetch } from '@/lib/api'
 
 export async function POST() {
   try {
@@ -10,9 +11,8 @@ export async function POST() {
       return NextResponse.json({ error: 'No refresh token' }, { status: 401 })
     }
 
-    const response = await fetch(`${process.env.API_GATEWAY_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4444'}/auth/refresh`, {
+    const response = await apiFetch('/auth/refresh', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ token: refreshToken }),
     })
 
