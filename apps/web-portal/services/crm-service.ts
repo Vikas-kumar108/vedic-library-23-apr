@@ -12,27 +12,23 @@ export class CRMService {
    * Fetches every connection for a member across 16 categories.
    */
   static async getDeepMember(userId: string) {
-    return await prisma.user.findUnique({
+    return await prisma.users.findUnique({
       where: { id: userId },
       include: {
-        familyLinks: {
+        family_links_as_user: {
           include: { related: true }
         },
-        relatedTo: {
+        family_links_as_related: {
           include: { user: true }
         },
         contributions: {
-          include: { project: true },
-          orderBy: { date: 'desc' }
+          include: { projects: true },
+          orderBy: { created_at: 'desc' }
         },
-        benefits: {
-          orderBy: { date: 'desc' }
-        },
-        subscriptionTier: true,
-        journeyStage: true,
-        hostedEvents: true,
-        eventRegistrations: {
-          include: { event: true }
+        organizations: true,
+        vedic_events: true,
+        event_registrations: {
+          include: { vedic_events: true }
         }
       }
     })
@@ -43,17 +39,17 @@ export class CRMService {
    * Links Projects to their financial and social outcomes.
    */
   static async getProjectTransparency(projectId: string) {
-    return await prisma.project.findUnique({
+    return await prisma.projects.findUnique({
       where: { id: projectId },
       include: {
         contributions: {
-          include: { user: true }
+          include: { users: true }
         },
-        expenses: {
-          orderBy: { date: 'desc' }
+        transactions: {
+          orderBy: { created_at: 'desc' }
         },
-        activityLogs: {
-          orderBy: { date: 'desc' }
+        activity_logs: {
+          orderBy: { created_at: 'desc' }
         }
       }
     })
@@ -64,17 +60,13 @@ export class CRMService {
    * Fetches campaigns with their target segments and reach.
    */
   static async getCampaignAnalytics() {
-    return await prisma.communicationCampaign.findMany({
+    return await prisma.communication_campaigns.findMany({
       include: {
-        targetTier: {
-          include: {
-            _count: {
-              select: { users: true }
-            }
-          }
+        _count: {
+          select: { communication_logs: true }
         }
       },
-      orderBy: { createdAt: 'desc' }
+      orderBy: { created_at: 'desc' }
     })
   }
 
@@ -84,17 +76,17 @@ export class CRMService {
    */
   static async universalSearch(query: string) {
     const [users, projects] = await Promise.all([
-      prisma.user.findMany({
+      prisma.users.findMany({
         where: {
           OR: [
-            { full_name: { contains: query, mode: 'insensitive' } },
             { email: { contains: query, mode: 'insensitive' } },
-            { village: { contains: query, mode: 'insensitive' } }
+            { profile: { full_name: { contains: query, mode: 'insensitive' } } },
+            { profile: { village: { contains: query, mode: 'insensitive' } } }
           ]
         },
         take: 10
       }),
-      prisma.project.findMany({
+      prisma.projects.findMany({
         where: {
           OR: [
             { name: { contains: query, mode: 'insensitive' } },

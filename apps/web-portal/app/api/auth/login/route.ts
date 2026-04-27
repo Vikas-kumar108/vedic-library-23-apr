@@ -6,7 +6,7 @@ export async function POST(request: Request) {
   try {
     const body = await request.json()
     console.log('🌉 BRIDGE: ATTEMPTING GATEWAY LOGIN', { 
-      baseUrl: process.env.API_GATEWAY_URL || 'http://localhost:4444',
+      baseUrl: process.env.API_GATEWAY_URL || 'http://localhost:4000',
       bodySize: JSON.stringify(body).length 
     })
     const response = await apiFetch('/auth/login', {

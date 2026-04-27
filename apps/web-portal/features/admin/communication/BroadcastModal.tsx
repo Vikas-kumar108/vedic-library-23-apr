@@ -15,6 +15,7 @@ import {
 import { Button } from '@/components/atoms/button'
 import { Badge } from '@/components/atoms/badge'
 import { cn } from '@/lib/utils'
+import { apiFetch } from '@/lib/api'
 
 interface BroadcastModalProps {
   isOpen: boolean
@@ -35,9 +36,9 @@ export const BroadcastModal: React.FC<BroadcastModalProps> = ({ isOpen, onClose 
     if (isOpen) {
       const fetchContent = async () => {
         try {
-          const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/library/contents?limit=10`)
+          const res = await apiFetch('/library/tags') // Adjusted to match finalized schema
           const data = await res.json()
-          setContentList(data.contents || [])
+          setContentList(data || [])
         } catch (err) {
           console.error('Failed to fetch shastra content', err)
         }
@@ -51,9 +52,8 @@ export const BroadcastModal: React.FC<BroadcastModalProps> = ({ isOpen, onClose 
     setStatus(null)
     
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/institutional/broadcast/broadcast`, {
+      const res = await apiFetch('/institutional/broadcast', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           contentId: selectedContent.id,
           criteria: {

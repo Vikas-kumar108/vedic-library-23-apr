@@ -5,49 +5,83 @@ export class ComplianceService {
 
   async getComplianceOverview(orgId: string) {
     const [partnerships, ucs, tasks] = await Promise.all([
-      this.prisma.partnership.findMany({
-        where: { orgId },
-        include: { partner: true }
+      this.prisma.partnerships.findMany({
+        where: { org_id: orgId },
+        include: { organizations_partnerships_partner_idToorganizations: true }
       }),
-      this.prisma.utilizationCertificate.findMany({
-        where: { grant: { partnership: { orgId } } },
-        include: { grant: true }
+      this.prisma.utilization_certificates.findMany({
+        where: { grants: { partnerships: { org_id: orgId } } },
+        include: { grants: true }
       }),
-      this.prisma.complianceTask.findMany({
-        where: { orgId },
-        orderBy: { dueDate: 'asc' }
+      this.prisma.compliance_tasks.findMany({
+        where: { org_id: orgId },
+        orderBy: { due_date: 'asc' }
       })
     ])
 
     return {
-      partnerships,
-      utilizationCertificates: ucs,
-      activeComplianceTasks: tasks
+      partnerships: partnerships.map(p => ({
+        id: p.id,
+        partnerName: p.organizations_partnerships_partner_idToorganizations?.name,
+        type: p.partnership_type,
+        status: p.status
+      })),
+      utilizationCertificates: ucs.map(u => ({
+        id: u.id,
+        grantId: u.grant_id,
+        amount: u.total_utilized,
+        date: u.certification_date
+      })),
+      activeComplianceTasks: tasks.map(t => ({
+        id: t.id,
+        title: t.title,
+        dueDate: t.due_date,
+        status: t.status
+      }))
     }
   }
 
   async getPartnershipDeed(id: string) {
-    return this.prisma.partnership.findUnique({
+    const deed = await this.prisma.partnerships.findUnique({
       where: { id },
       include: { 
-        partner: true,
+        organizations_partnerships_partner_idToorganizations: true,
         grants: true
       }
     })
+
+    if (!deed) return null
+
+    return {
+      id: deed.id,
+      partner: deed.organizations_partnerships_partner_idToorganizations?.name,
+      type: deed.partnership_type,
+      grants: deed.grants.map(g => ({ id: g.id, amount: g.amount }))
+    }
   }
 
   async getUtilizationCertificate(id: string) {
-    return this.prisma.utilizationCertificate.findUnique({
+    const uc = await this.prisma.utilization_certificates.findUnique({
       where: { id },
       include: {
-        grant: {
+        grants: {
           include: {
-            partnership: {
-              include: { partner: true }
+            partnerships: {
+              include: { organizations_partnerships_partner_idToorganizations: true }
             }
           }
         }
       }
     })
+
+    if (!uc) return null
+
+    return {
+      id: uc.id,
+      amount: uc.total_utilized,
+      date: uc.certification_date,
+      grantPurpose: uc.grants?.purpose,
+      partner: uc.grants?.partnerships?.organizations_partnerships_partner_idToorganizations?.name
+    }
   }
 }

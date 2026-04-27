@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { ArrowRight, Eye, EyeOff, Chrome, Loader2, AlertCircle, CheckCircle2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useAuth } from '../hooks/useAuth'
+import { RegisterInput } from '@dharma/contracts'
 
 export function SignupForm() {
   const { register } = useAuth()
@@ -27,6 +28,10 @@ export function SignupForm() {
     setError(null)
     
     try {
+      // 1. Validate against Shared Contract
+      RegisterInput.parse(form)
+
+      // 2. Execute Registration
       const isOk = await register(form)
       if (isOk) {
         setSuccess(true)

@@ -4,6 +4,7 @@ import { InstitutionalService } from '../services/institutional.service'
 import { AssetService } from '../services/asset.service'
 import { HumanCapitalService } from '../services/human-capital.service'
 import { IntegrationService } from '../services/integration.service'
+import { z } from 'zod'
 import { createWisdomModule } from '../modules/knowledge/wisdom'
 import { WisdomContext } from '../modules/knowledge/wisdom/wisdom-engine.service'
 import { OrgParamsSchema, LedgerQuerySchema, CreateAssetSchema } from '../schemas/institutional.schema'
@@ -84,10 +85,16 @@ export default async function institutionalRoutes(fastify: FastifyInstance) {
   })
 
   // 7. Vedic Wisdom Pulse
-  typedFastify.get('/wisdom/pulse', async (request) => {
+  typedFastify.get('/wisdom/pulse', {
+    schema: { 
+      querystring: z.object({ 
+        context: z.enum(['GOVERNANCE', 'LEADERSHIP', 'STEWARDSHIP']).default('GOVERNANCE') 
+      }) 
+    }
+  }, async (request) => {
     const { service } = createWisdomModule(request.server.prisma)
-    const { context } = request.query as { context: WisdomContext }
-    return await service.getWisdomPulse(context || 'GOVERNANCE')
+    const { context } = request.query
+    return await service.getWisdomPulse(context as any)
   })
 
   // 8. Content Inventory & Health

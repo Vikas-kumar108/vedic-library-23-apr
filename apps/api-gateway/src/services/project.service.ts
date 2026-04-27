@@ -8,10 +8,10 @@ export class ProjectService {
    * Get all active institutional projects with budget stats
    */
   async getInstitutionalBlueprint(orgId: string) {
-    const projects = await this.prisma.project.findMany({
-      where: { orgId },
+    const projects = await this.prisma.projects.findMany({
+      where: { org_id: orgId },
       include: {
-        grantAllocations: true,
+        grant_allocations: true,
         transactions: {
           select: {
             amount: true,
@@ -20,7 +20,7 @@ export class ProjectService {
         },
         project_budget_lines: true
       },
-      orderBy: { createdAt: 'desc' }
+      orderBy: { created_at: 'desc' }
     })
 
     return projects.map(p => {
@@ -28,11 +28,14 @@ export class ProjectService {
         .filter(t => t.type === 'EXPENSE')
         .reduce((sum, t) => sum.add(t.amount as Decimal), new Decimal(0))
       
-      const budget = p.totalBudget as Decimal
+      const budget = p.total_budget as Decimal
       const progress = budget.isZero() ? 0 : utilized.dividedBy(budget).mul(100).toNumber()
 
       return {
-        ...p,
+        id: p.id,
+        name: p.name,
+        description: p.description,
+        status: p.status,
         stats: {
           totalBudget: budget,
           utilizedAmount: utilized,
@@ -53,13 +56,13 @@ export class ProjectService {
     totalBudget: number
     causeId?: string
   }) {
-    return this.prisma.project.create({
+    return this.prisma.projects.create({
       data: {
-        orgId: data.orgId,
+        org_id: data.orgId,
         name: data.name,
         description: data.description,
-        totalBudget: new Decimal(data.totalBudget),
-        causeId: data.causeId,
+        total_budget: new Decimal(data.totalBudget),
+        cause_id: data.causeId,
         status: 'ACTIVE'
       }
     })
@@ -76,10 +79,10 @@ export class ProjectService {
     category: string
     images?: string[]
   }) {
-    return this.prisma.activityLog.create({
+    return this.prisma.activity_logs.create({
       data: {
-        orgId: data.orgId,
-        projectId: data.projectId,
+        org_id: data.orgId,
+        project_id: data.projectId,
         title: data.title,
         description: data.description,
         category: data.category,

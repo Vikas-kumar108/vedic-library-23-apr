@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { ArrowRight, Eye, EyeOff, Chrome, Loader2, AlertCircle } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useAuth } from '../hooks/useAuth'
+import { LoginInput } from '@dharma/contracts'
 
 export function LoginForm() {
   const { login } = useAuth()
@@ -27,6 +28,9 @@ export function LoginForm() {
     setError(null)
     
     try {
+      // 1. Validate against Shared Contract
+      LoginInput.parse(form)
+
       const success = await login(form)
       if (!success) {
          setError("Invalid credentials. Please verify your access details.")

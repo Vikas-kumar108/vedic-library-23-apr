@@ -12,60 +12,26 @@ export class AuthService {
   constructor(
     private prisma: PrismaClient,
     private emailService?: InstitutionalEmailService
-  ) { 
-    console.log("DB URL:", process.env.DATABASE_URL)
-  }
+  ) { }
 
-  /**
-   * [IDENTITY MIGRATION GATEWAY]
-   * Dynamically resolves the User delegate based on the migration toggle.
-   */
   private get userStore() {
-    const isIdentityEnabled = process.env.IDENTITY_SCHEMA_ENABLED === 'true';
-
-    if (isIdentityEnabled) {
-      return this.prisma.users;
-    }
-
-    return (this.prisma as any).legacy_users;
+    return this.prisma.users;
   }
 
-  /**
-   * [IDENTITY MIGRATION GATEWAY]
-   * Dynamically resolves the Profile delegate based on the migration toggle.
-   */
   private get profileStore() {
-    const isIdentityEnabled = process.env.IDENTITY_SCHEMA_ENABLED === 'true';
-
-    if (isIdentityEnabled) {
-      return this.prisma.user_profiles;
-    }
-
-    return (this.prisma as any).legacy_user_profiles;
+    return this.prisma.user_profiles;
   }
 
   private get preferenceStore() {
-    const isIdentityEnabled = process.env.IDENTITY_SCHEMA_ENABLED === 'true';
-    if (isIdentityEnabled) {
-      return this.prisma.user_preferences;
-    }
-    return (this.prisma as any).legacy_user_preferences;
+    return this.prisma.user_preferences;
   }
 
   private get spiritualProfileStore() {
-    const isIdentityEnabled = process.env.IDENTITY_SCHEMA_ENABLED === 'true';
-    if (isIdentityEnabled) {
-      return this.prisma.spiritual_profiles;
-    }
-    return (this.prisma as any).legacy_spiritual_profiles;
+    return this.prisma.spiritual_profiles;
   }
 
   private get statisticsStore() {
-    const isIdentityEnabled = process.env.IDENTITY_SCHEMA_ENABLED === 'true';
-    if (isIdentityEnabled) {
-      return this.prisma.user_statistics;
-    }
-    return (this.prisma as any).legacy_user_statistics;
+    return this.prisma.user_statistics;
   }
 
   async register(data: any) {
@@ -261,14 +227,10 @@ export class AuthService {
   async login(data: any) {
     const { email, password } = data
 
-    console.log("LOGIN TOGGLE:", process.env.IDENTITY_SCHEMA_ENABLED)
-
     const user = await this.userStore.findUnique({
       where: { email },
-      include: { user_profiles: true }
+      include: { profile: true }
     })
-
-    console.log("USER PASSWORD:", user?.password)
 
     if (!user) {
       throw new Error('Invalid credentials')
@@ -279,8 +241,6 @@ export class AuthService {
     }
 
     const isMatch = await bcrypt.compare(password, user.password || '')
-
-    console.log("PASSWORD MATCH:", isMatch)
 
     if (!isMatch) {
       const failed_attempts = (user.failed_login_attempts || 0) + 1
@@ -334,7 +294,7 @@ export class AuthService {
       user: {
         id: user.id,
         email: user.email,
-        name: user.user_profiles?.full_name,
+        name: user.profile?.full_name,
         roles: user.roles,
         email_verified: user.email_verified,
       }
@@ -347,9 +307,9 @@ export class AuthService {
       const user = await this.userStore.findUnique({
         where: { id: decoded.userId },
         include: { 
-          user_profiles: true,
-          spiritual_profiles: true,
-          user_statistics: true
+          profile: true,
+          spiritual_profile: true,
+          statistics: true
         }
       })
 
@@ -357,41 +317,92 @@ export class AuthService {
         throw new Error('User not found')
       }
 
-      // [SHADOW READ]: Consistency check for identity migration
-      if (process.env.IDENTITY_SCHEMA_ENABLED !== 'true') {
-        const identityUser = await (this.prisma as any).users?.findUnique({
-          where: { id: user.id },
-          include: { spiritual_profiles: true }
-        }).catch(() => null)
-        if (!identityUser) console.warn(`[IDENTITY] Shadow mismatch for ${user.id}`)
-      }
 
       return {
         id: user.id,
         email: user.email,
-        name: user.user_profiles?.full_name,
-        avatar: user.user_profiles?.avatar_url,
+        name: user.profile?.full_name,
+        avatar: user.profile?.avatar_url,
         roles: user.roles,
         email_verified: user.email_verified,
         
         // ✨ Seeker Context: Spiritual Profile
-        spiritual_profile: user.spiritual_profiles ? {
-          life_stage: user.spiritual_profiles.life_stage,
-          inner_state: user.spiritual_profiles.inner_state,
-          eligibility_level: user.spiritual_profiles.eligibility_level,
-          current_focus: user.spiritual_profiles.current_focus,
-          current_primary_node_id: user.spiritual_profiles.current_primary_node_id,
-          last_guided_at: user.spiritual_profiles.last_guided_at
+        spiritual_profile: user.spiritual_profile ? {
+          life_stage: user.spiritual_profile.life_stage,
+          inner_state: user.spiritual_profile.inner_state,
+          eligibility_level: user.spiritual_profile.eligibility_level,
+          current_focus: user.spiritual_profile.current_focus,
+          current_primary_node_id: user.spiritual_profile.current_primary_node_id,
+          last_guided_at: user.spiritual_profile.last_guided_at
         } : null,
-
+        
         // 📈 Seeker Context: Statistics
         statistics: {
-          nodes_read_count: user.user_statistics?.nodes_read_count || 0,
-          courses_completed: user.user_statistics?.courses_completed || 0
+          nodes_read_count: user.statistics?.nodes_read_count || 0,
+          courses_completed: user.statistics?.courses_completed || 0
         }
       }
     } catch (error) {
       throw new Error('Invalid or expired token')
+    }
+  }
+
+  async resendVerificationEmail(email: string) {
+    const user = await this.userStore.findUnique({
+      where: { email },
+    })
+
+    if (!user) throw new Error('User not found')
+    if (user.email_verified) throw new Error('Email already verified')
+
+    const verification_token = crypto.randomBytes(32).toString('hex')
+    await this.userStore.update({
+      where: { id: user.id },
+      data: { verification_token }
+    })
+
+    if (this.emailService) {
+      const verificationLink = `${FRONTEND_URL}/auth/verify?token=${verification_token}`
+      await this.emailService.sendEmail({
+        to: email,
+        subject: 'Resend: Welcome to the Vedic Gurukulam',
+        body: `Please verify your email: ${verification_token}`,
+        html: `<div style="font-family: serif; padding: 40px; border: 1px solid #eee; border-radius: 20px;">
+                <h2 style="color: #9333ea;">Verify Your Identity</h2>
+                <a href="${verificationLink}" style="background: #9333ea; color: white; padding: 12px 24px; text-decoration: none; border-radius: 12px; font-weight: bold; display: inline-block;">
+                  Verify Email
+                </a>
+               </div>`
+      })
+    }
+  }
+
+  async refreshToken(token: string) {
+    try {
+      const decoded = jwt.verify(token, JWT_SECRET, { ignoreExpiration: true }) as any
+      const user = await this.userStore.findUnique({
+        where: { id: decoded.userId }
+      })
+
+      if (!user) throw new Error('User not found')
+
+      const accessToken = jwt.sign(
+        { userId: user.id, email: user.email, roles: user.roles },
+        JWT_SECRET,
+        { expiresIn: '1d' }
+      )
+
+      return {
+        accessToken,
+        user: {
+          id: user.id,
+          email: user.email,
+          name: decoded.name, // Fallback to decoded name if profile not fetched
+          roles: user.roles
+        }
+      }
+    } catch (error) {
+      throw new Error('Invalid token')
     }
   }
 

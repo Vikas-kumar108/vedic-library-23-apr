@@ -10,19 +10,22 @@ export class CommunicationOrchestrator {
    * Dispatches a campaign to the correct audience and channels.
    */
   static async dispatchCampaign(campaignId: string) {
-    const campaign = await prisma.communicationCampaign.findUnique({
+    const campaign = await prisma.communication_campaigns.findUnique({
       where: { id: campaignId },
-      include: { targetTier: true }
+      include: { 
+        subscription_tiers: true,
+        organizations_communication_campaigns_org_idToorganizations: true
+      }
     })
 
     if (!campaign) throw new Error('CAMPAIGN_NOT_FOUND')
 
     // 1. Fetch the Segmented Audience
-    const audience = await prisma.user.findMany({
+    // 1. Fetch the Segmented Audience (Best effort: by organization membership)
+    const audience = await prisma.users.findMany({
       where: {
-        subscriptionTierId: campaign.targetTierId,
-        orgMemberships: {
-          some: { orgId: campaign.orgId } // STRICT TENANT ISOLATION
+        organization_members: {
+          some: { org_id: campaign.org_id } // STRICT TENANT ISOLATION
         }
       }
     })
@@ -34,10 +37,6 @@ export class CommunicationOrchestrator {
           switch (campaign.type) {
             case 'EMAIL':
               return await this.sendEmail(user.email, campaign.content)
-            case 'WHATSAPP':
-              return await this.sendWhatsApp(user.phoneNumber, campaign.content)
-            case 'SMS':
-              return await this.sendSMS(user.phoneNumber, campaign.content)
             case 'PORTAL_NOTICE':
               return await this.sendPortalNotice(user.id, campaign.content)
             default:
@@ -51,11 +50,11 @@ export class CommunicationOrchestrator {
     )
 
     // 3. Record Completion
-    await prisma.communicationCampaign.update({
+    await prisma.communication_campaigns.update({
       where: { id: campaignId },
       data: { 
         status: 'SENT',
-        sentAt: new Date()
+        sent_at: new Date()
       }
     })
 

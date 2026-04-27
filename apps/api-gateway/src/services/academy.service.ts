@@ -4,32 +4,24 @@ export class AcademyService {
   constructor(private prisma: PrismaClient) {}
 
   /**
-   * [IDENTITY MIGRATION GATEWAY]
+   * [IDENTITY SCHEMA]
    */
   private get userStore() {
-    const isIdentityEnabled = process.env.IDENTITY_SCHEMA_ENABLED === 'true';
-    if (isIdentityEnabled) {
-      return this.prisma.users;
-    }
-    return (this.prisma as any).legacy_users;
+    return this.prisma.users;
   }
 
   private get profileStore() {
-    const isIdentityEnabled = process.env.IDENTITY_SCHEMA_ENABLED === 'true';
-    if (isIdentityEnabled) {
-      return this.prisma.user_profiles;
-    }
-    return (this.prisma as any).legacy_user_profiles;
+    return this.prisma.user_profiles;
   }
 
   /**
    * Get the global community progress overview
    */
   async getCommunityPulse(orgId: string) {
-    const circles = await this.prisma.circle.findMany({
+    const circles = await this.prisma.circles.findMany({
       include: {
         _count: {
-          select: { members: true, posts: true }
+          select: { circle_members: true, circle_posts: true }
         }
       }
     })
@@ -38,21 +30,31 @@ export class AcademyService {
       `SELECT status, COUNT(*) as count FROM spiritual_vows GROUP BY status`
     )
 
-    const learningProgress = await (this.prisma as any).user_curve_progress.findMany({
+    const learningProgress = await this.prisma.user_curve_progress.findMany({
       include: {
-        curve: true,
-        user: {
-          include: { user_profiles: true }
+        learning_curves: true,
+        users: {
+          include: { profile: true }
         }
       },
       take: 10,
-      orderBy: { startedAt: 'desc' }
+      orderBy: { started_at: 'desc' }
     })
 
     return {
-      circles,
+      circles: circles.map(c => ({
+        id: c.id,
+        name: c.name,
+        members: c._count.circle_members,
+        posts: c._count.circle_posts
+      })),
       vowStats: (vows as any[]).reduce((acc, v) => ({ ...acc, [v.status]: Number(v.count) }), {}),
-      recentActivity: learningProgress
+      recentActivity: learningProgress.map(p => ({
+        seeker: p.users?.profile?.full_name,
+        curve: p.learning_curves?.title,
+        started: p.started_at,
+        progress: p.progress_percentage
+      }))
     }
   }
 
@@ -63,22 +65,39 @@ export class AcademyService {
     const user = await this.userStore.findUnique({
       where: { id: userId },
       include: {
-        user_profiles: true,
-        spiritual_profiles: true,
+        profile: true,
+        spiritual_profile: true,
         spiritual_vows: true,
         user_curve_progress: {
           include: {
-            curve: true,
-            currentStep: true
+            learning_curves: true,
+            learning_curve_steps: true
           }
         },
         circle_members: {
-          include: { circle: true }
+          include: { circles: true }
         }
       }
     })
 
-    return user
+    if (!user) return null;
+
+    return {
+      id: user.id,
+      email: user.email,
+      name: user.profile?.full_name,
+      avatar: user.profile?.avatar_url,
+      spiritual: {
+        stage: user.spiritual_profile?.life_stage,
+        state: user.spiritual_profile?.inner_state,
+        initiations: user.spiritual_vows.length
+      },
+      circles: user.circle_members.map(m => m.circles?.name),
+      progress: user.user_curve_progress.map(p => ({
+        title: p.learning_curves?.title,
+        percentage: p.progress_percentage
+      }))
+    };
   }
 
   /**
@@ -91,11 +110,16 @@ export class AcademyService {
     startDate?: Date
     endDate?: Date
   }) {
-    return this.prisma.$executeRawUnsafe(
-      `INSERT INTO spiritual_vows (id, user_id, title, description, status, start_date, end_date, created_at)
-       VALUES (uuid_generate_v4(), $1::uuid, $2, $3, 'ACTIVE', $4, $5, NOW())`,
-      data.userId, data.title, data.description, data.startDate, data.endDate
-    )
+    return this.prisma.spiritual_vows.create({
+      data: {
+        user_id: data.userId,
+        title: data.title,
+        description: data.description,
+        status: 'ACTIVE',
+        start_date: data.startDate,
+        end_date: data.endDate
+      }
+    })
   }
 
   /**
@@ -105,31 +129,47 @@ export class AcademyService {
     const mentor = await this.userStore.findUnique({
       where: { id: guideId },
       include: {
-        user_profiles: true,
-        mentored_circles: true,
-        guidance_assignments_guidance_assignments_guide_idTousers: {
+        profile: true,
+        circles: true,
+        guidance_as_guide: {
           include: {
-            student: { include: { user_profiles: true } }
+            student: { include: { profile: true } }
           }
         }
       }
     })
 
-    return mentor
+    if (!mentor) return null;
+
+    return {
+      id: mentor.id,
+      name: mentor.profile?.full_name,
+      circles: mentor.circles.map(c => c.name),
+      students: mentor.guidance_as_guide.map(g => ({
+        id: g.student_id,
+        name: g.student?.profile?.full_name
+      }))
+    };
   }
 
   /**
    * Get all published learning curves
    */
-  async getLearningCurves() {
-    return this.prisma.learningCurve.findMany({
-      where: { isPublished: true },
+    const curves = await this.prisma.learning_curves.findMany({
+      where: { is_published: true },
       include: {
         _count: {
-          select: { steps: true, userProgress: true }
+          select: { learning_curve_steps: true, user_curve_progress: true }
         }
       },
-      orderBy: { createdAt: 'desc' }
+      orderBy: { created_at: 'desc' }
     })
-  }
+
+    return curves.map(c => ({
+      id: c.id,
+      title: c.title,
+      description: c.description,
+      steps: c._count.learning_curve_steps,
+      enrolled: c._count.user_curve_progress
+    }))
 }

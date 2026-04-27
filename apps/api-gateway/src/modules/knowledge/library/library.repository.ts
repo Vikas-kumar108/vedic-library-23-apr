@@ -107,18 +107,12 @@ export class LibraryRepository {
       if (existing) return;
 
       // 2. Persistent Progress: Increment seeker's reading counter
-      const statsStore = process.env.IDENTITY_SCHEMA_ENABLED === 'true'
-        ? (this.prisma as any).identity_user_statistics
-        : (this.prisma as any).user_statistics;
-
-      if (statsStore) {
-        await statsStore.update({
-          where: { user_id: userId },
-          data: { nodes_read_count: { increment: 1 } }
-        }).catch((e: any) => {
-          console.error(`[GUIDED_PATH_FAILURE] Stats Increment Failure | User: ${userId} | Node: ${nodeId} | Error: ${e.message}`);
-        }); 
-      }
+      await this.prisma.user_statistics.update({
+        where: { user_id: userId },
+        data: { nodes_read_count: { increment: 1 } }
+      }).catch((e: any) => {
+        console.error(`[GUIDED_PATH_FAILURE] Stats Increment Failure | User: ${userId} | Node: ${nodeId} | Error: ${e.message}`);
+      });
 
       // 3. Create Audit Log: Final guard against duplicate views
       await this.prisma.audit_logs.create({
@@ -133,51 +127,45 @@ export class LibraryRepository {
       });
 
       // 4. Guided Path Completion: Atomic clear if reading the assigned primary guide
-      const profileStore = process.env.IDENTITY_SCHEMA_ENABLED === 'true' 
-        ? (this.prisma as any).identity_spiritual_profiles 
-        : (this.prisma as any).spiritual_profiles;
+      // Fetch context before clearing for observability
+      const profile = await this.prisma.spiritual_profiles.findUnique({
+        where: { user_id: userId },
+        select: { 
+          current_primary_node_id: true,
+          current_focus: true,
+          eligibility_level: true
+        }
+      });
 
-      if (profileStore) {
-        // Fetch context before clearing for observability
-        const profile = await profileStore.findUnique({
-          where: { user_id: userId },
-          select: { 
-            current_primary_node_id: true,
-            current_focus: true,
-            eligibility_level: true
-          }
+      // 🔒 Atomic Clear: Only clear if it matches the nodeId (prevents race conditions)
+      if (profile?.current_primary_node_id === nodeId) {
+        const result = await this.prisma.spiritual_profiles.updateMany({
+          where: { 
+            user_id: userId,
+            current_primary_node_id: nodeId
+          },
+          data: { current_primary_node_id: null }
+        }).catch((e: any) => {
+          console.error(`[GUIDED_PATH_FAILURE] Atomic Clear Persistence Failure | User: ${userId} | Node: ${nodeId} | Error: ${e.message}`);
         });
 
-        // 🔒 Atomic Clear: Only clear if it matches the nodeId (prevents race conditions)
-        if (profile?.current_primary_node_id === nodeId) {
-          const result = await profileStore.updateMany({
-            where: { 
-              user_id: userId,
-              current_primary_node_id: nodeId
-            },
-            data: { current_primary_node_id: null }
-          }).catch((e: any) => {
-            console.error(`[GUIDED_PATH_FAILURE] Atomic Clear Persistence Failure | User: ${userId} | Node: ${nodeId} | Error: ${e.message}`);
-          });
-
-          if (result && result.count > 0) {
-            // 🛰️ Observability: Record completion milestone
-            (this.prisma as any).audit_logs.create({
-              data: {
-                performed_by_id: userId,
-                record_id: nodeId,
-                action: 'PRIMARY_COMPLETED',
-                module: 'KNOWLEDGE',
-                new_data: { 
-                  focus: profile.current_focus, 
-                  eligibility_level: profile.eligibility_level,
-                  completed_at: new Date()
-                }
+        if (result && result.count > 0) {
+          // 🛰️ Observability: Record completion milestone
+          this.prisma.audit_logs.create({
+            data: {
+              performed_by_id: userId,
+              record_id: nodeId,
+              action: 'PRIMARY_COMPLETED',
+              module: 'KNOWLEDGE',
+              new_data: { 
+                focus: profile.current_focus, 
+                eligibility_level: profile.eligibility_level,
+                completed_at: new Date()
               }
-            }).catch((e: any) => {
-               console.error(`[GUIDED_PATH_FAILURE] PRIMARY_COMPLETED Log Failure | User: ${userId} | Node: ${nodeId} | Error: ${e.message}`);
-            });
-          }
+            }
+          }).catch((e: any) => {
+             console.error(`[GUIDED_PATH_FAILURE] PRIMARY_COMPLETED Log Failure | User: ${userId} | Node: ${nodeId} | Error: ${e.message}`);
+          });
         }
       }
     } catch (e: any) {

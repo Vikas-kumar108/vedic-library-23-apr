@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@dharma/contracts": "workspace:*",
     "@dharma/data-access": "workspace:*",
     "@dharma/text-engine": "workspace:*",
     "@hookform/resolvers": "^3.9.1",

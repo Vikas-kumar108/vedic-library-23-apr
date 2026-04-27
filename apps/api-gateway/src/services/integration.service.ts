@@ -5,10 +5,10 @@ export class IntegrationService {
 
   async getIntegrationsOverview(orgId: string) {
     const [integrations, webhooks] = await Promise.all([
-      this.prisma.externalIntegration.findMany({
-        where: { orgId }
+      this.prisma.external_integrations.findMany({
+        where: { org_id: orgId }
       }),
-      this.prisma.webhookEvent.findMany({
+      this.prisma.webhook_events.findMany({
         orderBy: { created_at: 'desc' },
         take: 20
       })

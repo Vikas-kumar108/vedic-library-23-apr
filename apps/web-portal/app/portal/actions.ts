@@ -10,14 +10,14 @@ import { userStore } from '@/lib/identity-gateway'
 
 export async function validatePortalToken(token: string) {
   try {
-    const shareLink = await prisma.secureShareLink.findUnique({
+    const shareLink = await prisma.secure_share_links.findUnique({
       where: { token },
       include: {
-        organization: {
+        organizations: {
           select: { name: true, type: true }
         },
-        documents: {
-          include: { document: true }
+        secure_share_link_documents: {
+          include: { legal_documents: true }
         }
       }
     })
@@ -31,19 +31,19 @@ export async function validatePortalToken(token: string) {
     }
 
     // Increment access count for audit tracking
-    await prisma.secureShareLink.update({
+    await prisma.secure_share_links.update({
       where: { token },
-      data: { accessCount: { increment: 1 } }
+      data: { access_count: { increment: 1 } }
     })
 
     // Fetch the actual documents
-    const documents = shareLink.documents.map(d => d.document)
+    const documents = shareLink.secure_share_link_documents.map(d => d.legal_documents)
 
     return {
       success: true,
-      organization: shareLink.organization,
+      organization: shareLink.organizations,
       purpose: shareLink.purpose,
-      expiresAt: shareLink.expiresAt,
+      expiresAt: shareLink.expires_at,
       documents
     }
   } catch (error: any) {
@@ -68,8 +68,8 @@ export async function getMentorStudents(mentorId: string) {
       }
     },
     include: {
-      user_profiles: true,
-      spiritual_profiles: true
+      profile: true,
+      spiritual_profile: true
     }
   })
   return students

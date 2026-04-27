@@ -170,7 +170,12 @@ export class LibraryService {
     }))
   }
 
-  async getTags() {
-    return await this.repository.getLibraryTaxonomy()
+    const tags = await this.repository.getLibraryTaxonomy()
+    return tags.map(t => ({
+      id: t.id,
+      name: t.name,
+      slug: t.slug,
+      count: t._count?.node_tags || 0
+    }))
   }
 }

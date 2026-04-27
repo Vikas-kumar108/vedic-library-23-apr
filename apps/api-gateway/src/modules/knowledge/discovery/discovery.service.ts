@@ -37,7 +37,7 @@ export class DiscoveryService {
         // node_tags might be missing, handled below
       }
 
-      const taggedNodes = taggedResults.map((r: any) => r.node).filter(Boolean);
+      const taggedNodes = taggedResults.map((r: any) => r.nodes).filter(Boolean);
       
       // 3. Populate with curated fallback if tagged results are sparse
       let fallbackNodes = [];
@@ -86,14 +86,14 @@ export class DiscoveryService {
       const tags = await this.repository.findTagsByKeyword(query, eligibilityLevel)
 
       let nodeResults = tags.flatMap((tag: any) => 
-        (tag as any).nodes.map((tn: any) => ({
+        (tag as any).node_tags.map((tn: any) => ({
           tagId: tag.id,
           tagName: tag.name,
-          nodeId: tn.node.id,
-          slug: tn.node.slug,
-          level: tn.node.level,
-          text: getPrimaryText(tn.node.texts),
-          language: tn.node.texts[0]?.language || '',
+          nodeId: tn.nodes.id,
+          slug: tn.nodes.slug,
+          level: tn.nodes.level,
+          text: getPrimaryText(tn.nodes.texts),
+          language: tn.nodes.texts[0]?.language || '',
         }))
       )
 
@@ -102,9 +102,9 @@ export class DiscoveryService {
         nodeResults = texts.map((t: any) => ({
           tagId: 'general',
           tagName: 'General Wisdom',
-          nodeId: t.node.id,
-          slug: t.node.slug,
-          level: t.node.level,
+          nodeId: t.nodes.id,
+          slug: t.nodes.slug,
+          level: t.nodes.level,
           text: t.content,
           language: t.language,
         }))
@@ -122,11 +122,11 @@ export class DiscoveryService {
       const nodes = await this.repository.findNodesByTagReference(tagIdOrSlug, eligibilityLevel)
 
       return nodes.map((n: any) => ({
-        id: n.node.id,
-        slug: n.node.slug,
-        level: n.node.level,
-        text: getPrimaryText(n.node.texts),
-        language: n.node.texts[0]?.language || '',
+        id: n.nodes.id,
+        slug: n.nodes.slug,
+        level: n.nodes.level,
+        text: getPrimaryText(n.nodes.texts),
+        language: n.nodes.texts[0]?.language || '',
       }))
     } catch (e) {
       return []

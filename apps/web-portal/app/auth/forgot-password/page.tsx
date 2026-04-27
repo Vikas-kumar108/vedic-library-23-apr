@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import { KeyRound, ArrowLeft, ArrowRight, Sparkles, CheckCircle2, Loader2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { ForgotPasswordInput } from '@dharma/contracts'
 
 export default function ForgotPasswordPage() {
   const [loading, setLoading] = useState(false)
@@ -18,6 +19,9 @@ export default function ForgotPasswordPage() {
     setError(null)
     
     try {
+      // 1. Validate against Shared Contract
+      ForgotPasswordInput.parse({ email })
+
       const res = await fetch('/api/auth/forgot-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

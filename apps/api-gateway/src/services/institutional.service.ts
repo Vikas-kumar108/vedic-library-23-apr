@@ -7,26 +7,26 @@ export class InstitutionalService {
    * Fetches an overview of institutional health.
    */
   async getOverview(orgId: string) {
-    const grantCount = await this.prisma.grant.count({
-      where: { partnership: { orgId } }
+    const grantCount = await this.prisma.grants.count({
+      where: { partnerships: { org_id: orgId } }
     })
 
-    const totalGrantAmount = await this.prisma.grant.aggregate({
-      where: { partnership: { orgId } },
+    const totalGrantAmount = await this.prisma.grants.aggregate({
+      where: { partnerships: { org_id: orgId } },
       _sum: { amount: true }
     })
 
-    const pendingCompliance = await this.prisma.complianceTask.count({
-      where: { orgId, status: 'UPCOMING' }
+    const pendingCompliance = await this.prisma.compliance_tasks.count({
+      where: { org_id: orgId, status: 'UPCOMING' }
     })
 
-    const recentJournals = await this.prisma.journalEntry.findMany({
-      where: { orgId },
-      orderBy: { createdAt: 'desc' },
+    const recentJournals = await this.prisma.journal_entries.findMany({
+      where: { org_id: orgId },
+      orderBy: { created_at: 'desc' },
       take: 5,
       include: {
-        transaction: true,
-        lines: { include: { account: true } }
+        transactions: true,
+        journal_lines: { include: { financial_accounts: true } }
       }
     })
 
@@ -36,7 +36,12 @@ export class InstitutionalService {
         totalFunding: totalGrantAmount._sum.amount || 0,
         pendingTasks: pendingCompliance
       },
-      recentActivity: recentJournals
+      recentActivity: recentJournals.map(j => ({
+        id: j.id,
+        date: j.created_at,
+        amount: j.transactions?.amount,
+        description: j.description
+      }))
     }
   }
 
@@ -44,43 +49,64 @@ export class InstitutionalService {
    * Fetches all grants and their milestones.
    */
   async getGrants(orgId: string) {
-    return await this.prisma.grant.findMany({
-      where: { partnership: { orgId } },
+    const grantList = await this.prisma.grants.findMany({
+      where: { partnerships: { org_id: orgId } },
       include: {
-        partnership: {
-          include: { partner: true }
+        partnerships: {
+          include: { organizations_partnerships_partner_idToorganizations: true }
         },
-        milestones: true,
-        allocations: {
-          include: { project: true }
+        grant_milestones: true,
+        grant_allocations: {
+          include: { projects: true }
         }
       }
     })
+
+    return grantList.map(g => ({
+      id: g.id,
+      amount: g.amount,
+      status: g.status,
+      partner: g.partnerships?.organizations_partnerships_partner_idToorganizations?.name,
+      milestones: g.grant_milestones.length,
+      allocations: g.grant_allocations.map(a => a.projects?.name)
+    }))
   }
 
   /**
    * Fetches the double-entry audit ledger.
    */
   async getLedger(orgId: string, limit = 50, offset = 0) {
-    return await this.prisma.journalEntry.findMany({
-      where: { orgId },
-      orderBy: { createdAt: 'desc' },
+    const entries = await this.prisma.journal_entries.findMany({
+      where: { org_id: orgId },
+      orderBy: { created_at: 'desc' },
       take: limit,
       skip: offset,
       include: {
-        transaction: true,
-        lines: {
-          include: { account: true }
+        transactions: true,
+        journal_lines: {
+          include: { financial_accounts: true }
         }
       }
     })
+
+    return entries.map(e => ({
+      id: e.id,
+      date: e.created_at,
+      description: e.description,
+      amount: e.transactions?.amount,
+      lines: e.journal_lines.map(l => ({
+        account: l.financial_accounts?.name,
+        debit: l.debit,
+        credit: l.credit
+      }))
+    }))
   }
 
   /**
    * Fetches the health and inventory of the Shastra database.
    */
   async getContentHealth() {
-    const shastras = await this.prisma.shastra.findMany({
+    const shastras = await this.prisma.shastras.findMany({
       include: {
         _count: {
           select: { nodes: true }
@@ -100,7 +126,7 @@ export class InstitutionalService {
         slug: s.slug,
         nodeCount: s._count.nodes,
         status: s.status,
-        updatedAt: s.updatedAt
+        updatedAt: s.updated_at
       })),
       languages: textStats
     }

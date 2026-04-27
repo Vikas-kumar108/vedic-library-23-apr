@@ -2,6 +2,7 @@ import { FastifyInstance, FastifyPluginOptions } from 'fastify'
 import { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { createLibraryModule } from '../modules/knowledge/library'
 import { searchByKeyword } from '@dharma/search-domain'
+import { z } from 'zod'
 import { VerseParamsSchema, SearchQuerySchema } from '../schemas/library.schema'
 import { AuthService } from '../services/auth.service'
 import { IntegrationRegistry } from '../integrations/registry'
@@ -65,8 +66,10 @@ export default async function libraryRoutes(fastify: FastifyInstance, options: F
   })
 
   // RELATED
-  typedFastify.get('/related/:id', async (request) => {
-    const { id } = request.params as { id: string }
+  typedFastify.get('/related/:id', {
+    schema: { params: z.object({ id: z.string().uuid() }) }
+  }, async (request) => {
+    const { id } = request.params
     const { service } = createLibraryModule(fastify.prisma)
     return await service.getRelated(id)
   })

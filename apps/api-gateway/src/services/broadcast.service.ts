@@ -19,21 +19,16 @@ export class BroadcastService {
   ) {}
 
   /**
-   * [IDENTITY MIGRATION GATEWAY]
+   * [IDENTITY SCHEMA]
    */
   private get userStore() {
-    const isIdentityEnabled = process.env.IDENTITY_SCHEMA_ENABLED === 'true';
-    if (isIdentityEnabled) {
-      return this.prisma.users;
-    }
-    return (this.prisma as any).legacy_users;
+    return this.prisma.users;
   }
 
-  async broadcastWisdom(contentId: string, criteria: BroadcastCriteria) {
-    // 1. Fetch the Wisdom Content (Sloka/Verse/Article)
-    const content = await this.prisma.shastraContent.findUnique({
+    // 1. Fetch the Wisdom Content (Library Item)
+    const content = await this.prisma.library_items.findUnique({
       where: { id: contentId },
-      include: { shastra: true }
+      include: { organizations: true }
     })
 
     if (!content) throw new Error('Wisdom content not found')
@@ -51,9 +46,10 @@ export class BroadcastService {
         where: {
           OR: [
             criteria.role ? { roles: { has: criteria.role as any } } : {},
-            criteria.stage ? { stage: criteria.stage } : {}
+            criteria.stage ? { spiritual_profile: { life_stage: criteria.stage as any } } : {}
           ]
-        }
+        },
+        include: { profile: true }
       })
     }
 
@@ -64,8 +60,8 @@ export class BroadcastService {
       audience.map(seeker => 
         this.emailService.sendEmail({
           to: seeker.email,
-          subject: `📜 Revelation: ${content.title} • ${content.shastra?.title || 'Wisdom'}`,
-          body: content.text,
+          subject: `📜 Revelation: ${content.title} • ${content.organizations?.name || 'Wisdom'}`,
+          body: content.description || 'New wisdom from the institutional library.',
           html: `
             <div style="font-family: serif; padding: 40px; border: 1px solid #eee; border-radius: 20px; max-width: 600px; margin: auto;">
               <div style="text-align: center; margin-bottom: 30px;">
@@ -79,12 +75,12 @@ export class BroadcastService {
               </h2>
               
               <div style="font-size: 18px; line-height: 1.8; color: #334155; margin-bottom: 30px; text-align: center;">
-                ${content.text.replace(/\n/g, '<br/>')}
+                ${(content.description || '').replace(/\n/g, '<br/>')}
               </div>
               
               <div style="border-top: 1px solid #f1f5f9; padding-top: 20px; text-align: center;">
                 <p style="font-size: 12px; color: #64748b; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em;">
-                  Source: ${content.shastra?.title || 'Institutional Library'}
+                  Source: ${content.organizations?.name || 'Institutional Library'}
                 </p>
                 <a href="${process.env.FRONTEND_URL}/library/${content.slug}" 
                    style="display: inline-block; margin-top: 10px; color: #9333ea; font-weight: bold; text-decoration: none; font-size: 14px;">

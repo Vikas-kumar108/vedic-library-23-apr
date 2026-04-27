@@ -14,10 +14,17 @@ export default async function membershipRoutes(fastify: FastifyInstance) {
     schema: { params: OrgParamsSchema }
   }, async (request) => {
     const { orgId } = request.params
-    return await request.server.prisma.subscriptionTier.findMany({
-      where: { orgId },
-      include: { _count: { select: { spiritualProfiles: true } } }
+    const tiers = await request.server.prisma.subscription_tiers.findMany({
+      where: { org_id: orgId },
+      include: { _count: { select: { spiritual_profiles: true } } }
     })
+    return tiers.map(t => ({
+      id: t.id,
+      name: t.name,
+      description: t.description,
+      level: t.level,
+      memberCount: t._count.spiritual_profiles
+    }))
   })
 
   /**
@@ -27,8 +34,8 @@ export default async function membershipRoutes(fastify: FastifyInstance) {
     schema: { params: OrgParamsSchema }
   }, async (request) => {
     const { orgId } = request.params
-    const totalMembers = await request.server.prisma.spiritualProfile.count({
-      where: { subscriptionTier: { orgId } }
+    const totalMembers = await request.server.prisma.spiritual_profiles.count({
+      where: { subscription_tiers: { org_id: orgId } }
     })
     return { totalMembers }
   })

@@ -5,7 +5,7 @@ import { prisma } from '@/lib/prisma'
 import { UserRole, RelationshipType } from '@/lib/prisma'
 import { CRMService } from '@/services/crm-service'
 import { protectAction } from '@/lib/rbac'
-import { userStore } from '@/lib/identity-gateway'
+import { prisma } from '@/lib/prisma'
 
 /**
  * MASTER CRM ACTIONS (Vedic Community OS)
@@ -19,11 +19,11 @@ export async function upsertMemberRecord(data: any, adminUser: any) {
 
     const { id, ...payload } = data
 
-    const result = await userStore.upsert({
+    const result = await prisma.users.upsert({
       where: { id: id || '00000000-0000-0000-0000-000000000000' },
       update: {
         roles: payload.roles as UserRole[],
-        user_profiles: {
+        profile: {
           upsert: {
             create: {
               full_name: payload.full_name,
@@ -47,7 +47,7 @@ export async function upsertMemberRecord(data: any, adminUser: any) {
             }
           }
         },
-        user_preferences: {
+        preferences: {
           upsert: {
             create: {
               metadata: {
@@ -70,7 +70,7 @@ export async function upsertMemberRecord(data: any, adminUser: any) {
         email: payload.email || `${payload.full_name?.toLowerCase().replace(/ /g, '.')}.${Date.now()}@internal.vedic`,
         roles: payload.roles as UserRole[],
         is_online: false,
-        user_profiles: {
+        profile: {
           create: {
               full_name: payload.full_name,
               phone_number: payload.phoneNumber,
@@ -82,7 +82,7 @@ export async function upsertMemberRecord(data: any, adminUser: any) {
               pin_code: payload.pinCode,
           }
         },
-        user_preferences: {
+        preferences: {
           create: {
             metadata: {
               notes: payload.notes,
@@ -106,24 +106,24 @@ export async function addContributionRecord(userId: string, data: any, adminUser
   try {
     protectAction([UserRole.admin, UserRole.director], adminUser)
     
-    const orgId = '00000000-0000-0000-0000-000000000001' // Default Org
-    const transaction = await prisma.transaction.create({
+    const org_id = '00000000-0000-0000-0000-000000000001' // Default Org
+    const transaction = await prisma.transactions.create({
       data: {
-        orgId,
+        org_id,
         amount: data.amount,
         type: 'INCOME',
         purpose: data.purpose,
         category: 'Donation',
-        paymentMethod: 'OTHER',
-        recordedById: adminUser.id,
+        payment_method: 'OTHER',
+        recorded_by_id: adminUser.id,
         status: 'PENDING'
       }
     })
-    const contribution = await prisma.contribution.create({
+    const contribution = await prisma.contributions.create({
       data: {
-        orgId,
-        userId,
-        transactionId: transaction.id,
+        org_id,
+        user_id: userId,
+        transaction_id: transaction.id,
         amount: data.amount,
         type: data.type || 'FINANCIAL',
         purpose: data.purpose,
@@ -137,30 +137,18 @@ export async function addContributionRecord(userId: string, data: any, adminUser
 }
 
 export async function recordBenefitProvided(userId: string, data: { type: string, description: string }) {
-  try {
-    const benefit = await prisma.benefit.create({
-      data: {
-        userId,
-        type: data.type,
-        description: data.description,
-        date: new Date()
-      }
-    })
-    revalidatePath(`/admin/community/${userId}`)
-    return { success: true, data: benefit }
-  } catch (error: any) {
-    return { success: false, error: error.message }
-  }
+  // Decommissioned: Benefit model no longer exists in the canonical schema.
+  return { success: false, error: 'Benefit module decommissioned' }
 }
 
 export async function mapFamilyRelation(personAId: string, personBId: string, type: RelationshipType, adminUser: any) {
   try {
     protectAction([UserRole.admin, UserRole.outreach_lead], adminUser)
     
-    const link = await prisma.familyLink.create({
+    const link = await prisma.family_links.create({
       data: {
-        userId: personAId,
-        relatedId: personBId,
+        user_id: personAId,
+        related_id: personBId,
         type: type
       }
     })
@@ -173,14 +161,14 @@ export async function mapFamilyRelation(personAId: string, personBId: string, ty
 
 export async function getMembers(filters: any = {}) {
   try {
-    return await userStore.findMany({
+    return await prisma.users.findMany({
       where: {
         ...filters,
       },
       include: {
-        user_profiles: true,
-        spiritual_profiles: true,
-        family_links_family_links_user_idTousers: true,
+        profile: true,
+        spiritual_profile: true,
+        family_links_as_user: true,
         contributions: true,
       }
     })

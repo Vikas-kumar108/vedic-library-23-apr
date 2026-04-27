@@ -1,26 +1,17 @@
 import { FastifyInstance, FastifyPluginOptions } from 'fastify'
 import { AuthService } from '../services/auth.service'
 import { z } from 'zod'
+import { RegisterInput, LoginInput, ForgotPasswordInput } from '@dharma/contracts'
 import { IntegrationRegistry } from '../integrations/registry'
 
 export default async function authRoutes(fastify: FastifyInstance, options: FastifyPluginOptions) {
   const emailService = IntegrationRegistry.getEmailService()
   const authService = new AuthService(fastify.prisma, emailService)
 
-  const signupSchema = z.object({
-    name: z.string().min(2),
-    email: z.string().email(),
-    password: z.string().min(6),
-  })
-
-  const loginSchema = z.object({
-    email: z.string().email(),
-    password: z.string().min(6),
-  })
 
   fastify.post('/register', async (request, reply) => {
-    console.log('🛰️ GATEWAY: RECEIVED REGISTER REQUEST', request.body)
-    const data = signupSchema.parse(request.body)
+    const data = RegisterInput.parse(request.body)
+    console.log('🛰️ GATEWAY: RECEIVED REGISTER REQUEST', { email: data.email })
     try {
       const user = await authService.register(data)
       return reply.code(201).send(user)
@@ -41,7 +32,7 @@ export default async function authRoutes(fastify: FastifyInstance, options: Fast
   })
 
   fastify.post('/forgot-password', async (request, reply) => {
-    const { email } = z.object({ email: z.string().email() }).parse(request.body)
+    const { email } = ForgotPasswordInput.parse(request.body)
     try {
       const result = await authService.forgotPassword(email)
       return reply.send(result)
@@ -64,9 +55,8 @@ export default async function authRoutes(fastify: FastifyInstance, options: Fast
   })
 
   fastify.post('/login', async (request, reply) => {
-    const body = request.body as any
-    console.log('🛰️ GATEWAY: LOGIN ATTEMPT', { email: body?.email, hasPass: !!body?.password })
-    const data = loginSchema.parse(request.body)
+    const data = LoginInput.parse(request.body)
+    console.log('🛰️ GATEWAY: LOGIN ATTEMPT', { email: data.email })
     try {
       const user = await authService.login(data)
       return reply.code(200).send(user)
