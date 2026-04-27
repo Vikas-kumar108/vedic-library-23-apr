@@ -14,7 +14,7 @@ import {
   ArrowUpRight
 } from 'lucide-react'
 import { Button } from '@/components/atoms/button'
-import { prisma } from '@/lib/prisma'
+import { userStore } from '@/lib/identity-gateway'
 import { notFound } from 'next/navigation'
 import { cn } from '@/lib/utils'
 
@@ -28,15 +28,15 @@ const RELATION_COLORS: Record<string, { bg: string, text: string, border: string
 }
 
 export default async function MemberProfilePage({ params }: { params: { id: string } }) {
-  const member = await prisma.user.findUnique({
+  const member = await userStore.findUnique({
     where: { id: params.id },
     include: {
-      profile: true,
-      familyLinks: {
-        include: { related: { include: { profile: true } } }
+      user_profiles: true,
+      family_links_family_links_user_idTousers: {
+        include: { users_family_links_related_idTousers: { include: { user_profiles: true } } }
       },
-      relatedTo: {
-        include: { user: { include: { profile: true } } }
+      family_links_family_links_related_idTousers: {
+        include: { users_family_links_user_idTousers: { include: { user_profiles: true } } }
       },
       contributions: {
         include: { transaction: true }
@@ -47,10 +47,20 @@ export default async function MemberProfilePage({ params }: { params: { id: stri
 
   if (!member) notFound()
 
+  // Readable Aliases for complex Prisma relations (Identity Domain Migration)
+  const familyOut = member.family_links_family_links_user_idTousers || []
+  const familyIn = member.family_links_family_links_related_idTousers || []
+
   // Group relations for display
   const connections = [
-    ...member.familyLinks.map(l => ({ person: l.related, type: l.type, direction: 'out' })),
-    ...member.relatedTo.map(l => ({ person: l.user, type: l.type, direction: 'in' }))
+    ...familyOut.map(l => {
+      const relatedUser = l.users_family_links_related_idTousers
+      return { person: relatedUser, type: l.type, direction: 'out' }
+    }),
+    ...familyIn.map(l => {
+      const relatedUser = l.users_family_links_user_idTousers
+      return { person: relatedUser, type: l.type, direction: 'in' }
+    })
   ]
 
   return (
@@ -61,9 +71,9 @@ export default async function MemberProfilePage({ params }: { params: { id: stri
           <ArrowLeft className="w-6 h-6" />
         </Link>
         <div>
-          <h1 className="text-3xl font-black text-slate-900">{member.profile?.full_name || 'Unknown Member'}</h1>
+          <h1 className="text-3xl font-black text-slate-900">{member.user_profiles?.full_name || 'Unknown Member'}</h1>
           <p className="text-xs text-slate-400 font-bold uppercase tracking-widest mt-1">
-            Member ID: {params.id.slice(0, 8)} • {member.profile?.village || 'No Village'}, {member.profile?.city || 'No City'}
+            Member ID: {params.id.slice(0, 8)} • {member.user_profiles?.village || 'No Village'}, {member.user_profiles?.city || 'No City'}
           </p>
         </div>
       </div>
@@ -78,8 +88,8 @@ export default async function MemberProfilePage({ params }: { params: { id: stri
                  {member.roles[0]?.replace('_', ' ')}
                </div>
                <div className="w-24 h-24 rounded-3xl bg-white border-4 border-white shadow-xl flex items-center justify-center translate-y-12">
-                  {member.profile?.avatarUrl ? (
-                    <img src={member.profile.avatarUrl} className="w-full h-full object-cover rounded-2xl" alt="" />
+                  {member.user_profiles?.avatar_url ? (
+                    <img src={member.user_profiles.avatar_url} className="w-full h-full object-cover rounded-2xl" alt="" />
                   ) : (
                     <User className="w-10 h-10 text-slate-200" />
                   )}
@@ -87,9 +97,9 @@ export default async function MemberProfilePage({ params }: { params: { id: stri
             </div>
             <div className="pt-16 pb-8 px-8 text-center space-y-4">
                <div>
-                  <h3 className="text-xl font-bold text-slate-900">{member.profile?.full_name}</h3>
+                  <h3 className="text-xl font-bold text-slate-900">{member.user_profiles?.full_name}</h3>
                   <div className="flex items-center justify-center gap-2 text-slate-400 text-xs mt-1">
-                     <MapPin className="w-3 h-3" /> {member.profile?.village}, {member.profile?.city}
+                     <MapPin className="w-3 h-3" /> {member.user_profiles?.village}, {member.user_profiles?.city}
                   </div>
                </div>
                <div className="flex flex-wrap justify-center gap-2">
@@ -112,7 +122,7 @@ export default async function MemberProfilePage({ params }: { params: { id: stri
                    </div>
                     <div>
                       <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">Mobile</p>
-                      <p className="text-sm font-bold text-slate-700">{member.profile?.phoneNumber || 'Not provided'}</p>
+                      <p className="text-sm font-bold text-slate-700">{member.user_profiles?.phone_number || 'Not provided'}</p>
                    </div>
                 </div>
                 <div className="flex items-center gap-4 group">
@@ -160,10 +170,10 @@ export default async function MemberProfilePage({ params }: { params: { id: stri
                       )}>
                          <div className="flex items-center gap-4">
                             <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-300 font-bold uppercase text-[10px]">
-                               {conn.person.profile?.full_name?.[0] || 'U'}
+                               {conn.person.user_profiles?.full_name?.[0] || 'U'}
                             </div>
                             <div>
-                               <p className="text-sm font-bold text-slate-800">{conn.person.profile?.full_name || 'Unknown'}</p>
+                               <p className="text-sm font-bold text-slate-800">{conn.person.user_profiles?.full_name || 'Unknown'}</p>
                                <p className={cn("text-[10px] font-black uppercase tracking-widest", colors.text)}>{conn.type}</p>
                             </div>
                          </div>

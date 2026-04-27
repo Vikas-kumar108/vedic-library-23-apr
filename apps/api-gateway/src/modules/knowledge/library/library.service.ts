@@ -44,11 +44,16 @@ export class LibraryService {
     return tree
   }
 
-  async getVerse(id: string) {
+  async getVerse(id: string, userId?: string) {
     const isUuid = /^[0-9a-f-]{36}$/i.test(id)
     const node = await this.repository.getVerseWithCommentary(id, isUuid)
 
     if (!node) return null
+
+    // 🚀 Audit Logging: Record read history (Fire-and-forget for performance)
+    if (userId) {
+      this.repository.recordNodeView(userId, node.id).catch(() => {});
+    }
 
     const verse: any = {
       id: node.id,

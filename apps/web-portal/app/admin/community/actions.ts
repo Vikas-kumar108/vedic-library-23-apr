@@ -5,6 +5,7 @@ import { prisma } from '@/lib/prisma'
 import { UserRole, RelationshipType } from '@/lib/prisma'
 import { CRMService } from '@/services/crm-service'
 import { protectAction } from '@/lib/rbac'
+import { userStore } from '@/lib/identity-gateway'
 
 /**
  * MASTER CRM ACTIONS (Vedic Community OS)
@@ -18,37 +19,35 @@ export async function upsertMemberRecord(data: any, adminUser: any) {
 
     const { id, ...payload } = data
 
-    const result = await prisma.user.upsert({
+    const result = await userStore.upsert({
       where: { id: id || '00000000-0000-0000-0000-000000000000' },
       update: {
         roles: payload.roles as UserRole[],
-        profile: {
+        user_profiles: {
           upsert: {
             create: {
               full_name: payload.full_name,
-              phoneNumber: payload.phoneNumber,
-              whatsappNumber: payload.whatsappNumber,
+              phone_number: payload.phoneNumber,
+              whatsapp_number: payload.whatsappNumber,
               gender: payload.gender,
               village: payload.village,
               city: payload.city,
               state: payload.state,
-              pinCode: payload.pinCode,
-              addressLine1: payload.addressLine1,
+              pin_code: payload.pinCode,
             },
             update: {
               full_name: payload.full_name,
-              phoneNumber: payload.phoneNumber,
-              whatsappNumber: payload.whatsappNumber,
+              phone_number: payload.phoneNumber,
+              whatsapp_number: payload.whatsappNumber,
               gender: payload.gender,
               village: payload.village,
               city: payload.city,
               state: payload.state,
-              pinCode: payload.pinCode,
-              addressLine1: payload.addressLine1,
+              pin_code: payload.pinCode,
             }
           }
         },
-        preferences: {
+        user_preferences: {
           upsert: {
             create: {
               metadata: {
@@ -70,21 +69,20 @@ export async function upsertMemberRecord(data: any, adminUser: any) {
       create: {
         email: payload.email || `${payload.full_name?.toLowerCase().replace(/ /g, '.')}.${Date.now()}@internal.vedic`,
         roles: payload.roles as UserRole[],
-        isOnline: false,
-        profile: {
+        is_online: false,
+        user_profiles: {
           create: {
               full_name: payload.full_name,
-              phoneNumber: payload.phoneNumber,
-              whatsappNumber: payload.whatsappNumber,
+              phone_number: payload.phoneNumber,
+              whatsapp_number: payload.whatsappNumber,
               gender: payload.gender,
               village: payload.village,
               city: payload.city,
               state: payload.state,
-              pinCode: payload.pinCode,
-              addressLine1: payload.addressLine1,
+              pin_code: payload.pinCode,
           }
         },
-        preferences: {
+        user_preferences: {
           create: {
             metadata: {
               notes: payload.notes,
@@ -175,14 +173,14 @@ export async function mapFamilyRelation(personAId: string, personBId: string, ty
 
 export async function getMembers(filters: any = {}) {
   try {
-    return await prisma.user.findMany({
+    return await userStore.findMany({
       where: {
         ...filters,
       },
       include: {
-        profile: true,
-        spiritual: true,
-        familyLinks: true,
+        user_profiles: true,
+        spiritual_profiles: true,
+        family_links_family_links_user_idTousers: true,
         contributions: true,
       }
     })

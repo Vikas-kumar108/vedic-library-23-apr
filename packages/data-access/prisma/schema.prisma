@@ -8,6 +8,101 @@ datasource db {
   provider   = "postgresql"
   url        = env("DATABASE_URL")
   extensions = [ltree, uuid_ossp(map: "uuid-ossp"), vector]
+  schemas    = ["identity", "public"]
+}
+
+model identity_spiritual_profiles {
+  user_id           String                     @id @db.Uuid
+  age_group         identity_age_group_enum?
+  life_stage        identity_life_stage_enum?
+  eligibility_level Int                        @default(1)
+  primary_focus     identity_purushartha_enum?
+  inner_state       identity_inner_state_enum?
+  nature            identity_svabhava_enum?
+  current_focus           String?
+  current_primary_node_id String?                    @db.Uuid
+  last_guided_at          DateTime?
+  created_at              DateTime                   @default(now())
+  updated_at              DateTime                   @default(now())
+  users             identity_users             @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("spiritual_profiles")
+  @@schema("identity")
+}
+
+model identity_user_preferences {
+  user_id            String         @id @db.Uuid
+  notification_prefs Json?          @default("{\"sms\": false, \"email\": true, \"whatsapp\": false}")
+  metadata           Json?          @default("{}")
+  notes              String?
+  created_at         DateTime       @default(now())
+  updated_at         DateTime       @default(now())
+  users              identity_users @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("user_preferences")
+  @@schema("identity")
+}
+
+model identity_user_profiles {
+  user_id         String                @id @db.Uuid
+  full_name       String?
+  phone_number    String?
+  whatsapp_number String?
+  avatar_url      String?
+  gender          identity_gender_enum?
+  date_of_birth   DateTime?
+  village         String?
+  city            String?
+  state           String?
+  pin_code        String?
+  created_at      DateTime              @default(now())
+  updated_at      DateTime              @default(now())
+  users           identity_users        @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("user_profiles")
+  @@schema("identity")
+}
+
+model identity_user_statistics {
+  user_id             String         @id @db.Uuid
+  nodes_read_count    Int?           @default(0)
+  courses_completed   Int?           @default(0)
+  contribution_points Int?           @default(0)
+  updated_at          DateTime?      @default(now())
+  users               identity_users @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("user_statistics")
+  @@schema("identity")
+}
+
+model identity_users {
+  id                    String                       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email                 String                       @unique
+  password              String?
+  is_online             Boolean?                     @default(true)
+  email_verified        DateTime?
+  roles                 identity_user_role_enum[]    @default([student])
+  status                identity_user_status_enum    @default(ACTIVE)
+  failed_login_attempts Int?                         @default(0)
+  account_locked_until  DateTime?
+  verification_token    String?
+  reset_token           String?
+  reset_token_expires   DateTime?
+  deleted_at            DateTime?
+  is_anonymized         Boolean?                     @default(false)
+  anonymized_at         DateTime?
+  created_at            DateTime                     @default(now())
+  updated_at            DateTime                     @default(now())
+  last_active           DateTime?
+  spiritual_profiles    identity_spiritual_profiles?
+  user_preferences      identity_user_preferences?
+  user_profiles         identity_user_profiles?
+  user_statistics       identity_user_statistics?
+
+  @@index([email], map: "idx_users_email")
+  @@index([status], map: "idx_users_status")
+  @@map("users")
+  @@schema("identity")
 }
 
 model CommunicationCampaignToLibraryItem {
@@ -18,6 +113,7 @@ model CommunicationCampaignToLibraryItem {
 
   @@id([A, B])
   @@map("_CommunicationCampaignToLibraryItem")
+  @@schema("public")
 }
 
 model activity_logs {
@@ -33,6 +129,8 @@ model activity_logs {
   updated_at    DateTime      @default(now())
   organizations organizations @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
   projects      projects?     @relation(fields: [project_id], references: [id], onUpdate: NoAction)
+
+  @@schema("public")
 }
 
 model audit_logs {
@@ -48,8 +146,10 @@ model audit_logs {
   ip_address      String?
   device_info     String?
   timestamp       DateTime      @default(now())
-  users           users         @relation(fields: [performed_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   transactions    transactions? @relation(fields: [transaction_id], references: [id], onUpdate: NoAction)
+
+  @@unique([performed_by_id, record_id, action])
+  @@schema("public")
 }
 
 model circle_members {
@@ -58,9 +158,10 @@ model circle_members {
   role      circle_role_enum? @default(MEMBER)
   joined_at DateTime?         @default(now())
   circles   circles           @relation(fields: [circle_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  users     users             @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users     users      @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@id([user_id, circle_id])
+  @@schema("public")
 }
 
 model circle_posts {
@@ -73,8 +174,10 @@ model circle_posts {
   replies    Int?                @default(0)
   is_pinned  Boolean?            @default(false)
   created_at DateTime            @default(now())
-  users      users               @relation(fields: [author_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users      users        @relation(fields: [author_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   circles    circles             @relation(fields: [circle_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@schema("public")
 }
 
 model circles {
@@ -89,7 +192,9 @@ model circles {
   updated_at     DateTime          @default(now())
   circle_members circle_members[]
   circle_posts   circle_posts[]
-  users          users?            @relation(fields: [mentor_id], references: [id], onUpdate: NoAction)
+  users          users?     @relation(fields: [mentor_id], references: [id], onUpdate: NoAction)
+
+  @@schema("public")
 }
 
 model communication_campaigns {
@@ -113,6 +218,8 @@ model communication_campaigns {
   partner_organizations                                              partner_organizations?               @relation(fields: [target_partner_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   subscription_tiers                                                 subscription_tiers?                  @relation(fields: [target_tier_id], references: [id], onUpdate: NoAction)
   communication_logs                                                 communication_logs[]
+
+  @@schema("public")
 }
 
 model communication_logs {
@@ -134,7 +241,9 @@ model communication_logs {
   library_items           library_items?             @relation(fields: [library_item_id], references: [id], onUpdate: NoAction)
   organizations           organizations?             @relation(fields: [org_id], references: [id], onUpdate: NoAction)
   partner_organizations   partner_organizations?     @relation(fields: [partner_id], references: [id], onUpdate: NoAction)
-  users                   users?                     @relation(fields: [user_id], references: [id], onUpdate: NoAction)
+  users                   users?              @relation(fields: [user_id], references: [id], onUpdate: NoAction)
+
+  @@schema("public")
 }
 
 model compliance_tasks {
@@ -147,8 +256,10 @@ model compliance_tasks {
   assigned_to   String?                 @db.Uuid
   created_at    DateTime?               @default(now())
   updated_at    DateTime?               @default(now())
-  users         users?                  @relation(fields: [assigned_to], references: [id], onUpdate: NoAction)
+  users         users?           @relation(fields: [assigned_to], references: [id], onUpdate: NoAction)
   organizations organizations           @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@schema("public")
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
@@ -167,7 +278,9 @@ model contributions {
   donation_causes donation_causes?       @relation(fields: [cause_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   organizations   organizations          @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
   transactions    transactions?          @relation(fields: [transaction_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  users           users                  @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users           users           @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@schema("public")
 }
 
 model document_versions {
@@ -178,8 +291,10 @@ model document_versions {
   change_note     String?
   created_by_id   String          @db.Uuid
   created_at      DateTime        @default(now())
-  users           users           @relation(fields: [created_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users           users    @relation(fields: [created_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   legal_documents legal_documents @relation(fields: [document_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@schema("public")
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
@@ -190,6 +305,8 @@ model donation_cause_options {
   suggested_amount Decimal?        @db.Decimal
   created_at       DateTime?       @default(now())
   donation_causes  donation_causes @relation(fields: [cause_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@schema("public")
 }
 
 model donation_causes {
@@ -215,6 +332,7 @@ model donation_causes {
   transactions           transactions[]
 
   @@index([path], map: "idx_causes_path", type: Gist)
+  @@schema("public")
 }
 
 model donation_receipts {
@@ -237,6 +355,8 @@ model donation_receipts {
   library_items                               library_items? @relation(fields: [library_item_id], references: [id], onUpdate: NoAction)
   transactions                                transactions   @relation(fields: [transaction_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
   users_donation_receipts_user_idTousers      users          @relation("donation_receipts_user_idTousers", fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@schema("public")
 }
 
 model event_registrations {
@@ -247,6 +367,7 @@ model event_registrations {
   users         users        @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@id([user_id, event_id])
+  @@schema("public")
 }
 
 model external_integrations {
@@ -260,6 +381,8 @@ model external_integrations {
   created_at    DateTime                 @default(now())
   updated_at    DateTime                 @default(now())
   organizations organizations?           @relation(fields: [org_id], references: [id], onUpdate: NoAction)
+
+  @@schema("public")
 }
 
 model family_groups {
@@ -270,6 +393,8 @@ model family_groups {
   created_at   DateTime?      @default(now()) @db.Timestamp(6)
   updated_at   DateTime?      @default(now()) @db.Timestamp(6)
   family_nodes family_nodes[]
+
+  @@schema("public")
 }
 
 model family_links {
@@ -280,10 +405,11 @@ model family_links {
   notes                                String?
   created_at                           DateTime               @default(now())
   updated_at                           DateTime               @default(now())
-  users_family_links_related_idTousers users                  @relation("family_links_related_idTousers", fields: [related_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  users_family_links_user_idTousers    users                  @relation("family_links_user_idTousers", fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users_family_links_related_idTousers users           @relation("family_links_related_idTousers", fields: [related_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users_family_links_user_idTousers    users           @relation("family_links_user_idTousers", fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@unique([user_id, related_id, type], map: "family_links_unique")
+  @@schema("public")
 }
 
 model family_nodes {
@@ -298,9 +424,10 @@ model family_nodes {
   family_groups      family_groups?        @relation(fields: [family_group_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
   family_nodes       family_nodes?         @relation("family_nodesTofamily_nodes", fields: [parent_id], references: [id], onUpdate: NoAction)
   other_family_nodes family_nodes[]        @relation("family_nodesTofamily_nodes")
-  users              users?                @relation(fields: [user_id], references: [id], onUpdate: NoAction)
+  users              users?         @relation(fields: [user_id], references: [id], onUpdate: NoAction)
 
   @@index([path], map: "idx_family_path", type: Gist)
+  @@schema("public")
 }
 
 model file_assets {
@@ -322,7 +449,7 @@ model file_assets {
   updated_at               DateTime                   @default(now())
   donation_receipts        donation_receipts?
   organizations            organizations              @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  users                    users?                     @relation(fields: [uploaded_by_id], references: [id], onUpdate: NoAction)
+  users                    users?              @relation(fields: [uploaded_by_id], references: [id], onUpdate: NoAction)
   grant_milestones         grant_milestones[]
   library_items            library_items?
   library_versions         library_versions[]
@@ -330,6 +457,8 @@ model file_assets {
   partner_reports          partner_reports[]
   partnerships             partnerships[]
   utilization_certificates utilization_certificates[]
+
+  @@schema("public")
 }
 
 model financial_accounts {
@@ -346,6 +475,8 @@ model financial_accounts {
   ledger_snapshots                                                     ledger_snapshots[]
   transactions_transactions_destination_account_idTofinancial_accounts transactions[]     @relation("transactions_destination_account_idTofinancial_accounts")
   transactions_transactions_source_account_idTofinancial_accounts      transactions[]     @relation("transactions_source_account_idTofinancial_accounts")
+
+  @@schema("public")
 }
 
 model financial_periods {
@@ -361,6 +492,8 @@ model financial_periods {
   organizations    organizations      @relation(fields: [org_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   ledger_snapshots ledger_snapshots[]
   payroll_records  payroll_records[]
+
+  @@schema("public")
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
@@ -375,6 +508,8 @@ model grant_allocations {
   donation_causes  donation_causes? @relation(fields: [cause_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   grants           grants           @relation(fields: [grant_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   projects         projects?        @relation(fields: [project_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@schema("public")
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
@@ -390,6 +525,8 @@ model grant_milestones {
   updated_at           DateTime?              @default(now())
   file_assets          file_assets?           @relation(fields: [completion_report_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_report_file")
   grants               grants                 @relation(fields: [grant_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@schema("public")
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
@@ -413,6 +550,8 @@ model grants {
   partnerships             partnerships               @relation(fields: [partnership_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   transactions             transactions[]
   utilization_certificates utilization_certificates[]
+
+  @@schema("public")
 }
 
 model guidance_assignments {
@@ -424,11 +563,12 @@ model guidance_assignments {
   status                                       guidance_status_enum? @default(ACTIVE)
   created_at                                   DateTime?             @default(now())
   updated_at                                   DateTime?             @default(now())
-  users_guidance_assignments_guide_idTousers   users                 @relation("guidance_assignments_guide_idTousers", fields: [guide_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  users_guidance_assignments_student_idTousers users                 @relation("guidance_assignments_student_idTousers", fields: [student_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users_guidance_assignments_guide_idTousers   users          @relation("guidance_assignments_guide_idTousers", fields: [guide_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users_guidance_assignments_student_idTousers users          @relation("guidance_assignments_student_idTousers", fields: [student_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   guidance_sessions                            guidance_sessions[]
 
   @@unique([guide_id, student_id, assignment_type], map: "guidance_unique")
+  @@schema("public")
 }
 
 model guidance_sessions {
@@ -438,6 +578,8 @@ model guidance_sessions {
   summary_notes        String?
   session_date         DateTime?            @default(now())
   guidance_assignments guidance_assignments @relation(fields: [assignment_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@schema("public")
 }
 
 model journal_entries {
@@ -452,11 +594,13 @@ model journal_entries {
   deleted_at                                  DateTime?
   created_at                                  DateTime?                @default(now())
   updated_at                                  DateTime?                @default(now())
-  users_journal_entries_approved_by_idTousers users?                   @relation("journal_entries_approved_by_idTousers", fields: [approved_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  users_journal_entries_created_by_idTousers  users?                   @relation("journal_entries_created_by_idTousers", fields: [created_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users_journal_entries_approved_by_idTousers users?            @relation("journal_entries_approved_by_idTousers", fields: [approved_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users_journal_entries_created_by_idTousers  users?            @relation("journal_entries_created_by_idTousers", fields: [created_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   organizations                               organizations            @relation(fields: [org_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   transactions                                transactions?            @relation(fields: [transaction_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   journal_lines                               journal_lines[]
+
+  @@schema("public")
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
@@ -471,6 +615,8 @@ model journal_lines {
   updated_at         DateTime?          @default(now())
   financial_accounts financial_accounts @relation(fields: [account_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   journal_entries    journal_entries    @relation(fields: [journal_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@schema("public")
 }
 
 model learning_curve_steps {
@@ -487,18 +633,21 @@ model learning_curve_steps {
   user_curve_progress user_curve_progress[]
 
   @@unique([curve_id, step_order], map: "step_order_unique")
+  @@schema("public")
 }
 
 model learning_curves {
-  id                   String                 @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id                   String                   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   title                String
   description          String?
   target_life_stages   life_stage_enum[]
-  is_published         Boolean?               @default(false)
-  created_at           DateTime               @default(now())
-  updated_at           DateTime               @default(now())
+  is_published         Boolean?                 @default(false)
+  created_at           DateTime                 @default(now())
+  updated_at           DateTime                 @default(now())
   learning_curve_steps learning_curve_steps[]
   user_curve_progress  user_curve_progress[]
+
+  @@schema("public")
 }
 
 model ledger_snapshots {
@@ -512,6 +661,7 @@ model ledger_snapshots {
   financial_periods  financial_periods?  @relation(fields: [period_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@unique([account_id, period_id], map: "ledger_snapshot_unique")
+  @@schema("public")
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -526,9 +676,11 @@ model legal_documents {
   created_at                  DateTime                      @default(now())
   updated_at                  DateTime                      @default(now())
   document_versions           document_versions[]
-  users                       users?                        @relation(fields: [created_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users                       users?                 @relation(fields: [created_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   organizations               organizations                 @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
   secure_share_link_documents secure_share_link_documents[]
+
+  @@schema("public")
 }
 
 model library_downloads {
@@ -537,7 +689,9 @@ model library_downloads {
   library_item_id String        @db.Uuid
   downloaded_at   DateTime      @default(now())
   library_items   library_items @relation(fields: [library_item_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  users           users?        @relation(fields: [user_id], references: [id], onUpdate: NoAction)
+  users           users? @relation(fields: [user_id], references: [id], onUpdate: NoAction)
+
+  @@schema("public")
 }
 
 model library_items {
@@ -566,11 +720,13 @@ model library_items {
   communication_logs                 communication_logs[]
   donation_receipts                  donation_receipts[]
   library_downloads                  library_downloads[]
-  users                              users?                               @relation(fields: [created_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users                              users?                        @relation(fields: [created_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   file_assets                        file_assets                          @relation(fields: [file_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   organizations                      organizations                        @relation(fields: [org_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   subscription_tiers                 subscription_tiers?                  @relation(fields: [required_tier], references: [id], onDelete: NoAction, onUpdate: NoAction)
   library_versions                   library_versions[]
+
+  @@schema("public")
 }
 
 model library_versions {
@@ -582,6 +738,8 @@ model library_versions {
   created_at      DateTime      @default(now())
   file_assets     file_assets   @relation(fields: [file_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   library_items   library_items @relation(fields: [library_item_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@schema("public")
 }
 
 model node_relations {
@@ -595,6 +753,7 @@ model node_relations {
 
   @@index([from_node_id], map: "idx_node_rel_from")
   @@index([to_node_id], map: "idx_node_rel_to")
+  @@schema("public")
 }
 
 model node_tags {
@@ -606,6 +765,7 @@ model node_tags {
   @@id([node_id, tag_id])
   @@index([node_id], map: "idx_node_tags_node")
   @@index([tag_id], map: "idx_node_tags_tag")
+  @@schema("public")
 }
 
 model nodes {
@@ -632,6 +792,7 @@ model nodes {
   texts                                             texts[]
 
   @@index([path], map: "idx_nodes_path", type: Gist)
+  @@schema("public")
 }
 
 model org_members {
@@ -645,8 +806,10 @@ model org_members {
   created_at      DateTime?         @default(now())
   updated_at      DateTime?         @default(now())
   organizations   organizations     @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  users           users             @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users           users      @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   payroll_records payroll_records[]
+
+  @@schema("public")
 }
 
 model organizations {
@@ -684,6 +847,8 @@ model organizations {
   subscription_tiers                                                           subscription_tiers[]
   support_tickets                                                              support_tickets[]
   transactions                                                                 transactions[]
+
+  @@schema("public")
 }
 
 model partner_organizations {
@@ -703,6 +868,8 @@ model partner_organizations {
   communication_campaigns communication_campaigns[]
   communication_logs      communication_logs[]
   partnerships            partnerships[]
+
+  @@schema("public")
 }
 
 model partner_report_versions {
@@ -713,6 +880,8 @@ model partner_report_versions {
   created_at      DateTime?       @default(now())
   file_assets     file_assets     @relation(fields: [file_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   partner_reports partner_reports @relation(fields: [report_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@schema("public")
 }
 
 model partner_reports {
@@ -729,6 +898,8 @@ model partner_reports {
   partner_report_versions partner_report_versions[]
   file_assets             file_assets               @relation(fields: [file_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   partnerships            partnerships              @relation(fields: [partnership_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@schema("public")
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -749,6 +920,8 @@ model partnerships {
   file_assets           file_assets?          @relation(fields: [agreement_file_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_agreement_file")
   organizations         organizations         @relation(fields: [org_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   partner_organizations partner_organizations @relation(fields: [partner_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@schema("public")
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
@@ -763,6 +936,8 @@ model payment_records {
   raw_data       Json?
   created_at     DateTime      @default(now())
   transactions   transactions? @relation(fields: [transaction_id], references: [id], onUpdate: NoAction)
+
+  @@schema("public")
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -780,6 +955,8 @@ model payroll_records {
   org_members       org_members       @relation(fields: [org_member_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
   financial_periods financial_periods @relation(fields: [period_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   transactions      transactions?     @relation(fields: [transaction_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@schema("public")
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -800,6 +977,7 @@ model physical_assets {
   organizations organizations      @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@index([qr_code], map: "idx_asset_qr")
+  @@schema("public")
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
@@ -813,6 +991,7 @@ model project_budget_lines {
   projects      projects  @relation(fields: [project_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@index([project_id], map: "idx_budget_project")
+  @@schema("public")
 }
 
 model projects {
@@ -832,6 +1011,8 @@ model projects {
   donation_causes      donation_causes?       @relation(fields: [cause_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   organizations        organizations          @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
   transactions         transactions[]
+
+  @@schema("public")
 }
 
 model secure_share_link_documents {
@@ -842,6 +1023,7 @@ model secure_share_link_documents {
   secure_share_links secure_share_links        @relation(fields: [link_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@id([link_id, document_id])
+  @@schema("public")
 }
 
 model secure_share_links {
@@ -854,6 +1036,8 @@ model secure_share_links {
   created_at                  DateTime                      @default(now())
   secure_share_link_documents secure_share_link_documents[]
   organizations               organizations                 @relation(fields: [org_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@schema("public")
 }
 
 model shastras {
@@ -866,6 +1050,8 @@ model shastras {
   created_at     DateTime            @default(now())
   updated_at     DateTime            @default(now())
   nodes          nodes[]
+
+  @@schema("public")
 }
 
 model sources {
@@ -878,6 +1064,8 @@ model sources {
   created_at  DateTime @default(now())
   updated_at  DateTime @default(now())
   texts       texts[]
+
+  @@schema("public")
 }
 
 model spiritual_profiles {
@@ -889,10 +1077,16 @@ model spiritual_profiles {
   inner_state          inner_state_enum?
   nature               svabhava_enum?
   subscription_tier_id String?             @db.Uuid
+  current_focus           String?
+  current_primary_node_id String?           @db.Uuid
+  last_guided_at          DateTime?
   created_at           DateTime            @default(now())
   updated_at           DateTime            @default(now())
   subscription_tiers   subscription_tiers? @relation(fields: [subscription_tier_id], references: [id], onUpdate: NoAction)
   users                users               @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("spiritual_profiles")
+  @@schema("public")
 }
 
 model spiritual_vows {
@@ -905,21 +1099,25 @@ model spiritual_vows {
   end_date    DateTime?        @db.Date
   created_at  DateTime?        @default(now())
   updated_at  DateTime?        @default(now())
-  users       users            @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users       users     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@schema("public")
 }
 
 model subscription_tiers {
-  id                      String                    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  org_id                  String                    @db.Uuid
+  id                      String                      @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  org_id                  String                      @db.Uuid
   name                    String
   description             String?
-  level                   Int                       @default(1)
-  created_at              DateTime                  @default(now())
-  updated_at              DateTime                  @default(now())
+  level                   Int                         @default(1)
+  created_at              DateTime                    @default(now())
+  updated_at              DateTime                    @default(now())
   communication_campaigns communication_campaigns[]
   library_items           library_items[]
   spiritual_profiles      spiritual_profiles[]
-  organizations           organizations             @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  organizations           organizations               @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@schema("public")
 }
 
 model support_tickets {
@@ -936,6 +1134,8 @@ model support_tickets {
   users_support_tickets_assigned_to_idTousers users?              @relation("support_tickets_assigned_to_idTousers", fields: [assigned_to_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   organizations                               organizations       @relation(fields: [org_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
   users_support_tickets_user_idTousers        users?              @relation("support_tickets_user_idTousers", fields: [user_id], references: [id], onUpdate: NoAction)
+
+  @@schema("public")
 }
 
 model synonyms {
@@ -947,6 +1147,8 @@ model synonyms {
   order_index Int?
   created_at  DateTime?      @default(now())
   texts       texts          @relation(fields: [text_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@schema("public")
 }
 
 model tags {
@@ -963,6 +1165,8 @@ model tags {
   node_tags     node_tags[]
   tags          tags?       @relation("tagsTotags", fields: [parent_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   other_tags    tags[]      @relation("tagsTotags")
+
+  @@schema("public")
 }
 
 model text_embeddings {
@@ -971,14 +1175,18 @@ model text_embeddings {
   model      String
   created_at DateTime              @default(now())
   texts      texts                 @relation(fields: [text_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@schema("public")
 }
 
 model text_metadata {
-  text_id         String                @id @db.Uuid
+  text_id         String                   @id @db.Uuid
   life_stages     life_stage_enum[]
   guidance_levels guidance_level_enum[]
-  is_sensitive    Boolean?              @default(false)
-  texts           texts                 @relation(fields: [text_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  is_sensitive    Boolean?                 @default(false)
+  texts           texts                    @relation(fields: [text_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@schema("public")
 }
 
 model text_versions {
@@ -992,6 +1200,8 @@ model text_versions {
   updated_by     String?
   created_at     DateTime           @default(now())
   texts          texts              @relation(fields: [text_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@schema("public")
 }
 
 model texts {
@@ -1015,6 +1225,8 @@ model texts {
   text_versions   text_versions[]
   nodes           nodes               @relation(fields: [node_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   sources         sources?            @relation(fields: [source_id], references: [id], onUpdate: NoAction)
+
+  @@schema("public")
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
@@ -1050,7 +1262,7 @@ model transactions {
   journal_entries                                                            journal_entries[]
   payment_records                                                            payment_records?
   payroll_records                                                            payroll_records[]
-  users_transactions_approved_by_idTousers                                   users?                   @relation("transactions_approved_by_idTousers", fields: [approved_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users_transactions_approved_by_idTousers                                   users?            @relation("transactions_approved_by_idTousers", fields: [approved_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   donation_causes                                                            donation_causes?         @relation(fields: [cause_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   financial_accounts_transactions_destination_account_idTofinancial_accounts financial_accounts?      @relation("transactions_destination_account_idTofinancial_accounts", fields: [destination_account_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   grants                                                                     grants?                  @relation(fields: [grant_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -1060,6 +1272,7 @@ model transactions {
   financial_accounts_transactions_source_account_idTofinancial_accounts      financial_accounts?      @relation("transactions_source_account_idTofinancial_accounts", fields: [source_account_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@index([cause_id], map: "idx_transactions_cause")
+  @@schema("public")
 }
 
 model user_curve_progress {
@@ -1072,9 +1285,10 @@ model user_curve_progress {
   completed_at         DateTime?
   learning_curve_steps learning_curve_steps? @relation(fields: [current_step_id], references: [id], onUpdate: NoAction)
   learning_curves      learning_curves       @relation(fields: [curve_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  users                users                 @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users                users          @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@unique([user_id, curve_id], map: "user_curve_unique")
+  @@schema("public")
 }
 
 model user_preferences {
@@ -1085,11 +1299,14 @@ model user_preferences {
   created_at         DateTime @default(now())
   updated_at         DateTime @default(now())
   users              users    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("user_preferences")
+  @@schema("public")
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model user_profiles {
-  user_id         String       @id @db.Uuid
+  user_id         String          @id @db.Uuid
   full_name       String?
   phone_number    String?
   whatsapp_number String?
@@ -1100,9 +1317,12 @@ model user_profiles {
   city            String?
   state           String?
   pin_code        String?
-  created_at      DateTime     @default(now())
-  updated_at      DateTime     @default(now())
-  users           users        @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  created_at      DateTime        @default(now())
+  updated_at      DateTime        @default(now())
+  users           users           @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("user_profiles")
+  @@schema("public")
 }
 
 model user_statistics {
@@ -1112,28 +1332,30 @@ model user_statistics {
   contribution_points Int?      @default(0)
   updated_at          DateTime? @default(now())
   users               users     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("user_statistics")
+  @@schema("public")
 }
 
 model users {
-  id                                                          String                 @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  email                                                       String                 @unique
+  id                                                          String                     @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  email                                                       String                     @unique
   password                                                    String?
-  is_online                                                   Boolean?               @default(true)
+  is_online                                                   Boolean?                   @default(true)
   email_verified                                              DateTime?
-  roles                                                       user_role_enum[]       @default([student])
-  status                                                      user_status_enum       @default(ACTIVE)
-  failed_login_attempts                                       Int?                   @default(0)
+  roles                                                       user_role_enum[]           @default([student])
+  status                                                      user_status_enum           @default(ACTIVE)
+  failed_login_attempts                                       Int?                       @default(0)
   account_locked_until                                        DateTime?
   deleted_at                                                  DateTime?
-  is_anonymized                                               Boolean?               @default(false)
+  is_anonymized                                               Boolean?                   @default(false)
   anonymized_at                                               DateTime?
   verification_token                                          String?
   reset_token                                                 String?
   reset_token_expires                                         DateTime?
-  created_at                                                  DateTime               @default(now())
-  updated_at                                                  DateTime               @default(now())
+  created_at                                                  DateTime                   @default(now())
+  updated_at                                                  DateTime                   @default(now())
   last_active                                                 DateTime?
-  audit_logs                                                  audit_logs[]
   circle_members                                              circle_members[]
   circle_posts                                                circle_posts[]
   circles                                                     circles[]
@@ -1141,32 +1363,35 @@ model users {
   compliance_tasks                                            compliance_tasks[]
   contributions                                               contributions[]
   document_versions                                           document_versions[]
-  donation_receipts_donation_receipts_issued_by_idTousers     donation_receipts[]    @relation("donation_receipts_issued_by_idTousers")
-  donation_receipts_donation_receipts_user_idTousers          donation_receipts[]    @relation("donation_receipts_user_idTousers")
+  donation_receipts_donation_receipts_issued_by_idTousers     donation_receipts[]        @relation("donation_receipts_issued_by_idTousers")
+  donation_receipts_donation_receipts_user_idTousers          donation_receipts[]        @relation("donation_receipts_user_idTousers")
   event_registrations                                         event_registrations[]
-  family_links_family_links_related_idTousers                 family_links[]         @relation("family_links_related_idTousers")
-  family_links_family_links_user_idTousers                    family_links[]         @relation("family_links_user_idTousers")
+  family_links_family_links_related_idTousers                 family_links[]             @relation("family_links_related_idTousers")
+  family_links_family_links_user_idTousers                    family_links[]             @relation("family_links_user_idTousers")
   family_nodes                                                family_nodes[]
   file_assets                                                 file_assets[]
-  guidance_assignments_guidance_assignments_guide_idTousers   guidance_assignments[] @relation("guidance_assignments_guide_idTousers")
-  guidance_assignments_guidance_assignments_student_idTousers guidance_assignments[] @relation("guidance_assignments_student_idTousers")
-  journal_entries_journal_entries_approved_by_idTousers       journal_entries[]      @relation("journal_entries_approved_by_idTousers")
-  journal_entries_journal_entries_created_by_idTousers        journal_entries[]      @relation("journal_entries_created_by_idTousers")
+  guidance_assignments_guidance_assignments_guide_idTousers   guidance_assignments[]     @relation("guidance_assignments_guide_idTousers")
+  guidance_assignments_guidance_assignments_student_idTousers guidance_assignments[]     @relation("guidance_assignments_student_idTousers")
+  journal_entries_journal_entries_approved_by_idTousers       journal_entries[]          @relation("journal_entries_approved_by_idTousers")
+  journal_entries_journal_entries_created_by_idTousers        journal_entries[]          @relation("journal_entries_created_by_idTousers")
   legal_documents                                             legal_documents[]
   library_downloads                                           library_downloads[]
   library_items                                               library_items[]
   org_members                                                 org_members[]
   spiritual_profiles                                          spiritual_profiles?
   spiritual_vows                                              spiritual_vows[]
-  support_tickets_support_tickets_assigned_to_idTousers       support_tickets[]      @relation("support_tickets_assigned_to_idTousers")
-  support_tickets_support_tickets_user_idTousers              support_tickets[]      @relation("support_tickets_user_idTousers")
-  transactions_transactions_approved_by_idTousers             transactions[]         @relation("transactions_approved_by_idTousers")
-  transactions_transactions_recorded_by_idTousers             transactions[]         @relation("transactions_recorded_by_idTousers")
+  support_tickets_support_tickets_assigned_to_idTousers       support_tickets[]          @relation("support_tickets_assigned_to_idTousers")
+  support_tickets_support_tickets_user_idTousers              support_tickets[]          @relation("support_tickets_user_idTousers")
+  transactions_transactions_approved_by_idTousers             transactions[]             @relation("transactions_approved_by_idTousers")
+  transactions_transactions_recorded_by_idTousers             transactions[]             @relation("transactions_recorded_by_idTousers")
   user_curve_progress                                         user_curve_progress[]
   user_preferences                                            user_preferences?
   user_profiles                                               user_profiles?
   user_statistics                                             user_statistics?
   vedic_events                                                vedic_events[]
+
+  @@map("users")
+  @@schema("public")
 }
 
 model utilization_certificates {
@@ -1182,6 +1407,8 @@ model utilization_certificates {
   updated_at         DateTime?    @default(now())
   file_assets        file_assets? @relation(fields: [file_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_uc_file")
   grants             grants       @relation(fields: [grant_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@schema("public")
 }
 
 model vedic_events {
@@ -1196,6 +1423,8 @@ model vedic_events {
   updated_at          DateTime              @default(now())
   event_registrations event_registrations[]
   users               users                 @relation(fields: [host_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@schema("public")
 }
 
 model webhook_events {
@@ -1207,6 +1436,99 @@ model webhook_events {
   status       webhook_status_enum? @default(PENDING)
   processed_at DateTime?
   created_at   DateTime             @default(now())
+
+  @@schema("public")
+}
+
+enum identity_age_group_enum {
+  child
+  teen
+  young_adult
+  adult
+  senior
+
+  @@map("age_group_enum")
+  @@schema("identity")
+}
+
+enum identity_gender_enum {
+  male
+  female
+
+  @@map("gender_enum")
+  @@schema("identity")
+}
+
+enum identity_inner_state_enum {
+  confused
+  seeking
+  stable
+  disturbed
+  detached
+
+  @@map("inner_state_enum")
+  @@schema("identity")
+}
+
+enum identity_life_stage_enum {
+  student
+  unmarried
+  married
+  parent
+  vanaprastha
+  renunciate
+
+  @@map("life_stage_enum")
+  @@schema("identity")
+}
+
+enum identity_purushartha_enum {
+  dharma
+  artha
+  kama
+  moksha
+
+  @@map("purushartha_enum")
+  @@schema("identity")
+}
+
+enum identity_svabhava_enum {
+  intellectual
+  administrative
+  creative
+  practical
+
+  @@map("svabhava_enum")
+  @@schema("identity")
+}
+
+enum identity_user_role_enum {
+  student
+  mentor
+  teacher
+  coordinator
+  admin
+  donor
+  director
+  village_member
+  city_member
+  outreach_lead
+  volunteer
+  staff
+
+  @@map("user_role_enum")
+  @@schema("identity")
+}
+
+enum identity_user_status_enum {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+  DELETED
+  ANONYMIZED
+
+  @@map("user_status_enum")
+  @@schema("identity")
 }
 
 enum age_group_enum {
@@ -1217,6 +1539,9 @@ enum age_group_enum {
   adult_25_40
   mid_40_60
   senior_60_plus
+
+  @@map("age_group_enum")
+  @@schema("public")
 }
 
 enum asset_status_enum {
@@ -1225,12 +1550,16 @@ enum asset_status_enum {
   RETIRED
   LOST
   SOLD
+
+  @@schema("public")
 }
 
 enum assignment_type_enum {
   mentor
   teacher
   coordinator
+
+  @@schema("public")
 }
 
 enum authority_status_enum {
@@ -1238,6 +1567,8 @@ enum authority_status_enum {
   dependant
   karta
   shakha_head
+
+  @@schema("public")
 }
 
 enum campaign_status_enum {
@@ -1246,18 +1577,24 @@ enum campaign_status_enum {
   SENT
   FAILED
   CANCELLED
+
+  @@schema("public")
 }
 
 enum circle_role_enum {
   MEMBER
   MODERATOR
   MENTOR
+
+  @@schema("public")
 }
 
 enum circle_type_enum {
   REGIONAL
   STUDY_GROUP
   MENTOR_CIRCLE
+
+  @@schema("public")
 }
 
 enum communication_channel_enum {
@@ -1266,6 +1603,8 @@ enum communication_channel_enum {
   WHATSAPP
   PUSH
   IN_APP
+
+  @@schema("public")
 }
 
 enum communication_status_enum {
@@ -1276,6 +1615,8 @@ enum communication_status_enum {
   FAILED
   OPENED
   CLICKED
+
+  @@schema("public")
 }
 
 enum compliance_status_enum {
@@ -1284,6 +1625,8 @@ enum compliance_status_enum {
   COMPLETED
   OVERDUE
   DELAYED
+
+  @@schema("public")
 }
 
 enum content_status_enum {
@@ -1291,6 +1634,8 @@ enum content_status_enum {
   ACTIVE
   ARCHIVED
   DELETED
+
+  @@schema("public")
 }
 
 enum content_type_enum {
@@ -1318,12 +1663,16 @@ enum content_type_enum {
   sutra_summary
   key_points
   mula
+
+  @@schema("public")
 }
 
 enum contribution_type_enum {
   FINANCIAL
   IN_KIND
   SERVICE
+
+  @@schema("public")
 }
 
 enum document_permission_enum {
@@ -1331,12 +1680,16 @@ enum document_permission_enum {
   WRITE
   DELETE
   SHARE
+
+  @@schema("public")
 }
 
 enum event_type_enum {
   LIVE_SATSANG
   WORKSHOP
   GROUP_MEDITATION
+
+  @@schema("public")
 }
 
 enum file_category_enum {
@@ -1351,11 +1704,16 @@ enum file_category_enum {
   UC_CERTIFICATE
   GALLERY_ITEM
   TAX_CHALLAN
+
+  @@schema("public")
 }
 
 enum gender_enum {
   male
   female
+
+  @@map("gender_enum")
+  @@schema("public")
 }
 
 enum grant_status_enum {
@@ -1363,6 +1721,8 @@ enum grant_status_enum {
   ACTIVE
   COMPLETED
   EXPIRED
+
+  @@schema("public")
 }
 
 enum guidance_level_enum {
@@ -1370,6 +1730,8 @@ enum guidance_level_enum {
   intermediate
   advanced
   teacher
+
+  @@schema("public")
 }
 
 enum guidance_status_enum {
@@ -1377,6 +1739,8 @@ enum guidance_status_enum {
   COMPLETED
   ON_HOLD
   TERMINATED
+
+  @@schema("public")
 }
 
 enum inner_state_enum {
@@ -1385,6 +1749,9 @@ enum inner_state_enum {
   stable
   disturbed
   detached
+
+  @@map("inner_state_enum")
+  @@schema("public")
 }
 
 enum integration_service_enum {
@@ -1396,6 +1763,8 @@ enum integration_service_enum {
   STRIPE
   GITA_API
   TRANSLATION_ENGINE
+
+  @@schema("public")
 }
 
 enum language_enum {
@@ -1407,6 +1776,8 @@ enum language_enum {
   or
   mr
   gu
+
+  @@schema("public")
 }
 
 enum legal_document_status_enum {
@@ -1415,6 +1786,8 @@ enum legal_document_status_enum {
   ARCHIVED
   EXPIRED
   REVOKED
+
+  @@schema("public")
 }
 
 enum librarytype {
@@ -1422,6 +1795,8 @@ enum librarytype {
   BOOKLET
   ARTICLE
   NEWSLETTER
+
+  @@schema("public")
 }
 
 enum life_stage_enum {
@@ -1431,6 +1806,9 @@ enum life_stage_enum {
   parent
   vanaprastha
   renunciate
+
+  @@map("life_stage_enum")
+  @@schema("public")
 }
 
 enum milestone_status_enum {
@@ -1438,6 +1816,8 @@ enum milestone_status_enum {
   IN_PROGRESS
   COMPLETED
   VERIFIED
+
+  @@schema("public")
 }
 
 enum partner_type_enum {
@@ -1446,6 +1826,8 @@ enum partner_type_enum {
   GOVERNMENT
   CORPORATE
   VENDOR
+
+  @@schema("public")
 }
 
 enum payment_method_enum {
@@ -1453,12 +1835,16 @@ enum payment_method_enum {
   CASH
   BANK_TRANSFER
   CHEQUE
+
+  @@schema("public")
 }
 
 enum post_category_enum {
   REALIZATION
   QUESTION
   ANNOUNCEMENT
+
+  @@schema("public")
 }
 
 enum project_status_enum {
@@ -1467,6 +1853,8 @@ enum project_status_enum {
   COMPLETED
   ON_HOLD
   CANCELLED
+
+  @@schema("public")
 }
 
 enum purushartha_enum {
@@ -1474,6 +1862,9 @@ enum purushartha_enum {
   artha
   kama
   moksha
+
+  @@map("purushartha_enum")
+  @@schema("public")
 }
 
 enum relationship_type_enum {
@@ -1486,6 +1877,8 @@ enum relationship_type_enum {
   prapautra
   pautra
   sahodara
+
+  @@schema("public")
 }
 
 enum script_enum {
@@ -1494,6 +1887,8 @@ enum script_enum {
   bengali
   tamil
   oriya
+
+  @@schema("public")
 }
 
 enum storage_provider_enum {
@@ -1501,6 +1896,8 @@ enum storage_provider_enum {
   R2
   GCS
   LOCAL
+
+  @@schema("public")
 }
 
 enum svabhava_enum {
@@ -1508,6 +1905,9 @@ enum svabhava_enum {
   administrative
   creative
   practical
+
+  @@map("svabhava_enum")
+  @@schema("public")
 }
 
 enum ticket_status_enum {
@@ -1515,6 +1915,8 @@ enum ticket_status_enum {
   IN_PROGRESS
   RESOLVED
   CLOSED
+
+  @@schema("public")
 }
 
 enum transaction_status_enum {
@@ -1522,6 +1924,8 @@ enum transaction_status_enum {
   APPROVED
   REJECTED
   FAILED
+
+  @@schema("public")
 }
 
 enum transaction_type_enum {
@@ -1530,6 +1934,8 @@ enum transaction_type_enum {
   TRANSFER
   ADJUSTMENT
   PAYROLL
+
+  @@schema("public")
 }
 
 enum user_role_enum {
@@ -1545,6 +1951,9 @@ enum user_role_enum {
   outreach_lead
   volunteer
   staff
+
+  @@map("user_role_enum")
+  @@schema("public")
 }
 
 enum user_status_enum {
@@ -1553,6 +1962,9 @@ enum user_status_enum {
   SUSPENDED
   DELETED
   ANONYMIZED
+
+  @@map("user_status_enum")
+  @@schema("public")
 }
 
 enum vow_status_enum {
@@ -1561,10 +1973,14 @@ enum vow_status_enum {
   COMPLETED
   BROKEN
   REVOKED
+
+  @@schema("public")
 }
 
 enum webhook_status_enum {
   PENDING
   PROCESSED
   FAILED
+
+  @@schema("public")
 }

@@ -1,6 +1,7 @@
 'use server'
 
 import { prisma } from '@/lib/prisma'
+import { userStore } from '@/lib/identity-gateway'
 
 /**
  * SECURE PORTAL ACTIONS
@@ -38,12 +39,12 @@ export async function validatePortalToken(token: string) {
     // Fetch the actual documents
     const documents = shareLink.documents.map(d => d.document)
 
-    return { 
-      success: true, 
-      organization: shareLink.organization, 
+    return {
+      success: true,
+      organization: shareLink.organization,
       purpose: shareLink.purpose,
       expiresAt: shareLink.expiresAt,
-      documents 
+      documents
     }
   } catch (error: any) {
     return { success: false, error: error.message }
@@ -56,19 +57,19 @@ export async function validatePortalToken(token: string) {
  */
 export async function getMentorStudents(mentorId: string) {
   // Logic to fetch students assigned to this mentor via circles
-  const students = await prisma.user.findMany({
+  const students = await userStore.findMany({
     where: {
-      circleMemberships: {
+      circle_members: {
         some: {
           circle: {
-            mentorId: mentorId
+            mentor_id: mentorId
           }
         }
       }
     },
     include: {
-      profile: true,
-      spiritual: true
+      user_profiles: true,
+      spiritual_profiles: true
     }
   })
   return students

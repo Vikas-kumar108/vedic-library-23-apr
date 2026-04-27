@@ -4,6 +4,25 @@ export class AcademyService {
   constructor(private prisma: PrismaClient) {}
 
   /**
+   * [IDENTITY MIGRATION GATEWAY]
+   */
+  private get userStore() {
+    const isIdentityEnabled = process.env.IDENTITY_SCHEMA_ENABLED === 'true';
+    if (isIdentityEnabled) {
+      return (this.prisma as any).identity_users;
+    }
+    return (this.prisma as any).users;
+  }
+
+  private get profileStore() {
+    const isIdentityEnabled = process.env.IDENTITY_SCHEMA_ENABLED === 'true';
+    if (isIdentityEnabled) {
+      return (this.prisma as any).identity_user_profiles;
+    }
+    return (this.prisma as any).user_profiles;
+  }
+
+  /**
    * Get the global community progress overview
    */
   async getCommunityPulse(orgId: string) {
@@ -19,11 +38,11 @@ export class AcademyService {
       `SELECT status, COUNT(*) as count FROM spiritual_vows GROUP BY status`
     )
 
-    const learningProgress = await this.prisma.userCurveProgress.findMany({
+    const learningProgress = await (this.prisma as any).user_curve_progress.findMany({
       include: {
         curve: true,
         user: {
-          include: { profile: true }
+          include: { user_profiles: true }
         }
       },
       take: 10,
@@ -41,19 +60,19 @@ export class AcademyService {
    * Get a detailed spiritual profile for a seeker
    */
   async getSeekerProfile(userId: string) {
-    const user = await this.prisma.user.findUnique({
+    const user = await this.userStore.findUnique({
       where: { id: userId },
       include: {
-        profile: true,
-        spiritual: true,
+        user_profiles: true,
+        spiritual_profiles: true,
         spiritual_vows: true,
-        curveProgress: {
+        user_curve_progress: {
           include: {
             curve: true,
             currentStep: true
           }
         },
-        circleMemberships: {
+        circle_members: {
           include: { circle: true }
         }
       }
@@ -83,14 +102,14 @@ export class AcademyService {
    * Get a detailed mentor profile
    */
   async getMentorProfile(guideId: string) {
-    const mentor = await this.prisma.user.findUnique({
+    const mentor = await this.userStore.findUnique({
       where: { id: guideId },
       include: {
-        profile: true,
-        mentoredCircles: true,
-        assignmentsAsGuide: {
+        user_profiles: true,
+        mentored_circles: true,
+        guidance_assignments_guidance_assignments_guide_idTousers: {
           include: {
-            student: { include: { profile: true } }
+            student: { include: { user_profiles: true } }
           }
         }
       }

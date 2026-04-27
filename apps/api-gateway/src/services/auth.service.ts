@@ -12,69 +12,169 @@ export class AuthService {
   constructor(
     private prisma: PrismaClient,
     private emailService?: InstitutionalEmailService
-  ) {}
+  ) { }
+
+  /**
+   * [IDENTITY MIGRATION GATEWAY]
+   * Dynamically resolves the User delegate based on the migration toggle.
+   */
+  private get userStore() {
+    const isIdentityEnabled = process.env.IDENTITY_SCHEMA_ENABLED === 'true';
+
+    if (isIdentityEnabled) {
+      return (this.prisma as unknown as {
+        identity_users: typeof this.prisma.users;
+      }).identity_users;
+    }
+
+    return this.prisma.users;
+  }
+
+  /**
+   * [IDENTITY MIGRATION GATEWAY]
+   * Dynamically resolves the Profile delegate based on the migration toggle.
+   */
+  private get profileStore() {
+    const isIdentityEnabled = process.env.IDENTITY_SCHEMA_ENABLED === 'true';
+
+    if (isIdentityEnabled) {
+      return (this.prisma as unknown as {
+        identity_user_profiles: typeof this.prisma.user_profiles;
+      }).identity_user_profiles;
+    }
+
+    return this.prisma.user_profiles;
+  }
+
+  private get preferenceStore() {
+    const isIdentityEnabled = process.env.IDENTITY_SCHEMA_ENABLED === 'true';
+    if (isIdentityEnabled) {
+      return (this.prisma as unknown as {
+        identity_user_preferences: typeof this.prisma.user_preferences;
+      }).identity_user_preferences;
+    }
+    return this.prisma.user_preferences;
+  }
+
+  private get spiritualProfileStore() {
+    const isIdentityEnabled = process.env.IDENTITY_SCHEMA_ENABLED === 'true';
+    if (isIdentityEnabled) {
+      return (this.prisma as unknown as {
+        identity_spiritual_profiles: typeof this.prisma.spiritual_profiles;
+      }).identity_spiritual_profiles;
+    }
+    return this.prisma.spiritual_profiles;
+  }
+
+  private get statisticsStore() {
+    const isIdentityEnabled = process.env.IDENTITY_SCHEMA_ENABLED === 'true';
+    if (isIdentityEnabled) {
+      return (this.prisma as unknown as {
+        identity_user_statistics: typeof this.prisma.user_statistics;
+      }).identity_user_statistics;
+    }
+    return this.prisma.user_statistics;
+  }
 
   async register(data: any) {
-    const { email, password, name } = data
+    try {
+      const { email, password, name } = data
 
-    const existingUser = await this.prisma.users.findUnique({
-      where: { email },
-    })
-
-    if (existingUser) {
-      throw new Error('User already exists')
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10)
-    const verification_token = crypto.randomBytes(32).toString('hex')
-
-    const user = await this.prisma.users.create({
-      data: {
-        email,
-        password: hashedPassword,
-        verification_token,
-        roles: ['student'],
-        user_profiles: {
-          create: { full_name: name }
-        }
-      },
-      include: { user_profiles: true }
-    })
-
-    // 🛰️ Send Institutional Verification Email
-    if (this.emailService) {
-      const verificationLink = `${FRONTEND_URL}/auth/verify?token=${verification_token}`
-      console.log(`\n📧 NEW SEEKER INITIATION LINK:`)
-      console.log(`🔗 ${verificationLink}\n`)
-
-      await this.emailService.sendEmail({
-        to: email,
-        subject: 'Welcome to the Vedic Gurukulam • Verify Identity',
-        body: `Please verify your email using this token: ${verification_token}`,
-        html: `
-          <div style="font-family: serif; padding: 40px; border: 1px solid #eee; border-radius: 20px;">
-            <h2 style="color: #9333ea italic;">Welcome to the Gurukulam</h2>
-            <p>Your spiritual journey requires identity verification.</p>
-            <a href="${verificationLink}" 
-               style="background: #9333ea; color: white; padding: 12px 24px; text-decoration: none; border-radius: 12px; font-weight: bold; display: inline-block;">
-               Complete Verification
-            </a>
-          </div>
-        `
+      // Check existence using toggled store
+      const existingUser = await this.userStore.findUnique({
+        where: { email },
       })
-    }
 
-    return {
-      id: user.id,
-      email: user.email,
-      name: user.user_profiles?.full_name,
-      roles: user.roles,
-      message: 'Please verify your email to complete registration'
+      if (existingUser) {
+        throw new Error('User already exists')
+      }
+
+      const hashedPassword = await bcrypt.hash(password, 10)
+      const verification_token = crypto.randomBytes(32).toString('hex')
+
+      // [SCHEMA STABILITY]: Create user in the active schema
+      const user = await this.userStore.create({
+        data: {
+          email,
+          password: hashedPassword,
+          verification_token,
+          roles: ['student'],
+        }
+      })
+
+
+      // [SCHEMA STABILITY]: Create profile in the SAME active schema
+      // This prevents the Foreign Key violation where an identity user tries 
+      // to link to a public profile.
+      await this.profileStore.upsert({
+        where: { user_id: user.id },
+        update: {
+          full_name: name
+        },
+        create: {
+          user_id: user.id,
+          full_name: name
+        }
+      })
+
+      await this.preferenceStore.upsert({
+        where: { user_id: user.id },
+        update: {},
+        create: { user_id: user.id }
+      })
+
+      await this.spiritualProfileStore.upsert({
+        where: { user_id: user.id },
+        update: {},
+        create: { user_id: user.id }
+      })
+
+      await this.statisticsStore.upsert({
+        where: { user_id: user.id },
+        update: {},
+        create: { user_id: user.id }
+      })
+
+      // 🛰️ Send Institutional Verification Email
+      if (this.emailService) {
+        const verificationLink = `${FRONTEND_URL}/auth/verify?token=${verification_token}`
+        console.log(`\n📧 NEW SEEKER INITIATION LINK:`)
+        console.log(`🔗 ${verificationLink}\n`)
+
+        await this.emailService.sendEmail({
+          to: email,
+          subject: 'Welcome to the Vedic Gurukulam • Verify Identity',
+          body: `Please verify your email using this token: ${verification_token}`,
+          html: `
+            <div style="font-family: serif; padding: 40px; border: 1px solid #eee; border-radius: 20px;">
+              <h2 style="color: #9333ea italic;">Welcome to the Gurukulam</h2>
+              <p>Your spiritual journey requires identity verification.</p>
+              <a href="${verificationLink}" 
+                 style="background: #9333ea; color: white; padding: 12px 24px; text-decoration: none; border-radius: 12px; font-weight: bold; display: inline-block;">
+                 Complete Verification
+              </a>
+            </div>
+          `
+        })
+      }
+
+      return {
+        id: user.id,
+        email: user.email,
+        // Use local 'name' since profile write was decoupled from user creation
+        name: name,
+        roles: user.roles,
+        message: 'Please verify your email to complete registration'
+      }
+    } catch (error) {
+      // [TEMPORARY DEBUG LOGGING]: Expose the real backend error
+      console.error("REGISTER ERROR:", error)
+      throw error
     }
   }
 
   async verifyEmail(token: string) {
-    const user = await this.prisma.users.findFirst({
+    const user = await this.userStore.findFirst({
       where: { verification_token: token },
     })
 
@@ -82,7 +182,7 @@ export class AuthService {
       throw new Error('Invalid or expired verification token')
     }
 
-    await this.prisma.users.update({
+    await this.userStore.update({
       where: { id: user.id },
       data: {
         email_verified: new Date(),
@@ -94,7 +194,7 @@ export class AuthService {
   }
 
   async forgotPassword(email: string) {
-    const user = await this.prisma.users.findUnique({
+    const user = await this.userStore.findUnique({
       where: { email },
     })
 
@@ -106,7 +206,7 @@ export class AuthService {
     const reset_token = crypto.randomBytes(32).toString('hex')
     const reset_token_expires = new Date(Date.now() + 3600000) // 1 hour
 
-    await this.prisma.users.update({
+    await this.userStore.update({
       where: { id: user.id },
       data: {
         reset_token,
@@ -141,7 +241,7 @@ export class AuthService {
   }
 
   async resetPassword(token: string, password: any) {
-    const user = await this.prisma.users.findFirst({
+    const user = await this.userStore.findFirst({
       where: {
         reset_token: token,
         reset_token_expires: { gt: new Date() },
@@ -154,7 +254,7 @@ export class AuthService {
 
     const hashedPassword = await bcrypt.hash(password, 10)
 
-    await this.prisma.users.update({
+    await this.userStore.update({
       where: { id: user.id },
       data: {
         password: hashedPassword,
@@ -169,36 +269,39 @@ export class AuthService {
   async login(data: any) {
     const { email, password } = data
 
-    const user = await this.prisma.users.findUnique({
+    console.log("LOGIN TOGGLE:", process.env.IDENTITY_SCHEMA_ENABLED)
+
+    const user = await this.userStore.findUnique({
       where: { email },
       include: { user_profiles: true }
     })
+
+    console.log("USER PASSWORD:", user?.password)
 
     if (!user) {
       throw new Error('Invalid credentials')
     }
 
-    // 1. Check for Account Lockout
     if (user.account_locked_until && user.account_locked_until > new Date()) {
       throw new Error(`Account locked. Please try again after ${user.account_locked_until.toLocaleTimeString()}`)
     }
 
     const isMatch = await bcrypt.compare(password, user.password || '')
-    
+
+    console.log("PASSWORD MATCH:", isMatch)
+
     if (!isMatch) {
-      // 2. Handle Failed Attempt
       const failed_attempts = (user.failed_login_attempts || 0) + 1
       const isLockout = failed_attempts >= 5
-      
-      await this.prisma.users.update({
+
+      await this.userStore.update({
         where: { id: user.id },
         data: {
           failed_login_attempts: failed_attempts,
-          account_locked_until: isLockout ? new Date(Date.now() + 30 * 60000) : null // 30 mins lockout
+          account_locked_until: isLockout ? new Date(Date.now() + 30 * 60000) : null
         }
       })
 
-      // 3. Log Security Incident
       await this.prisma.audit_logs.create({
         data: {
           action: 'LOGIN_FAILED',
@@ -211,8 +314,7 @@ export class AuthService {
       throw new Error(isLockout ? 'Too many failed attempts. Account locked for 30 minutes.' : 'Invalid credentials')
     }
 
-    // 4. Reset Failed Attempts on Success
-    await this.prisma.users.update({
+    await this.userStore.update({
       where: { id: user.id },
       data: {
         failed_login_attempts: 0,
@@ -221,7 +323,6 @@ export class AuthService {
       }
     })
 
-    // 5. Log Successful Login
     await this.prisma.audit_logs.create({
       data: {
         action: 'LOGIN_SUCCESS',
@@ -251,10 +352,27 @@ export class AuthService {
   async validateToken(token: string) {
     try {
       const decoded = jwt.verify(token, JWT_SECRET) as any
-      const user = await this.prisma.users.findUnique({
+      const user = await this.userStore.findUnique({
         where: { id: decoded.userId },
         include: { user_profiles: true }
       })
+
+      // [SHADOW READ]: Verify data consistency between schemas
+      const identityUser = await (this.prisma as any).identity_users?.findUnique({
+        where: { id: user?.id }
+      })
+      if (user && !identityUser) console.warn("SHADOW MISMATCH: missing in identity")
+
+      const identityProfile = await (this.prisma as any).identity_user_profiles.findUnique({
+        where: { user_id: user?.id }
+      })
+
+      if (user && !identityProfile) {
+        console.warn("SHADOW PROFILE MISMATCH:", {
+          userId: user.id,
+          email: user.email
+        })
+      }
 
       if (!user) {
         throw new Error('User not found')

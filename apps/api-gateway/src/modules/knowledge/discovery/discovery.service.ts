@@ -9,39 +9,54 @@ export class DiscoveryService {
   constructor(private repository: DiscoveryRepository) {}
 
   /**
-   * getRecommended: Suggests wisdom based on user stage and tags.
+   * getRecommended: Suggests wisdom based on user stage, statistics, and tags.
    */
-  async getRecommended(eligibilityLevel: number, tags: string[] = []) {
-    // 1. Try to find nodes by tags first
-    try {
-      const searchTags = tags.length > 0 ? tags : ['daily-wisdom', 'grihastha-dharma']
-      const results = await this.repository.findRecommendedByTags(eligibilityLevel, searchTags)
+  async getRecommended(userId?: string, tags: string[] = [], manualStage?: number) {
+    // 1. Resolve Personalization Context (Primary Driver)
+    let eligibilityLevel = manualStage || 1;
+    let skipCount = 0;
 
-      if (results.length > 0) {
-        return results.map((r: any) => ({
-          ...toLightVerse(r.node),
-          slug: r.node.slug,
-          shastra: r.node.shastra.name,
-          type: 'recommendation'
-        }))
+    if (userId) {
+      try {
+        const { profile, stats } = await this.repository.getUserContext(userId);
+        eligibilityLevel = profile?.eligibility_level || eligibilityLevel;
+        skipCount = stats?.nodes_read_count || 0;
+      } catch (e) {
+        // Silent fallback to defaults
       }
-    } catch (e) {
-      console.warn('DiscoveryService: node_tags table might be missing or empty.')
     }
 
-    // 2. Fallback to generic high-level wisdom
+    // 2. Fetch Personalized Mix (Gracefully bypass empty node_tags)
+    const searchTags = tags.length > 0 ? tags : ['daily-wisdom', 'grihastha-dharma'];
+    
     try {
-      const fallback = await this.repository.findGenericWisdom(eligibilityLevel)
+      let taggedResults = [];
+      try {
+        taggedResults = await this.repository.findRecommendedByTags(eligibilityLevel, searchTags, skipCount % 5);
+      } catch (e) {
+        // node_tags might be missing, handled below
+      }
 
-      return fallback.map((n: any) => ({
+      const taggedNodes = taggedResults.map((r: any) => r.node).filter(Boolean);
+      
+      // 3. Populate with curated fallback if tagged results are sparse
+      let fallbackNodes = [];
+      if (taggedNodes.length < 3) {
+        fallbackNodes = await this.repository.findCuratedWisdom(eligibilityLevel, (skipCount + taggedNodes.length) % 10);
+      }
+
+      // Combine and deduplicate
+      const combined = [...taggedNodes, ...fallbackNodes];
+      const uniqueNodes = Array.from(new Map(combined.map(n => [n.slug, n])).values());
+
+      return uniqueNodes.slice(0, 3).map((n: any) => ({
         ...toLightVerse(n),
-        slug: n.slug,
-        shastra: n.shastra.name,
-        type: 'fallback'
-      }))
+        slug: n.slug || 'unknown-wisdom',
+        shastra: n.shastras?.[0]?.name || 'Vedic Library',
+        type: taggedNodes.some(tn => tn.id === n.id) ? 'recommendation' : 'curated'
+      }));
     } catch (e) {
-      console.error('DiscoveryService Error:', e)
-      return [] // Graceful empty state
+      return []; // Absolute graceful empty state
     }
   }
 

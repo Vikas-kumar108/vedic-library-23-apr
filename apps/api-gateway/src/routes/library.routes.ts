@@ -1,11 +1,15 @@
-import { FastifyInstance } from 'fastify'
+import { FastifyInstance, FastifyPluginOptions } from 'fastify'
 import { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { createLibraryModule } from '../modules/knowledge/library'
 import { searchByKeyword } from '@dharma/search-domain'
 import { VerseParamsSchema, SearchQuerySchema } from '../schemas/library.schema'
+import { AuthService } from '../services/auth.service'
+import { IntegrationRegistry } from '../integrations/registry'
 
-export default async function libraryRoutes(fastify: FastifyInstance) {
+export default async function libraryRoutes(fastify: FastifyInstance, options: FastifyPluginOptions) {
   const typedFastify = fastify.withTypeProvider<ZodTypeProvider>()
+  const emailService = IntegrationRegistry.getEmailService()
+  const authService = new AuthService(fastify.prisma, emailService)
 
   // TREE
   typedFastify.get('/tree', async () => {
@@ -20,7 +24,21 @@ export default async function libraryRoutes(fastify: FastifyInstance) {
     async (request, reply) => {
       const { service } = createLibraryModule(fastify.prisma)
       const { id } = request.params
-      const verse = await service.getVerse(id)
+      
+      // Security Layer: Extract identity for history tracking
+      let userId: string | undefined = undefined
+      const authHeader = request.headers.authorization
+      if (authHeader && authHeader.startsWith('Bearer ')) {
+        const token = authHeader.split(' ')[1]
+        try {
+          const decoded = await authService.validateToken(token)
+          userId = decoded.id
+        } catch (e) {
+          // Proceed as anonymous if token is invalid
+        }
+      }
+
+      const verse = await service.getVerse(id, userId)
 
       if (!verse) {
         return reply.status(404).send({ error: 'Verse not found' })

@@ -18,6 +18,17 @@ export class BroadcastService {
     private emailService: InstitutionalEmailService
   ) {}
 
+  /**
+   * [IDENTITY MIGRATION GATEWAY]
+   */
+  private get userStore() {
+    const isIdentityEnabled = process.env.IDENTITY_SCHEMA_ENABLED === 'true';
+    if (isIdentityEnabled) {
+      return (this.prisma as any).identity_users;
+    }
+    return (this.prisma as any).users;
+  }
+
   async broadcastWisdom(contentId: string, criteria: BroadcastCriteria) {
     // 1. Fetch the Wisdom Content (Sloka/Verse/Article)
     const content = await this.prisma.shastraContent.findUnique({
@@ -30,16 +41,16 @@ export class BroadcastService {
     // 2. Identify the Targeted Audience
     let audience = []
     if (criteria.userIds && criteria.userIds.length > 0) {
-      audience = await this.prisma.user.findMany({
+      audience = await this.userStore.findMany({
         where: { id: { in: criteria.userIds } }
       })
     } else if (criteria.allUsers) {
-      audience = await this.prisma.user.findMany()
+      audience = await this.userStore.findMany()
     } else {
-      audience = await this.prisma.user.findMany({
+      audience = await this.userStore.findMany({
         where: {
           OR: [
-            criteria.role ? { roles: { has: criteria.role } } : {},
+            criteria.role ? { roles: { has: criteria.role as any } } : {},
             criteria.stage ? { stage: criteria.stage } : {}
           ]
         }

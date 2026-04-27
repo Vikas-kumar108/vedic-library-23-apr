@@ -89,4 +89,78 @@ export class LibraryRepository {
       }
     })
   }
+
+  async recordNodeView(userId: string, nodeId: string) {
+    const oneMinuteAgo = new Date(Date.now() - 60000);
+    
+    try {
+      // 1. Debounce Check (Avoid duplicates within 1 minute - Optimization)
+      const existing = await this.prisma.audit_logs.findFirst({
+        where: {
+          performed_by_id: userId,
+          action: 'READ_NODE',
+          record_id: nodeId,
+          timestamp: { gte: oneMinuteAgo }
+        }
+      });
+
+      if (existing) return;
+
+      // 2. Create Log (DB Unique constraint is the final guard)
+      await this.prisma.audit_logs.create({
+        data: {
+          action: 'READ_NODE',
+          record_id: nodeId,
+          performed_by_id: userId,
+          module: 'KNOWLEDGE'
+        }
+      });
+
+      // 3. Completion Trigger: Clear primary guide if it was just read (Atomic)
+      const profileStore = process.env.IDENTITY_SCHEMA_ENABLED === 'true' 
+        ? (this.prisma as any).identity_spiritual_profiles 
+        : (this.prisma as any).spiritual_profiles;
+
+      if (profileStore) {
+        // Fetch metadata before atomic clear for observability
+        const profile = await profileStore.findUnique({
+          where: { user_id: userId },
+          select: { 
+            current_primary_node_id: true,
+            current_focus: true,
+            eligibility_level: true
+          }
+        });
+
+        if (profile?.current_primary_node_id === nodeId) {
+          const result = await profileStore.updateMany({
+            where: { 
+              user_id: userId,
+              current_primary_node_id: nodeId
+            },
+            data: { current_primary_node_id: null }
+          });
+
+          if (result.count > 0) {
+            // 🛰️ Observability: Log completion milestones
+            (this.prisma as any).audit_logs.create({
+              data: {
+                performed_by_id: userId,
+                record_id: nodeId,
+                action: 'PRIMARY_COMPLETED',
+                module: 'KNOWLEDGE',
+                new_data: { 
+                  focus: profile.current_focus, 
+                  eligibility_level: profile.eligibility_level 
+                }
+              }
+            }).catch(() => {});
+          }
+        }
+      }
+    } catch (e) {
+      // Ignore unique constraint violations or other logging errors
+      // P2002 is the Prisma code for unique constraint violation
+    }
+  }
 }
