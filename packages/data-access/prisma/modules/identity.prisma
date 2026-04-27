@@ -91,6 +91,8 @@ model users {
   preferences        user_preferences?
   profile            user_profiles?
   statistics         user_statistics?
+  samskaras          samskaras[]
+  jyotish_profile    jyotish_profiles?
 
   // Institutional relations (clean naming)
   audit_logs             audit_logs[]
@@ -117,6 +119,15 @@ model users {
   guidance_as_guide   guidance_assignments[] @relation("guidance_assignments_guide")
   guidance_as_student guidance_assignments[] @relation("guidance_assignments_student")
 
+  community_members   community_members[]
+  karma_events        karma_events[]
+
+  family_lineage_as_parent family_lineage[] @relation("family_parent")
+  family_lineage_as_child  family_lineage[] @relation("family_child")
+
+  mentorship_as_mentor  mentor_lineage[] @relation("mentor_relation")
+  mentorship_as_student mentor_lineage[] @relation("student_relation")
+
   journal_entries_approved journal_entries[] @relation("journal_entries_approved")
   journal_entries_created  journal_entries[] @relation("journal_entries_created")
 
@@ -133,5 +144,56 @@ model users {
   @@index([email], map: "idx_users_email")
   @@index([status], map: "idx_users_status")
   @@map("users")
+  @@schema("identity")
+}
+
+model samskaras {
+  id           String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  user_id      String               @db.Uuid
+  type         samskara_type_enum
+  status       samskara_status_enum @default(PENDING)
+  scheduled_at DateTime?
+  completed_at DateTime?
+  notes        String?
+  created_at   DateTime             @default(now())
+
+  users users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@map("samskaras")
+  @@schema("identity")
+}
+
+model jyotish_profiles {
+  user_id     String   @id @db.Uuid
+  birth_date  DateTime
+  birth_time  String?
+  birth_place String?
+  timezone    String?
+  created_at  DateTime @default(now())
+
+  user users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@map("jyotish_profiles")
+  @@schema("identity")
+}
+
+enum samskara_type_enum {
+  birth
+  naming
+  education_start
+  initiation
+  marriage
+  vanaprastha_transition
+  renunciation
+
+  @@schema("identity")
+}
+
+enum samskara_status_enum {
+  PENDING
+  SCHEDULED
+  COMPLETED
+  MISSED
+
   @@schema("identity")
 }

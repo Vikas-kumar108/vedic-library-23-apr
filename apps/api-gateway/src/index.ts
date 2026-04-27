@@ -19,6 +19,11 @@ import complianceRoutes from './routes/compliance.routes'
 import membershipRoutes from './routes/membership.routes'
 import broadcastRoutes from './routes/broadcast'
 import { paymentRoutes } from './routes/payment'
+import { registerAutoRoutes } from './auto-routes'
+import { fastifyTRPCPlugin } from '@trpc/server/adapters/fastify'
+import { appRouter } from './routers'
+import { createContext } from './trpc'
+import intelligenceRoutes from './routes/intelligence.routes'
 
 const fastify = Fastify({
   logger: true
@@ -47,6 +52,13 @@ await fastify.register(complianceRoutes, { prefix: '/institutional/compliance' }
 await fastify.register(membershipRoutes, { prefix: '/institutional/membership' })
 await fastify.register(broadcastRoutes, { prefix: '/institutional/broadcast' })
 await fastify.register(paymentRoutes, { prefix: '/institutional/dana' })
+await fastify.register(registerAutoRoutes)
+await fastify.register(intelligenceRoutes, { prefix: '/intelligence' })
+
+await fastify.register(fastifyTRPCPlugin, {
+  prefix: '/trpc',
+  trpcOptions: { router: appRouter, createContext },
+})
 
 fastify.get('/health', async () => {
   return { status: 'ok', timestamp: new Date().toISOString() }

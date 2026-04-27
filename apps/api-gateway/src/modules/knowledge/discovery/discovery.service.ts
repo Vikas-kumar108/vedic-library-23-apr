@@ -4,6 +4,8 @@ import { DiscoveryRepository } from './discovery.repository'
 import { resolveReference } from '../shared/utils/reference.util'
 import { getPrimaryText } from '../shared/utils/text.util'
 import { toLightVerse } from '../shared/mappers/verse.mapper'
+import { SeekerStateService } from '../../../intelligence/seeker-state.service'
+import { RecommendationService } from '../../../intelligence/recommendation.service'
 
 export class DiscoveryService {
   constructor(private repository: DiscoveryRepository) {}
@@ -49,14 +51,26 @@ export class DiscoveryService {
       const combined = [...taggedNodes, ...fallbackNodes];
       const uniqueNodes = Array.from(new Map(combined.map(n => [n.slug, n])).values());
 
-      return uniqueNodes.slice(0, 3).map((n: any) => ({
-        ...toLightVerse(n),
-        slug: n.slug || 'unknown-wisdom',
-        shastra: n.shastras?.[0]?.name || 'Vedic Library',
-        type: taggedNodes.some(tn => tn.id === n.id) ? 'recommendation' : 'curated'
-      }));
+      // 4. Intelligence Layer: Suggest Next Step
+      let nextStep = null;
+      if (userId) {
+        const { profile, stats } = await this.repository.getUserContext(userId);
+        const state = SeekerStateService.computeState(profile as any, profile as any, stats);
+        const recService = new RecommendationService((this.repository as any).prisma);
+        nextStep = await recService.suggestNext(userId, state);
+      }
+
+      return {
+        recommendations: uniqueNodes.slice(0, 3).map((n: any) => ({
+          ...toLightVerse(n),
+          slug: n.slug || 'unknown-wisdom',
+          shastra: n.shastras?.[0]?.name || 'Vedic Library',
+          type: taggedNodes.some(tn => tn.id === n.id) ? 'recommendation' : 'curated'
+        })),
+        next_step: nextStep
+      };
     } catch (e) {
-      return []; // Absolute graceful empty state
+      return { recommendations: [], next_step: null };
     }
   }
 

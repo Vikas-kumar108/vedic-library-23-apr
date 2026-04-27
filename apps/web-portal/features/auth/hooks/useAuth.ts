@@ -3,27 +3,10 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
+import { User } from '@dharma/contracts'
+import { trpc } from '@/lib/trpc'
 
-export interface User {
-  id: string
-  name: string
-  email: string
-  avatar?: string
-  roles: string[]
-  emailVerified?: Date
-  spiritual_profile?: {
-    life_stage: string
-    inner_state: string
-    eligibility_level: number
-    current_focus: string
-    current_primary_node_id: string
-    last_guided_at: string
-  }
-  statistics?: {
-    nodes_read_count: number
-    courses_completed: number
-  }
-}
+// Institutional User Identity
 
 /**
  * useAuth Hook
@@ -67,49 +50,31 @@ export function useAuth() {
     checkAuth()
   }, [checkAuth])
 
+  const loginMutation = trpc.auth.login.useMutation();
+
   const login = async (credentials: any) => {
     try {
-      const res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(credentials)
-      })
-
-      const data = await res.json()
-      if (res.ok) {
-        setUser(data.user)
-        toast.success(`Welcome back, ${data.user.name}`)
-        router.push('/dashboard')
-        return true
-      } else {
-        toast.error(data.error || 'Authentication failed')
-        return false
-      }
-    } catch (err) {
-      toast.error('Gateway connection failed')
-      return false
+      const data = await loginMutation.mutateAsync(credentials);
+      setUser(data.user);
+      toast.success(`Welcome back, ${data.user.name}`);
+      router.push('/dashboard');
+      return true;
+    } catch (err: any) {
+      toast.error(err.message || 'Authentication failed');
+      return false;
     }
   }
 
+  const registerMutation = trpc.auth.register.useMutation();
+
   const register = async (details: any) => {
     try {
-      const res = await fetch('/api/auth/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(details)
-      })
-
-      const data = await res.json()
-      if (res.ok) {
-        toast.success('Registration successful. Please verify your email.')
-        return true
-      } else {
-        toast.error(data.error || 'Registration failed')
-        return false
-      }
-    } catch (err) {
-      toast.error('Gateway connection failed')
-      return false
+      await registerMutation.mutateAsync(details);
+      toast.success('Registration successful. Please verify your email.');
+      return true;
+    } catch (err: any) {
+      toast.error(err.message || 'Registration failed');
+      return false;
     }
   }
 

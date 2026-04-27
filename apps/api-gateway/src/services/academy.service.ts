@@ -1,4 +1,5 @@
 import { PrismaClient } from '@dharma/data-access'
+import { UserSchema, SpiritualProfileSchema } from '@dharma/contracts'
 
 export class AcademyService {
   constructor(private prisma: PrismaClient) {}
@@ -83,13 +84,11 @@ export class AcademyService {
     if (!user) return null;
 
     return {
-      id: user.id,
-      email: user.email,
+      ...UserSchema.parse(user),
       name: user.profile?.full_name,
       avatar: user.profile?.avatar_url,
       spiritual: {
-        stage: user.spiritual_profile?.life_stage,
-        state: user.spiritual_profile?.inner_state,
+        ...SpiritualProfileSchema.parse(user.spiritual_profile || {}),
         initiations: user.spiritual_vows.length
       },
       circles: user.circle_members.map(m => m.circles?.name),

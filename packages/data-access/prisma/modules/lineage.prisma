@@ -1,0 +1,48 @@
+model family_lineage {
+  id            String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  parent_id     String               @db.Uuid
+  child_id      String               @db.Uuid
+  relation_type family_relation_enum
+  created_at    DateTime             @default(now())
+
+  parent users @relation("family_parent", fields: [parent_id], references: [id], onDelete: Cascade)
+  child  users @relation("family_child", fields: [child_id], references: [id], onDelete: Cascade)
+
+  @@map("family_lineage")
+  @@schema("identity")
+}
+
+model mentor_lineage {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  mentor_id  String   @db.Uuid
+  student_id String   @db.Uuid
+  started_at DateTime @default(now())
+  active     Boolean  @default(true)
+
+  mentor  users @relation("mentor_relation", fields: [mentor_id], references: [id])
+  student users @relation("student_relation", fields: [student_id], references: [id])
+
+  @@map("mentor_lineage")
+  @@schema("identity")
+}
+
+model parampara_lineage {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  guru_name   String
+  disciple_id String?  @db.Uuid
+  parent_id   String?  @db.Uuid
+  level       Int
+  created_at  DateTime @default(now())
+
+  @@map("parampara_lineage")
+  @@schema("identity")
+}
+
+enum family_relation_enum {
+  parent
+  child
+  spouse
+  sibling
+
+  @@schema("identity")
+}

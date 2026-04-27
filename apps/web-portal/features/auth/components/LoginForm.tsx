@@ -7,6 +7,7 @@ import { ArrowRight, Eye, EyeOff, Chrome, Loader2, AlertCircle } from 'lucide-re
 import { cn } from '@/lib/utils'
 import { useAuth } from '../hooks/useAuth'
 import { LoginInput } from '@dharma/contracts'
+import { trpc } from '@/lib/trpc'
 
 export function LoginForm() {
   const { login } = useAuth()

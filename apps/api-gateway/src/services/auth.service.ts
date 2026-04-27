@@ -4,6 +4,13 @@ import crypto from 'crypto'
 import jwt from 'jsonwebtoken'
 import { nanoid } from 'nanoid'
 import { InstitutionalEmailService } from '../integrations/adapter.foundation'
+import { 
+  UserSchema, 
+  UserProfileSchema, 
+  SpiritualProfileSchema, 
+  UserStatisticSchema 
+} from '@dharma/contracts'
+import { SeekerStateService } from '../intelligence/seeker-state.service'
 
 const JWT_SECRET = process.env.JWT_SECRET || 'vedic-secret-key-108'
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000'
@@ -117,11 +124,8 @@ export class AuthService {
       }
 
       return {
-        id: user.id,
-        email: user.email,
-        // Use local 'name' since profile write was decoupled from user creation
+        ...UserSchema.parse(user),
         name: name,
-        roles: user.roles,
         message: 'Please verify your email to complete registration'
       }
     } catch (error) {
@@ -292,11 +296,8 @@ export class AuthService {
     return {
       accessToken,
       user: {
-        id: user.id,
-        email: user.email,
+        ...UserSchema.parse(user),
         name: user.profile?.full_name,
-        roles: user.roles,
-        email_verified: user.email_verified,
       }
     }
   }
@@ -319,28 +320,18 @@ export class AuthService {
 
 
       return {
-        id: user.id,
-        email: user.email,
+        ...UserSchema.parse(user),
         name: user.profile?.full_name,
         avatar: user.profile?.avatar_url,
-        roles: user.roles,
-        email_verified: user.email_verified,
         
         // ✨ Seeker Context: Spiritual Profile
-        spiritual_profile: user.spiritual_profile ? {
-          life_stage: user.spiritual_profile.life_stage,
-          inner_state: user.spiritual_profile.inner_state,
-          eligibility_level: user.spiritual_profile.eligibility_level,
-          current_focus: user.spiritual_profile.current_focus,
-          current_primary_node_id: user.spiritual_profile.current_primary_node_id,
-          last_guided_at: user.spiritual_profile.last_guided_at
-        } : null,
+        spiritual_profile: user.spiritual_profile ? SpiritualProfileSchema.parse(user.spiritual_profile) : null,
         
         // 📈 Seeker Context: Statistics
-        statistics: {
-          nodes_read_count: user.statistics?.nodes_read_count || 0,
-          courses_completed: user.statistics?.courses_completed || 0
-        }
+        statistics: user.statistics ? UserStatisticSchema.parse(user.statistics) : { nodes_read_count: 0, courses_completed: 0 },
+
+        // 🧠 Seeker Intelligence: Computed State
+        seeker_state: SeekerStateService.computeState(user, user.spiritual_profile, user.statistics)
       }
     } catch (error) {
       throw new Error('Invalid or expired token')
@@ -395,10 +386,8 @@ export class AuthService {
       return {
         accessToken,
         user: {
-          id: user.id,
-          email: user.email,
+          ...UserSchema.parse(user),
           name: decoded.name, // Fallback to decoded name if profile not fetched
-          roles: user.roles
         }
       }
     } catch (error) {

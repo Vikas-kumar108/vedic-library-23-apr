@@ -12,6 +12,9 @@
     "sync": "pnpm --filter @dharma/web-portal run sync",
     "db:push": "pnpm --filter @dharma/data-access db:push",
     "db:generate": "pnpm --filter @dharma/data-access db:generate",
+    "contracts:generate": "tsx packages/data-access/prisma/generate-contracts.ts",
+    "api:generate": "tsx packages/data-access/prisma/generate-api.ts",
+    "hooks:generate": "tsx packages/data-access/prisma/generate-hooks.ts",
     "prisma": "prisma",
     "postinstall": "pnpm db:generate"
   },

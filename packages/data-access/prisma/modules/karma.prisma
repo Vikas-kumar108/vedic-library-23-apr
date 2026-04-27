@@ -1,0 +1,24 @@
+model karma_events {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  user_id     String   @db.Uuid
+  type        karma_event_type_enum
+  context     String?
+  intensity   Int      // 1–10
+  created_at  DateTime @default(now())
+
+  user users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@map("karma_events")
+  @@schema("public")
+}
+
+enum karma_event_type_enum {
+  discipline
+  distraction
+  conflict
+  service
+  study
+  avoidance
+
+  @@schema("public")
+}

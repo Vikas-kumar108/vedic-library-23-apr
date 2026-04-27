@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 import { apiFetch } from '@/lib/api'
+import { User } from '@dharma/contracts'
 
 export async function GET() {
   try {
@@ -11,14 +12,17 @@ export async function GET() {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const response = await apiFetch('/auth/me', {
+    const { data, error, status } = await apiFetch<User>('/auth/me', {
       headers: {
         'Authorization': `Bearer ${token}`
       }
     })
 
-    const data = await response.json()
-    return NextResponse.json(data, { status: response.status })
+    if (error) {
+      return NextResponse.json({ error }, { status })
+    }
+
+    return NextResponse.json(data)
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 })
   }
